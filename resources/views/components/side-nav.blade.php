@@ -16,8 +16,8 @@
             <a href="charts.html"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Negocio</span></a>
             <ul class="menu-content">
                 <li class="{{ $isSelected('2', '1') ? 'active' : '' }}"><a class="menu-item" href="/empleados">Empleados</a></li>
-                <li class="{{ $isSelected('2', '2') ? 'active' : '' }}"><a class="menu-item" href="/empleados">Ventas</a></li>
-                <li class="{{ $isSelected('2', '2') ? 'active' : '' }}"><a class="menu-item" href="/empleados">Pagos</a></li>
+                <li class="{{ $isSelected('2', '2') ? 'active' : '' }}"><a class="menu-item" href="/ventas">Ventas</a></li>
+                <li class="{{ $isSelected('2', '2') ? 'active' : '' }}"><a class="menu-item" href="/pagos">Pagos</a></li>
             </ul>
         </li>
 

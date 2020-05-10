@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('admin.inicio');
 });
+
+Route::get('/empleados', function () {return view('admin.negocio.empleados');});
+Route::get('/crearEmpleado', function () {return view('admin.negocio.crearEmpleado');});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
