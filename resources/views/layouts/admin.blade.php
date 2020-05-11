@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<html class="loading" lang="es" data-textdirection="ltr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +41,7 @@
       <div class="content-wrapper">
         <div class="content-wrapper-before"></div>
             @yield('header')
-            <div class="content-body"><!-- Bar charts section start -->
+            <div class="content-body" id="app"><!-- Bar charts section start -->
                 @yield('content')
             </div>
       </div>
@@ -56,6 +56,7 @@
     </footer>
 
     @yield('scripts')
+    <script src="/js/app.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
     <script src="/theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
