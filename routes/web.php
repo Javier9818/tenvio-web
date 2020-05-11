@@ -33,3 +33,11 @@ Route::get('/transporte', function () {return view('admin.pedidos.asignacionDeli
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// FRONT DELIVERY
+
+Route::get('/test', function(){
+    return view('layouts.front');
+});
+
+
