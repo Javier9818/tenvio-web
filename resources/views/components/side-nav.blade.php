@@ -13,34 +13,36 @@
         </li>
 
         <li class="has-sub nav-item {{ $isTab('2') ? 'open' : '' }}">
-            <a href="charts.html"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Negocio</span></a>
+            <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Negocio</span></a>
             <ul class="menu-content">
                 <li class="{{ $isSelected('2', '1') ? 'active' : '' }}"><a class="menu-item" href="/empleados">Empleados</a></li>
                 <li class="{{ $isSelected('2', '2') ? 'active' : '' }}"><a class="menu-item" href="/ventas">Ventas</a></li>
-                <li class="{{ $isSelected('2', '2') ? 'active' : '' }}"><a class="menu-item" href="/pagos">Pagos</a></li>
+                <li class="{{ $isSelected('2', '3') ? 'active' : '' }}"><a class="menu-item" href="/pagos">Pagos</a></li>
             </ul>
         </li>
 
-        <li class="{{ $isTab('3') ? 'active' : 'nav-item' }}"><a href="icons.html"><i class="ft-droplet"></i><span class="menu-title" data-i18n="">Icons</span></a>
+        <li class="has-sub nav-item {{ $isTab('3') ? 'open' : '' }}">
+            <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Menú</span></a>
+            <ul class="menu-content">
+                <li class="{{ $isSelected('3', '1') ? 'active' : '' }}"><a class="menu-item" href="/categorias">Categorías</a></li>
+                <li class="{{ $isSelected('3', '2') ? 'active' : '' }}"><a class="menu-item" href="/productos">Productos</a></li>
+            </ul>
         </li>
 
-        <li class="{{ $isTab('4') ? 'active' : 'nav-item' }}"><a href="cards.html"><i class="ft-layers"></i><span class="menu-title" data-i18n="">Cards</span></a>
-        </li>
-        <li class="{{ $isTab('5') ? 'active' : 'nav-item' }}"><a href="buttons.html"><i class="ft-box"></i><span class="menu-title" data-i18n="">Buttons</span></a>
-        </li>
-
-        <li class="{{ $isTab('6') ? 'active' : 'nav-item' }}"><a href="typography.html"><i class="ft-bold"></i><span class="menu-title" data-i18n="">Typography</span></a>
-        </li>
-
-        <li class="{{ $isTab('7') ? 'active' : 'nav-item' }}"><a href="tables.html"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">Tables</span></a>
+        <li class="has-sub nav-item {{ $isTab('4') ? 'open' : '' }}">
+            <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Pedidos</span></a>
+            <ul class="menu-content">
+                <li class="{{ $isSelected('4', '1') ? 'active' : '' }}"><a class="menu-item" href="/pedidos">Pedidos del día</a></li>
+                <li class="{{ $isSelected('4', '2') ? 'active' : '' }}"><a class="menu-item" href="/pedidos-cocina">Pedidos en cocina</a></li>
+                <li class="{{ $isSelected('4', '3') ? 'active' : '' }}"><a class="menu-item" href="/asignar-delivery">Asignar delivery</a></li>
+            </ul>
         </li>
 
-        <li class="{{ $isTab('8') ? 'active' : 'nav-item' }}"><a href="form-elements.html"><i class="ft-layout"></i><span class="menu-title" data-i18n="">Form Elements</span></a>
+        <li class="{{ $isTab('5') ? 'active' : 'nav-item' }}"><a href="buttons.html"><i class="ft-box"></i><span class="menu-title" data-i18n="">Cocina</span></a>
         </li>
 
-        <li class="{{ $isTab('9') ? 'active' : 'nav-item' }}"><a href="https://themeselection.com/demo/chameleon-admin-template/documentation"><i class="ft-book"></i><span class="menu-title" data-i18n="">Documentation</span></a>
+        <li class="{{ $isTab('6') ? 'active' : 'nav-item' }}"><a href="typography.html"><i class="ft-bold"></i><span class="menu-title" data-i18n="">Transporte</span></a>
         </li>
-
       </ul>
     </div>
     <div class="navigation-background"></div>
