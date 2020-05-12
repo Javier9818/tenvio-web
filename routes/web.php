@@ -37,7 +37,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 // FRONT DELIVERY
 
 Route::get('/test', function(){
-    return view('layouts.front');
+    return view('front.index');
 });
 
+Route::get('/empresa', function(){
+    return view('front.empresa');
+});
 
