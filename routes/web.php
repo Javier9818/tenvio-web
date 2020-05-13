@@ -25,10 +25,9 @@ Route::get('/pagos', function () {return view('admin.negocio.pagos');});
 Route::get('/categorias', function () {return view('admin.menu.categorias');});
 Route::get('/productos', function () {return view('admin.menu.productos');});
 Route::get('/pedidos', function () {return view('admin.pedidos.pedidos');});
-Route::get('/pedidos-cocina', function () {return view('admin.pedidos.pedidosCocina');});
+Route::get('/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');});
 Route::get('/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
-Route::get('/cocina', function () {return view('admin.pedidos.asignacionDelivery');});
-Route::get('/transporte', function () {return view('admin.pedidos.asignacionDelivery');});
+Route::get('/transporte', function () {return view('admin.transporte.transporte');});
 
 Auth::routes();
 

@@ -24,6 +24,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('ventas-component', require('./components/VentasComponent.vue').default);
 Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
 Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);
+Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 /**
