@@ -43,3 +43,7 @@ Route::get('/empresa', function(){
     return view('front.empresa');
 });
 
+Route::get('/cart', function(){
+    return view('front.cart');
+});
+
