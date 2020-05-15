@@ -33,15 +33,12 @@
             <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Pedidos</span></a>
             <ul class="menu-content">
                 <li class="{{ $isSelected('4', '1') ? 'active' : '' }}"><a class="menu-item" href="/pedidos">Pedidos del día</a></li>
-                <li class="{{ $isSelected('4', '2') ? 'active' : '' }}"><a class="menu-item" href="/pedidos-cocina">Pedidos en cocina</a></li>
+                <li class="{{ $isSelected('4', '2') ? 'active' : '' }}"><a class="menu-item" href="/pedidos-cocina">Recepción</a></li>
                 <li class="{{ $isSelected('4', '3') ? 'active' : '' }}"><a class="menu-item" href="/asignar-delivery">Asignar delivery</a></li>
             </ul>
         </li>
 
-        <li class="{{ $isTab('5') ? 'active' : 'nav-item' }}"><a href="buttons.html"><i class="ft-box"></i><span class="menu-title" data-i18n="">Cocina</span></a>
-        </li>
-
-        <li class="{{ $isTab('6') ? 'active' : 'nav-item' }}"><a href="typography.html"><i class="ft-bold"></i><span class="menu-title" data-i18n="">Transporte</span></a>
+        <li class="{{ $isTab('5') ? 'active' : 'nav-item' }}"><a href="/transporte"><i class="ft-bold"></i><span class="menu-title" data-i18n="">Transporte</span></a>
         </li>
       </ul>
     </div>

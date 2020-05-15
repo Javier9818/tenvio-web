@@ -4,6 +4,10 @@
     Index WebDelivery
 @endsection
 
+@section('nav')
+    @include('front.nav')
+@endsection
+
 @section('contenido')
 <section id="slider" class="slider slider-layout1">
     <div class="carousel owl-carousel carousel-arrows" data-slide="1" data-slide-md="1" data-slide-sm="1"

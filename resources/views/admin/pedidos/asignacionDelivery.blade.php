@@ -44,7 +44,7 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
-
+                        <asignacion-component></asignacion-component>
                     </div>
                 </div>
             </div>
