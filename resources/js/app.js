@@ -4,7 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap');
+require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 window.Vue = require('vue');
 
@@ -25,6 +25,7 @@ Vue.component('ventas-component', require('./components/VentasComponent.vue').de
 Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
 Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);
 Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);
+Vue.component('form-empleado', require('./components/FormEmpleado.vue').default);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 /**

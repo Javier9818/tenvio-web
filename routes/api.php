@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/roles', 'generalController@roles');
+Route::get('/username/{username}', 'generalController@validateUsername');
+
+Route::post('/empleado', 'empleadoController@setEmpleado');
