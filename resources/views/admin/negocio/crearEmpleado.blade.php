@@ -44,33 +44,7 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
-                        <form action="">
-                            @csrf
-                            @method('POST')
-                            <div class="row">
-                                <div class="col-md-6 mt-2">
-                                    <label for="validationCustom01">Apellido Paterno</label>
-                                     <input type="text" class="form-control is-invalid" placeholder="Ingrese apellidos paternos" required>
-                                </div>
-                                <div class="col-md-6 mt-2">
-                                    <label for="validationCustom01">Apellido Materno</label>
-                                     <input type="text" class="form-control" placeholder="Ingrese apellidos maternos" required>
-                                </div>
-                                <div class="col-md-12 mt-2">
-                                    <label for="validationCustom01">Nombres</label>
-                                     <input type="text" class="form-control" placeholder="Ingrese nombres" required>
-                                </div>
-                                <div class="col-md-6 mt-2">
-                                    <label for="validationCustom01">Celular</label>
-                                     <input type="text" class="form-control" placeholder="Ingrese su número de celular" required>
-                                </div>
-                                <div class="col-md-6 mt-2">
-                                    <label for="validationCustom01">Dni</label>
-                                     <input type="text" class="form-control" placeholder="IIngrese su número de DNI" required>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-icon btn-primary mt-2">Registrar</button>
-                        </form>
+                        <form-empleado></form-empleado>
                     </div>
                 </div>
             </div>
