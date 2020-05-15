@@ -47,3 +47,7 @@ Route::get('/cart', function(){
     return view('front.cart');
 });
 
+Route::get('/login', function(){
+    return view('front.login');
+});
+
