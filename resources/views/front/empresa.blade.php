@@ -78,7 +78,10 @@
                     <img src="assets/images/shop/grid/1.jpg" alt="Product">
                     <div class="product__hover">
                         <div class="product__action">
-                        <a href="#" class="btn btn__primary btn__hover2">Comprar</a>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoria">
+                               Comprar
+                             </button>
+                            <a href="#" class="btn btn__primary btn__hover2 d-none">Comprar</a>
                         </div><!-- /.product__action -->
                     </div><!-- /.product__hover-->
                     </div><!-- /.product-img -->
@@ -161,4 +164,113 @@
       </div><!-- /.row -->
     </div><!-- /.container -->
   </section><!-- /.shop Products -->
+
+
+
+
+
+
+  <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nueva categoría</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="container">
+
+            <div class="row">
+              <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="product__single-img">
+                  <img src="assets/images/shop/full/1.jpg" class="zoomin" alt="product" style="visibility: visible;">
+                </div><!-- /.product-img -->
+              </div><!-- /.col-lg-6 -->
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <h4 class="product__title">1/4 Pollo a la brasa</h4>
+                <span class="product__price">S/. 18.00</span>
+                <hr class="hr-dashed mt-30 mb-30">
+                <div class="product__desc">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et voluptatum magni illum quos dolorem nam nisi animi amet eos quas natus, ea aliquam sequi, similique commodi iure, quo veritatis consequatur.</p>
+                </div><!-- /.product-desc -->
+                <form class="product__form-wrap mb-30">
+                  <div class="product__quantity d-flex">
+                    <div class="quantity__input-wrap mr-20">
+                      <i class="decrease-qty"></i>
+                      <input type="number" value="1" class="qty-input">
+                      <i class="increase-qty"></i>
+                    </div>
+                    <button class="btn btn__primary">add to cart</button>
+                  </div><!-- /.product-quantity -->
+                </form>
+
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-10 offset-lg-1">
+                <div class="product__tabs mt-90">
+                  <nav class="nav nav-tabs justify-content-center">
+                   <a class="nav__link active" data-toggle="tab" href="#Description">Description</a>
+                    {{--  <a class="nav__link" data-toggle="tab" href="#Details">Additional Information</a>
+                    <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (0)</a> --}}
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="Description">
+                      <p>The restaurant itself is literally one big giant kitchen. When we first got in there, it was all
+                        the things you can imagine—dingy, musky. But if I took you in there today, you’d be like ‘Oh! This
+                        is so clean, everything smells so great.’ Those are a few benefits of a little bit of elbow grease
+                        and hard work on the front end.” As Chip’s vision has come to fruition, he’s garnered a lot more
+                        support. We’ve all been dying to know which type of magic the Gaines would bring to the café, a
+                        landmark on Waco’s bustling traffic circle.</p>
+                    </div><!-- /.desc-tab -->
+                    {{-- <div class="tab-pane fade" id="Details">
+                      <p>The restaurant itself is literally one big giant kitchen. When we first got in there, it was all
+                        the things you can imagine—dingy, musky. But if I took you in there today, you’d be like ‘Oh! This
+                        is so clean, everything smells so great.’ Those are a few benefits of a little bit of elbow grease
+                        and hard work on the front end.” As Chip’s vision has come to fruition, he’s garnered a lot more
+                        support. We’ve all been dying to know which type of magic the Gaines would bring to the café, a
+                        landmark on Waco’s bustling traffic circle.</p>
+                      <p>The restaurant itself is literally one big giant kitchen. When we first got in there, it was all
+                        the things you can imagine—dingy, musky. But if I took you in there today, you’d be like ‘Oh! This
+                        is so clean, everything smells so great.’ Those are a few benefits of a little bit of elbow grease
+                        and hard work on the front end.” As Chip’s vision has come to fruition, he’s garnered a lot more
+                        support. We’ve all been dying to know which type of magic the Gaines would bring to the café, a
+                        landmark on Waco’s bustling traffic circle.</p>
+                    </div> --}}
+                    {{-- <div class="tab-pane fade" id="Reviews">
+                      <form class="row reviews__form">
+                        <div class="col-sm-6 form-group">
+                          <label for="reviewerName">Name</label>
+                          <input id="reviewerName" type="text" class="form-control">
+                        </div><!-- /.form-group -->
+                        <div class="col-sm-6 form-group">
+                          <label for="reviewerEmail">Email</label>
+                          <input id="reviewerEmail" type="text" class="form-control">
+                        </div><!-- /.form-group -->
+                        <div class="col-sm-12 form-group">
+                          <label for="reviewerReview">Review</label>
+                          <textarea id="reviewerReview" class="form-control"></textarea>
+                        </div><!-- /.form-group -->
+                        <div class="col-sm-12">
+                          <button type="submit" class="btn btn__primary">Submit</button>
+                        </div>
+                      </form>
+                    </div> --}}
+                  </div>
+                </div><!-- /.product-tabs -->
+              </div><!-- /.col-lg-12 -->
+            </div><!-- /.row -->
+          </div><!-- /.container -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Seguir Comprando</button>
+          <button type="button" class="btn btn-primary">Finalizar Pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
