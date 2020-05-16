@@ -18,10 +18,9 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
           <span class="pagetitle__subheading">Restaurant</span>
           <h1 class="pagetitle__heading">Doña Queka</h1>
-          <nav aria-label="breadcrumb" class="d-none">
+          <nav aria-label="breadcrumb" >
             <ol class="breadcrumb justify-content-center">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Shop</li>
+              <li class="breadcrumb-item active">Trujillo Peru</li>
             </ol>
           </nav>
         </div><!-- /.col-lg-12 -->
@@ -174,7 +173,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nueva categoría</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -183,86 +182,38 @@
 
           <div class="container">
 
-            <div class="row">
-              <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="product__single-img">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
+                <div class="product__single-img text-center w-50">
                   <img src="assets/images/shop/full/1.jpg" class="zoomin" alt="product" style="visibility: visible;">
                 </div><!-- /.product-img -->
               </div><!-- /.col-lg-6 -->
-              <div class="col-sm-12 col-md-12 col-lg-12">
+              <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
                 <h4 class="product__title">1/4 Pollo a la brasa</h4>
                 <span class="product__price">S/. 18.00</span>
                 <hr class="hr-dashed mt-30 mb-30">
+                <nav class="nav nav-tabs justify-content-center">
+                  <a class="nav__link">Description</a>
+                   {{--  <a class="nav__link" data-toggle="tab" href="#Details">Additional Information</a>
+                   <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (0)</a> --}}
+                 </nav>
                 <div class="product__desc">
                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et voluptatum magni illum quos dolorem nam nisi animi amet eos quas natus, ea aliquam sequi, similique commodi iure, quo veritatis consequatur.</p>
                 </div><!-- /.product-desc -->
                 <form class="product__form-wrap mb-30">
                   <div class="product__quantity d-flex">
                     <div class="quantity__input-wrap mr-20">
-                      <i class="decrease-qty"></i>
+                      <i class="decrease-qty fas fa-minus-circle"></i>
                       <input type="number" value="1" class="qty-input">
-                      <i class="increase-qty"></i>
+                      <i class="increase-qty fas fa-plus-circle"></i>
                     </div>
-                    <button class="btn btn__primary">add to cart</button>
+                    <button class="btn btn__primary">Agregar</button>
                   </div><!-- /.product-quantity -->
                 </form>
 
               </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-10 offset-lg-1">
-                <div class="product__tabs mt-90">
-                  <nav class="nav nav-tabs justify-content-center">
-                   <a class="nav__link active" data-toggle="tab" href="#Description">Description</a>
-                    {{--  <a class="nav__link" data-toggle="tab" href="#Details">Additional Information</a>
-                    <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (0)</a> --}}
-                  </nav>
-                  <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="Description">
-                      <p>The restaurant itself is literally one big giant kitchen. When we first got in there, it was all
-                        the things you can imagine—dingy, musky. But if I took you in there today, you’d be like ‘Oh! This
-                        is so clean, everything smells so great.’ Those are a few benefits of a little bit of elbow grease
-                        and hard work on the front end.” As Chip’s vision has come to fruition, he’s garnered a lot more
-                        support. We’ve all been dying to know which type of magic the Gaines would bring to the café, a
-                        landmark on Waco’s bustling traffic circle.</p>
-                    </div><!-- /.desc-tab -->
-                    {{-- <div class="tab-pane fade" id="Details">
-                      <p>The restaurant itself is literally one big giant kitchen. When we first got in there, it was all
-                        the things you can imagine—dingy, musky. But if I took you in there today, you’d be like ‘Oh! This
-                        is so clean, everything smells so great.’ Those are a few benefits of a little bit of elbow grease
-                        and hard work on the front end.” As Chip’s vision has come to fruition, he’s garnered a lot more
-                        support. We’ve all been dying to know which type of magic the Gaines would bring to the café, a
-                        landmark on Waco’s bustling traffic circle.</p>
-                      <p>The restaurant itself is literally one big giant kitchen. When we first got in there, it was all
-                        the things you can imagine—dingy, musky. But if I took you in there today, you’d be like ‘Oh! This
-                        is so clean, everything smells so great.’ Those are a few benefits of a little bit of elbow grease
-                        and hard work on the front end.” As Chip’s vision has come to fruition, he’s garnered a lot more
-                        support. We’ve all been dying to know which type of magic the Gaines would bring to the café, a
-                        landmark on Waco’s bustling traffic circle.</p>
-                    </div> --}}
-                    {{-- <div class="tab-pane fade" id="Reviews">
-                      <form class="row reviews__form">
-                        <div class="col-sm-6 form-group">
-                          <label for="reviewerName">Name</label>
-                          <input id="reviewerName" type="text" class="form-control">
-                        </div><!-- /.form-group -->
-                        <div class="col-sm-6 form-group">
-                          <label for="reviewerEmail">Email</label>
-                          <input id="reviewerEmail" type="text" class="form-control">
-                        </div><!-- /.form-group -->
-                        <div class="col-sm-12 form-group">
-                          <label for="reviewerReview">Review</label>
-                          <textarea id="reviewerReview" class="form-control"></textarea>
-                        </div><!-- /.form-group -->
-                        <div class="col-sm-12">
-                          <button type="submit" class="btn btn__primary">Submit</button>
-                        </div>
-                      </form>
-                    </div> --}}
-                  </div>
-                </div><!-- /.product-tabs -->
-              </div><!-- /.col-lg-12 -->
-            </div><!-- /.row -->
+
           </div><!-- /.container -->
 
         </div>
