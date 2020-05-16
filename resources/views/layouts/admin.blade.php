@@ -22,17 +22,27 @@
     <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/core/colors/palette-gradient.css">
+
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
+    <style>
+        .button{
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+    }
+    </style>
     @yield('styles')
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <!-- END Custom CSS-->
   </head>
+  {{-- vertical-layout vertical-menu 2-columns fixed-navbar pace-done menu-collapsed --}}
   <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
 
     <!-- fixed-top-->
@@ -70,8 +80,18 @@
     <script src="/theme-assets/vendors/js/charts/chart.min.js" type="text/javascript"></script>
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN CHAMELEON  JS-->
-    <script src="/theme-assets/js/core/app-menu-lite.js" type="text/javascript"></script>
-    <script src="/theme-assets/js/core/app-lite.js" type="text/javascript"></script>
+    {{-- <script src="/theme-assets/js/core/app-menu-lite.js" type="text/javascript"></script> --}}
+    {{-- <script src="/theme-assets/js/core/app-lite.js" type="text/javascript"></script> --}}
+    <script src="/theme-assets/js/core/app.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/app-menu.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/compact-menu.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/customizer.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/prism.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/switch.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/switchery.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
+    {{-- <script src="/theme-assets/js/core/vendors.min.js.descargar" type="text/javascript"></script> --}}
+
     <!-- END CHAMELEON  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <script src="/theme-assets/js/scripts/charts/chartjs/bar/column.js" type="text/javascript"></script>

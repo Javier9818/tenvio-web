@@ -1,17 +1,17 @@
 @extends('layouts.admin')
-@section('title') Categorías  @endsection
+@section('title') DeliveryWeb - Panel de control  @endsection
 @section('nav')
     @include('admin.components.nav')
 @endsection
 
 @section('sideNav')
-    <x-side-nav tab="3" selected='1'/>
+    <x-side-nav-admin tab="1" selected='1'/>
 @endsection
 
 @section('header')
     <div class="content-header row">
         <div class="content-header-left col-md-4 col-12 mb-2">
-            <h3 class="content-header-title">Categorías</h3>
+            <h3 class="content-header-title">Mis empresas</h3>
         </div>
         <div class="content-header-right col-md-8 col-12">
             <div class="breadcrumbs-top float-md-right">
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Inicio</a>
                     </li>
-                    <li class="breadcrumb-item active">Categorías
+                    <li class="breadcrumb-item active">Mis empresas
                     </li>
                     </ol>
                 </div>
@@ -34,7 +34,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Categorías</h4>
+                    <h4 class="card-title">Mis empresas</h4>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
@@ -48,19 +48,30 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Descripcion</th>
+                                        <th>Nombre</th>
+                                        <th>RUC</th>
+                                        <th>Celular</th>
+                                        <th>Distrito</th>
                                         <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Pollo a la brasa</td>
-                                        <td><a href="" class="mr-2" title="Editar"><i class="ft-edit success"></i></a> <a href="" title="Eliminar"><i class="ft-delete red"></i></a></td>
-                                    </tr>
+                                    @foreach ($empresas as $empresa)
+                                        <tr>
+                                            <td>{{$empresa->nombre}}</td>
+                                            <td>{{$empresa->ruc}}</td>
+                                            <td>{{$empresa->celular}}</td>
+                                            <td>{{$empresa->nombre}}</td>
+                                            <td>
+                                                <a href="" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
+                                                <a href="" title="Eliminar"><i class="ft-delete red"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoria">
-                                Nueva categoría
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#empresa">
+                                Nueva Empresa
                              </button>
                         </div>
                     </div>
@@ -70,23 +81,18 @@
     </div>
 </section>
 
-<div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade " id="empresa" tabindex="-1" role="dialog" aria-labelledby="  " aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Nueva categoría</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Nueva empresa</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Registrar</button>
-        </div>
+        <form-empresa-register></form-empresa-register>
       </div>
     </div>
 </div>
+
 @endsection

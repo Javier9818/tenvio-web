@@ -36,4 +36,12 @@ class empleadoController extends Controller
 
         return response()->json([ "id" => $user->id ], 200);
     }
+
+    public function listByEmpresa($empresa){
+        $empleados = DB::select('select * from users u
+                    inner join users_empresas ue on u.id = ue.user_id
+                    inner join personas p on p.id = u.persona_id
+                    where ue.empresa_id = ?', [$empresa]);
+        return response()->json(["empleados" => $empleados], 200);
+    }
 }

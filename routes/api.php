@@ -19,6 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/roles', 'generalController@roles');
+Route::get('/categorias', 'generalController@categoriasEmpresa');
 Route::get('/username/{username}', 'generalController@validateUsername');
 
 Route::post('/empleado', 'empleadoController@setEmpleado');
+Route::get('/empleados/{empresa}', 'empleadoController@listByEmpresa');
+
+Route::get('/roles', 'generalController@roles');

@@ -1,6 +1,7 @@
 <template>
     <form v-on:submit.prevent="submit()">
         <div class="row">
+            <sweet-alert></sweet-alert>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Apellido Paterno</label> <!--is-invalid-->
                     <input type="text" class="form-control" placeholder="Ingrese apellidos paternos" required v-model="form.appaterno">
@@ -13,7 +14,7 @@
                 <label for="validationCustom01">Nombres</label>
                     <input type="text" class="form-control" placeholder="Ingrese nombres" required v-model="form.nombres">
             </div>
-             <div class="col-md-6 mt-2">
+            <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Usuario</label>
                     <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.username" :class="{ 'is-invalid': errorUsername }">
                     <span class="danger" v-if="errorUsername">Este usuario ya existe, intente con otro diferente</span>
@@ -39,7 +40,7 @@
                 <b-form-checkbox-group v-model="form.roles" id="roles" :options="options">
                 </b-form-checkbox-group>
             </div>
-        </div>
+            </div>
         <button type="submit" class="btn btn-icon btn-primary mt-2">Registrar</button>
     </form>
 </template>
@@ -51,6 +52,7 @@
         },
         data() {
             return {
+                show: true,
                 options: [],
                 errorUsername:null,
                form:{
@@ -74,7 +76,20 @@
                     this.errorUsername = true;
                 else{
                     await axios.post(`/api/empleado`,this.form).then(({data}) => {
-                        alert('registro exitoso');
+                        document.getElementById('sweetAlert').click();
+                        this.errorUsername = null;
+                        this. form = {
+                            nombres:'',
+                            appaterno:'',
+                            apmaterno:'',
+                            celular:'',
+                            dni:'',
+                            email:'',
+                            username:'',
+                            direccion:'',
+                            empresa:1,
+                            roles:[]
+                        }
                     });
                 }
             }
