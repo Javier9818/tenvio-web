@@ -6,8 +6,8 @@
     02- Helper Classes
     03- Background & Colors
     04- Typography
-    05- page title 
-    06- Buttons 
+    05- page title
+    06- Buttons
     07- Forms
     08- Tabs
     09- Icons
@@ -15,7 +15,7 @@
     11- Pagination
     12- Lists
     13- Alerts
-    14- Header & Navbar 
+    14- Header & Navbar
     15- Accordions
     16- Banners
     17- Dividers
@@ -1223,7 +1223,7 @@ h6 {
 }
 
 /*-------------------------
-    page title 
+    page title
 -------------------------*/
 .header-transparent+.page-title {
   margin-top: -100px;
@@ -1837,7 +1837,7 @@ textarea.form-control {
   }
 }
 
-/*------------------- 
+/*-------------------
     Icons
 ------------------*/
 .social__icons {
@@ -2042,7 +2042,7 @@ textarea.form-control {
 }
 
 /*----------------------------
-       Header & Navbar 
+       Header & Navbar
 -----------------------------*/
 .header {
   position: relative;
@@ -2169,7 +2169,8 @@ textarea.form-control {
   height: 2px;
   margin: auto;
   display: block;
-  background-color: #c7a254;
+  /* background-color: #c7a254; */
+  background-color: #0069d9;
   -webkit-transition: 0.5s ease;
   -moz-transition: 0.5s ease;
   -ms-transition: 0.5s ease;
@@ -2179,7 +2180,8 @@ textarea.form-control {
 
 .navbar .nav__item .nav__item-link.active,
 .navbar .nav__item .nav__item-link:hover {
-  color: #c7a254;
+  /* color: #c7a254; */
+  color: #0069d9;
 }
 
 .navbar .nav__item .nav__item-link.active:before,
@@ -3498,7 +3500,7 @@ textarea.form-control {
 }
 
 /*----------------------
-     Dividers 
+     Dividers
 ------------------------*/
 .divider__line {
   position: relative;
@@ -3896,7 +3898,7 @@ textarea.form-control {
 }
 
 /*------------------------
-    Slider 
+    Slider
 --------------------------*/
 .header-transparent+.slider {
   margin-top: -100px;
@@ -4211,7 +4213,7 @@ textarea.form-control {
 }
 
 /*-----------------------
-     Fancybox 
+     Fancybox
 ------------------------*/
 .fancybox-item {
   position: relative;
@@ -5288,7 +5290,7 @@ textarea.form-control {
   }
 }
 
-/*----------------------- 
+/*-----------------------
     Clients
 -----------------------*/
 .clients .heading__title {
@@ -7294,7 +7296,7 @@ textarea.form-control {
 }
 
 /*----------------------
-    Reservation 
+    Reservation
 -----------------------*/
 .reservation__wrapper {
   background-color: #ffffff;

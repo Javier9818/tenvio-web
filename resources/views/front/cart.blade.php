@@ -3,7 +3,13 @@
 @section('title')
     Compra
 @endsection
-    @include('front.nav2')
+
+@section('nav')
+   @include('front.nav2')
+@endsection
+
+
+
 @section('contenido')
 <section id="page-title" class="page-title page-title-layout7">
     <div class="container">
@@ -73,11 +79,11 @@
                       <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content">
                         <form class="d-flex flex-wrap">
                           <input type="text" class="form-control mb-10 mr-10" placeholder="Cupon de descuento">
-                          <button type="submit" class="btn btn__primary mb-10">Aplicar Cupon</button>
+                          <button type="submit" class="btn btn-primary mb-10">Aplicar Cupon</button>
                         </form>
                         <div>
                           {{-- <a class="btn btn__secondary mr-10" href="#">update cart</a> --}}
-                          <a class="btn btn__primary" href="#">Realizar Pedido</a>
+                          <a class="btn btn-primary" href="#">Realizar Pedido</a>
                         </div>
                       </div><!-- /.col-lg-2  -->
                     </div><!-- /.row  -->

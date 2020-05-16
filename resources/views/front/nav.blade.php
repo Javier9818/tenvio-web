@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg sticky-navbar">
       <div class="container">
         <a class="navbar-brand" href="index.html">
-          <img src="assets/images/logo/logo-light.png" class="logo-light" alt="logo">
-          <img src="assets/images/logo/logo-dark.png" class="logo-dark" alt="logo">
+          <img src="assets/images/logo/LogoDeliveryLight.png" class="logo-light" alt="logo">
+          <img src="assets/images/logo/LogoDeliveryDark.png" class="logo-dark" alt="logo">
         </a>
         <button class="navbar-toggler" type="button">
           <span class="menu-lines"><span></span></span>
