@@ -3,7 +3,9 @@
 @section('title')
     Nombre Restaurant
 @endsection
-
+@section('nav')
+    @include('front.nav')
+@endsection
 @section('contenido')
 <section id="page-title" class="page-title page-title-layout6 text-center bg-overlay bg-overlay-2 bg-parallax">
     <div class="bg-img"><img src="https://i.pinimg.com/originals/12/b1/45/12b145b9a4aad221ead5b87f38d76d03.jpg" alt="background"></div>
