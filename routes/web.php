@@ -31,8 +31,9 @@ Route::get('/transporte', function () {return view('admin.transporte.transporte'
 
 
 Route::get('/superadmin/empresas', 'superAdminController@listarEmpresas');
+Route::get('/superadmin/empresa/{idEmpresa}', 'superAdminController@verEmpresa');
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -46,14 +46,13 @@
                         <div class="card-body">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Nombre de la empresa: </h4><h4 class="d-inline"> Polleria Las Delicias</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">RUC: </h4><h4 class="d-inline"> 1053301116</h4></div>
+                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Nombre de la empresa: </h4><h4 class="d-inline">{{$empresa->nombre}}</h4></div>
+                                    <div class="col-6 mt-2"> <h4 class="d-inline label">RUC: </h4><h4 class="d-inline">{{$empresa->ruc}}</h4></div>
                                     <div class="col-6 mt-2"> <h4 class="d-inline label">Gerente: </h4><h4 class="d-inline"> Briceño Montaño Javier</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Categoría:</h4><h4 class="d-inline"> Polleria</h4></div>
-                                    <div class="col-12 mt-2"> <h4 class="label">Descripción del negocio: </h4><h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel nobis, dolore consectetur repellat cumque accusantium voluptatem adipisci impedit corrupti iste nam neque sapiente dolorem rerum suscipit aliquid molestiae quod modi.</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Dirección:</h4><h4 class="d-inline"> Calle Real #34 - CARTAVIO</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Número de contacto: </h4><h4 class="d-inline">981559813</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Email de contacto: </h4><h4 class="d-inline">polerix@gmail.com</h4></div>
+                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Categoría:</h4><h4 class="d-inline"> {{$empresa->categoria}}</h4></div>
+                                    <div class="col-12 mt-2"> <h4 class="label">Descripción del negocio: </h4><h4>{{$empresa->descripcion ?? '-'}}</h4></div>
+                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Dirección:</h4><h4 class="d-inline"> {{$empresa->direccion}}</h4></div>
+                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Celular: </h4><h4 class="d-inline">{{$empresa->celular}}</h4></div>
                                 </div>
                             </div>
                         </div>

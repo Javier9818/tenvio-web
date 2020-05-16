@@ -61,9 +61,9 @@
                                             <td>{{$empresa->nombre}}</td>
                                             <td>{{$empresa->ruc}}</td>
                                             <td>{{$empresa->celular}}</td>
-                                            <td>{{$empresa->nombre}}</td>
+                                            <td>{{$empresa->distrito}}</td>
                                             <td>
-                                                <a href="" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
+                                                <a href="/superadmin/empresa/{{$empresa->id}}" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
                                                 <a href="" title="Eliminar"><i class="ft-delete red"></i></a>
                                             </td>
                                         </tr>
