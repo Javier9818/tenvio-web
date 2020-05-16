@@ -28,7 +28,7 @@
                     <div class="  px-1 py-1 m-0">
                         <div class="card-header border-0">
                             <div class="text-center mb-1">
-                                    <img src="../../../app-assets/images/logo/logo.png" alt="AQUI VA EL LOGO">
+                                    <img src="assets/images/logo/LogoDelivery.png" alt="AQUI VA EL LOGO" style="width: 50%;">
                             </div>
                             <div class="font-large-1  text-center">
                                 Acceso al sistema
