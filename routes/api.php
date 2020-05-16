@@ -24,5 +24,6 @@ Route::get('/username/{username}', 'generalController@validateUsername');
 
 Route::post('/empleado', 'empleadoController@setEmpleado');
 Route::get('/empleados/{empresa}', 'empleadoController@listByEmpresa');
+Route::post('/empresa', 'empresaController@setEmpresa');
 
 Route::get('/roles', 'generalController@roles');

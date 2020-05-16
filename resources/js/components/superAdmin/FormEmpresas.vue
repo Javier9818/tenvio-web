@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
     <div class="modal-body">
          <form v-on:submit.prevent="submit()" id="formEmpresa">
             <div class="row">
@@ -68,11 +68,11 @@
                 </div>
 
                 <div class="col-md-6 mt-2">
-                    <label>Distrito</label>
+                    <label>Distrito {{form.distrito}}</label>
                     <b-form-select
                         v-model="form.distrito"
                         :options="distritos"
-                        value-field="id"
+                        value-field="name"
                         text-field="name"
                         required
                     >
@@ -93,7 +93,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Cerrar</button>
         <button type="submit" form="formEmpresa" class="btn btn-primary">Registrar</button>
     </div>
 </div>
@@ -133,7 +133,13 @@
         },
         methods:{
             submit: async function(){
-                alert('hola');
+                await axios.post('/api/empresa', this.form).then((data)=>{
+                    console.log(data);
+                    document.getElementById('close').click();
+                    window.location.href = "/superadmin/empresas";
+                }).catch((error) => {
+                    console.log(error);
+                });
             },
             handleDepartamento: async function(){
                 this.form.provincia = null;
