@@ -20,4 +20,9 @@ class generalController extends Controller
         else
             return response()->json(["message" => false]);
     }
+
+    public function categoriasEmpresa(){
+        $categorias = DB::select('select id as value, descripcion as text from categorias');
+        return response()->json(["categorias" => $categorias], 200);
+    }
 }

@@ -23,6 +23,9 @@ class CreateEmpresasTable extends Migration
             $table->string('direccion', 100);
             $table->string('email', 100);
             $table->string('foto', 100);
+            $table->integer('distrito_id');
+            $table->string('ciudad', 40);
+            $table->string('estado', 20)->default('ACTIVO');
             $table->integer('categoria_id');
             $table->timestamps();
         });

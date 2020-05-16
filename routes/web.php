@@ -29,6 +29,9 @@ Route::get('/pedidos-cocina', function () {return view('admin.pedidos.pedidosRec
 Route::get('/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
 Route::get('/transporte', function () {return view('admin.transporte.transporte');});
 
+
+Route::get('/superadmin/empresas', 'superAdminController@listarEmpresas');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

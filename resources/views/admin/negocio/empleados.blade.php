@@ -44,27 +44,7 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Nombres</th>
-                                        <th>Cargo</th>
-                                        <th>Teléfono</th>
-                                        <th>Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Javier Briceño</th>
-                                        <td>Gerente</td>
-                                        <td>981559813</td>
-                                        <td><a href="" class="mr-2" title="Editar"><i class="ft-edit success"></i></a> <a href="" title="Eliminar"><i class="ft-delete red"></i></a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a type="button" class="btn btn-icon btn-primary" href="/crearEmpleado">Nuevo empleado</a>
-                        </div>
+                        <table-empleados></table-empleados>
                     </div>
                 </div>
             </div>
