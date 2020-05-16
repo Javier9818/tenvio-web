@@ -74,7 +74,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 position-static">
                 <div class="footer__logo-wrap text-center">
-                  <img src="assets/images/logo/footer-logo.png" alt="logo" class="footer__logo">
+                  <img src="assets/images/logo/footer-logo2.png" alt="logo" class="footer__logo">
                 </div>
               </div><!-- /.col-lg-12 -->
             </div><!-- /.row -->

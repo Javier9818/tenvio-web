@@ -3,7 +3,7 @@
         <div class="container">
           <a class="navbar-brand" href="index.html">
             <img src="assets/images/logo/LogoDeliveryLight.png" class="logo-light" alt="logo">
-            <img src="assets/images/logo/logo-dark.png" class="logo-dark" alt="logo">
+            <img src="assets/images/logo/LogoDeliveryDark.png" class="logo-dark" alt="logo">
           </a>
           <button class="navbar-toggler" type="button">
             <span class="menu-lines"><span></span></span>
@@ -45,8 +45,8 @@
           <div class="navbar-actions-wrap">
             <div class="navbar-actions d-flex align-items-center">
               <a href="#" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
-              <a href="reservation.html"
-                class="navbar__action-btn navbar__action-btn-reserve btn btn__primary">Reservation</a>
+              {{-- <a href="reservation.html"
+                class="navbar__action-btn navbar__action-btn-reserve btn btn__primary">Reservation</a> --}}
               <ul class="social__icons">
                 <li><a href="#"><i class="fa fa-tripadvisor"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
