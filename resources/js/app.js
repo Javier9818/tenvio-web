@@ -44,6 +44,11 @@ Vue.component('table-empleados', require('./components/TableEmpleados.vue').defa
 Vue.component('form-empresa-register', require('./components/superAdmin/FormEmpresas.vue').default);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
+
+Vue.component('menu-categorias', require('./components/menu/Categorias.vue').default);
+Vue.component('menu-productos', require('./components/menu/Productos.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

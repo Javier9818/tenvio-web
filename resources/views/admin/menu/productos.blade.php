@@ -44,6 +44,8 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
+						<menu-productos></menu-productos>
+						<!--
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -69,14 +71,14 @@
                                Nuevo producto
                             </button>
                         </div>
+						-->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-  <!-- Modal -->
+<!--
   <div class="modal fade" id="producto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -96,4 +98,5 @@
       </div>
     </div>
   </div>
+-->
 @endsection
