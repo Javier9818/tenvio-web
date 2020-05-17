@@ -2169,8 +2169,8 @@ textarea.form-control {
   height: 2px;
   margin: auto;
   display: block;
-  /* background-color: #c7a254; */
-  background-color: #0069d9;
+  background-color: #c7a254;
+  /* background-color: #0069d9; */
   -webkit-transition: 0.5s ease;
   -moz-transition: 0.5s ease;
   -ms-transition: 0.5s ease;
@@ -2180,8 +2180,8 @@ textarea.form-control {
 
 .navbar .nav__item .nav__item-link.active,
 .navbar .nav__item .nav__item-link:hover {
-  /* color: #c7a254; */
-  color: #0069d9;
+  color: #c7a254;
+  /* color: #0069d9; */
 }
 
 .navbar .nav__item .nav__item-link.active:before,

@@ -55,3 +55,7 @@ Route::get('/login', function(){
     return view('front.login');
 });
 
+Route::get('/list', function(){
+    return view('front.listEmpresa');
+});
+

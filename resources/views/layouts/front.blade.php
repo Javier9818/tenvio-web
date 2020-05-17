@@ -96,9 +96,9 @@
                   <a href="#" class="color-theme">Nortec</a>
                 </div>
                 <ul class="social__icons social__icons-white justify-content-center">
-                  <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                  <li><a href="#"><i class="fa fa-tripadvisor"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
                 </ul><!-- /.social__icons -->
               </div>
             </div><!-- /.row -->
