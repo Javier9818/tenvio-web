@@ -8,6 +8,18 @@ require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 window.Vue = require('vue');
 
+//bustrapVue
+//import { BootstrapVueIcons } from 'bootstrap-vue'
+//Vue.use(BootstrapVueIcons)
+
+//sweetalert
+import VueSweetalert2 from 'vue-sweetalert2';
+Vue.use(VueSweetalert2);
+
+//File agent
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
+Vue.use(VueFileAgent);
 
 /**
  * The following block of code may be used to automatically register your
