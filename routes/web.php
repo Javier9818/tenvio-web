@@ -22,12 +22,21 @@ Route::get('/crearEmpleado', function () {return view('admin.negocio.crearEmplea
 Route::get('/empleados', function () {return view('admin.negocio.empleados');});
 Route::get('/ventas', function () {return view('admin.negocio.ventas');});
 Route::get('/pagos', function () {return view('admin.negocio.pagos');});
-Route::get('/categorias', function () {return view('admin.menu.categorias');});
-Route::get('/productos', function () {return view('admin.menu.productos');});
 Route::get('/pedidos', function () {return view('admin.pedidos.pedidos');});
 Route::get('/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');});
 Route::get('/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
 Route::get('/transporte', function () {return view('admin.transporte.transporte');});
+
+
+//Route::get('/categorias', function () {return view('admin.menu.categorias');});
+//Route::get('/productos', function () {return view('admin.menu.productos');});
+
+Route::get('/categorias', 'CategoriasMenusController@fn');
+Route::post('/categorias/{funcion}', 'CategoriasMenusController@fn');
+Route::get('/productos', 'ProductosController@fn');
+Route::post('/productos/{funcion}', 'ProductosController@fn');
+
+
 
 
 Route::get('/superadmin/empresas', 'superAdminController@listarEmpresas');
@@ -58,4 +67,3 @@ Route::get('/login', function(){
 Route::get('/list', function(){
     return view('front.listEmpresa');
 });
-

@@ -21,10 +21,8 @@ import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 Vue.use(VueFileAgent);
 
-//Vue-Select
-import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css';
-Vue.component('v-select', vSelect)
+//Vue-search-select
+import 'vue-search-select/dist/VueSearchSelect.css';
 
 /**
  * The following block of code may be used to automatically register your
