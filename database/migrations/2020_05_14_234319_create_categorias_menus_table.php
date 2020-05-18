@@ -17,6 +17,7 @@ class CreateCategoriasMenusTable extends Migration
             $table->id();
             $table->string('descripcion');
             $table->integer('empresa_id');
+            $table->string('estado', 1);
             $table->timestamps();
         });
     }

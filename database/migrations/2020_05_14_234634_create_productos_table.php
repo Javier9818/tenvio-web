@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
             $table->double('precio');
             $table->integer('categorias_menu_id');
             $table->integer('empresa_id');
+            $table->string('estado', 1);
             $table->timestamps();
         });
     }

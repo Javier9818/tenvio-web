@@ -13,13 +13,18 @@ window.Vue = require('vue');
 //Vue.use(BootstrapVueIcons)
 
 //sweetalert
-import VueSweetalert2 from 'vue-sweetalert2';
-Vue.use(VueSweetalert2);
+import Swal from 'sweetalert2'
+//Vue.use(Swal);
 
 //File agent
 import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 Vue.use(VueFileAgent);
+
+//Vue-Select
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
+Vue.component('v-select', vSelect)
 
 /**
  * The following block of code may be used to automatically register your
