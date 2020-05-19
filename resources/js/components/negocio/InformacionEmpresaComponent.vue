@@ -1,36 +1,39 @@
 <template>
 <div class="card">
-    <sweet-alert message=''></sweet-alert>
     <div class="card-header">
         <h4 class="card-title">Información de la empresa</h4>
         <div class="d-block d-md-none">
-            <a  v-on:click="changeEdit">{{edit}}</a> -
-            <a v-if="edit=='Guardar cambios'"  v-on:click="cancelEdit"> Cancelar</a>
+            <button v-if="edit=='editar'" class="btn btn-primary mt-1" v-on:click="changeEdit">{{edit}}</button>
+            <button class="btn btn-primary mt-1" v-if="edit=='Guardar cambios'" v-on:click="cancelEdit">Cancelar</button>
         </div>
         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
         <div class="heading-elements d-none d-md-block">
             <ul class="list-inline">
-                <li><button class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button></li>
-                <li v-if="edit=='Guardar cambios'"><a  v-on:click="cancelEdit">Cancelar</a></li>
+                <li v-if="edit=='editar'"><button class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button></li>
+                <li v-if="edit=='Guardar cambios'"><button class="btn btn-primary" v-on:click="cancelEdit">Cancelar</button></li>
             </ul>
         </div>
     </div>
     <div class="card-content collapse show">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12" v-if="edit === 'editar'">
+                    <img :src="'/storage/images/perfilEmpresa/'+form.foto" alt="No se encontró imagen" width="100%">
+                </div>
+                <div class="col-md-12" v-else>
                     <picture-input
                     ref="pictureInput"
-                    width="600"
+                    width="1200"
                     height="600"
                     margin="16"
                     accept="image/jpeg,image/png"
                     size="10"
                     button-class="btn"
+                    zIndex=1
                     :removable="true"
                     :custom-strings="{
                         upload: '<h1>Bummer!</h1>',
-                        drag: 'Arrastra una foto o click',
+                        drag: 'Arrastra una foto o click <br> para actualizar foto',
                         change:'Cambiar imagen',
                         remove:'Remover imagen',
                         tap:'Pulsa aquí para seleccionar una foto <br> desde tu galería'
@@ -38,7 +41,7 @@
                     @change="onChange">
                     </picture-input>
                 </div>
-                <div class="col-md-6" v-if="edit === 'editar'">
+                <div class="col-md-12" v-if="edit === 'editar'">
                     <div class="row">
                         <div class="col-6 mt-2"> <h5 class="d-inline label">Nombre de la empresa </h5><br><h5 class="d-inline">{{form.nombre}}</h5></div>
                         <div class="col-6 mt-2"> <h5 class="d-inline label">RUC </h5><br><h5 class="d-inline">{{form.ruc}}</h5></div>
@@ -50,8 +53,12 @@
                         <div class="col-md-6 mt-2"> <h5 class="d-inline label">Ciudad </h5><br><h5 class="d-inline">{{form.ciudad}}</h5></div>
                     </div>
                 </div>
-                <div class="col-md-6" v-else>
+                <div class="col-md-12" v-else>
                     <form  class="row" method="POST">
+                        <div class="col-md-12 mt-2">
+                            <label for="">Foto de negocio</label><br>
+                            <img :src="'/storage/images/perfilEmpresa/'+form.foto" alt="No se encontró imagen" width="40%">
+                        </div>
                         <div class="col-md-12 mt-2">
                             <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->
                             <input type="text" class="form-control" placeholder="Ingrese el nombre de la empresa" v-model="form.nombre">
@@ -132,7 +139,7 @@
                             <label>Ciudad</label>
                             <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.ciudad">
                         </div>
-                        <div class="col-md-6 mt-2 d-block d-md-none">
+                        <div class="col-md-6 mt-2 ">
                             <button type="submit" form="formEmpresa" class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button>
                         </div>
                     </form>
@@ -145,9 +152,11 @@
 
 <script>
     import PictureInput from 'vue-picture-input'
+    import Swal from 'sweetalert2'
     export default {
         mounted() {
             console.log('Component mounted.')
+            console.log(empresa);
             axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
             axios.get('/json/departamentos.json').then(({data}) => {this.departamentos = data;});
             axios.get('/json/distritos.json').then(({data}) => {
@@ -199,9 +208,11 @@
             if (image) {
                 console.log('Picture loaded.')
                 this.image = image
-                axios.put(`/api/fotoEmpresa/${this.form.id}`, {image:this.image}).then( data => {
-                        console.log(data);
-                }).catch( error => alert('Error'));
+                axios.put(`/api/fotoEmpresa/${this.form.id}`, {image:this.image}).then( ({data}) => {
+                    console.log(data);
+                    this.form.foto = data.foto;
+                    Swal.fire('Éxito', 'La foto se ha actualizado', 'success');
+                }).catch( error => Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error'));
             } else {
                 console.log('FileReader API not supported: use the <form>, Luke!')
             }
@@ -210,8 +221,10 @@
                 if(this.edit === 'Guardar cambios'){
                     axios.put(`/api/empresa/${this.form.id}`, this.form).then( data => {
                         console.log(data);
-                        document.getElementById('sweetAlert').click();
+                        Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
 
+                    }).catch(error => {
+                        Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                     });
                 }
                 else this.edit = 'Guardar cambios';

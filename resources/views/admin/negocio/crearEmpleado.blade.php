@@ -17,7 +17,7 @@
             <div class="breadcrumbs-top float-md-right">
                 <div class="breadcrumb-wrapper mr-1">
                     <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/empleados">Empleados</a>
+                    <li class="breadcrumb-item"><a href="/intranet/empleados">Empleados</a>
                     </li>
                     <li class="breadcrumb-item active">Nuevo empleado
                     </li>

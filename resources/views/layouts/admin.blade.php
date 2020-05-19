@@ -36,18 +36,6 @@
         margin-right: auto;
         margin-bottom: 10px;
     }
-
-    .fixed-top{
-        z-index: 100000 !important;
-    }
-
-    .main-menu.menu-fixed{
-        z-index: 100001 !important;
-    }
-
-    .modal{
-        z-index: 100002 !important;
-    }
     </style>
     @yield('styles')
     <!-- END Page Level CSS-->

@@ -1,7 +1,6 @@
 <template>
     <form v-on:submit.prevent="submit()">
         <div class="row">
-            <sweet-alert></sweet-alert>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Apellido Paterno</label> <!--is-invalid-->
                     <input type="text" class="form-control" placeholder="Ingrese apellidos paternos" required v-model="form.appaterno">
@@ -62,6 +61,7 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
     export default {
         props:['edit'],
         mounted() {
@@ -124,8 +124,10 @@
                 this.errorUsername = null;
                 this.errorEmail = null;
                 await axios.put(`/api/empleado`,{...this.form}).then(({data}) => {
-                    document.getElementById('sweetAlert').click();
-                    window.location.reload();
+                    Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
+
+                }).catch( error => {
+                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                 });
             },
             submit: async function(){
@@ -137,7 +139,9 @@
                     if( validateEmail && validateUsername ){
                         await axios.post(`/api/empleado`,{...this.form, empresa}).then(({data}) => {
                             this.clean();
-                            document.getElementById('sweetAlert').click();
+                            Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
+                        }).catch( error => {
+                            Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                         });
                     }
                 }else{

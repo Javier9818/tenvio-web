@@ -40,12 +40,11 @@ Vue.component('ventas-component', require('./components/VentasComponent.vue').de
 Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
 Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);
 Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);
-Vue.component('form-empleado', require('./components/FormEmpleado.vue').default);
-Vue.component('sweet-alert', require('./components/AlertComponent.vue').default);
-Vue.component('table-empleados', require('./components/TableEmpleados.vue').default);
-Vue.component('info-empresa', require('./components/InformacionEmpresaComponent.vue').default);
+Vue.component('form-empleado', require('./components/negocio/FormEmpleado.vue').default);
+Vue.component('table-empleados', require('./components/negocio/TableEmpleados.vue').default);
+Vue.component('info-empresa', require('./components/negocio/InformacionEmpresaComponent.vue').default);
 
-Vue.component('form-empresa-register', require('./components/superAdmin/FormEmpresas.vue').default);
+Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 

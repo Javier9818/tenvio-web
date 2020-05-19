@@ -62,7 +62,7 @@ class empresaController extends Controller
         if($res !== false){
             $empresa->foto = $res;
             $empresa->save();
-            return response()->json(["message" => "Actualización exitosa"], 200);
+            return response()->json(["message" => "Actualización exitosa", "foto" => $res], 200);
         }else{
             return response()->json(["message" => "Error en actualización"], 500);
         }

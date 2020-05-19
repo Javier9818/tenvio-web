@@ -3,7 +3,6 @@
     <div class="modal-body">
          <form v-on:submit.prevent="submit()" id="formEmpresa">
             <div class="row">
-                <sweet-alert></sweet-alert>
                 <div class="col-md-6 mt-2">
                     <label>RUC</label> <!--is-invalid-->
                         <input type="number" class="form-control" placeholder="Ingrese apellidos paternos" v-model="form.ruc">
@@ -100,6 +99,7 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
     export default {
         mounted() {
            axios.get('/json/departamentos.json').then(({data}) => {
@@ -135,10 +135,13 @@
             submit: async function(){
                 await axios.post('/api/empresa', this.form).then((data)=>{
                     console.log(data);
-                    document.getElementById('close').click();
-                    window.location.href = "/admin/empresas";
+                    Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
+                        window.location.reload();
+                    });
+
                 }).catch((error) => {
                     console.log(error);
+                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                 });
             },
             handleDepartamento: async function(){

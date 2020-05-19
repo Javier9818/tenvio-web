@@ -17,7 +17,7 @@
             <div class="breadcrumbs-top float-md-right">
                 <div class="breadcrumb-wrapper mr-1">
                     <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Inicio</a>
+                    <li class="breadcrumb-item"><a href="/intranet">Inicio</a>
                     </li>
                     <li class="breadcrumb-item active">Asignación de delivery
                     </li>

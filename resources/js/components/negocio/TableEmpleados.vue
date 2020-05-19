@@ -12,7 +12,7 @@
             <tbody>
                 <tr v-for="empleado in empleados" :key="empleado.id">
                     <th scope="row">{{empleado.nombres}} {{empleado.appaterno}}</th>
-                    <td>Gerente</td>
+                    <td>{{empleado.cargo}}</td>
                     <td>{{empleado.celular}}</td>
                     <td>
                         <a :href="'/intranet/empleado/edit/'+empleado.id" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
@@ -28,7 +28,7 @@
 <script>
     export default {
         mounted() {
-            axios.get(`/api/empleados/${empresa}`).then(({data})=>{ this.empleados = data.empleados; });
+            axios.get(`/api/empleados/${empresa}`).then(({data})=>{ this.empleados = data.empleados; console.log(data.empleados)});
         },
         data() {
       return {
