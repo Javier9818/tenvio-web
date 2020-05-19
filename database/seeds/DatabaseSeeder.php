@@ -27,5 +27,12 @@ class DatabaseSeeder extends Seeder
 
         DB::insert('insert into tipos (id, descripcion) values (?, ?)', [1, 'DELIVERY']);
         DB::insert('insert into tipos (id, descripcion) values (?, ?)', [2, 'RECEPCION']);
+
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [1, 'GERENTE']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [2, 'COCINERO']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [3, 'AYUDANTE DE COCINA']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [4, 'ADMINISTRADOR']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [5, 'PERSONAL DE NEGOCIO']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [6, 'PERSONAL DE TRANSPORTE']);
     }
 }

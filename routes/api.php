@@ -20,10 +20,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/roles', 'generalController@roles');
 Route::get('/categorias', 'generalController@categoriasEmpresa');
+Route::get('/cargos', 'generalController@cargosEmpleado');
 Route::get('/username/{username}', 'generalController@validateUsername');
 Route::get('/email/{email}', 'generalController@validateEmail');
 
 Route::post('/empleado', 'empleadoController@setEmpleado');
+Route::put('/empleado', 'empleadoController@updateEmpleado');
 Route::get('/empleados/{empresa}', 'empleadoController@listByEmpresa');
 Route::post('/empresa', 'empresaController@setEmpresa');
 Route::put('/empresa/{empresa}', 'empresaController@updateEmpresa');

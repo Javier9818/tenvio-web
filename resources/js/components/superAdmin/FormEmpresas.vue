@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="col-md-6 mt-2">
-                    <label>Distrito {{form.distrito}}</label>
+                    <label>Distrito</label>
                     <b-form-select
                         v-model="form.distrito"
                         :options="distritos"

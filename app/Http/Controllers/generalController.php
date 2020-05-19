@@ -33,4 +33,9 @@ class generalController extends Controller
         $categorias = DB::select('select id as value, descripcion as text from categorias');
         return response()->json(["categorias" => $categorias], 200);
     }
+
+    public function cargosEmpleado(){
+        $roles = DB::select('select id as value, descripcion as text from cargos');
+        return response()->json(["cargos" => $roles], 200);
+    }
 }

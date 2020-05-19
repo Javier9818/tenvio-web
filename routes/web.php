@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 Route::get('/intranet', 'empresaController@verEmpresa');
 Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados', ["empresa" => Session::get('empresa')]);});
 Route::get('/intranet/nuevo-empleado', function () {return view('admin.negocio.crearEmpleado', ["empresa" => Session::get('empresa')]);});
+Route::get('/intranet/empleado/edit/{id}', 'empleadoController@edit');
 // Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados');});
 Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');});
 Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');});

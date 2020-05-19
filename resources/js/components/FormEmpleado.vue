@@ -36,25 +36,44 @@
                 <label for="validationCustom01">Dirección</label>
                     <input type="text" class="form-control" placeholder="Ingrese su dirección" required v-model="form.direccion">
             </div>
-            <div class="col-md-12 mt-2">
+             <div class="col-md-6 mt-2">
+                    <label>Cargo</label>
+                    <b-form-select
+                        v-model="form.cargo"
+                        :options="optionsCargos"
+                        value-field="value"
+                        text-field="text"
+                        required
+                    >
+                        <template v-slot:first>
+                            <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                        </template>
+                    </b-form-select>
+            </div>
+            <div class="col-md-6 mt-2">
                 <label for="roles">Permisos</label>
                 <b-form-checkbox-group v-model="form.roles" id="roles" :options="options">
                 </b-form-checkbox-group>
             </div>
             </div>
-        <button type="submit" class="btn btn-icon btn-primary mt-2">Registrar</button>
+        <button type="submit" class="btn btn-icon btn-primary mt-2" v-if="edit">Guardar cambios</button>
+        <button type="submit" class="btn btn-icon btn-primary mt-2" v-else>Registrar</button>
     </form>
 </template>
 
 <script>
     export default {
+        props:['edit'],
         mounted() {
             axios.get('/api/roles').then(({data})=>{ this.options = data.roles });
+            axios.get('/api/cargos').then(({data})=>{ this.optionsCargos = data.cargos });
+            if(this.edit){ this.form = { ...empleado, roles }; console.log(empleado);};
         },
         data() {
             return {
                 show: true,
                 options: [],
+                optionsCargos:[],
                 errorUsername:null,
                 errorEmail:null,
                 form:{
@@ -66,40 +85,71 @@
                     email:'',
                     username:'',
                     direccion:'',
-                    empresa,
+                    cargo:null,
                     roles:[]
                 }
             }
         },
         methods:{
-            submit: async function(){
-                this.errorUsername = null;
-                this.email = null;
+            validateUsername: async function(){
                 const {data} = await axios.get(`/api/username/${this.form.username}`);
-                const errorEmail = await axios.get(`/api/email/${this.form.email}`);
-                if(data.message)
+                if(data.message){
                     this.errorUsername = true;
-                else if(errorEmail.data.message)
+                    return false;
+                }else return true;
+            },
+            validateEmail: async function(){
+               const {data} = await axios.get(`/api/email/${this.form.email}`);
+                if(data.message){
                     this.errorEmail = true;
-                else{
-                    await axios.post(`/api/empleado`,this.form).then(({data}) => {
-                        document.getElementById('sweetAlert').click();
-                        this.errorUsername = null;
-                        this. form = {
-                            nombres:'',
-                            appaterno:'',
-                            apmaterno:'',
-                            celular:'',
-                            dni:'',
-                            email:'',
-                            username:'',
-                            direccion:'',
-                            empresa,
-                            roles:[]
-                        }
-                    });
+                    return false;
+                }else return true;
+            },
+            clean(){
+                    this.errorEmail = null;
+                    this.errorUsername = null;
+                    this. form = {
+                        nombres:'',
+                        appaterno:'',
+                        apmaterno:'',
+                        celular:'',
+                        dni:'',
+                        email:'',
+                        username:'',
+                        direccion:'',
+                        roles:[]
+                    }
+            },
+            update: async function(){
+                this.errorUsername = null;
+                this.errorEmail = null;
+                await axios.put(`/api/empleado`,{...this.form}).then(({data}) => {
+                    document.getElementById('sweetAlert').click();
+                    window.location.reload();
+                });
+            },
+            submit: async function(){
+                if(!this.edit){
+                    this.errorUsername = null;
+                    this.errorEmail = null;
+                    let validateEmail = await this.validateEmail();
+                    let validateUsername = await this.validateUsername();
+                    if( validateEmail && validateUsername ){
+                        await axios.post(`/api/empleado`,{...this.form, empresa}).then(({data}) => {
+                            this.clean();
+                            document.getElementById('sweetAlert').click();
+                        });
+                    }
+                }else{
+                    let validateEmail = true;
+                    let validateUsername = true;
+                    this.errorUsername = null;
+                    this.errorEmail = null;
+                    if(this.form.username != empleado.username) validateUsername = await this.validateUsername();
+                    if(this.form.email != empleado.email) validateEmail = await this.validateEmail();
+                    if(validateUsername && validateEmail) this.update();
                 }
-            }
+            },
         }
     }
 </script>
