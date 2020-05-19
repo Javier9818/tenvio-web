@@ -11,7 +11,7 @@
 @section('contenido')
 <section id="slider" class="slider slider-layout1">
     <div class="carousel owl-carousel carousel-arrows" data-slide="1" data-slide-md="1" data-slide-sm="1"
-      data-autoplay="true" data-nav="true" data-dots="false" data-space="0" data-loop="true" data-speed="3000"
+      data-autoplay="false" data-nav="true" data-dots="false" data-space="0" data-loop="false" data-speed="3000"
       data-transition="fade" data-animate-out="fadeOut" data-animate-in="fadeIn">
       <div class="slide-item align-v-h text-center bg-overlay">
         <div class="bg-img"><img src="http://7oroof.com/demos/babette/assets/images/backgrounds/8.jpg" alt="slide img"></div>
@@ -21,11 +21,11 @@
               <div class="slide__content">
                 <span class="slide__subtitle d-none">Text</span>
                 <h2 class="slide__title text-uppercase">Busca la ciudad o nombre del restaurant</h2>
-                <p class="slide__desc"></p> <input type="text" class="form-control">
+                <p class="slide__desc"></p> <input type="text"  style="text-align:center;font-size:2.5em" class="form-control">
 
 
 
-                <a href="#" class="btn btn__white btn__bordered my-1">Buscar restaurantes cercanos a mi posición</a>
+                <a href="#" class="btn btn__white btn__bordered my-5">Buscar restaurantes cercanos a mi posición</a>
               </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->
           </div><!-- /.row -->
