@@ -1,7 +1,7 @@
 <div class="main-menu menu-fixed menu-light menu-accordion    menu-shadow " data-scroll-to-active="true" data-img="/theme-assets/images/backgrounds/02.jpg">
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
-        <li class="nav-item mr-auto"><a class="navbar-brand" href="index.html"><img class="brand-logo" alt="Chameleon admin logo" src="/theme-assets/images/logo/logo.png"/>
+        <li class="nav-item mr-auto"><a class="navbar-brand" href="/admin/empresas"><img class="brand-logo" alt="Chameleon admin logo" src="/theme-assets/images/logo/logo.png"/>
             <h3 class="brand-text">Delivery</h3></a></li>
         <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
       </ul>
@@ -12,7 +12,7 @@
         <li class="has-sub nav-item {{ $isTab('1') ? 'open' : '' }}">
             <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Empresas</span></a>
             <ul class="menu-content">
-                <li class="{{ $isSelected('1', '1') ? 'active' : '' }}"><a class="menu-item" href="/superadmin/empresas">Mis empresas</a></li>
+                <li class="{{ $isSelected('1', '1') ? 'active' : '' }}"><a class="menu-item" href="/admin/empresas">Mis empresas</a></li>
             </ul>
         </li>
       </ul>

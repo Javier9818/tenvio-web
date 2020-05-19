@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title') DeliveryWeb - Panel de control  @endsection
+@section('title') Panel de control - TeLlevoPeru  @endsection
 @section('nav')
     @include('admin.components.nav')
 @endsection
@@ -63,7 +63,7 @@
                                             <td>{{$empresa->celular}}</td>
                                             <td>{{$empresa->distrito}}</td>
                                             <td>
-                                                <a href="/superadmin/empresa/{{$empresa->id}}" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
+                                                <a href="/admin/empresa/{{$empresa->id}}" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
                                                 <a href="" title="Eliminar"><i class="ft-delete red"></i></a>
                                             </td>
                                         </tr>

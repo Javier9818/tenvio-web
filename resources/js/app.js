@@ -28,6 +28,7 @@ Vue.component('asignacion-component', require('./components/AsignacionComponent.
 Vue.component('form-empleado', require('./components/FormEmpleado.vue').default);
 Vue.component('sweet-alert', require('./components/AlertComponent.vue').default);
 Vue.component('table-empleados', require('./components/TableEmpleados.vue').default);
+Vue.component('info-empresa', require('./components/InformacionEmpresaComponent.vue').default);
 
 Vue.component('form-empresa-register', require('./components/superAdmin/FormEmpresas.vue').default);
 Vue.use(BootstrapVue)

@@ -21,6 +21,14 @@ class generalController extends Controller
             return response()->json(["message" => false]);
     }
 
+    public function validateEmail($email){
+        $user = DB::select('select * from users where email = ?', [$email]);
+        if(count($user) > 0 )
+            return response()->json(["message" => true]);
+        else
+            return response()->json(["message" => false]);
+    }
+
     public function categoriasEmpresa(){
         $categorias = DB::select('select id as value, descripcion as text from categorias');
         return response()->json(["categorias" => $categorias], 200);

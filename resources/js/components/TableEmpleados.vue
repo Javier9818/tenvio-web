@@ -21,14 +21,14 @@
                 </tr>
             </tbody>
         </table>
-        <a type="button" class="btn btn-icon btn-primary" href="/crearEmpleado">Nuevo empleado</a>
+        <a type="button" class="btn btn-icon btn-primary" href="/intranet/nuevo-empleado">Nuevo empleado</a>
     </div>
 </template>
 
 <script>
     export default {
         mounted() {
-            axios.get('/api/empleados/1').then(({data})=>{ this.empleados = data.empleados; });
+            axios.get(`/api/empleados/${empresa}`).then(({data})=>{ this.empleados = data.empleados; });
         },
         data() {
       return {

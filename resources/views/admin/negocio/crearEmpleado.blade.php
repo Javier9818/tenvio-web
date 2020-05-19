@@ -53,3 +53,10 @@
 </section>
 @endsection
 
+@section('scripts')
+    <script>
+        let empresa = @json($empresa);
+    </script>
+@endsection
+
+

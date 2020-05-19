@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,45 +14,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.inicio');
-});
-
-Route::get('/empleados', function () {return view('admin.negocio.empleados');});
-Route::get('/crearEmpleado', function () {return view('admin.negocio.crearEmpleado');});
-Route::get('/empleados', function () {return view('admin.negocio.empleados');});
-Route::get('/ventas', function () {return view('admin.negocio.ventas');});
-Route::get('/pagos', function () {return view('admin.negocio.pagos');});
-Route::get('/categorias', function () {return view('admin.menu.categorias');});
-Route::get('/productos', function () {return view('admin.menu.productos');});
-Route::get('/pedidos', function () {return view('admin.pedidos.pedidos');});
-Route::get('/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');});
-Route::get('/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
-Route::get('/transporte', function () {return view('admin.transporte.transporte');});
+Route::get('/intranet', 'empresaController@verEmpresa');
+Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados', ["empresa" => Session::get('empresa')]);});
+Route::get('/intranet/nuevo-empleado', function () {return view('admin.negocio.crearEmpleado', ["empresa" => Session::get('empresa')]);});
+// Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados');});
+Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');});
+Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');});
+Route::get('/intranet/categorias', function () {return view('admin.menu.categorias');});
+Route::get('/intranet/productos', function () {return view('admin.menu.productos');});
+Route::get('/intranet/pedidos', function () {return view('admin.pedidos.pedidos');});
+Route::get('/intranet/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');});
+Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
+Route::get('/intranet/transporte', function () {return view('admin.transporte.transporte');});
 
 
-Route::get('/superadmin/empresas', 'superAdminController@listarEmpresas');
-Route::get('/superadmin/empresa/{idEmpresa}', 'superAdminController@verEmpresa');
+Route::get('/admin/empresas', 'adminController@listarEmpresas');
+Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa');
 
 //Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-// FRONT DELIVERY
-
-Route::get('/test', function(){
-    return view('front.index');
-});
-
-Route::get('/empresa', function(){
-    return view('front.empresa');
-});
-
-Route::get('/cart', function(){
-    return view('front.cart');
-});
-
-Route::get('/login', function(){
-    return view('front.login');
-});
+/* CLIENTE **/
+Route::get('/', function(){return view('front.index');});
+Route::get('/empresa', function(){return view('front.empresa');});
+Route::get('/cart', function(){return view('front.cart');});
+Route::get('/login', function(){return view('front.login');});
 

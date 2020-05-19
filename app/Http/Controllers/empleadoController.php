@@ -18,12 +18,12 @@ class empleadoController extends Controller
             "apmaterno" => $request->apmaterno,
             "celular" => $request->celular,
             "direccion" => $request->direccion,
-            "dni" => $request->direccion,
-            "email" => $request->direccion,
+            "dni" => $request->dni,
         ]);
 
         $user = User::create([
             "username" => $request->username,
+            "email" => $request->email,
             "password" => Hash::make($request->dni),
             "persona_id" => $persona->id
         ]);

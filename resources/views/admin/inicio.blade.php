@@ -32,36 +32,20 @@
     <section id="chartjs-bar-charts">
         <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Información de la empresa</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a href="/"><i class="ft-edit"></i> Editar</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-content collapse show">
-                        <div class="card-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Nombre de la empresa: </h4><h4 class="d-inline">{{$empresa->nombre}}</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">RUC: </h4><h4 class="d-inline">{{$empresa->ruc}}</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Gerente: </h4><h4 class="d-inline"> Briceño Montaño Javier</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Categoría:</h4><h4 class="d-inline"> {{$empresa->categoria}}</h4></div>
-                                    <div class="col-12 mt-2"> <h4 class="label">Descripción del negocio: </h4><h4>{{$empresa->descripcion ?? '-'}}</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Dirección:</h4><h4 class="d-inline"> {{$empresa->direccion}}</h4></div>
-                                    <div class="col-6 mt-2"> <h4 class="d-inline label">Celular: </h4><h4 class="d-inline">{{$empresa->celular}}</h4></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{-- <img src="{{asset('storage/images/perfilEmpresa/'.$empresa->foto)}}" alt="" width="100%"> --}}
+                <info-empresa></info-empresa>
             </div>
         </div>
     </section>
 @endsection
+
+
+@section('scripts')
+    <script>
+        let empresa = @json($empresa);
+    </script>
+@endsection
+
 
 @section('styles')
     <style>

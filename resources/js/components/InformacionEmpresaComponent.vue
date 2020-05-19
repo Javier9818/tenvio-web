@@ -1,0 +1,240 @@
+<template>
+<div class="card">
+    <sweet-alert message=''></sweet-alert>
+    <div class="card-header">
+        <h4 class="card-title">Información de la empresa</h4>
+        <div class="d-block d-md-none">
+            <a  v-on:click="changeEdit">{{edit}}</a> -
+            <a v-if="edit=='Guardar cambios'"  v-on:click="cancelEdit"> Cancelar</a>
+        </div>
+        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+        <div class="heading-elements d-none d-md-block">
+            <ul class="list-inline">
+                <li><button class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button></li>
+                <li v-if="edit=='Guardar cambios'"><a  v-on:click="cancelEdit">Cancelar</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <picture-input
+                    ref="pictureInput"
+                    width="600"
+                    height="600"
+                    margin="16"
+                    accept="image/jpeg,image/png"
+                    size="10"
+                    button-class="btn"
+                    :removable="true"
+                    :custom-strings="{
+                        upload: '<h1>Bummer!</h1>',
+                        drag: 'Arrastra una foto o click',
+                        change:'Cambiar imagen',
+                        remove:'Remover imagen',
+                        tap:'Pulsa aquí para seleccionar una foto <br> desde tu galería'
+                    }"
+                    @change="onChange">
+                    </picture-input>
+                </div>
+                <div class="col-md-6" v-if="edit === 'editar'">
+                    <div class="row">
+                        <div class="col-6 mt-2"> <h5 class="d-inline label">Nombre de la empresa </h5><br><h5 class="d-inline">{{form.nombre}}</h5></div>
+                        <div class="col-6 mt-2"> <h5 class="d-inline label">RUC </h5><br><h5 class="d-inline">{{form.ruc}}</h5></div>
+                        <div class="col-6 mt-2"> <h5 class="d-inline label">Categoría</h5><br><h5 class="d-inline">{{form.categoriaName}}</h5></div>
+                        <div class="col-6 mt-2"> <h5 class="d-inline label">Celular </h5><br><h5 class="d-inline">{{form.celular}}</h5></div>
+                        <div class="col-12 mt-2"> <h5 class="label">Descripción del negocio </h5><h5>{{form.descripcion || '-'}}</h5></div>
+                        <div class="col-12 mt-2"> <h5 class="d-inline label">Dirección</h5><br><h5 class="d-inline">{{form.direccion}}</h5></div>
+                        <div class="col-md-6 mt-2"> <h5 class="d-inline label">Distrito </h5><br><h5 class="d-inline">{{form.distrito}}</h5></div>
+                        <div class="col-md-6 mt-2"> <h5 class="d-inline label">Ciudad </h5><br><h5 class="d-inline">{{form.ciudad}}</h5></div>
+                    </div>
+                </div>
+                <div class="col-md-6" v-else>
+                    <form  class="row" method="POST">
+                        <div class="col-md-12 mt-2">
+                            <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->
+                            <input type="text" class="form-control" placeholder="Ingrese el nombre de la empresa" v-model="form.nombre">
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="validationCustom01">RUC</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el RUC de la empresa" v-model="form.ruc">
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label>Categoría</label>
+                            <b-form-select v-model="form.categoria" :options="optionsCategorias" required>
+                                <template v-slot:first>
+                                    <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="validationCustom01">Descripción del negocio</label>
+                            <textarea class="form-control" cols="30" rows="3" v-model="form.descripcion"></textarea>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="validationCustom01">Celular</label>
+                            <input type="text" class="form-control" placeholder="Ingrese el celular de la empresa" v-model="form.celular">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="validationCustom01">Dirección</label>
+                            <input type="text" class="form-control" placeholder="Ingrese la dirección de la empresa" v-model="form.direccion">
+                        </div>
+
+                         <div class="col-md-6 mt-2">
+                            <label>Departamento</label>
+                            <b-form-select
+                                v-model="form.departamento"
+                                :options="departamentos"
+                                value-field="id"
+                                text-field="name"
+                                v-on:change="handleDepartamento()"
+                                required
+                            >
+                                <template v-slot:first>
+                                    <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label>Provincia</label>
+                            <b-form-select
+                                v-model="form.provincia"
+                                :options="provincias"
+                                value-field="id"
+                                text-field="name"
+                                v-on:change="handleProvincia()"
+                                required
+                            >
+                                <template v-slot:first>
+                                    <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label>Distrito {{form.distrito}}</label>
+                            <b-form-select
+                                v-model="form.distrito"
+                                :options="distritos"
+                                value-field="name"
+                                text-field="name"
+                                required
+                            >
+                                <template v-slot:first>
+                                    <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </div>
+
+                        <div class="col-md-6 mt-2">
+                            <label>Ciudad</label>
+                            <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.ciudad">
+                        </div>
+                        <div class="col-md-6 mt-2 d-block d-md-none">
+                            <button type="submit" form="formEmpresa" class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+    import PictureInput from 'vue-picture-input'
+    export default {
+        mounted() {
+            console.log('Component mounted.')
+            axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
+            axios.get('/json/departamentos.json').then(({data}) => {this.departamentos = data;});
+            axios.get('/json/distritos.json').then(({data}) => {
+                 data.forEach(distrito => {
+                    if(distrito.name === empresa.distrito){
+                        data.forEach( e => {
+                           if(e.province_id === distrito.province_id){
+                               this.distritos.push(e);
+                               this.form.provincia = e.province_id;
+                               this.form.departamento = e.department_id;
+                           }
+                        });
+                        axios.get('/json/provincias.json').then(({data}) => {
+                            this.provinciasGlobal = data;
+                            data.forEach( province => {
+                                if(province.department_id === this.form.departamento)
+                                    this.provincias.push(province);
+                            });
+                        });
+                    }
+                 });
+                 this.distritosGlobal = data
+            });
+        },
+        data () {
+            return {
+                optionsCategorias:[],
+                provinciasGlobal:[],
+                distritosGlobal:[],
+                departamentos:[],
+                provincias:[],
+                distritos:[],
+                edit:'editar',
+                image:'',
+                form:{
+                    ...empresa,
+                    provincia:'',
+                    departamento:''
+                }
+
+            }
+        },
+        components: {
+            PictureInput
+        },
+        methods: {
+            onChange (image) {
+            console.log('New picture selected!')
+            if (image) {
+                console.log('Picture loaded.')
+                this.image = image
+                axios.put(`/api/fotoEmpresa/${this.form.id}`, {image:this.image}).then( data => {
+                        console.log(data);
+                }).catch( error => alert('Error'));
+            } else {
+                console.log('FileReader API not supported: use the <form>, Luke!')
+            }
+            },
+            changeEdit(){
+                if(this.edit === 'Guardar cambios'){
+                    axios.put(`/api/empresa/${this.form.id}`, this.form).then( data => {
+                        console.log(data);
+                        document.getElementById('sweetAlert').click();
+
+                    });
+                }
+                else this.edit = 'Guardar cambios';
+            },
+            cancelEdit(){
+                this.edit = 'editar';
+            },
+            handleDepartamento: async function(){
+                this.form.provincia = null;
+                this.provincias = [];
+                this.form.distrito = null;
+                this.distritos = [];
+                this.provinciasGlobal.map((provincia) => {
+                   if(provincia.department_id === this.form.departamento) this.provincias.push(provincia);
+                })
+            },
+            handleProvincia: async function(){
+                this.form.distrito = null;
+                this.distritos = [];
+                this.distritosGlobal.map((distrito) => {
+                   if(distrito.province_id === this.form.provincia) this.distritos.push(distrito);
+                })
+            }
+        }
+    }
+</script>

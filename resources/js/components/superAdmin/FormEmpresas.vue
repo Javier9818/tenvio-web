@@ -136,7 +136,7 @@
                 await axios.post('/api/empresa', this.form).then((data)=>{
                     console.log(data);
                     document.getElementById('close').click();
-                    window.location.href = "/superadmin/empresas";
+                    window.location.href = "/admin/empresas";
                 }).catch((error) => {
                     console.log(error);
                 });
