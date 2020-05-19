@@ -21,12 +21,18 @@ Route::get('/intranet/empleado/edit/{id}', 'empleadoController@edit');
 // Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados');});
 Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');});
 Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');});
-Route::get('/intranet/categorias', function () {return view('admin.menu.categorias');});
-Route::get('/intranet/productos', function () {return view('admin.menu.productos');});
+//Route::get('/intranet/categorias', function () {return view('admin.menu.categorias');});
+//Route::get('/intranet/productos', function () {return view('admin.menu.productos');});
 Route::get('/intranet/pedidos', function () {return view('admin.pedidos.pedidos');});
 Route::get('/intranet/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');});
 Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
 Route::get('/intranet/transporte', function () {return view('admin.transporte.transporte');});
+
+
+Route::get('/intranet/categorias', 'CategoriasMenusController@fn');
+Route::get('/intranet/categorias/{funcion}', 'CategoriasMenusController@fn');
+Route::get('/intranet/productos', 'ProductosController@fn');
+Route::get('/intranet/productos/{funcion}', 'ProductosController@fn');
 
 
 Route::get('/admin/empresas', 'adminController@listarEmpresas');
