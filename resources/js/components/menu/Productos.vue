@@ -71,8 +71,8 @@ import Swal from 'sweetalert2'
 export default {
 	data() {
 		return {
-			rutaCategorias: '/categorias',
-			ruta: '/productos',
+			rutaCategorias: '/intranet/categorias',
+			ruta: '/intranet/productos',
 			datos: [],
 			columnas: [
 				{ key: 'id', label: 'Id' },

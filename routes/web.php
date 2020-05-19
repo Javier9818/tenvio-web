@@ -30,9 +30,9 @@ Route::get('/intranet/transporte', function () {return view('admin.transporte.tr
 
 
 Route::get('/intranet/categorias', 'CategoriasMenusController@fn');
-Route::get('/intranet/categorias/{funcion}', 'CategoriasMenusController@fn');
+Route::post('/intranet/categorias/{funcion}', 'CategoriasMenusController@fn');
 Route::get('/intranet/productos', 'ProductosController@fn');
-Route::get('/intranet/productos/{funcion}', 'ProductosController@fn');
+Route::post('/intranet/productos/{funcion}', 'ProductosController@fn');
 
 
 Route::get('/admin/empresas', 'adminController@listarEmpresas');
