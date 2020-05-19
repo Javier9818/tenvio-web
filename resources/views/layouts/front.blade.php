@@ -46,7 +46,7 @@
                 <div class="contact-box">
                   <h6 class="contact__box-title">Nosotros</h6>
                   <ul class="contact__box-list list-unstyled">
-                    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit eos repellendus accusamus, facilis commodi id, harum magnam modi aperiam quos voluptatum, velit magni voluptate fuga! Dicta magni sapiente hic quasi.</li>
+                    <li>TE ENVIO tu mejor aliado, te brindamos las herramientas que necesitas para incrementar tus ventas y gestiones mejor tu negocio.</li>
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->
@@ -80,7 +80,7 @@
             </div><!-- /.row -->
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
-                <p class="mb-20">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos quam odio ducimus nulla enim culpa distinctio impedit officiis corrupti, laboriosam, ut quod nam atque nisi reprehenderit sit, voluptatem doloremque at!
+                <p class="mb-20">NORTEC es un grupo tecnológico, cuya actividad principal es el desarrollo y gestión de una plataforma tecnológica mediante la que a través de una página web o aplicación móvil permite a determinados restaurantes de La Libertad publicitar sus productos a través del aplicativo
                 </p>
 
               </div><!-- /.col-lg-6 -->
