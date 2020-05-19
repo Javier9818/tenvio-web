@@ -8,6 +8,21 @@ require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 window.Vue = require('vue');
 
+//bustrapVue
+//import { BootstrapVueIcons } from 'bootstrap-vue'
+//Vue.use(BootstrapVueIcons)
+
+//sweetalert
+import Swal from 'sweetalert2'
+//Vue.use(Swal);
+
+//File agent
+import VueFileAgent from 'vue-file-agent';
+import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
+Vue.use(VueFileAgent);
+
+//Vue-search-select
+import 'vue-search-select/dist/VueSearchSelect.css';
 
 /**
  * The following block of code may be used to automatically register your
@@ -33,6 +48,11 @@ Vue.component('info-empresa', require('./components/InformacionEmpresaComponent.
 Vue.component('form-empresa-register', require('./components/superAdmin/FormEmpresas.vue').default);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
+
+Vue.component('menu-categorias', require('./components/menu/Categorias.vue').default);
+Vue.component('menu-productos', require('./components/menu/Productos.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

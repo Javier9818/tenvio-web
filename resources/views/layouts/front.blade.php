@@ -74,7 +74,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 position-static">
                 <div class="footer__logo-wrap text-center">
-                  <img src="assets/images/logo/footer-logo.png" alt="logo" class="footer__logo">
+                  <img src="assets/images/logo/footer-logo2.png" alt="logo" class="footer__logo">
                 </div>
               </div><!-- /.col-lg-12 -->
             </div><!-- /.row -->
@@ -96,9 +96,9 @@
                   <a href="#" class="color-theme">Nortec</a>
                 </div>
                 <ul class="social__icons social__icons-white justify-content-center">
-                  <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                  <li><a href="#"><i class="fa fa-tripadvisor"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
                 </ul><!-- /.social__icons -->
               </div>
             </div><!-- /.row -->

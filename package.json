@@ -25,6 +25,12 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.13.1",
+<<<<<<< HEAD
         "vue-picture-input": "^2.1.6"
+=======
+        "sweetalert2": "^9.10.13",
+        "vue-file-agent": "^1.7.3",
+        "vue-search-select": "^2.9.3"
+>>>>>>> a9131ae3731f0eb487975430d442bc3793e4101c
     }
 }
