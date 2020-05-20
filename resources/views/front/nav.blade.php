@@ -10,31 +10,13 @@
         </button>
         <div class="collapse navbar-collapse" id="mainNavigation">
           <ul class="navbar-nav ml-auto">
-            <li class="nav__item with-dropdown d-none">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">Menu 1</a>
+            <li class="nav__item with-dropdown">
+              <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">ROCO27</a>
               <ul class="dropdown-menu">
-                <li class="nav__item"><a href="index.html" class="nav__item-link">Opcion 01</a></li>
+                <li class="nav__item"><a href="index.html" class="nav__item-link">Cerrar Sesion</a></li>
                 <!-- /.nav-item -->
-                <li class="nav__item"><a href="home-gourmet.html" class="nav__item-link">Opcion 02</a></li>
+                <li class="nav__item"><a href="home-gourmet.html" class="nav__item-link">Ajustes</a></li>
                 <!-- /.nav-item -->
-              </ul><!-- /.dropdown-menu -->
-            </li><!-- /.nav-item -->
-
-            <li class="nav__item with-dropdown d-none">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">MENU 2</a>
-              <ul class="dropdown-menu">
-                <li class="nav__item"><a href="blog-carousel.html" class="nav__item-link">Opcion 01</a></li>
-                <li class="nav__item dropdown-submenu">
-                  <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link">Opcion 02</a>
-                  <ul class="dropdown-menu">
-                    <li class="nav__item">
-                      <a href="blog-grid-sidebar.html" class="nav__item-link">Sub Opcion 02.01</a>
-                    </li><!-- /.nav-item -->
-                    <li class="nav__item">
-                      <a href="blog-grid.html" class="nav__item-link">Sub Opcion 02.02</a>
-                    </li><!-- /.nav-item -->
-                  </ul><!-- /.dropdown-menu -->
-                </li><!-- /.nav-item -->
               </ul><!-- /.dropdown-menu -->
             </li><!-- /.nav-item -->
 
