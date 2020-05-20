@@ -32,15 +32,16 @@
                         </div>
                         <div class="card-content">
                             <div class="card-body">
-                                <form class="form-horizontal" action="index.html" novalidate="">
+                                <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                                    @csrf
                                     <fieldset class="form-group position-relative has-icon-left">
-                                        <input type="text" class="form-control round" id="user-name" placeholder="Usuario / Email" required="" aria-invalid="false">
+                                        <input type="text" class="form-control round" id="username" name="username" placeholder="Usuario / Email" required="" aria-invalid="false">
                                         <div class="form-control-position">
                                             <i class="ft-user"></i>
                                         </div>
                                     </fieldset>
                                     <fieldset class="form-group position-relative has-icon-left">
-                                        <input type="password" class="form-control round" id="user-password" placeholder="Contraseña" required="" aria-invalid="false">
+                                        <input type="password" class="form-control round" id="password" name="password" placeholder="Contraseña" required="" aria-invalid="false">
                                         <div class="form-control-position">
                                             <i class="ft-lock"></i>
                                         </div>
