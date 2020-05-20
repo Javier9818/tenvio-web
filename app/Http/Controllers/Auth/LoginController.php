@@ -42,10 +42,13 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
-        if (Auth::attempt(['email'=>$request->username, 'password' => $request->password])) {
+        if (Auth::attempt(["email" => $request->username, "password" => $request->password]) || Auth::attempt(["username" => $request->username, "password" => $request->password])) {
             // Authentication passed...
             return redirect('/');
             return redirect()->intended('dashboard');
+        }else
+        {
+            return redirect('/login')->with('message','Error logging in!');
         }
     }
 }
