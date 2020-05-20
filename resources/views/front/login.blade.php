@@ -19,6 +19,7 @@
 
     <section id="wrapper" class="login-register login-sidebar flexbox-container d-flex" style="background-image:url(assets/images/backgrounds/LoginDelivery-02.png);background-size: cover; height: 100vh">
         <div class="login-box col-12 d-flex align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
+
             <div class="card-body" style="height: 100vh">
                <div class="container-fluid">
                    <div class="row m-0 p-0">
@@ -30,46 +31,56 @@
                             <div class="font-large-1  text-center">
                                 Acceso al sistema
                             </div>
+
+            <div class="card-body m-0 p-0" style="height: 90vh">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4 m-0 p-0">
+                    <div class="card-header border-0">
+                        <div class="text-center mb-1">
+                                <img src="assets/images/logo/LogoDelivery.png" alt="AQUI VA EL LOGO" style="width: 50%;">
+
                         </div>
-                        <div class="card-content">
-                            <div class="card-body">
-                                <form class="form-horizontal" action="index.html" novalidate="">
-                                    <fieldset class="form-group position-relative has-icon-left">
-                                        <input type="text" class="form-control round" id="user-name" placeholder="Usuario / Email" required="" aria-invalid="false">
-                                        <div class="form-control-position">
-                                            <i class="ft-user"></i>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset class="form-group position-relative has-icon-left">
-                                        <input type="password" class="form-control round" id="user-password" placeholder="Contraseña" required="" aria-invalid="false">
-                                        <div class="form-control-position">
-                                            <i class="ft-lock"></i>
-                                        </div>
-                                    </fieldset>
-                                    <div class="form-group row">
-                                        <div class="col-md-6 col-12 text-center text-sm-left">
-
-                                        </div>
-                                        <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Olvidaste tu contraseña?</a></div>
-                                    </div>
-                                    <div class="form-group text-center">
-                                        <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
-                                    </div>
-
-                                </form>
-                            </div>
-                            <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-2 "><span>Inicia sesion usando</span></p>
-                            <div class="text-center">
-                                <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-facebook"><span class="ft-facebook"></span></a>
-                                <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-twitter"><span class="ft-twitter"></span></a>
-                                <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-instagram"><span class="ft-instagram"></span></a>
-                            </div>
-
-                            <p class="card-subtitle text-muted text-right font-small-3 mx-2 my-1"><span>No tienes una cuenta? <a href="register.html" class="card-link">Registrate</a></span></p>
+                        <div class="font-large-1  text-center">
+                            Acceso al sistema
                         </div>
                     </div>
-                   </div>
-               </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                                @csrf
+                                <fieldset class="form-group position-relative has-icon-left">
+                                    <input type="text" class="form-control round" id="username" name="username" placeholder="Usuario / Email" required="" aria-invalid="false">
+                                    <div class="form-control-position">
+                                        <i class="ft-user"></i>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group position-relative has-icon-left">
+                                    <input type="password" class="form-control round" id="password" name="password" placeholder="Contraseña" required="" aria-invalid="false">
+                                    <div class="form-control-position">
+                                        <i class="ft-lock"></i>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group row">
+                                    <div class="col-md-6 col-12 text-center text-sm-left">
+
+                                    </div>
+                                    <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Olvidaste tu contraseña?</a></div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
+                                </div>
+
+                            </form>
+                        </div>
+                        <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-2 "><span>Inicia sesion usando</span></p>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-facebook"><span class="ft-facebook"></span></a>
+                            <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-twitter"><span class="ft-twitter"></span></a>
+                            <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-instagram"><span class="ft-instagram"></span></a>
+                        </div>
+
+                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>No tienes una cuenta? <a href="register.html" class="card-link">Registrate</a></span></p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

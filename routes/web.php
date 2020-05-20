@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,8 +37,9 @@ Route::post('/intranet/productos/{funcion}', 'ProductosController@fn');
 Route::get('/admin/empresas', 'adminController@listarEmpresas');
 Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa');
 
-//Auth::routes();
-Route::get('/login', function(){return view('front.login');});
+Auth::routes();
+Route::get('/login', function(){return view('front.login');})->name('loginForm');
+Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
 Route::get('/perfil', function(){return view('auth.profile');});
 Route::get('/home', 'HomeController@index')->name('home');
 
