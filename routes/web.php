@@ -39,14 +39,14 @@ Route::get('/admin/empresas', 'adminController@listarEmpresas');
 Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa');
 
 //Auth::routes();
+Route::get('/login', function(){return view('front.login');});
+Route::get('/perfil', function(){return view('auth.profile');});
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* CLIENTE **/
 Route::get('/', function(){return view('front.index');});
 Route::get('/empresa', function(){return view('front.empresa');});
 Route::get('/cart', function(){return view('front.cart');});
-Route::get('/login', function(){return view('front.login');});
 
-Route::get('/list', function(){
-    return view('front.listEmpresa');
-});
+
+Route::get('/list', function(){ return view('front.listEmpresa');});

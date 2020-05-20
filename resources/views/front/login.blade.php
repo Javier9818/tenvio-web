@@ -10,22 +10,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="/theme-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
-    <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/vendors.css">
-    <!-- END VENDOR CSS-->
-    <!-- BEGIN CHAMELEON  CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/app-lite.css">
-    <!-- END CHAMELEON  CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/core/colors/palette-gradient.css">
-    <!-- END Custom CSS-->
   </head>
   <body>
 
     <section id="wrapper" class="login-register login-sidebar " style="background-image:url(assets/images/backgrounds/LoginDelivery-02.png);background-size: cover; height: 100vh">
         <div class="login-box"> <!--class="login-box card shadow-none" -->
-            <div class="card-body m-100" >
-                <div class="col-lg-4 col-md-6 col-10  p-0">
-                    <div class="  px-1 py-1 m-0">
+            <div class="card-body" style="height: 90vh">
+               <div class="container-fluid">
+                   <div class="row m-0 p-0">
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
                         <div class="card-header border-0">
                             <div class="text-center mb-1">
                                     <img src="assets/images/logo/LogoDelivery.png" alt="AQUI VA EL LOGO" style="width: 50%;">
@@ -35,7 +31,6 @@
                             </div>
                         </div>
                         <div class="card-content">
-
                             <div class="card-body">
                                 <form class="form-horizontal" action="index.html" novalidate="">
                                     <fieldset class="form-group position-relative has-icon-left">
@@ -72,7 +67,8 @@
                             <p class="card-subtitle text-muted text-right font-small-3 mx-2 my-1"><span>No tienes una cuenta? <a href="register.html" class="card-link">Registrate</a></span></p>
                         </div>
                     </div>
-                </div>
+                   </div>
+               </div>
             </div>
         </div>
     </section>

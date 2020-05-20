@@ -38,7 +38,7 @@
               </ul><!-- /.dropdown-menu -->
             </li><!-- /.nav-item -->
 
-            <li class="nav__item"><a href="#" class="nav__item-link">Iniciar Sesion</a></li>
+            <li class="nav__item"><a href="/login" class="nav__item-link">Iniciar Sesion</a></li>
             <li class="nav__item"><a href="#" class="nav__item-link">Registrarse</a></li>
             <!-- /.nav-item -->
           </ul><!-- /.navbar-nav -->

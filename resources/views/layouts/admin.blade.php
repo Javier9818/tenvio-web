@@ -74,7 +74,9 @@
     @yield('scripts')
     <script src="/js/app.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
-    <script src="/theme-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/vendors.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/switchery.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/core/switch.min.js.descargar" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
     {{-- <script src="/theme-assets/vendors/js/charts/chart.min.js" type="text/javascript"></script> --}}
@@ -90,7 +92,6 @@
     <script src="/theme-assets/js/core/switch.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/switchery.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
-    {{-- <script src="/theme-assets/js/core/vendors.min.js.descargar" type="text/javascript"></script> --}}
 
 
 

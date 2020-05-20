@@ -2592,7 +2592,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      ruta: '/categorias',
+      ruta: '/intranet/categorias',
       datos: [],
       columnas: [{
         key: 'id',
@@ -2748,8 +2748,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      rutaCategorias: '/categorias',
-      ruta: '/productos',
+      rutaCategorias: '/intranet/categorias',
+      ruta: '/intranet/productos',
       datos: [],
       columnas: [{
         key: 'id',
