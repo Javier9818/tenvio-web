@@ -18,24 +18,7 @@
   <body>
 
     <section id="wrapper" class="login-register login-sidebar flexbox-container d-flex" style="background-image:url(assets/images/backgrounds/LoginDelivery-02.png);background-size: cover; height: 100vh">
-<<<<<<< HEAD
-        <div class="login-box col-12 align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
-
-            <div class="card-body" style="height: 100vh">
-               <div class="container-fluid">
-                   <div class="row m-0 p-0">
-                    <div class="col-12 col-sm-8 col-md-6 col-lg-4 ">
-                        <div class="card-header border-0">
-                            <div class="text-center mb-1">
-                                    <img src="assets/images/logo/LogoDelivery.png" alt="AQUI VA EL LOGO" style="width: 50%;">
-                            </div>
-                            <div class="font-large-1  text-center">
-                                Acceso al sistema
-                            </div>
-
-=======
         <div class="login-box col-12 d-flex align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
->>>>>>> 6cbe4c2723bdab38386bcfc85705c48a85c5471b
             <div class="card-body m-0 p-0" style="height: 90vh">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 m-0 p-0">
                     <div class="card-header border-0">
