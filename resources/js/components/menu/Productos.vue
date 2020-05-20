@@ -14,9 +14,9 @@
             </div>
         </div>
 		<div class="text-center">
-			<button class="btn btn-primary" v-b-modal.modal-mantenedor>Nuevo Producto</button>
+			<button class="btn btn-primary" v-b-modal.modal-mantenedor @click="nuevo">Nuevo Producto</button>
 		</div>
-		<b-modal id="modal-mantenedor" size="sm" centered hide-backdrop :title="texto+' Producto'" hide-footer>
+		<b-modal id="modal-mantenedor" size="md" scrollable centered hide-backdrop :title="texto+' Producto'" hide-footer>
 			<b-col sm="12" md="12">
 				<b-form-group
 				label="Nombre"
@@ -54,11 +54,24 @@
 				class="mb-0">
 					<b-form-input v-model="producto.precio" type="number" placeholder="Precio"></b-form-input>
 				</b-form-group>
+				<b-form-group
+				label="Foto del Producto"
+				label-cols-sm="12"
+				label-align-sm="left"
+				label-align="center"
+				label-size="sm"
+				class="mb-0"
+				:hidden="texto=='Modificars'">
+					<div class="text-center">
+						<b-img :src="'/'+rutaImagenes+producto.foto" :hidden="producto.foto==''"></b-img>
+					</div>
+					<sube-archivos @archivosubido="archivosubido"></sube-archivos>
+				</b-form-group>
 			</b-col>
 			<div class="text-center">
 				<br>
 				<b-button variant="danger" size="sm" @click="cerrarModal">Cancelar</b-button>
-				<b-button variant="success" size="sm" @click="setupddel(false)">{{texto}}</b-button>
+				<b-button variant="success" :disabled="deshabilitaboton" size="sm" @click="setupddel(false)">{{texto}}</b-button>
 			</div>
 			<br>
 		</b-modal>
@@ -88,12 +101,24 @@ export default {
 				nombre: '',
 				descripcion: '',
 				precio: 0,
+				foto: '',
 				categorias_menu_id: null,
+				fotosubida: null,
 			},
+			rutaImagenes: '',
 			texto: 'Registrar',
+			deshabilitaboton: false
 		}
 	},
 	methods: {
+		archivosubido: function({valor, fileRecords}){
+			if (fileRecords.length == 1)
+				fileRecords[0].urlResized = '.';
+			console.log({valor, fileRecords});
+			this.producto.fotosubida = fileRecords;
+			this.deshabilitaboton = valor;
+
+		},
 		cargarCategorias: function(){
 			var that = this;
 			axios.post(this.rutaCategorias+'/listarvselect')
@@ -110,6 +135,7 @@ export default {
 			this.producto.nombre = '';
 			this.producto.descripcion = '';
 			this.producto.precio = 0;
+			this.producto.foto = '';
 			this.producto.categorias_menu_id = null;
 		},
 		editar: function(item){
@@ -119,10 +145,13 @@ export default {
 			this.producto.nombre = item.nombre;
 			this.producto.descripcion = item.descripcion;
 			this.producto.precio = item.precio;
+			this.producto.foto = item.foto;
 			this.producto.categorias_menu_id = item.categorias_menu_id;
 		},
 		eliminar: function(item){
-			console.log(item);
+			this.producto.id = item.id;
+			this.producto.foto = '';
+			this.producto.fotoSubida = '';
 			this.setupddel(true);
 		},
 		setupddel: function(eliminar){
@@ -151,7 +180,8 @@ export default {
 			var that = this;
 			axios.post(this.ruta+'/listar')
 			.then(function (response) {
-				that.datos = response.data;
+				that.datos = response.data.productos;
+				that.rutaImagenes = response.data.rutaImagenes;
 			});
 		}
 	},

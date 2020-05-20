@@ -24,6 +24,11 @@ Vue.use(VueFileAgent);
 //Vue-search-select
 import 'vue-search-select/dist/VueSearchSelect.css';
 
+//Vue-loaders
+import 'vue-loaders/dist/vue-loaders.css'
+import VueLoaders from 'vue-loaders'
+Vue.use(VueLoaders)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -48,6 +53,9 @@ Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
+
+Vue.component('loader', require('./components/extras/Loader.vue').default)
+Vue.component('sube-archivos', require('./components/extras/SubeArchivos.vue').default)
 
 Vue.component('menu-categorias', require('./components/menu/Categorias.vue').default);
 Vue.component('menu-productos', require('./components/menu/Productos.vue').default);

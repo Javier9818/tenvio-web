@@ -26,6 +26,8 @@ Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos
 Route::get('/intranet/transporte', function () {return view('admin.transporte.transporte');})->middleware('auth');
 
 
+Route::any('/extras/{funcion}', 'ExtrasController@fn');
+
 Route::get('/intranet/categorias', 'CategoriasMenusController@fn')->middleware('auth');
 Route::post('/intranet/categorias/{funcion}', 'CategoriasMenusController@fn')->middleware('auth');
 Route::get('/intranet/productos', 'ProductosController@fn')->middleware('auth');
