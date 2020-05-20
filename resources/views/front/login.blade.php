@@ -18,7 +18,7 @@
   <body>
 
     <section id="wrapper" class="login-register login-sidebar flexbox-container d-flex" style="background-image:url(assets/images/backgrounds/LoginDelivery-02.png);background-size: cover; height: 100vh">
-        <div class="login-box col-12 d-flex align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
+        <div class="login-box col-12 align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
 
             <div class="card-body" style="height: 100vh">
                <div class="container-fluid">
