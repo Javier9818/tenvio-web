@@ -10,32 +10,29 @@
         </button>
         <div class="collapse navbar-collapse" id="mainNavigation">
           <ul class="navbar-nav ml-auto">
-            <li class="nav__item with-dropdown">
-              <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">ROCO27</a>
-              <ul class="dropdown-menu">
-                <li class="nav__item"><a href="index.html" class="nav__item-link">Cerrar Sesion</a></li>
-                <!-- /.nav-item -->
-                <li class="nav__item"><a href="home-gourmet.html" class="nav__item-link">Ajustes</a></li>
-                <!-- /.nav-item -->
-              </ul><!-- /.dropdown-menu -->
-            </li><!-- /.nav-item -->
-
-            <li class="nav__item"><a href="/login" class="nav__item-link">Iniciar Sesion</a></li>
-            <li class="nav__item"><a href="#" class="nav__item-link">Registrarse</a></li>
-            <!-- /.nav-item -->
-          </ul><!-- /.navbar-nav -->
-        </div><!-- /.navbar-collapse -->
+            @auth
+                <li class="nav__item with-dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">{{Auth::user()->username}}</a>
+                    <ul class="dropdown-menu">
+                    <li class="nav__item"><a href="{{ route('logout') }}" class="nav__item-link" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">Cerrar Sesion</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    <li class="nav__item"><a href="home-gourmet.html" class="nav__item-link">Ajustes</a></li>
+                    </ul>
+                </li>
+            @else
+                <li class="nav__item"><a href="/login" class="nav__item-link">Iniciar Sesion</a></li>
+                <li class="nav__item"><a href="#" class="nav__item-link">Registrarse</a></li>
+            @endauth
+          </ul>
+        </div>
         <div class="navbar-actions-wrap">
           <div class="navbar-actions d-flex align-items-center">
             <a href="#" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
-            {{-- <a href="reservation.html"
-              class="navbar__action-btn navbar__action-btn-reserve btn btn__primary">Reservation</a> --}}
-            <ul class="social__icons">
-                <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-                <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
-            </ul><!-- /.social__icons -->
-          </div><!-- /.navbar-actions -->
-        </div><!-- /.navbar-actions-wrap -->
-      </div><!-- /.container -->
-    </nav><!-- /.navabr -->
+          </div>
+        </div>
+      </div>
+    </nav>
 </header>

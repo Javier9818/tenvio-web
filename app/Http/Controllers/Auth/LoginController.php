@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -44,8 +45,11 @@ class LoginController extends Controller
     {
         if (Auth::attempt(["email" => $request->username, "password" => $request->password]) || Auth::attempt(["username" => $request->username, "password" => $request->password])) {
             // Authentication passed...
-            return redirect('/');
-            return redirect()->intended('dashboard');
+            $user = DB::select('select isAdmin from users where username = ? or email = ?', [$request->username, $request->username]);
+            if($user[0]->isAdmin)
+                return redirect(route('admin-total-inicio'));
+            else
+                return redirect()->intended();
         }else
         {
             return redirect('/login')->with('message','Error logging in!');

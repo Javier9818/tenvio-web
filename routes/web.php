@@ -13,29 +13,27 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-Route::get('/intranet', 'empresaController@verEmpresa');
-Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados', ["empresa" => Session::get('empresa')]);});
-Route::get('/intranet/nuevo-empleado', function () {return view('admin.negocio.crearEmpleado', ["empresa" => Session::get('empresa')]);});
-Route::get('/intranet/empleado/edit/{id}', 'empleadoController@edit');
-// Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados');});
-Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');});
-Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');});
-//Route::get('/intranet/categorias', function () {return view('admin.menu.categorias');});
-//Route::get('/intranet/productos', function () {return view('admin.menu.productos');});
-Route::get('/intranet/pedidos', function () {return view('admin.pedidos.pedidos');});
-Route::get('/intranet/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');});
-Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');});
-Route::get('/intranet/transporte', function () {return view('admin.transporte.transporte');});
+
+Route::get('/intranet', 'empresaController@verEmpresa')->middleware('auth');
+Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados', ["empresa" => Session::get('empresa')]);})->middleware('auth');
+Route::get('/intranet/nuevo-empleado', function () {return view('admin.negocio.crearEmpleado', ["empresa" => Session::get('empresa')]);})->middleware('auth');
+Route::get('/intranet/empleado/edit/{id}', 'empleadoController@edit')->middleware('auth');
+Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');})->middleware('auth');
+Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');})->middleware('auth');
+Route::get('/intranet/pedidos', function () {return view('admin.pedidos.pedidos');})->middleware('auth');
+Route::get('/intranet/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');})->middleware('auth');
+Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');})->middleware('auth');
+Route::get('/intranet/transporte', function () {return view('admin.transporte.transporte');})->middleware('auth');
 
 
-Route::get('/intranet/categorias', 'CategoriasMenusController@fn');
-Route::post('/intranet/categorias/{funcion}', 'CategoriasMenusController@fn');
-Route::get('/intranet/productos', 'ProductosController@fn');
-Route::post('/intranet/productos/{funcion}', 'ProductosController@fn');
+Route::get('/intranet/categorias', 'CategoriasMenusController@fn')->middleware('auth');
+Route::post('/intranet/categorias/{funcion}', 'CategoriasMenusController@fn')->middleware('auth');
+Route::get('/intranet/productos', 'ProductosController@fn')->middleware('auth');
+Route::post('/intranet/productos/{funcion}', 'ProductosController@fn')->middleware('auth');
 
 
-Route::get('/admin/empresas', 'adminController@listarEmpresas');
-Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa');
+Route::get('/admin/empresas', 'adminController@listarEmpresas')->name('admin-total-inicio')->middleware('auth');
+Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa')->middleware('auth');
 
 Auth::routes();
 Route::get('/login', function(){return view('front.login');})->name('loginForm');
