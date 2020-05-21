@@ -30,9 +30,37 @@
 
 @section('content')
     <section id="chartjs-bar-charts">
-        <div class="row">
-            <div class="col-12">
+        <div class="row justify-content-center ">
+            <div class="col-12 col-md-3">
+                <div class="row justify-content-around">
+                    <div class="card col-10 col-md-12 col-xl-12">
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <foto-perfil></foto-perfil>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card col-10 col-md-12 col-xl-12">
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <clave-perfil></clave-perfil>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-12 col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Perfil de usuario</h4>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <user-perfil></user-perfil>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -41,7 +69,7 @@
 
 @section('scripts')
     <script>
-
+        let user = @json($user);
     </script>
 @endsection
 

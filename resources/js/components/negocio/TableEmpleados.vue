@@ -10,12 +10,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="empleado in empleados" :key="empleado.id">
+                <tr v-for="empleado in empleados" :key="empleado.user_id">
                     <th scope="row">{{empleado.nombres}} {{empleado.appaterno}}</th>
                     <td>{{empleado.cargo}}</td>
                     <td>{{empleado.celular}}</td>
                     <td>
-                        <a :href="'/intranet/empleado/edit/'+empleado.id" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
+                        <a :href="'/intranet/empleado/edit/'+empleado.user_id" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
                         <a href="" title="Eliminar"><i class="ft-delete red"></i></a>
                     </td>
                 </tr>

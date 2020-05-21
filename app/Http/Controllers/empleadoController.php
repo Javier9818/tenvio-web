@@ -63,7 +63,7 @@ class empleadoController extends Controller
     }
 
     public function listByEmpresa($empresa){
-        $empleados = DB::select('select *, c.descripcion as cargo from users u
+        $empleados = DB::select('select *, c.descripcion as cargo, u.id as user_id from users u
                     inner join users_empresas ue on u.id = ue.user_id
                     inner join personas p on p.id = u.persona_id
                     inner join cargos c on c.id = ue.cargo_id

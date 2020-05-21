@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class User extends Authenticatable
 {
@@ -36,4 +39,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function setImagen($data, $actual = false){
+        if($data){
+            if($actual){
+                Storage::disk('public')->delete("images/fotosPerfil/$actual");
+            }
+            $imageName=Str::random(20).'.jpg';
+            $imagen=Image::make($data)->encode('jpg',90);
+            $imagen->resize(200,200,function($constraint){
+                $constraint->upsize();
+            });
+            Storage::disk('public')->put("images/fotosPerfil/$imageName",$imagen->stream());
+            return $imageName;
+        }else{
+            return false;
+        }
+    }
 }

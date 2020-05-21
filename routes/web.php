@@ -38,7 +38,7 @@ Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa')->middlewa
 Auth::routes();
 Route::get('/login', function(){return view('front.login');})->name('loginForm');
 Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
-Route::get('/perfil', function(){return view('auth.profile');});
+Route::get('/perfil', 'UserController@getUser');
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* CLIENTE **/

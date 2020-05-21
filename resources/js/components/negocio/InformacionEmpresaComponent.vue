@@ -18,7 +18,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12" v-if="edit === 'editar'">
-                    <img :src="'/storage/images/perfilEmpresa/'+form.foto" alt="No se encontró imagen" width="100%">
+                    <img :src="'/storage/images/perfilEmpresa/'+(form.foto || 'imagenDefault.png')" alt="No se encontró imagen" width="100%">
                 </div>
                 <div class="col-md-12" v-else>
                     <picture-input
@@ -57,7 +57,7 @@
                     <form  class="row" method="POST">
                         <div class="col-md-12 mt-2">
                             <label for="">Foto de negocio</label><br>
-                            <img :src="'/storage/images/perfilEmpresa/'+form.foto" alt="No se encontró imagen" width="40%">
+                            <img :src="'/storage/images/perfilEmpresa/'+(form.foto || 'imagenDefault.png')" alt="No se encontró imagen" width="40%">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->

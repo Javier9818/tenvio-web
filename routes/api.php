@@ -31,4 +31,8 @@ Route::post('/empresa', 'empresaController@setEmpresa');
 Route::put('/empresa/{empresa}', 'empresaController@updateEmpresa');
 Route::put('/fotoEmpresa/{empresa}', 'empresaController@updateFoto');
 
+Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
+Route::put('/user', 'UserController@updateUser');
+Route::put('/pass', 'UserController@updatePassword');
+
 Route::get('/roles', 'generalController@roles');

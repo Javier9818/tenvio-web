@@ -52,6 +52,10 @@ Vue.use(IconsPlugin)
 Vue.component('menu-categorias', require('./components/menu/Categorias.vue').default);
 Vue.component('menu-productos', require('./components/menu/Productos.vue').default);
 
+Vue.component('foto-perfil', require('./components/auth/fotoPerfil.vue').default);
+Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
+Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
