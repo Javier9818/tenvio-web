@@ -31,11 +31,51 @@
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
     <style>
-        .button{
+
+    :root {
+    --color-bg: #ff7a1d;
+    /* --color-bg: #1da1ff; */
+    }
+
+    .button{
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 10px;
     }
+
+    /* .main-menu-content > .menu-title{
+        background: var(--color-bg) !important;
+    }
+    .main-menu-content > ul.menu-popout > li.active> a{
+        color: var(--color-bg) !important;
+    }
+    body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigation .hover > a > i, body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigation:hover > a > i, body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigation .open > a > i{
+        box-shadow: 0 0 20px var(--color-bg);
+    }
+    .main-menu.menu-dark .navigation > li.open > a{
+        color: var(--color-bg);
+    }
+    .main-menu.menu-dark .navigation > li.hover > a, .main-menu.menu-dark .navigation > li:hover > a, .main-menu.menu-dark .navigation > li.active > a {
+        color: var(--color-bg);
+    }
+    .main-menu.menu-dark .navigation > li ul .active > a{
+        color: var(--color-bg);
+    }
+    .main-menu.menu-dark .navigation > li ul .active > a:before {
+        border-color: var(--color-bg);
+        background-color: var(--color-bg);
+    }
+    .main-menu.menu-dark .navigation > li.open .hover > a:before {
+        border-color: var(--color-bg);
+        background-color: var(--color-bg);
+    }
+
+    body.vertical-layout[data-color=bg-gradient-x-purple-blue] .navbar-container, body.vertical-layout[data-color=bg-gradient-x-purple-blue] .content-wrapper-before{
+        background-image: linear-gradient(to right, #f3be12, #e95b23);
+    }
+    .navbar-semi-light{
+        background-color: #f3be12;
+    } */
     </style>
     @yield('styles')
     <!-- END Page Level CSS-->
