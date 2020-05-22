@@ -2,7 +2,7 @@
     <div class="navbar-header">
       <ul class="nav navbar-nav flex-row">
         <li class="nav-item mr-auto"><a class="navbar-brand" href="/intranet">
-            {{-- <img class="brand-logo" alt="Chameleon admin logo" src="/theme-assets/images/logo/logo.png"/> --}}
+            <img class="brand-logo" alt="Chameleon admin logo" src="/theme-assets/images/logo/logo2.png"/>
             <h3 class="brand-text">Te envio</h3></a></li>
         <li class="nav-item d-md-none"><a class="nav-link close-navbar"><i class="ft-x"></i></a></li>
       </ul>
