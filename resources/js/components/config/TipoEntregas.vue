@@ -17,7 +17,7 @@
             name="checkbox-2"
             value="accepted"
             unchecked-value="not_accepted"
-            v-on:changue="recepcionChange()"
+            v-on:click="recepcionChange()"
             >
             Entrega con recepción en local
         </b-form-checkbox>

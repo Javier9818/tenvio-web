@@ -1,0 +1,79 @@
+/* PARA CAMBIAR EL ANCHO DEL MENU LATERAL, Y ESTILOS DEL SCROLL */
+body.vertical-layout.vertical-menu.menu-expanded .main-menu {
+    width: 280px;
+}
+.vertical-overlay-menu .main-menu, .vertical-overlay-menu.menu-hide .main-menu{
+    width: 290px;
+}
+.main-menu ul {
+    overflow: auto;
+    height: 100%;
+}
+.main-menu ul::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    /* display: none;  Ocultar scroll */
+}
+.main-menu ul::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.main-menu ul::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.main-menu ul::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+
+.button{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+
+/* PARA CAMBIAR EL COLOR Y TEMA DEL PROYECTO */
+
+/* :root {
+    --color-bg: #ff7a1d;
+    --color-bg: #1da1ff;
+}    */
+
+/* .main-menu-content > .menu-title{
+    background: var(--color-bg) !important;
+}
+.main-menu-content > ul.menu-popout > li.active> a{
+    color: var(--color-bg) !important;
+}
+body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigation .hover > a > i, body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigation:hover > a > i, body.vertical-layout.vertical-menu.menu-expanded .main-menu.menu-dark .navigation .open > a > i{
+    box-shadow: 0 0 20px var(--color-bg);
+}
+.main-menu.menu-dark .navigation > li.open > a{
+    color: var(--color-bg);
+}
+.main-menu.menu-dark .navigation > li.hover > a, .main-menu.menu-dark .navigation > li:hover > a, .main-menu.menu-dark .navigation > li.active > a {
+    color: var(--color-bg);
+}
+.main-menu.menu-dark .navigation > li ul .active > a{
+    color: var(--color-bg);
+}
+.main-menu.menu-dark .navigation > li ul .active > a:before {
+    border-color: var(--color-bg);
+    background-color: var(--color-bg);
+}
+.main-menu.menu-dark .navigation > li.open .hover > a:before {
+    border-color: var(--color-bg);
+    background-color: var(--color-bg);
+}
+
+body.vertical-layout[data-color=bg-gradient-x-purple-blue] .navbar-container, body.vertical-layout[data-color=bg-gradient-x-purple-blue] .content-wrapper-before{
+    background-image: linear-gradient(to right, #f3be12, #e95b23);
+}
+.navbar-semi-light{
+    background-color: #f3be12;
+} */
