@@ -5,7 +5,7 @@
 @endsection
 
 @section('sideNav')
-    <x-side-nav tab="3" selected='1'/>
+    <x-side-nav tab="5" selected='1'/>
 @endsection
 
 @section('header')

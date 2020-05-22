@@ -42,6 +42,7 @@
                         :options="optionsCargos"
                         value-field="value"
                         text-field="text"
+                        v-on:change="cargoChange()"
                         required
                     >
                         <template v-slot:first>
@@ -154,6 +155,32 @@
                     if(validateUsername && validateEmail) this.update();
                 }
             },
+            cargoChange(){
+                console.log(this.form.cargo);
+               switch (this.form.cargo) {
+                   case 1:
+                       this.form.roles = [1, 2, 3, 4, 5, 6];
+                       break;
+                    case 2:
+                       this.form.roles = [1, 2, 3, 4, 5];
+                       break;
+                    case 3:
+                       this.form.roles = [4];
+                       break;
+                    case 4:
+                       this.form.roles = [4];
+                       break;
+                     case 5:
+                       this.form.roles = [3, 4];
+                       break;
+                     case 6:
+                       this.form.roles = [5];
+                       break;
+
+                   default:
+                       break;
+               }
+            }
         }
     }
 </script>

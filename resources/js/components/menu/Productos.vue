@@ -63,7 +63,7 @@
 				class="mb-0"
 				:hidden="texto=='Modificars'">
 					<div class="text-center">
-						<b-img :src="'/'+rutaImagenes+producto.foto" :hidden="producto.foto==''"></b-img>
+						<b-img :src="'/'+rutaImagenes+producto.foto" :hidden="producto.foto==''" class="img-fluid"></b-img>
 					</div>
 					<sube-archivos @archivosubido="archivosubido"></sube-archivos>
 				</b-form-group>
