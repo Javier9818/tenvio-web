@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [1, 'Gestión de personal']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [2, 'Gestión de contabilidad']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [3, 'Gestión de pedidos']);
-        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [4, 'Gestión de menús']);
+        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [4, 'Gestión de productos']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [5, 'Entregas delivery']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [6, 'Datos de negocio']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [7, 'User']);
@@ -28,15 +28,14 @@ class DatabaseSeeder extends Seeder
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [5, 'FUENTE DE SODA']);
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [6, 'RESPOTERIA']);
 
-        DB::insert('insert into tipos (id, descripcion) values (?, ?)', [1, 'DELIVERY']);
-        DB::insert('insert into tipos (id, descripcion) values (?, ?)', [2, 'RECEPCION']);
+        DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [1, 'DELIVERY']);
+        DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [2, 'RECEPCIÓN EN LOCAL']);
 
         DB::insert('insert into cargos (id, descripcion) values (?, ?)', [1, 'GERENTE']);
         DB::insert('insert into cargos (id, descripcion) values (?, ?)', [2, 'ADMINISTRADOR']);
-        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [3, 'COCINERO']);
-        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [4, 'AYUDANTE DE COCINA']);
-        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [5, 'PERSONAL DE NEGOCIO']);
-        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [6, 'PERSONAL DE TRANSPORTE']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [3, 'CONTADOR']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [4, 'PERSONAL DE NEGOCIO']);
+        DB::insert('insert into cargos (id, descripcion) values (?, ?)', [5, 'PERSONAL DE TRANSPORTE']);
 
 
         $person = Persona::create([

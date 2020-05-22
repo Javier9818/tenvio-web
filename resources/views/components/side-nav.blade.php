@@ -10,7 +10,7 @@
     <div class="main-menu-content">
       <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 
-        <li class="{{ $isTab('1') ? 'active' : 'nav-item' }} hover"><a href="/intranet"><i class="ft-home"></i><span class="menu-title" data-i18n="">Inicio</span></a>
+        <li class="{{ $isTab('1') ? 'active' : 'nav-item' }}"><a href="/intranet"><i class="ft-home"></i><span class="menu-title" data-i18n="">Inicio</span></a>
         </li>
 
         <li class="has-sub nav-item {{ $isTab('2') ? 'open' : '' }}">
@@ -39,7 +39,7 @@
         </li>
         {{-- <i class="ft-pie-chart"></i> --}}
         <li class="has-sub nav-item {{ $isTab('5') ? 'open' : '' }}">
-            <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Menú</span></a>
+            <a href="javascript::void(0)"><i class="ft-pie-chart"></i><span class="menu-title" data-i18n="">Mis productos</span></a>
             <ul class="menu-content">
                 <li class="{{ $isSelected('5', '1') ? 'active' : '' }}"><a class="menu-item" href="/intranet/categorias">Categorías</a></li>
                 <li class="{{ $isSelected('5', '2') ? 'active' : '' }}"><a class="menu-item" href="/intranet/productos">Productos</a></li>
@@ -47,8 +47,13 @@
         </li>
 
 
-        <li class="{{ $isTab('5') ? 'active' : 'nav-item' }}"><a href="/intranet/transporte"><i class="la la-motorcycle"></i><span class="menu-title" data-i18n="">Transporte</span></a>
+        <li class="{{ $isTab('6') ? 'active' : 'nav-item' }}"><a href="/intranet/transporte"><i class="la la-motorcycle"></i><span class="menu-title" data-i18n="">Transporte</span></a>
         </li>
+
+
+        <li class="nav-item {{ $isTab('7') ? 'open' : '' }}"><a href="/intranet/configuraciones"><i class="la la-cog"></i><span class="menu-title" data-i18n="">Configuraciones</span></a>
+        </li>
+
       </ul>
     </div>
     <div class="navigation-background"></div>

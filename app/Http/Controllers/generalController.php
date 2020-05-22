@@ -13,6 +13,14 @@ class generalController extends Controller
         return response()->json(["roles" => $roles], 200);
     }
 
+    public function tiposEntrega($empresa)
+    {
+        $tipos = DB::select('select * from tipo_entrega_empresas te
+                            inner join tipo_entregas t on te.tipo_entrega_id = t.id
+                            where te.empresa_id = ?', [$empresa]);
+        return response()->json(["tipos" => $tipos], 200);
+    }
+
     public function validateUsername($username){
         $user = DB::select('select * from users where username = ?', [$username]);
         if(count($user) > 0 )

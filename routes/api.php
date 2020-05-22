@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/roles', 'generalController@roles');
 Route::get('/categorias', 'generalController@categoriasEmpresa');
+Route::get('/tipo-entregas', 'generalController@tiposEntrega');
 Route::get('/cargos', 'generalController@cargosEmpleado');
 Route::get('/username/{username}', 'generalController@validateUsername');
 Route::get('/email/{email}', 'generalController@validateEmail');
@@ -34,5 +35,3 @@ Route::put('/fotoEmpresa/{empresa}', 'empresaController@updateFoto');
 Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');
 Route::put('/pass', 'UserController@updatePassword');
-
-Route::get('/roles', 'generalController@roles');

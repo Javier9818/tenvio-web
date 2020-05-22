@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 Route::get('/intranet', 'empresaController@verEmpresa')->middleware('auth');
 Route::get('/intranet/empleados', function () {return view('admin.negocio.empleados', ["empresa" => Session::get('empresa')]);})->middleware('auth');
 Route::get('/intranet/nuevo-empleado', function () {return view('admin.negocio.crearEmpleado', ["empresa" => Session::get('empresa')]);})->middleware('auth');
+Route::get('/intranet/configuraciones', function () {return view('admin.config', ["empresa" => Session::get('empresa')]);})->middleware('auth');
 Route::get('/intranet/empleado/edit/{id}', 'empleadoController@edit')->middleware('auth');
 Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');})->middleware('auth');
 Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');})->middleware('auth');

@@ -3014,6 +3014,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/config/TipoEntregas.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/config/TipoEntregas.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      delivery: 'accepted',
+      local: 'accepted',
+      checked: true
+    };
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  },
+  computed: {
+    deliveryChange: function deliveryChange() {
+      alert('hola');
+    },
+    recepcionChange: function recepcionChange() {
+      alert('holarecepcion');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/extras/Loader.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/extras/Loader.vue?vue&type=script&lang=js& ***!
@@ -3863,18 +3921,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           break;
 
         case 3:
-          this.form.roles = [4];
+          this.form.roles = [2];
           break;
 
         case 4:
-          this.form.roles = [4];
-          break;
-
-        case 5:
           this.form.roles = [3, 4];
           break;
 
-        case 6:
+        case 5:
           this.form.roles = [5];
           break;
 
@@ -76125,6 +76179,82 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/config/TipoEntregas.vue?vue&type=template&id=66d41ae1&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/config/TipoEntregas.vue?vue&type=template&id=66d41ae1& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "b-form-checkbox",
+        {
+          attrs: {
+            id: "checkbox-1",
+            name: "checkbox-1",
+            value: "accepted",
+            "unchecked-value": "not_accepted",
+            state: _vm.deliveryChange
+          },
+          model: {
+            value: _vm.delivery,
+            callback: function($$v) {
+              _vm.delivery = $$v
+            },
+            expression: "delivery"
+          }
+        },
+        [_vm._v("\n        Entrega via delivery\n    ")]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "b-form-checkbox",
+        {
+          attrs: {
+            id: "checkbox-2",
+            name: "checkbox-2",
+            value: "accepted",
+            "unchecked-value": "not_accepted"
+          },
+          on: {
+            changue: function($event) {
+              return _vm.recepcionChange()
+            }
+          },
+          model: {
+            value: _vm.local,
+            callback: function($$v) {
+              _vm.local = $$v
+            },
+            expression: "local"
+          }
+        },
+        [_vm._v("\n        Entrega con recepción en local\n    ")]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/extras/Loader.vue?vue&type=template&id=d72684b8&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/extras/Loader.vue?vue&type=template&id=d72684b8& ***!
@@ -95694,6 +95824,7 @@ Vue.component('asignacion-component', __webpack_require__(/*! ./components/Asign
 Vue.component('form-empleado', __webpack_require__(/*! ./components/negocio/FormEmpleado.vue */ "./resources/js/components/negocio/FormEmpleado.vue")["default"]);
 Vue.component('table-empleados', __webpack_require__(/*! ./components/negocio/TableEmpleados.vue */ "./resources/js/components/negocio/TableEmpleados.vue")["default"]);
 Vue.component('info-empresa', __webpack_require__(/*! ./components/negocio/InformacionEmpresaComponent.vue */ "./resources/js/components/negocio/InformacionEmpresaComponent.vue")["default"]);
+Vue.component('tipo-entrega', __webpack_require__(/*! ./components/config/TipoEntregas.vue */ "./resources/js/components/config/TipoEntregas.vue")["default"]);
 Vue.component('form-empresa-register', __webpack_require__(/*! ./components/admin/FormEmpresas.vue */ "./resources/js/components/admin/FormEmpresas.vue")["default"]);
 Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__["BootstrapVue"]);
 Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_0__["IconsPlugin"]);
@@ -96393,6 +96524,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_perfil_vue_vue_type_template_id_64794198___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_perfil_vue_vue_type_template_id_64794198___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/config/TipoEntregas.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/config/TipoEntregas.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TipoEntregas_vue_vue_type_template_id_66d41ae1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TipoEntregas.vue?vue&type=template&id=66d41ae1& */ "./resources/js/components/config/TipoEntregas.vue?vue&type=template&id=66d41ae1&");
+/* harmony import */ var _TipoEntregas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TipoEntregas.vue?vue&type=script&lang=js& */ "./resources/js/components/config/TipoEntregas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TipoEntregas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TipoEntregas_vue_vue_type_template_id_66d41ae1___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TipoEntregas_vue_vue_type_template_id_66d41ae1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/config/TipoEntregas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/config/TipoEntregas.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/config/TipoEntregas.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoEntregas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TipoEntregas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/config/TipoEntregas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoEntregas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/config/TipoEntregas.vue?vue&type=template&id=66d41ae1&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/config/TipoEntregas.vue?vue&type=template&id=66d41ae1& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoEntregas_vue_vue_type_template_id_66d41ae1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TipoEntregas.vue?vue&type=template&id=66d41ae1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/config/TipoEntregas.vue?vue&type=template&id=66d41ae1&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoEntregas_vue_vue_type_template_id_66d41ae1___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TipoEntregas_vue_vue_type_template_id_66d41ae1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -10,6 +10,8 @@
     <meta name="author" content="ThemeSelect">
     <title>@yield('title')</title>
     <link rel="apple-touch-icon" href="/theme-assets/images/ico/apple-icon-120.png">
+    <link rel="apple-touch-icon" href="/theme-assets/css/plugins/forms/switch.css">
+    <link rel="apple-touch-icon" href="/theme-assets/css/plugins/forms/checkboxes-radios.css">
     <link rel="shortcut icon" type="image/x-icon" href="/theme-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
@@ -116,7 +118,7 @@
     <!-- BEGIN VENDOR JS-->
     <script src="/theme-assets/js/core/vendors.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/switchery.min.js.descargar" type="text/javascript"></script>
-    <script src="/theme-assets/js/core/switch.min.js.descargar" type="text/javascript"></script>
+    <script src="/theme-assets/js/scripts/forms/switch.min.js" type="text/javascript"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
     {{-- <script src="/theme-assets/vendors/js/charts/chart.min.js" type="text/javascript"></script> --}}
@@ -129,8 +131,6 @@
     <script src="/theme-assets/js/core/compact-menu.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/customizer.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/prism.min.js.descargar" type="text/javascript"></script>
-    <script src="/theme-assets/js/core/switch.min.js.descargar" type="text/javascript"></script>
-    <script src="/theme-assets/js/core/switchery.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
 
 

@@ -24,6 +24,10 @@ class empresaController extends Controller
             "ciudad" => $request->ciudad,
         ]);
 
+
+        DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
+        DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
+
         Contrato::create([
             "empresa_id" => $empresa->id,
             "estado" => 'PRUEBA'
