@@ -77,4 +77,11 @@ class empresaController extends Controller
         return view('admin.inicio', ["empresa" => $empresa[0]]);
     }
 
+    public function listarEmpresas(){
+
+        $empresas = Empresa::all();
+
+        return view('front.listEmpresa',compact('empresas'));
+    }
+
 }
