@@ -50,4 +50,4 @@ Route::get('/empresa', function(){return view('front.empresa');});
 Route::get('/cart', function(){return view('front.cart');});
 
 
-Route::get('/list', function(){ return view('front.listEmpresa');});
+Route::get('/list','empresaController@listarEmpresas');
