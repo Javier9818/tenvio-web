@@ -46,7 +46,35 @@ class DatabaseSeeder extends Seeder
             "dni" => "72764269"
         ]);
 
-        DB::insert('insert into users (username, email, password, persona_id, isAdmin) values (?, ?, ?, ?, ?)', ['Javier98', 'jbriceno@unitru.edu.pe','$2y$10$bYFb1csH9VFCm43kVtYN.uDvXvH4nAkk4oSBu2wsrk68AsUf00iP2',$person->id,true]);
+		$person2 = Persona::create([
+            "nombres" => "Jairo",
+            "appaterno" => "Navez",
+            "apmaterno" => "Aroca",
+            "celular" => "956504624",
+            "direccion" => "Manuel Ubalde #822",
+            "dni" => "72409948"
+        ]);
+
+
+        DB::insert('insert into users (username, email, password, persona_id, isAdmin) values (?, ?, ?, ?, ?)',
+			[
+				'Javier98',
+				'jbriceno@unitru.edu.pe',
+				'$2y$10$bYFb1csH9VFCm43kVtYN.uDvXvH4nAkk4oSBu2wsrk68AsUf00iP2'
+				,$person->id,
+				true
+			]
+		);
+
+        DB::insert('insert into users (username, email, password, persona_id, isAdmin) values (?, ?, ?, ?, ?)',
+			[
+				'jnavez',
+				'jnavez@unitru.edu.pe',
+				'$2y$10$bYFb1csH9VFCm43kVtYN.uDvXvH4nAkk4oSBu2wsrk68AsUf00iP2'//123456789
+				,$person2->id,
+				true
+			]
+		);
 
     }
 }
