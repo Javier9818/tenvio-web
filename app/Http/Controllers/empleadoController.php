@@ -24,11 +24,14 @@ class empleadoController extends Controller
             "username" => $request->username,
             "email" => $request->email,
             "password" => Hash::make($request->dni),
-            "persona_id" => $persona->id
+            "persona_id" => $persona->id,
+            "persona_id" => $persona->id,
+            "isCustomer" => true
         ]);
 
         DB::insert('insert into users_empresas (user_id, empresa_id, cargo_id) values (?, ?, ?)', [$user->id, $request->empresa, $request->cargo]);
 
+        DB::insert('insert into permisos_users (permiso_id, user_id) values (?, ?)', [7, $user->id]);
         foreach ($request->roles as $key => $value) {
             DB::insert('insert into permisos_users (permiso_id, user_id) values (?, ?)', [$value, $user->id]);
         }

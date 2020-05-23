@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/roles', 'generalController@roles');
 Route::get('/categorias', 'generalController@categoriasEmpresa');
-Route::get('/tipo-entregas', 'generalController@tiposEntrega');
 Route::get('/cargos', 'generalController@cargosEmpleado');
 Route::get('/username/{username}', 'generalController@validateUsername');
 Route::get('/email/{email}', 'generalController@validateEmail');
@@ -31,6 +30,8 @@ Route::get('/empleados/{empresa}', 'empleadoController@listByEmpresa');
 Route::post('/empresa', 'empresaController@setEmpresa');
 Route::put('/empresa/{empresa}', 'empresaController@updateEmpresa');
 Route::put('/fotoEmpresa/{empresa}', 'empresaController@updateFoto');
+Route::get('/tipo-entregas/{empresa}', 'empresaController@tiposEntrega');
+Route::put('/tipo-entregas', 'empresaController@updateTipoEntrega');
 
 Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');

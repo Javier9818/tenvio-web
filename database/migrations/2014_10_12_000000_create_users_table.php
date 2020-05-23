@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('foto', 25)->nullable();
             $table->boolean('isAdmin')->default(false);
+            $table->boolean('isCustomer')->default(false);
             $table->string('persona_id');
             $table->rememberToken();
             $table->timestamps();

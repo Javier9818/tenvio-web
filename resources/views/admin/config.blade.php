@@ -32,7 +32,7 @@
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header mb-0">
                     <h4 class="card-title">Tipos de entrega</h4>
                 </div>
                 <div class="card-content collapse show">
@@ -44,4 +44,10 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+    <script>
+        let empresa = @json($empresa);
+    </script>
 @endsection

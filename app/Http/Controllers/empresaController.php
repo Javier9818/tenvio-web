@@ -88,4 +88,15 @@ class empresaController extends Controller
         return view('front.listEmpresa',compact('empresas'));
     }
 
+    public function tiposEntrega($empresa){
+        $tipos = DB::select('select * from tipo_entrega_empresas te
+                            inner join tipo_entregas t on te.tipo_entrega_id = t.id
+                            where te.empresa_id = ?', [$empresa]);
+        return response()->json(["tipos" => $tipos], 200);
+    }
+
+    public function updateTipoEntrega(Request $request){
+        DB::update('update tipo_entrega_empresas set estado = ? where tipo_entrega_id = ? and empresa_id = ?', [$request->estado, $request->tipo_entrega_id, $request->empresa]);
+    }
+
 }

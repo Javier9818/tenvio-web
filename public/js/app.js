@@ -2620,11 +2620,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (!this.form.errorClave) {
                   axios.put('/api/pass', this.form).then(function (_ref) {
                     var data = _ref.data;
-                    if (data.error) sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Error', 'Ha sucedido un error', 'error');
+                    if (data.error) sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Error', 'Ha sucedido un error, asegúrese de haber ingresado la contraseña correcta', 'error');
 
                     if (data.message) {
-                      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Éxito', 'La foto se ha actualizado', 'success').then(function (data) {
+                      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Éxito', 'Su contraseña ha sido actualizada', 'success').then(function (data) {
                         _this.editar = null;
+                        _this.form = {
+                          claveActual: '',
+                          claveNueva: '',
+                          claveRepetida: '',
+                          errorClave: null,
+                          id: user.id
+                        };
                       });
                     }
                   });
@@ -3023,6 +3030,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3033,39 +3048,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      delivery: 'accepted',
-      local: 'accepted',
-      checked: true
+      alert: 0,
+      tipos: []
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     console.log('Component mounted.');
+    axios.get("/api/tipo-entregas/".concat(empresa)).then(function (_ref) {
+      var data = _ref.data;
+      _this.tipos = data.tipos;
+
+      _this.valida(data.tipos);
+    });
   },
-  computed: {
-    deliveryChange: function deliveryChange() {
-      alert('hola');
+  methods: {
+    valida: function valida(array) {
+      var value = 0;
+      array.forEach(function (tipo) {
+        value = value + tipo.estado;
+      });
+      this.alert = value;
     },
-    recepcionChange: function recepcionChange() {
-      alert('holarecepcion');
+    handleTipo: function handleTipo(tipo) {
+      var _this2 = this;
+
+      axios.put('/api/tipo-entregas', _objectSpread(_objectSpread({}, this.tipos[tipo - 1]), {}, {
+        empresa: empresa
+      })).then(function (_ref2) {
+        var data = _ref2.data;
+        sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'El dato ha sido actualizado', 'success');
+
+        _this2.valida(_this2.tipos);
+      })["catch"](function (error) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Error', 'Ha sucedido un error', 'error');
+      });
     }
   }
 });
@@ -76197,55 +76219,65 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "b-form-checkbox",
-        {
-          attrs: {
-            id: "checkbox-1",
-            name: "checkbox-1",
-            value: "accepted",
-            "unchecked-value": "not_accepted",
-            state: _vm.deliveryChange
-          },
-          model: {
-            value: _vm.delivery,
-            callback: function($$v) {
-              _vm.delivery = $$v
+      _vm._l(_vm.tipos, function(tipo) {
+        return _c("div", { key: tipo.id, staticClass: "form-group" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: tipo.estado,
+                expression: "tipo.estado"
+              }
+            ],
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(tipo.estado)
+                ? _vm._i(tipo.estado, null) > -1
+                : tipo.estado
             },
-            expression: "delivery"
-          }
-        },
-        [_vm._v("\n        Entrega via delivery\n    ")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "b-form-checkbox",
-        {
-          attrs: {
-            id: "checkbox-2",
-            name: "checkbox-2",
-            value: "accepted",
-            "unchecked-value": "not_accepted"
-          },
-          on: {
-            changue: function($event) {
-              return _vm.recepcionChange()
+            on: {
+              change: [
+                function($event) {
+                  var $$a = tipo.estado,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && _vm.$set(tipo, "estado", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          tipo,
+                          "estado",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(tipo, "estado", $$c)
+                  }
+                },
+                function($event) {
+                  return _vm.handleTipo(tipo.id)
+                }
+              ]
             }
-          },
-          model: {
-            value: _vm.local,
-            callback: function($$v) {
-              _vm.local = $$v
-            },
-            expression: "local"
-          }
-        },
-        [_vm._v("\n        Entrega con recepción en local\n    ")]
-      )
+          }),
+          _vm._v("\n        " + _vm._s(tipo.nombre) + "\n    ")
+        ])
+      }),
+      _vm._v(" "),
+      _vm.alert === 0
+        ? _c("span", { staticStyle: { color: "red" } }, [
+            _vm._v(
+              " Sus clientes no podrán realizar pedidos, se recomienda dejar un campo activado"
+            )
+          ])
+        : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

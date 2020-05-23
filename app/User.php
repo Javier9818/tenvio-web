@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -19,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'persona_id', 'email'
+        'username', 'password', 'persona_id', 'email', 'isAdmin', 'isCustomer'
     ];
 
     /**
@@ -28,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password','isAdmin', 'isCustomer', 'remember_token',
     ];
 
     /**
@@ -56,4 +58,5 @@ class User extends Authenticatable
             return false;
         }
     }
+
 }

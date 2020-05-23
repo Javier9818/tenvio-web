@@ -7,18 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class generalController extends Controller
 {
-    public function roles()
-    {
-        $roles = DB::select('select id as value, descripcion as text from permisos');
+    public function roles(){
+        $roles = DB::select('select id as value, descripcion as text from permisos where descripcion != "User"');
         return response()->json(["roles" => $roles], 200);
-    }
-
-    public function tiposEntrega($empresa)
-    {
-        $tipos = DB::select('select * from tipo_entrega_empresas te
-                            inner join tipo_entregas t on te.tipo_entrega_id = t.id
-                            where te.empresa_id = ?', [$empresa]);
-        return response()->json(["tipos" => $tipos], 200);
     }
 
     public function validateUsername($username){
