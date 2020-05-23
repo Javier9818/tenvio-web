@@ -14,13 +14,21 @@
                 <li class="nav__item with-dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle nav__item-link active">{{Auth::user()->username}}</a>
                     <ul class="dropdown-menu">
-                    <li class="nav__item"><a href="{{ route('logout') }}" class="nav__item-link" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">Cerrar Sesion</a></li>
+                        @can('gestionar-panel-empresa')
+                            @can('gestionar-panel-general')
+                                <li class="nav__item"><a href="/admin/empresas" class="nav__item-link">Panel de administración</a></li>
+                            @else
+                                <li class="nav__item"><a href="/intranet" class="nav__item-link">Panel de administración</a></li>
+                            @endcan
+                        @endcan
+                        <li class="nav__item"><a href="{{ route('logout') }}" class="nav__item-link" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">Cerrar Sesion</a>
+                        </li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                    <li class="nav__item"><a href="home-gourmet.html" class="nav__item-link">Ajustes</a></li>
                     </ul>
+
                 </li>
             @else
                 <li class="nav__item"><a href="/login" class="nav__item-link">Iniciar Sesion</a></li>

@@ -35,6 +35,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin;
         });
 
+        Gate::define('gestionar-panel-empresa', function($user){
+            return $user->isCustomer;
+        });
+
         Gate::define('gestionar-personal', function($user){
             $permisos = $user->permisoUser;
             foreach ($permisos as $key => $permiso) {
