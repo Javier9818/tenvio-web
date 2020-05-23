@@ -30,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password','isAdmin', 'isCustomer', 'remember_token',
+        'password', 'remember_token',
     ];
 
     /**
@@ -57,6 +57,14 @@ class User extends Authenticatable
         }else{
             return false;
         }
+    }
+
+    public  function userEmpresa(){
+        return $this->hasOne('App\UserEmpresa');
+    }
+
+    public function permisoUser(){
+        return $this->belongsToMany('App\Permiso');
     }
 
 }

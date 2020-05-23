@@ -3669,6 +3669,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
+    console.log(this.edit);
     axios.get('/api/roles').then(function (_ref) {
       var data = _ref.data;
       _this.options = data.roles;
@@ -4144,11 +4145,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['editar'],
   mounted: function mounted() {
     var _this = this;
 
     console.log('Component mounted.');
     console.log(empresa);
+    console.log(this.editar);
     axios.get('/api/categorias').then(function (_ref) {
       var data = _ref.data;
       _this.optionsCategorias = data.categorias;
@@ -77326,64 +77329,68 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title" }, [
-        _vm._v("Información de la empresa")
+        _vm._v("Información de la empresa " + _vm._s(_vm.editar))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "d-block d-md-none" }, [
-        _vm.edit == "editar"
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mt-1",
-                on: { click: _vm.changeEdit }
-              },
-              [_vm._v(_vm._s(_vm.edit))]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.edit == "Guardar cambios"
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mt-1",
-                on: { click: _vm.cancelEdit }
-              },
-              [_vm._v("Cancelar")]
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "heading-elements d-none d-md-block" }, [
-        _c("ul", { staticClass: "list-inline" }, [
-          _vm.edit == "editar"
-            ? _c("li", [
-                _c(
+      _vm.editar === "true"
+        ? _c("div", { staticClass: "d-block d-md-none" }, [
+            _vm.edit == "editar"
+              ? _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary",
+                    staticClass: "btn btn-primary mt-1",
                     on: { click: _vm.changeEdit }
                   },
                   [_vm._v(_vm._s(_vm.edit))]
                 )
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.edit == "Guardar cambios"
-            ? _c("li", [
-                _c(
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.edit == "Guardar cambios"
+              ? _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary",
+                    staticClass: "btn btn-primary mt-1",
                     on: { click: _vm.cancelEdit }
                   },
                   [_vm._v("Cancelar")]
                 )
-              ])
-            : _vm._e()
-        ])
-      ])
+              : _vm._e()
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm.editar === "true"
+        ? _c("div", { staticClass: "heading-elements d-none d-md-block" }, [
+            _c("ul", { staticClass: "list-inline" }, [
+              _vm.edit == "editar"
+                ? _c("li", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: { click: _vm.changeEdit }
+                      },
+                      [_vm._v(_vm._s(_vm.edit))]
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.edit == "Guardar cambios"
+                ? _c("li", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: { click: _vm.cancelEdit }
+                      },
+                      [_vm._v("Cancelar")]
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-content collapse show" }, [

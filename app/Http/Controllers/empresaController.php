@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contrato;
 use App\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -75,6 +76,8 @@ class empresaController extends Controller
 
     public function verEmpresa(){
         $idempresa = Session::get('empresa');
+        // $permisos = Auth::user()->permisoUser;
+        // return dd($permisos[5]->descripcion);
         $empresa = DB::select('select e.*, c.descripcion as categoriaName, c.id as categoria from empresas e
                                 inner join categorias c on e.categoria_id = c.id
                                 where e.id = ?', [$idempresa]);

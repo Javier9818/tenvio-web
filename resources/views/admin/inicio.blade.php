@@ -32,8 +32,11 @@
     <section id="chartjs-bar-charts">
         <div class="row">
             <div class="col-12">
-                {{-- <img src="{{asset('storage/images/perfilEmpresa/'.$empresa->foto)}}" alt="" width="100%"> --}}
-                <info-empresa></info-empresa>
+                @can('edit-company')
+                    <info-empresa editar=true></info-empresa>
+                @else
+                    <info-empresa editar=false></info-empresa>
+                @endcan
             </div>
         </div>
     </section>

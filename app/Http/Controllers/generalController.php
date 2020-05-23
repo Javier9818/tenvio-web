@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -36,5 +36,17 @@ class generalController extends Controller
     public function cargosEmpleado(){
         $roles = DB::select('select id as value, descripcion as text from cargos');
         return response()->json(["cargos" => $roles], 200);
+    }
+
+    public function vistaEmpleados(){
+        return view('admin.negocio.empleados', ["empresa" => Session::get('empresa')]);
+    }
+
+    public function vistaNuevoEmpleado(){
+        return view('admin.negocio.crearEmpleado', ["empresa" => Session::get('empresa')]);
+    }
+
+    public function vistaConfiguraciones(){
+        return view('admin.config', ["empresa" => Session::get('empresa')]);
     }
 }

@@ -66,6 +66,7 @@
     export default {
         props:['edit'],
         mounted() {
+            console.log(this.edit);
             axios.get('/api/roles').then(({data})=>{ this.options = data.roles });
             axios.get('/api/cargos').then(({data})=>{ this.optionsCargos = data.cargos });
             if(this.edit){ this.form = { ...empleado, roles }; console.log(empleado);};

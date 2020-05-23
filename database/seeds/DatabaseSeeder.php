@@ -17,9 +17,8 @@ class DatabaseSeeder extends Seeder
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [2, 'Gestión de contabilidad']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [3, 'Gestión de pedidos']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [4, 'Gestión de productos']);
-        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [5, 'Entregas delivery']);
-        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [6, 'Datos de negocio']);
-        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [7, 'User']);
+        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [5, 'Repartidor delivery']);
+        DB::insert('insert into permisos (id, descripcion) values (?, ?)', [6, 'Gestión de datos de negocio']);
 
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [1, 'POLLERIA']);
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [2, 'CHIFA']);

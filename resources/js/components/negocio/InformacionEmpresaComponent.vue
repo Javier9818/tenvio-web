@@ -1,13 +1,13 @@
 <template>
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Información de la empresa</h4>
-        <div class="d-block d-md-none">
+        <h4 class="card-title">Información de la empresa {{editar}}</h4>
+        <div class="d-block d-md-none" v-if="editar === 'true'">
             <button v-if="edit=='editar'" class="btn btn-primary mt-1" v-on:click="changeEdit">{{edit}}</button>
             <button class="btn btn-primary mt-1" v-if="edit=='Guardar cambios'" v-on:click="cancelEdit">Cancelar</button>
         </div>
         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-        <div class="heading-elements d-none d-md-block">
+        <div class="heading-elements d-none d-md-block" v-if="editar === 'true'">
             <ul class="list-inline">
                 <li v-if="edit=='editar'"><button class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button></li>
                 <li v-if="edit=='Guardar cambios'"><button class="btn btn-primary" v-on:click="cancelEdit">Cancelar</button></li>
@@ -154,9 +154,11 @@
     import PictureInput from 'vue-picture-input'
     import Swal from 'sweetalert2'
     export default {
+        props:['editar'],
         mounted() {
             console.log('Component mounted.')
             console.log(empresa);
+            console.log(this.editar);
             axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
             axios.get('/json/departamentos.json').then(({data}) => {this.departamentos = data;});
             axios.get('/json/distritos.json').then(({data}) => {
