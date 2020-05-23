@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\CategoriaMenu;
+use Illuminate\Support\Facades\Session;
 
 class CategoriasMenusController extends Controller
 {
@@ -11,7 +12,7 @@ class CategoriasMenusController extends Controller
 		if ($funcion == 'listar') return $this->listar($request);
 		else if ($funcion == 'setupddel') return $this->setupddel($request);
 		else if ($funcion == 'listarvselect') return $this->listarvselect($request);
-		else return view('admin.menu.categorias');
+		else return view('admin.menu.categorias',["empresa" => Session::get('empresa')]);
     }
 
 	static function listarvselect(Request $request){

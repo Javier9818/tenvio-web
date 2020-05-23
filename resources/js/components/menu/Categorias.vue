@@ -106,6 +106,7 @@ export default {
 		},
 	},
 	mounted() {
+        console.log(empresa);
 	},
 	created: function(){
 		this.cargarCategorias();

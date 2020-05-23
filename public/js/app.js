@@ -3347,7 +3347,9 @@ __webpack_require__.r(__webpack_exports__);
       this.setupddel(true);
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(empresa);
+  },
   created: function created() {
     this.cargarCategorias();
   }
