@@ -69,6 +69,10 @@ Vue.component('clave-perfil', require('./components/auth/contraseña.vue').defau
 //FRONT CLIENTE
 Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
 
+
+/*Front*/
+Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

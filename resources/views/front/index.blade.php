@@ -21,11 +21,11 @@
               <div class="slide__content">
                 <span class="slide__subtitle d-none">Text</span>
                 <h2 class="slide__title text-uppercase">Busca la ciudad o nombre del restaurant</h2>
-                <p class="slide__desc"></p> <input type="text"  style="text-align:center;font-size:2.5em" class="form-control">
-
-
-
-                <a href="#" class="btn btn__white btn__bordered my-5">Buscar restaurantes cercanos a mi posición</a>
+                <p class="slide__desc"></p> 
+                <form action="{{ route('list') }}" method="get">                   
+                  <input type="text"  name="search" style="text-align:center;font-size:2.5em" class="form-control">
+                </form>        
+                <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
               </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->
           </div><!-- /.row -->
