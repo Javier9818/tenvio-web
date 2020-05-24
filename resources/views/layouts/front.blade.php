@@ -123,9 +123,8 @@
     </div><!-- /.search-popup -->
 
   </div>
-  <!-- /.app.js de Vue -->
-  <script src="/js/app.js" type="text/javascript"></script>
-   <!-- /.wrapper -->
+  <!-- /.wrapper -->
+
   <script src="assets/js/jquery-3.3.1.min.js"></script>
   <script src="assets/js/plugins.js"></script>
   <!-- <script src="assets/js/wow.min.js"></script> -->
