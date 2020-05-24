@@ -52,11 +52,11 @@
       </div><!-- /.row -->
       <div class="row">
         <!-- Post Item #1 -->
-        @for ($i = 0; $i < 6; $i++)
-           <div class="col-sm-12 col-md-6 col-lg-4">
+        @foreach ($empresas as $empresa)
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="post-item">
             <div class="post__img">
-              <a href="#">
+              <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre))}}">
                 <img src="assets/images/blog/grid/1.jpg" alt="post image">
               </a>
             </div><!-- /.post__img -->
@@ -67,14 +67,13 @@
                   <a href="#">Polleria</a><a href="#">Parrillas</a>
                 </div><!-- /.post-meta-cat -->
               </div><!-- /.post-meta -->
-              <h4 class="post__title"><a href="#">Poller ROASCHICKEN</a></h4>
-              <p class="post__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id minus ad quo alias ipsa accusamus rem atque vel et quos tempore expedita quidem explicabo labore, itaque quod odit, eaque suscipit..</p>
-              <a href="#" class="btn btn__secondary btn__link d-none">Read More</a>
+              <h4 class="post__title"><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre))}}">{{$empresa->nombre}}</a></h4>
+              <p class="post__desc">{{$empresa->descripcion}}</p>
+              <!-- <a href=" " class="btn btn__secondary btn__link d-none">Ver más</a> -->
             </div><!-- /.post__content -->
           </div><!-- /.post-item -->
         </div><!-- /.col-lg-4 -->
-        @endfor
-
+        @endforeach      
       </div><!-- /.row -->
     </div><!-- /.container -->
   </section><!-- /.blog Grid -->
