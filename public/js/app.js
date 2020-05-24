@@ -3389,9 +3389,7 @@ __webpack_require__.r(__webpack_exports__);
       this.setupddel(true);
     }
   },
-  mounted: function mounted() {
-    console.log(empresa);
-  },
+  mounted: function mounted() {},
   created: function created() {
     this.cargarCategorias();
   }
