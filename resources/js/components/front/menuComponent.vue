@@ -125,7 +125,7 @@ export default {
   data()
   {
     return{
-      categorias:[],
+      categorias:[{ value: 'all', text: 'Todo' }],
       productos:[],
       categoria:'',
       options: { value: 0, text: '' },
@@ -142,7 +142,7 @@ export default {
 			axios.post('/front/categorias',{id:that.id})
 			.then(function (response) {
         console.log(response.data);
-         that.categorias=[];
+        // that.categorias=[];
         response.data.forEach(element => {        
           that.categorias.push(element);
         });			 

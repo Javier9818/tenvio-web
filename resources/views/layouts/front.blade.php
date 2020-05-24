@@ -17,8 +17,8 @@
   @yield('styles')
 </head>
 
-<body>
-  <div class="wrapper">
+<body >
+  <div class="wrapper" id="app">
     <!-- =========================
         Header
     =========================== -->

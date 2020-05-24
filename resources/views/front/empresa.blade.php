@@ -34,7 +34,7 @@
   <!-- ========================
      shop Products
   =========================== -->
-  <div id="app">
+  <div >
     <front-menu-component id="{{$data[0]->id}}"></front-menu-component>
   </div>
   
@@ -56,7 +56,7 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
                 <div class="product__single-img text-center w-50">
-                  <img src="assets/images/shop/full/1.jpg" class="zoomin" alt="product" style="visibility: visible;">
+                  <!-- <img src="assets/images/shop/full/1.jpg" class="zoomin" alt="product" style="visibility: visible;"> -->
                 </div><!-- /.product-img -->
               </div><!-- /.col-lg-6 -->
               <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
