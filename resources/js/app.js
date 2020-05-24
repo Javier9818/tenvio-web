@@ -29,6 +29,11 @@ import 'vue-loaders/dist/vue-loaders.css'
 import VueLoaders from 'vue-loaders'
 Vue.use(VueLoaders)
 
+//Vuelidate
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
