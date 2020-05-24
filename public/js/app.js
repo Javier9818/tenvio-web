@@ -2704,6 +2704,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 303658a... Fotos por default arreglados
+=======
 >>>>>>> parent of 303658a... Fotos por default arreglados
 =======
 >>>>>>> parent of 303658a... Fotos por default arreglados
@@ -3331,6 +3334,9 @@ __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 303658a... Fotos por default arreglados
 =======
 >>>>>>> parent of 303658a... Fotos por default arreglados
           sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
@@ -3568,6 +3574,9 @@ __webpack_require__.r(__webpack_exports__);
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 303658a... Fotos por default arreglados
 =======
 >>>>>>> parent of 303658a... Fotos por default arreglados
 =======
