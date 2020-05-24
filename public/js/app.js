@@ -2701,6 +2701,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3320,8 +3322,11 @@ __webpack_require__.r(__webpack_exports__);
         categoria: this.categoria,
         eliminar: eliminar
       }).then(function (response) {
-        //console.log(response.data);
-        if (response.data) {
+        console.log(response);
+        console.log(response.data);
+        console.log(response.data == true);
+
+        if (response.data == true) {
           sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
           that.cerrarModal();
           that.cargarCategorias();
@@ -3520,6 +3525,7 @@ __webpack_require__.r(__webpack_exports__);
       this.producto.descripcion = '';
       this.producto.precio = 0;
       this.producto.foto = '';
+      this.producto.fotosubida = null;
       this.producto.categorias_menu_id = null;
     },
     editar: function editar(item) {
@@ -3539,14 +3545,37 @@ __webpack_require__.r(__webpack_exports__);
       this.setupddel(true);
     },
     setupddel: function setupddel(eliminar) {
-      //console.log(this.categoria);
+      console.log(this.producto);
+
+      if (eliminar == false) {
+        if (this.producto.nombre == '') {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Advertencia', 'Debe ingresar un nombre de producto', 'warning');
+          return;
+        }
+
+        if (this.producto.descripcion == '') {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Advertencia', 'Debe ingresar una descripcion del producto ', 'warning');
+          return;
+        }
+
+        if (this.producto.precio <= 0) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Advertencia', 'El precio del producto debe ser mayor a s/0.00', 'warning');
+          return;
+        }
+
+        if (this.producto.categorias_menu_id == null) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Advertencia', 'Debe ingresar la categoría del producto ', 'warning');
+          return;
+        }
+      }
+
       var that = this;
       axios.post(this.ruta + '/setupddel', {
         producto: this.producto,
         eliminar: eliminar
       }).then(function (response) {
         //console.log(response.data);
-        if (response.data) {
+        if (response.data == true) {
           sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
           that.cerrarModal();
           that.cargarProductos();
@@ -3992,6 +4021,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -75322,7 +75355,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "number",
-                  placeholder: "Ingrese un nombre de usuario",
+                  placeholder: "Ingrese su número de celular",
                   required: ""
                 },
                 domProps: { value: _vm.form.celular },
@@ -75387,7 +75420,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
-                  placeholder: "Ingrese un nombre de usuario",
+                  placeholder: "Ingrese la direccion de su empresa",
                   required: ""
                 },
                 domProps: { value: _vm.form.direccion },
@@ -75547,7 +75580,7 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
-                  placeholder: "Ingrese un nombre de usuario",
+                  placeholder: "Ingrese el nombre de su ciudad",
                   required: ""
                 },
                 domProps: { value: _vm.form.ciudad },
@@ -75823,9 +75856,9 @@ var render = function() {
                 _c("img", {
                   staticClass: "desvanecer",
                   attrs: {
-                    src:
-                      "/storage/images/fotosPerfil/" +
-                      (_vm.foto || "perfil.png"),
+                    src: _vm.foto
+                      ? "/storage/images/perfilEmpresa/" + _vm.foto
+                      : "/img/perfil.png",
                     alt: "avatar"
                   }
                 })
@@ -77331,7 +77364,7 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "card-title" }, [
-        _vm._v("Información de la empresa " + _vm._s(_vm.editar))
+        _vm._v("Información de la empresa")
       ]),
       _vm._v(" "),
       _vm.editar === "true"
@@ -77402,9 +77435,9 @@ var render = function() {
             ? _c("div", { staticClass: "col-md-12" }, [
                 _c("img", {
                   attrs: {
-                    src:
-                      "/storage/images/perfilEmpresa/" +
-                      (_vm.form.foto || "imagenDefault.png"),
+                    src: _vm.form.foto
+                      ? "/storage/images/perfilEmpresa/" + _vm.form.foto
+                      : "/img/imagenDefault.png",
                     alt: "No se encontró imagen",
                     width: "100%"
                   }
@@ -77532,9 +77565,9 @@ var render = function() {
                     _vm._v(" "),
                     _c("img", {
                       attrs: {
-                        src:
-                          "/storage/images/perfilEmpresa/" +
-                          (_vm.form.foto || "imagenDefault.png"),
+                        src: _vm.form.foto
+                          ? "/storage/images/perfilEmpresa/" + _vm.form.foto
+                          : "/img/imagenDefault.png",
                         alt: "No se encontró imagen",
                         width: "40%"
                       }
@@ -77875,7 +77908,7 @@ var render = function() {
                       staticClass: "form-control",
                       attrs: {
                         type: "text",
-                        placeholder: "Ingrese un nombre de usuario",
+                        placeholder: "Ingrese el nombre de la ciudad",
                         required: ""
                       },
                       domProps: { value: _vm.form.ciudad },
