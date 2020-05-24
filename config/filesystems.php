@@ -55,6 +55,19 @@ return [
             'visibility' => 'public',
         ],
 
+		'temp' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public/temp'),
+			'url' => env('APP_URL').'/storage/temp',
+			'visibility' => 'public',
+		],
+		'imgproductos' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public/imgproductos'),
+			'url' => env('APP_URL').'/storage/imgproductos',
+			'visibility' => 'public',
+		],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -64,6 +77,8 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
         ],
+
+
 
     ],
 
