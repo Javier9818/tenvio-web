@@ -116,7 +116,63 @@
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
     </div><!-- /.container -->
+    <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <div class="container">
+
+            <div class="row justify-content-center align-items-center">
+              <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
+                <div class="product__single-img text-center w-50">
+                  <!-- <img src="assets/images/shop/full/1.jpg" class="zoomin" alt="product" style="visibility: visible;"> -->
+                </div><!-- /.product-img -->
+              </div><!-- /.col-lg-6 -->
+              <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
+                <h4 class="product__title">1/4 Pollo a la brasa</h4>
+                <span class="product__price">S/. 18.00</span>
+                <hr class="hr-dashed mt-30 mb-30">
+                <nav class="nav nav-tabs justify-content-center">
+                  <a class="nav__link">Description</a>
+                   {{--  <a class="nav__link" data-toggle="tab" href="#Details">Additional Information</a>
+                   <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (0)</a> --}}
+                 </nav>
+                <div class="product__desc">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et voluptatum magni illum quos dolorem nam nisi animi amet eos quas natus, ea aliquam sequi, similique commodi iure, quo veritatis consequatur.</p>
+                </div><!-- /.product-desc -->
+                <form class="product__form-wrap mb-30">
+                  <div class="product__quantity d-flex">
+                    <div class="quantity__input-wrap mr-20">
+                      <i class="decrease-qty fas fa-minus-circle"></i>
+                      <input type="number" value="1" class="qty-input">
+                      <i class="increase-qty fas fa-plus-circle"></i>
+                    </div>
+                    <button class="btn btn__primary">Agregar</button>
+                  </div><!-- /.product-quantity -->
+                </form>
+
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+
+          </div><!-- /.container -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Seguir Comprando</button>
+          <button type="button" class="btn btn-primary">Finalizar Pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
   </section>
+  
 </template>
 
 <script>
@@ -125,9 +181,9 @@ export default {
   data()
   {
     return{
-      categorias:[],
+      categorias:[{ value: 'all', text: 'Todo' }],
       productos:[],
-      categoria:'',
+      categoria:'all',
       options: { value: 0, text: '' },
            
     }
@@ -142,7 +198,7 @@ export default {
 			axios.post('/front/categorias',{id:that.id})
 			.then(function (response) {
         console.log(response.data);
-         that.categorias=[];
+        // that.categorias=[];
         response.data.forEach(element => {        
           that.categorias.push(element);
         });			 
