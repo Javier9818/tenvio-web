@@ -18,7 +18,7 @@
 </head>
 
 <body>
-  <div class="wrapper">
+  <div class="wrapper" id="app">
     <!-- =========================
         Header
     =========================== -->
@@ -124,6 +124,7 @@
 
   </div>
   <!-- /.wrapper -->
+  <script src="/js/app.js" type="text/javascript"></script>
 
   <script src="assets/js/jquery-3.3.1.min.js"></script>
   <script src="assets/js/plugins.js"></script>
