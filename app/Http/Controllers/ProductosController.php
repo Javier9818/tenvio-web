@@ -49,7 +49,7 @@ class ProductosController extends Controller
 			else
 				Producto::editar($id, $nombre, $descripcion, $precio, $fotosubida, $categorias_menu_id);
 			if ($sesubiofoto == true)
-				ExtrasController::moverFoto($fotosubida);
+				ExtrasController::moverFotoProducto($fotosubida);
 		}
 		//return 4949;
 		//return abort(409);
