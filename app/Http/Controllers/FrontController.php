@@ -27,7 +27,7 @@ class FrontController extends Controller
   public function ListEmpresas( Request $request){
     $empresas =DB::table('empresas')      
       //->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-      ->select('id','nombre','descripcion')
+      ->select('id','nombre','descripcion','foto')
       ->where('nombre','=',$request->get('search'))
       ->get();
       // $empresas = DB::select('select e.*, c.descripcion as categoriaName from empresas e
