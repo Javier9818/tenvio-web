@@ -127,7 +127,7 @@ export default {
     return{
       categorias:[{ value: 'all', text: 'Todo' }],
       productos:[],
-      categoria:'',
+      categoria:'all',
       options: { value: 0, text: '' },
            
     }

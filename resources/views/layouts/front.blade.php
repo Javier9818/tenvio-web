@@ -10,9 +10,9 @@
   <title>@yield('title')</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Rubik:400,500,700%7cShadows+Into+Light&display=swap">
-  <link rel="stylesheet" href="assets/css/libraries.css" />
+    <link rel="stylesheet" href="{!! asset('assets/css/libraries.css') !!}" />
   <!-- <link rel="stylesheet" href="assets/css/animate.css" /> -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   @yield('styles')
 </head>
@@ -74,7 +74,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 position-static">
                 <div class="footer__logo-wrap text-center">
-                  <img src="assets/images/logo/footer-logo2.png" alt="logo" class="footer__logo">
+                <img src="{!! asset('assets/images/logo/footer-logo2.png') !!}" alt="logo" class="footer__logo">
                 </div>
               </div><!-- /.col-lg-12 -->
             </div><!-- /.row -->
@@ -124,12 +124,12 @@
 
   </div>
   <!-- /.wrapper -->
-  <script src="/js/app.js" type="text/javascript"></script>
-
-  <script src="assets/js/jquery-3.3.1.min.js"></script>
-  <script src="assets/js/plugins.js"></script>
+  <script src="/js/app.js" type="text/javascript"></script> 
+  
+  <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
+  <script src="{!! asset('assets/js/plugins.js') !!}"></script>
   <!-- <script src="assets/js/wow.min.js"></script> -->
-  <script src="assets/js/main.js"></script>
+  <script src="{!! asset('assets/js/main.js') !!}"></script>
 </body>
 
 </html>
