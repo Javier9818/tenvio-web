@@ -42,6 +42,7 @@
                         :options="optionsCargos"
                         value-field="value"
                         text-field="text"
+                        v-on:change="cargoChange()"
                         required
                     >
                         <template v-slot:first>
@@ -65,6 +66,7 @@
     export default {
         props:['edit'],
         mounted() {
+            console.log(this.edit);
             axios.get('/api/roles').then(({data})=>{ this.options = data.roles });
             axios.get('/api/cargos').then(({data})=>{ this.optionsCargos = data.cargos });
             if(this.edit){ this.form = { ...empleado, roles }; console.log(empleado);};
@@ -154,6 +156,29 @@
                     if(validateUsername && validateEmail) this.update();
                 }
             },
+            cargoChange(){
+                console.log(this.form.cargo);
+               switch (this.form.cargo) {
+                   case 1:
+                       this.form.roles = [1, 2, 3, 4, 5, 6];
+                       break;
+                    case 2:
+                       this.form.roles = [1, 2, 3, 4, 5];
+                       break;
+                    case 3:
+                       this.form.roles = [2];
+                       break;
+                    case 4:
+                       this.form.roles = [3,4];
+                       break;
+                     case 5:
+                       this.form.roles = [5];
+                       break;
+
+                   default:
+                       break;
+               }
+            }
         }
     }
 </script>

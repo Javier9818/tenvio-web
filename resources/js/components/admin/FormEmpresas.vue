@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-6 mt-2">
                     <label>Celular</label>
-                        <input type="number" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.celular">
+                        <input type="number" class="form-control" placeholder="Ingrese su número de celular" required v-model="form.celular">
                 </div>
 
                 <div class="col-md-12 mt-2">
@@ -31,7 +31,7 @@
 
                 <div class="col-md-12 mt-2">
                     <label>Dirección</label>
-                    <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.direccion">
+                    <input type="text" class="form-control" placeholder="Ingrese la direccion de su empresa" required v-model="form.direccion">
                 </div>
 
                 <div class="col-md-6 mt-2">
@@ -83,7 +83,7 @@
 
                 <div class="col-md-6 mt-2">
                     <label>Ciudad</label>
-                    <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.ciudad">
+                    <input type="text" class="form-control" placeholder="Ingrese el nombre de su ciudad" required v-model="form.ciudad">
                 </div>
 
 

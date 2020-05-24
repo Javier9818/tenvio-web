@@ -2,12 +2,12 @@
 <div class="card">
     <div class="card-header">
         <h4 class="card-title">Información de la empresa</h4>
-        <div class="d-block d-md-none">
+        <div class="d-block d-md-none" v-if="editar === 'true'">
             <button v-if="edit=='editar'" class="btn btn-primary mt-1" v-on:click="changeEdit">{{edit}}</button>
             <button class="btn btn-primary mt-1" v-if="edit=='Guardar cambios'" v-on:click="cancelEdit">Cancelar</button>
         </div>
         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-        <div class="heading-elements d-none d-md-block">
+        <div class="heading-elements d-none d-md-block" v-if="editar === 'true'">
             <ul class="list-inline">
                 <li v-if="edit=='editar'"><button class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button></li>
                 <li v-if="edit=='Guardar cambios'"><button class="btn btn-primary" v-on:click="cancelEdit">Cancelar</button></li>
@@ -18,7 +18,9 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12" v-if="edit === 'editar'">
-                    <img :src="'/storage/images/perfilEmpresa/'+(form.foto || 'imagenDefault.png')" alt="No se encontró imagen" width="100%">
+                    <img :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'"
+                        alt="No se encontró imagen"
+                        width="100%">
                 </div>
                 <div class="col-md-12" v-else>
                     <picture-input
@@ -57,7 +59,9 @@
                     <form  class="row" method="POST">
                         <div class="col-md-12 mt-2">
                             <label for="">Foto de negocio</label><br>
-                            <img :src="'/storage/images/perfilEmpresa/'+(form.foto || 'imagenDefault.png')" alt="No se encontró imagen" width="40%">
+                              <img :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'"
+                                alt="No se encontró imagen"
+                                width="40%">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->
@@ -137,7 +141,7 @@
 
                         <div class="col-md-6 mt-2">
                             <label>Ciudad</label>
-                            <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.ciudad">
+                            <input type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad" required v-model="form.ciudad">
                         </div>
                         <div class="col-md-6 mt-2 ">
                             <button type="submit" form="formEmpresa" class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button>
@@ -154,9 +158,11 @@
     import PictureInput from 'vue-picture-input'
     import Swal from 'sweetalert2'
     export default {
+        props:['editar'],
         mounted() {
             console.log('Component mounted.')
             console.log(empresa);
+            console.log(this.editar);
             axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
             axios.get('/json/departamentos.json').then(({data}) => {this.departamentos = data;});
             axios.get('/json/distritos.json').then(({data}) => {

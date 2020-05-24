@@ -63,7 +63,7 @@
 				class="mb-0"
 				:hidden="texto=='Modificars'">
 					<div class="text-center">
-						<b-img :src="'/'+rutaImagenes+producto.foto" :hidden="producto.foto==''"></b-img>
+						<b-img :src="'/'+rutaImagenes+producto.foto" :hidden="producto.foto==''" class="img-fluid"></b-img>
 					</div>
 					<sube-archivos @archivosubido="archivosubido"></sube-archivos>
 				</b-form-group>
@@ -136,6 +136,7 @@ export default {
 			this.producto.descripcion = '';
 			this.producto.precio = 0;
 			this.producto.foto = '';
+			this.producto.fotosubida = null;
 			this.producto.categorias_menu_id = null;
 		},
 		editar: function(item){
@@ -155,12 +156,30 @@ export default {
 			this.setupddel(true);
 		},
 		setupddel: function(eliminar){
-			//console.log(this.categoria);
+			console.log(this.producto);
+			if(eliminar == false){
+				if (this.producto.nombre == ''){
+					Swal.fire('Advertencia', 'Debe ingresar un nombre de producto', 'warning');
+					return;
+				}
+				if (this.producto.descripcion == ''){
+					Swal.fire('Advertencia', 'Debe ingresar una descripcion del producto ', 'warning');
+					return;
+				}
+				if (this.producto.precio <= 0){
+					Swal.fire('Advertencia', 'El precio del producto debe ser mayor a s/0.00', 'warning');
+					return;
+				}
+				if (this.producto.categorias_menu_id == null){
+					Swal.fire('Advertencia', 'Debe ingresar la categoría del producto ', 'warning');
+					return;
+				}
+			}
 			var that = this;
 			axios.post(this.ruta+'/setupddel', {producto: this.producto, eliminar: eliminar})
 			.then(function (response) {
 				//console.log(response.data);
-				if(response.data){
+				if(response.data == true){
 					Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
 					that.cerrarModal();
 					that.cargarProductos();

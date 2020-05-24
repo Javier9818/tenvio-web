@@ -56,8 +56,8 @@
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="post-item">
             <div class="post__img">
-              <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre))}}">
-                <img src="assets/images/blog/grid/1.jpg" alt="post image">
+              <a href="#">
+              <img src="storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
               </a>
             </div><!-- /.post__img -->
             <div class="post__content">

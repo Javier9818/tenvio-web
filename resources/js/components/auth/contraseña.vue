@@ -35,6 +35,7 @@ import Swal from 'sweetalert2'
     export default {
         mounted() {
             console.log('Component mounted.')
+
         },
          data () {
             return {
@@ -57,10 +58,17 @@ import Swal from 'sweetalert2'
                 if(!this.form.errorClave){
                     axios.put('/api/pass',this.form).then(({data}) => {
                         if(data.error)
-                            Swal.fire('Error', 'Ha sucedido un error', 'error');
+                            Swal.fire('Error', 'Ha sucedido un error, asegúrese de haber ingresado la contraseña correcta', 'error');
                         if(data.message){
-                            Swal.fire('Éxito', 'La foto se ha actualizado', 'success').then( data => {
+                            Swal.fire('Éxito', 'Su contraseña ha sido actualizada', 'success').then( data => {
                                 this.editar=null;
+                                this.form = {
+                                    claveActual:'',
+                                    claveNueva:'',
+                                    claveRepetida:'',
+                                    errorClave:null,
+                                    id: user.id
+                                }
                             });
                         }
 

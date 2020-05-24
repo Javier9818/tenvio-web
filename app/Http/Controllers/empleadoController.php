@@ -24,13 +24,16 @@ class empleadoController extends Controller
             "username" => $request->username,
             "email" => $request->email,
             "password" => Hash::make($request->dni),
-            "persona_id" => $persona->id
+            "persona_id" => $persona->id,
+            "persona_id" => $persona->id,
+            "isCustomer" => true
         ]);
 
         DB::insert('insert into users_empresas (user_id, empresa_id, cargo_id) values (?, ?, ?)', [$user->id, $request->empresa, $request->cargo]);
 
+        DB::insert('insert into permiso_user (permiso_id, user_id) values (?, ?)', [7, $user->id]);
         foreach ($request->roles as $key => $value) {
-            DB::insert('insert into permisos_users (permiso_id, user_id) values (?, ?)', [$value, $user->id]);
+            DB::insert('insert into permiso_user (permiso_id, user_id) values (?, ?)', [$value, $user->id]);
         }
 
         return response()->json([ "id" => $user->id ], 200);
@@ -53,10 +56,10 @@ class empleadoController extends Controller
         $user->save();
 
         DB::update('update users_empresas set cargo_id = ? where user_id = ?', [$request->cargo, $request->user_id]);
-        DB::delete('delete from permisos_users where user_id = ?', [$request->user_id]);
+        DB::delete('delete from permiso_user where user_id = ?', [$request->user_id]);
 
         foreach ($request->roles as $key => $value) {
-            DB::insert('insert into permisos_users (permiso_id, user_id) values (?, ?)', [$value, $request->user_id]);
+            DB::insert('insert into permiso_user (permiso_id, user_id) values (?, ?)', [$value, $request->user_id]);
         }
 
         return response()->json([ "id" => $user->id ], 200);
@@ -79,7 +82,7 @@ class empleadoController extends Controller
                     where u.id = ?', [$id]);
         $empleado[0]->password = '';
 
-        $roles = DB::select('select permiso_id as id from permisos_users where user_id = ?', [$id]);
+        $roles = DB::select('select permiso_id as id from permiso_user where user_id = ?', [$id]);
         foreach ($roles as $key => $value) {
             $rols[$key] = $value->id;
         }

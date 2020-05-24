@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\ExtrasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Producto;
 
 class ProductosController extends Controller
@@ -16,7 +17,7 @@ class ProductosController extends Controller
     }
 
 	static function listar(Request $request){
-		$empresa_id = 1;////////////////////////////////////
+		$empresa_id = Session::get('empresa');////////////////////////////////////
 		$productos = [
 			'productos' => Producto::listar($empresa_id),
 			'rutaImagenes' => ExtrasController::$rutaFotosProductos];
@@ -31,8 +32,11 @@ class ProductosController extends Controller
 		$categorias_menu_id = $request->get('producto')['categorias_menu_id'];
 		$foto = $request->get('producto')['foto']??'';
 		$fotosubida = $request->get('producto')['fotosubida']??[];
-		if (count($fotosubida) == 1)
+		$sesubiofoto = false;
+		if (count($fotosubida) == 1){
+			$sesubiofoto = true;
 			$fotosubida = $fotosubida[0]['upload']['data'];
+		}
 		else
 			$fotosubida = $foto;
 		$eliminar = $request->get('eliminar');
@@ -40,14 +44,16 @@ class ProductosController extends Controller
 			Producto::eliminar($id);
 		}
 		else{
-			$empresa_id = 1;////////////////////////////////////
+			$empresa_id = Session::get('empresa');////////////////////////////////////
 			if ($id == 0)
 				Producto::registrar($nombre, $descripcion, $precio, $fotosubida, $categorias_menu_id, $empresa_id);
 			else
 				Producto::editar($id, $nombre, $descripcion, $precio, $fotosubida, $categorias_menu_id);
+			if ($sesubiofoto == true)
+				ExtrasController::moverFotoProducto($fotosubida);
 		}
-		if ($fotosubida != '')
-			ExtrasController::moverFoto($fotosubida);
+		//return 4949;
+		//return abort(409);
 		return response()->json(true, 200);
 	}
 

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\CategoriaMenu;
 
 class CategoriasMenusController extends Controller
@@ -15,13 +16,13 @@ class CategoriasMenusController extends Controller
     }
 
 	static function listarvselect(Request $request){
-		$empresa_id = 1;////////////////////////////////////
+		$empresa_id = Session::get('empresa');////////////////////////////////////
 		$categorias = CategoriaMenu::listarvselect($empresa_id);
 		return response()->json($categorias, 200);
 	}
 
 	static function listar(Request $request){
-		$empresa_id = 1;////////////////////////////////////
+		$empresa_id = Session::get('empresa');////////////////////////////////////
 		$categorias = CategoriaMenu::listar($empresa_id);
 		return response()->json($categorias, 200);
 	}
@@ -34,7 +35,7 @@ class CategoriasMenusController extends Controller
 			CategoriaMenu::eliminar($id);
 		}
 		else{
-			$empresa_id = 1;////////////////////////////////////
+			$empresa_id = Session::get('empresa');////////////////////////////////////
 			if ($id == 0)
 				CategoriaMenu::registrar($descripcion, $empresa_id);
 				else

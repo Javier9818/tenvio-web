@@ -73,8 +73,10 @@ export default {
 			var that = this;
 			axios.post(this.ruta+'/setupddel', {categoria: this.categoria, eliminar: eliminar})
 			.then(function (response) {
-				//console.log(response.data);
-				if(response.data){
+				console.log(response);
+				console.log(response.data);
+				console.log(response.data==true);
+				if(response.data == true){
 					Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
 					that.cerrarModal();
 					that.cargarCategorias();

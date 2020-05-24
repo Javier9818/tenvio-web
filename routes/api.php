@@ -30,9 +30,9 @@ Route::get('/empleados/{empresa}', 'empleadoController@listByEmpresa');
 Route::post('/empresa', 'empresaController@setEmpresa');
 Route::put('/empresa/{empresa}', 'empresaController@updateEmpresa');
 Route::put('/fotoEmpresa/{empresa}', 'empresaController@updateFoto');
+Route::get('/tipo-entregas/{empresa}', 'empresaController@tiposEntrega');
+Route::put('/tipo-entregas', 'empresaController@updateTipoEntrega');
 
 Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');
 Route::put('/pass', 'UserController@updatePassword');
-
-Route::get('/roles', 'generalController@roles');

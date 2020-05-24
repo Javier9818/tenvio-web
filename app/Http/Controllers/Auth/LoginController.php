@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,14 +46,18 @@ class LoginController extends Controller
     {
         if (Auth::attempt(["email" => $request->username, "password" => $request->password]) || Auth::attempt(["username" => $request->username, "password" => $request->password])) {
             // Authentication passed...
-            $user = DB::select('select isAdmin from users where username = ? or email = ?', [$request->username, $request->username]);
+            $user = DB::select('select id, isAdmin, isCustomer from users where username = ? or email = ?', [$request->username, $request->username]);
             if($user[0]->isAdmin)
                 return redirect(route('admin-total-inicio'));
+            else if($user[0]->isCustomer){
+                $empresa = DB::select('select * from users_empresas where user_id = ?', [$user[0]->id]);
+                Session::put('empresa', $empresa[0]->empresa_id);
+                return redirect()->intended('/intranet');
+            }
             else
                 return redirect()->intended();
         }else
-        {
             return redirect('/login')->with('message','Error logging in!');
-        }
+
     }
 }
