@@ -18,9 +18,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12" v-if="edit === 'editar'">
-                    <img :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'"
-                        alt="No se encontró imagen"
-                        width="100%">
+                    <img :src="'/storage/images/perfilEmpresa/'+(form.foto || 'imagenDefault.png')" alt="No se encontró imagen" width="100%">
                 </div>
                 <div class="col-md-12" v-else>
                     <picture-input
@@ -59,9 +57,7 @@
                     <form  class="row" method="POST">
                         <div class="col-md-12 mt-2">
                             <label for="">Foto de negocio</label><br>
-                            <img :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'"
-                                alt="No se encontró imagen"
-                                width="40%">
+                            <img :src="'/storage/images/perfilEmpresa/'+(form.foto || 'imagenDefault.png')" alt="No se encontró imagen" width="40%">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->
@@ -141,7 +137,7 @@
 
                         <div class="col-md-6 mt-2">
                             <label>Ciudad</label>
-                            <input type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad" required v-model="form.ciudad">
+                            <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario" required v-model="form.ciudad">
                         </div>
                         <div class="col-md-6 mt-2 ">
                             <button type="submit" form="formEmpresa" class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button>

@@ -2699,8 +2699,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3322,7 +3320,15 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //console.log(response.data);
         if (response.data) {
+<<<<<<< HEAD
           sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
+=======
+<<<<<<< HEAD
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
+=======
+          sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
+>>>>>>> parent of bcccd58... Merge branch 'master' of https://github.com/Javier9818/DeliveryWeb
+>>>>>>> 0dc2172bfe496d09a7772c394b0ac0be6191f853
           that.cerrarModal();
           that.cargarCategorias();
         } else {
@@ -3545,7 +3551,15 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //console.log(response.data);
         if (response.data) {
+<<<<<<< HEAD
           sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
+=======
+<<<<<<< HEAD
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
+=======
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Éxito', 'Se han guardado los cambios', 'success');
+>>>>>>> parent of bcccd58... Merge branch 'master' of https://github.com/Javier9818/DeliveryWeb
+>>>>>>> 0dc2172bfe496d09a7772c394b0ac0be6191f853
           that.cerrarModal();
           that.cargarProductos();
         } else {
