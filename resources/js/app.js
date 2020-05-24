@@ -63,7 +63,15 @@ Vue.component('menu-productos', require('./components/menu/Productos.vue').defau
 
 Vue.component('foto-perfil', require('./components/auth/fotoPerfil.vue').default);
 Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
-Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default)
+Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default);
+
+
+//FRONT CLIENTE
+Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
+
+
+/*Front*/
+Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
