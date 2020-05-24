@@ -42,7 +42,7 @@
                             @if (strlen(Auth::user()->foto) >0)
                                 <img src="/storage/images/fotosPerfil/{{Auth::user()->foto}}" alt="avatar"><i></i>
                             @else
-                                <img src="/storage/images/fotosPerfil/perfil.png" alt="avatar"><i></i>
+                                <img src="/img/perfil.png" alt="avatar"><i></i>
                             @endif
                         </span>
                     </a>
@@ -51,7 +51,7 @@
                         @if (strlen(Auth::user()->foto) >0)
                             <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/storage/images/fotosPerfil/{{Auth::user()->foto}}" alt="avatar"><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
                         @else
-                            <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/storage/images/fotosPerfil/perfil.png" alt="avatar"><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
+                            <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/img/perfil.png" alt="avatar"><i></i><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/perfil"><i class="ft-user"></i> Mi Perfil</a>
