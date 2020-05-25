@@ -1,22 +1,22 @@
 <template>
   <section id="shop3Products" class="shop shop-grid shop-grid-3col pb-90">
-    <div class="container">       
+    <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-9">
           <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">  
-              
+            <div class="col-sm-12 col-md-12 col-lg-12">
+
                   <div class="filtering-options">
                     <div class="filter-option-sorting">
                       <div class="sort-box">
-                        <span>Ordenar por:</span>   
+                        <span>Ordenar por:</span>
                         <!-- <b-form-select v-model="categoria" :options="categorias"></b-form-select>                 -->
-                         
-                        <div class="select-box"> 
-                          <b-form-select v-model="categoria" :options="categorias" class=" d-block" @change="funcAcciona"></b-form-select> 
+
+                        <div class="select-box">
+                          <b-form-select v-model="categoria" :options="categorias" class=" d-block" @change="funcAcciona"></b-form-select>
                         </div><!-- /.select-box -->
                       </div><!-- /.sort-box -->
-                
+
                     </div><!-- /.filter-option-sorting -->
                     <div class="filter-option-view">
                       <span>Ver Como:</span>
@@ -24,8 +24,8 @@
                       <a id="listView" href="#"><i class="fa fa-th-list"></i></a>
                     </div><!-- /.filter-option-view -->
                   </div><!-- /.filtering-options -->
-                         
-             
+
+
             </div><!-- /.col-lg-12 -->
           </div><!-- /.row -->
           <div class="row">
@@ -39,7 +39,7 @@
                     <div class="product__action">
                       <button type="button" class="btn btn-primary" @click="funSelecciona(item)">
                         Comprar
-                      </button> 
+                      </button>
                       <a href="#" class="btn btn__primary btn__hover2 d-none" >Comprar</a>
                     </div><!-- /.product__action -->
                   </div><!-- /.product__hover-->
@@ -101,7 +101,7 @@
                 </div><!-- /.widget-product-item -->
               </div><!-- /.widget-content -->
             </div><!-- /.widget-poducts -->
-           
+
           </aside><!-- /.sidebar -->
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
@@ -112,34 +112,34 @@
             <div class="col-sm-12 col-md-12 col-lg-12 align-items-center text-center">
               <div class="row align-items-center">
                 <div class="col-12 col-lg-6 col-sm-6 product__single-img text-center">
-                  <img :src="'/img/productos/'+producto.foto" alt="Product" class="zoomin text-center" style="visibility: visible;">  
+                  <img :src="'/storage/imgproductos/'+producto.foto" alt="Product" class="zoomin text-center" style="visibility: visible;">
                 </div>
                 <div class="col-12  col-lg-6 col-sm-6">
                   <h4 class="product__title">{{producto.nombre}}</h4>
                   <span class="product__price">S/. {{producto.precio}}</span>
                 </div>
-              </div> 
-            </div> 
-            <div class="col-sm-12 col-md-12 col-lg-12 align-items-center">       
-               <hr class="hr-dashed mt-30 mb-30">     
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-12 align-items-center">
+               <hr class="hr-dashed mt-30 mb-30">
               <div class="row align-items-center">
                 <div class=" col-12  col-lg-12 col-sm-12">
                   <nav class="nav nav-tabs justify-content-center">
-                    <a class="nav__link">Descripción</a>                  
+                    <a class="nav__link">Descripción</a>
                     </nav>
                   <div class="product__desc">
                     <p>{{producto.descripcion}}</p>
                   </div>
                 </div>
                 <div class=" col-12  col-lg-12 col-sm-12 text-center align-items-center">
-                  <button class="decrease-qty fas fa-minus-circle text-danger fa-2x" @click="funAdd('-')"></button>                  
+                  <button class="decrease-qty fas fa-minus-circle text-danger fa-2x" @click="funAdd('-')"></button>
                   <input type="number"   class="qty-input" v-model="producto.cant">
-                  <button class="increase-qty fas fa-plus-circle text-success fa-2x" @click="funAdd('+')"></button>                   
+                  <button class="increase-qty fas fa-plus-circle text-success fa-2x" @click="funAdd('+')"></button>
                 </div>
                 <!-- <div class=" col-12  col-lg-6 col-sm-6 text-center">
                   <button class="btn btn__primary" @click="funAgregar">Agregar</button>
                 </div> -->
-              </div>   
+              </div>
             </div>
           </div>
         </div>
@@ -153,10 +153,10 @@
         <div class="col-6">
           <b-button class="mt-2" variant="primary" block @click="hideModal">Salir</b-button>
         </div>
-      </div>  
-    </b-modal>     
+      </div>
+    </b-modal>
   </section>
-  
+
 </template>
 
 <script>
@@ -171,7 +171,7 @@ export default {
       carrito:[],
       categoria:'all',
       options: { value: 0, text: '' },
-      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0}     
+      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0}
     }
   },
   methods:{
@@ -181,14 +181,14 @@ export default {
     hideModal() {
       this.$refs['my-modal'].hide()
     },
-    funAdd: function (key) {      
+    funAdd: function (key) {
       switch (key) {
-        case '+':          
+        case '+':
           this.producto.cant++;
           break;
         case '-':
-          if(this.producto.cant==0)          
-            break;          
+          if(this.producto.cant==0)
+            break;
           this.producto.cant--;
           break;
         default:
@@ -202,31 +202,31 @@ export default {
       this.producto.precio=item.precio
       this.producto.id=item.id
       this.producto.empresa=this.id
-      this.producto.cant=0;       
+      this.producto.cant=0;
       this.showModal();
     },
     funAgregar: function () {
       console.log(this.producto);
     },
     funCarrito: function (key) {
-      
+
       switch (key) {
-        case 'c':    
-          if(this.producto.cant!=0)         
-            this.funAddCarrito(this.producto);                  
+        case 'c':
+          if(this.producto.cant!=0)
+            this.funAddCarrito(this.producto);
           this.hideModal();
           break;
-        case 'x':         
+        case 'x':
           this.hideModal();
           break;
         default:
           break;
       }
     },
-    funAddCarrito: function (item) {      
-      EventBus.$emit('i-got-clicked', this.producto);          
+    funAddCarrito: function (item) {
+      EventBus.$emit('i-got-clicked', this.producto);
     },
-    funcAcciona: function () {      
+    funcAcciona: function () {
       this.funcionProductos(this.categoria);
     },
     funcionCategorias:function () {
@@ -235,9 +235,9 @@ export default {
 			.then(function (response) {
         console.log(response.data);
         // that.categorias=[];
-        response.data.forEach(element => {        
+        response.data.forEach(element => {
           that.categorias.push(element);
-        });			 
+        });
 			});
     },
     funcionProductos:function (item) {
@@ -245,7 +245,7 @@ export default {
 			axios.post('/front/productos',{tipo:item, id:that.id})
 			.then(function (response) {
         console.log(response.data);
-        that.productos = response.data;       
+        that.productos = response.data;
 			});
     }
   },

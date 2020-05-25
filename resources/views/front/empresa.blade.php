@@ -18,26 +18,26 @@
     </svg>
     <div class="container">
       <div class="row">
-        
+
         <div class="col-sm-12 col-md-12 col-lg-12">
           <span class="pagetitle__subheading">Restaurant</span>
           <h1 class="pagetitle__heading">{{$data[0]->nombre}}</h1>
           <nav aria-label="breadcrumb" >
             <ol class="breadcrumb justify-content-center">
-              <li class="breadcrumb-item active">{{$data[0]->distrito}} - {{$data[0]->ciudad}}</li>
+              <li class="breadcrumb-item active">{{$data[0]->ciudad_id}} - {{$data[0]->ciudad_id}}</li>
             </ol>
           </nav>
         </div><!-- /.col-lg-12 -->
       </div><!-- /.row -->
     </div><!-- /.container -->
-  </section><!-- /.page-title --> 
+  </section><!-- /.page-title -->
   <!-- ========================
      shop Products
   =========================== -->
   <div >
     <front-menu-component id="{{$data[0]->id}}"></front-menu-component>
   </div>
-  
+
   <!-- /.shop Products -->
-  
+
 @endsection

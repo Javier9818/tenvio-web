@@ -17,7 +17,7 @@
 		<div class="text-center">
 			<button class="btn btn-primary" @click="nuevo" v-b-modal.modal-mantenedor>Nueva Categoría</button>
 		</div>
-		<b-modal id="modal-mantenedor" size="sm" centered hide-backdrop :title="texto+' Categoría'" hide-footer>
+		<b-modal id="modal-mantenedor" size="lg" centered hide-backdrop :title="texto+' Categoría'" hide-footer>
 			<b-col sm="12" md="12">
 				<b-form-group
 				label="Descripcion"

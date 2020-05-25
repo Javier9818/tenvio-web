@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-table :items="items" :fields="fields" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" responsive="sm">
+        <b-table :items="items" :fields="fields" responsive="sm">
             <template v-slot:cell(opciones)="row">
                 <a :href="'/admin/empresa/'+row.item.id" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
                 <a href="" title="Eliminar"><i class="ft-delete red"></i></a>

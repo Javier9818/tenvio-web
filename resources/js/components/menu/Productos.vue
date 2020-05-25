@@ -17,7 +17,7 @@
 		<div class="text-center">
 			<button class="btn btn-primary" v-b-modal.modal-mantenedor @click="nuevo">Nuevo Producto</button>
 		</div>
-		<b-modal id="modal-mantenedor" size="md" scrollable centered hide-backdrop :title="texto+' Producto'" hide-footer>
+		<b-modal id="modal-mantenedor" size="lg" scrollable centered hide-backdrop :title="texto+' Producto'" hide-footer>
 			<b-col sm="12" md="12">
 				<b-form-group
 				label="Nombre"

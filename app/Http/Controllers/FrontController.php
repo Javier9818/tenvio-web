@@ -25,13 +25,13 @@ class FrontController extends Controller
     }
   }
   public function ListEmpresas( Request $request){
-    $empresas =DB::table('empresas')      
+    $empresas =DB::table('empresas')
       //->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
       ->select('id','nombre','descripcion','foto')
       ->where('nombre','=',$request->get('search'))
       ->get();
       // $empresas = DB::select('select e.*, c.descripcion as categoriaName from empresas e
-      // inner join categorias c on e.categoria_id = c.id 
+      // inner join categorias c on e.categoria_id = c.id
       // where e.nombre = '+$request->get('search'));
       //var_dump($request->get('search'));
       //var_dump($empresas);
@@ -40,24 +40,26 @@ class FrontController extends Controller
   public function Empresa($nombre){
 
       try {
-        $empresa =DB::table('empresas')            
-        ->select('id','nombre','descripcion', 'ciudad','distrito')
+        $empresa =DB::table('empresas')
+        ->select('id','nombre','descripcion', 'ciudad_id')
         ->where('nombre','=',str_replace('-',' ',$nombre))
-        ->get();        
+        ->get();
         return view('front.empresa')->with("data",$empresa);
       }catch (\Exception  $e) {
-        return [
-          'Message'=> $e->getMessage(),
-          'success'=>false
-        ];
-     }  
+        // return [
+        //   'Message'=> $e->getMessage(),
+        //   'success'=>false
+        // ];
+        return abort(404);
+     }
+
   }
   public function productos(Request $request)
   {
     try {
       if($request->get('tipo')=='all'){
         return DB::table('empresas')
-        ->join('productos', 'productos.empresa_id', '=', 'empresas.id')         
+        ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
         ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
         ->where([
           ['empresas.id', 'like', $request->get('id')],
@@ -67,7 +69,7 @@ class FrontController extends Controller
       return DB::table('empresas')
       ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
       ->join('categorias_menus', 'categorias_menus.id', '=', 'productos.categorias_menu_id')
-      ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')       
+      ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
       ->where([
         ['categorias_menus.id', '=', $request->get('tipo')],
         ['empresas.id', '=', $request->get('id')],
