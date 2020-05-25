@@ -57,7 +57,7 @@
           <div class="post-item">
             <div class="post__img">
               <a href="#">
-              <img src="storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
+              <img src="/storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
               </a>
             </div><!-- /.post__img -->
             <div class="post__content">

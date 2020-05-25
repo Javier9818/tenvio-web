@@ -34,7 +34,7 @@
             <div class="col-sm-6 col-md-6 col-lg-4" v-for="(item, key) in productos" :key="key">
               <div class="product-item">
                 <div class="product__img align-items-center">
-                  <img :src="'/img/productos/'+item.foto" alt="Product" class=" img-fluid text-center">
+                  <img :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
                   <div class="product__hover">
                     <div class="product__action">
                       <button type="button" class="btn btn-primary" @click="funSelecciona(item)">

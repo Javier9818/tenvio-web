@@ -2,7 +2,7 @@
     <div>
         <ul class="list-unstyled">
             <li class="cart-item" v-for="(item, index) of productos" :key="index">
-            <div class="cart__item-img"><img :src="'/img/productos/'+item.foto" alt="Product"></div>
+            <div class="cart__item-img"><img :src="'/storage/imgproductos/'+item.foto" alt="Product"></div>
             <div class="cart__item-content">
                 <h6 class="cart__item-title"> [ {{item.cant}} ] {{item.nombre}}</h6>
                 <div class="cart__item-detail">S/. {{item.precio}}</div>
