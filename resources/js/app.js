@@ -8,6 +8,10 @@ require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 window.Vue = require('vue');
 
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+Vue.$cookies.config('1d')
+
 //bustrapVue
 //import { BootstrapVueIcons } from 'bootstrap-vue'
 //Vue.use(BootstrapVueIcons)
@@ -78,7 +82,8 @@ Vue.component('front-menu-component', require('./components/front/menuComponent.
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+const EventBus = new Vue();
 const app = new Vue({
     el: '#app',
 });
+

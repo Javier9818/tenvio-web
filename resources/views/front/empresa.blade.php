@@ -39,6 +39,5 @@
   </div>
   
   <!-- /.shop Products -->
- 
   
 @endsection

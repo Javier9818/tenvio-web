@@ -58,7 +58,7 @@ class FrontController extends Controller
       if($request->get('tipo')=='all'){
         return DB::table('empresas')
         ->join('productos', 'productos.empresa_id', '=', 'empresas.id')         
-        ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto')
+        ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
         ->where([
           ['empresas.id', 'like', $request->get('id')],
         ])
@@ -67,7 +67,7 @@ class FrontController extends Controller
       return DB::table('empresas')
       ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
       ->join('categorias_menus', 'categorias_menus.id', '=', 'productos.categorias_menu_id')
-      ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto')       
+      ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')       
       ->where([
         ['categorias_menus.id', '=', $request->get('tipo')],
         ['empresas.id', '=', $request->get('id')],

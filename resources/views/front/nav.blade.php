@@ -44,7 +44,7 @@
                 <i class="icon-cart"></i><span class="cart__label">3</span>
             </a>
             <div class="cart-popup">
-                    <modal-carrito></modal-carrito>
+                    <modal-carrito ref="carritoComponent"></modal-carrito>
             </div><!-- /.cart-popup -->
         </div>
         </div>

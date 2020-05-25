@@ -37,10 +37,10 @@
                   <img :src="'/img/productos/'+item.foto" alt="Product" class=" img-fluid text-center">
                   <div class="product__hover">
                     <div class="product__action">
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoria">
+                      <button type="button" class="btn btn-primary" @click="funSelecciona(item)">
                         Comprar
-                      </button>
-                      <a href="#" class="btn btn__primary btn__hover2 d-none">Comprar</a>
+                      </button> 
+                      <a href="#" class="btn btn__primary btn__hover2 d-none" >Comprar</a>
                     </div><!-- /.product__action -->
                   </div><!-- /.product__hover-->
                 </div><!-- /.product-img -->
@@ -101,81 +101,66 @@
                 </div><!-- /.widget-product-item -->
               </div><!-- /.widget-content -->
             </div><!-- /.widget-poducts -->
-            <!-- <div class="widget widget-filter d-none">
-              <h5 class="widget__title">Pricing Filter</h5>
-              <div class="widget__content">
-                <div id="rangeSlider"></div>
-                <div class="price-output">
-                  <label for="rangeSliderResult">Price: </label>
-                  <input type="text" id="rangeSliderResult" readonly>
-                  <a class="btn btn__primary btn__link" href="#">Filter Now</a>
-                </div>
-              </div>
-            </div> -->
+           
           </aside><!-- /.sidebar -->
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
     </div><!-- /.container -->
-    <div class="modal fade" id="categoria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <b-modal ref="my-modal" hide-footer :title="producto.nombre">
+        <div class="container">
+          <div class="row  align-items-center">
+            <div class="col-sm-12 col-md-12 col-lg-12 align-items-center text-center">
+              <div class="row align-items-center">
+                <div class="col-12 col-lg-6 col-sm-6 product__single-img text-center">
+                  <img :src="'/img/productos/'+producto.foto" alt="Product" class="zoomin text-center" style="visibility: visible;">  
+                </div>
+                <div class="col-12  col-lg-6 col-sm-6">
+                  <h4 class="product__title">{{producto.nombre}}</h4>
+                  <span class="product__price">S/. {{producto.precio}}</span>
+                </div>
+              </div> 
+            </div> 
+            <div class="col-sm-12 col-md-12 col-lg-12 align-items-center">       
+               <hr class="hr-dashed mt-30 mb-30">     
+              <div class="row align-items-center">
+                <div class=" col-12  col-lg-12 col-sm-12">
+                  <nav class="nav nav-tabs justify-content-center">
+                    <a class="nav__link">Descripción</a>                  
+                    </nav>
+                  <div class="product__desc">
+                    <p>{{producto.descripcion}}</p>
+                  </div>
+                </div>
+                <div class=" col-12  col-lg-12 col-sm-12 text-center align-items-center">
+                  <button class="decrease-qty fas fa-minus-circle text-danger fa-2x" @click="funAdd('-')"></button>                  
+                  <input type="number"   class="qty-input" v-model="producto.cant">
+                  <button class="increase-qty fas fa-plus-circle text-success fa-2x" @click="funAdd('+')"></button>                   
+                </div>
+                <!-- <div class=" col-12  col-lg-6 col-sm-6 text-center">
+                  <button class="btn btn__primary" @click="funAgregar">Agregar</button>
+                </div> -->
+              </div>   
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-
-          <div class="container">
-
-            <div class="row justify-content-center align-items-center">
-              <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
-                <div class="product__single-img text-center w-50">
-                  <!-- <img src="assets/images/shop/full/1.jpg" class="zoomin" alt="product" style="visibility: visible;"> -->
-                </div><!-- /.product-img -->
-              </div><!-- /.col-lg-6 -->
-              <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center">
-                <h4 class="product__title">1/4 Pollo a la brasa</h4>
-                <span class="product__price">S/. 18.00</span>
-                <hr class="hr-dashed mt-30 mb-30">
-                <nav class="nav nav-tabs justify-content-center">
-                  <a class="nav__link">Description</a>
-                   {{--  <a class="nav__link" data-toggle="tab" href="#Details">Additional Information</a>
-                   <a class="nav__link" data-toggle="tab" href="#Reviews">Reviews (0)</a> --}}
-                 </nav>
-                <div class="product__desc">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et voluptatum magni illum quos dolorem nam nisi animi amet eos quas natus, ea aliquam sequi, similique commodi iure, quo veritatis consequatur.</p>
-                </div><!-- /.product-desc -->
-                <form class="product__form-wrap mb-30">
-                  <div class="product__quantity d-flex">
-                    <div class="quantity__input-wrap mr-20">
-                      <i class="decrease-qty fas fa-minus-circle"></i>
-                      <input type="number" value="1" class="qty-input">
-                      <i class="increase-qty fas fa-plus-circle"></i>
-                    </div>
-                    <button class="btn btn__primary">Agregar</button>
-                  </div><!-- /.product-quantity -->
-                </form>
-
-              </div><!-- /.col-lg-6 -->
-            </div><!-- /.row -->
-
-          </div><!-- /.container -->
-
+      <div class="row">
+        <div class="col-12">
+          <b-button class="mt-3" variant="success" block @click="funCarrito('c')">Agregar</b-button>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Seguir Comprando</button>
-          <button type="button" class="btn btn-primary">Finalizar Pedido</button>
+        <div class="col-6">
+          <b-button class="mt-2" variant="warning" block @click="funCarrito('x')">Finalizar Pedido</b-button>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="col-6">
+          <b-button class="mt-2" variant="primary" block @click="hideModal">Salir</b-button>
+        </div>
+      </div>  
+    </b-modal>     
   </section>
   
 </template>
 
 <script>
+import EventBus from '../../event-bus';
 export default {
   props: ['id'],
   data()
@@ -183,14 +168,65 @@ export default {
     return{
       categorias:[{ value: 'all', text: 'Todo' }],
       productos:[],
+      carrito:[],
       categoria:'all',
       options: { value: 0, text: '' },
-           
+      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0}     
     }
   },
   methods:{
-    funcAcciona: function () {
-      console.log(this.categoria);
+    showModal() {
+      this.$refs['my-modal'].show()
+    },
+    hideModal() {
+      this.$refs['my-modal'].hide()
+    },
+    funAdd: function (key) {      
+      switch (key) {
+        case '+':          
+          this.producto.cant++;
+          break;
+        case '-':
+          if(this.producto.cant==0)          
+            break;          
+          this.producto.cant--;
+          break;
+        default:
+          break;
+      }
+    },
+    funSelecciona: function (item) {
+      this.producto.descripcion=item.descripcion
+      this.producto.foto=item.foto
+      this.producto.nombre=item.nombre
+      this.producto.precio=item.precio
+      this.producto.id=item.id
+      this.producto.empresa=this.id
+      this.producto.cant=0;       
+      this.showModal();
+    },
+    funAgregar: function () {
+      console.log(this.producto);
+    },
+    funCarrito: function (key) {
+      
+      switch (key) {
+        case 'c':    
+          if(this.producto.cant!=0)         
+            this.funAddCarrito(this.producto);                  
+          this.hideModal();
+          break;
+        case 'x':         
+          this.hideModal();
+          break;
+        default:
+          break;
+      }
+    },
+    funAddCarrito: function (item) {      
+      EventBus.$emit('i-got-clicked', this.producto);          
+    },
+    funcAcciona: function () {      
       this.funcionProductos(this.categoria);
     },
     funcionCategorias:function () {

@@ -26,6 +26,7 @@
     "dependencies": {
         "bootstrap-vue": "^2.13.1",
         "sweetalert2": "^9.10.13",
+        "vue-cookies": "^1.7.0",
         "vue-file-agent": "^1.7.3",
         "vue-loaders": "^4.0.0-alpha.2",
         "vue-picture-input": "^2.1.6",
