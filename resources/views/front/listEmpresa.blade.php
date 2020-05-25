@@ -52,12 +52,12 @@
       </div><!-- /.row -->
       <div class="row">
         <!-- Post Item #1 -->
-        @foreach ($empresas as $item)
+        @foreach ($empresas as $empresa)
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="post-item">
             <div class="post__img">
               <a href="#">
-              <img src="storage/images/perfilEmpresa/{{$item->foto}}" alt="post image">
+              <img src="/storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
               </a>
             </div><!-- /.post__img -->
             <div class="post__content">
@@ -67,14 +67,13 @@
                   <a href="#">Polleria</a><a href="#">Parrillas</a>
                 </div><!-- /.post-meta-cat -->
               </div><!-- /.post-meta -->
-              <h4 class="post__title"><a href="#">{{$item->nombre}}</a></h4>
-              <p class="post__desc">{{$item->descripcion}}</p>
-              <a href="#" class="btn btn__secondary btn__link d-none">Read More</a>
+              <h4 class="post__title"><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre))}}">{{$empresa->nombre}}</a></h4>
+              <p class="post__desc">{{$empresa->descripcion}}</p>
+              <!-- <a href=" " class="btn btn__secondary btn__link d-none">Ver más</a> -->
             </div><!-- /.post__content -->
           </div><!-- /.post-item -->
         </div><!-- /.col-lg-4 -->
-        @endforeach
-
+        @endforeach      
       </div><!-- /.row -->
     </div><!-- /.container -->
   </section><!-- /.blog Grid -->

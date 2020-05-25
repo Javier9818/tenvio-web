@@ -11,7 +11,7 @@
 @section('contenido')
 <section id="slider" class="slider slider-layout1">
     <div class="carousel owl-carousel carousel-arrows" data-slide="1" data-slide-md="1" data-slide-sm="1"
-      data-autoplay="false" data-nav="true" data-dots="false" data-space="0" data-loop="false" data-speed="3000"
+      data-autoplay="false" data-nav="false" data-dots="false" data-space="0" data-loop="false" data-speed="3000"
       data-transition="fade" data-animate-out="fadeOut" data-animate-in="fadeIn">
       <div class="slide-item align-v-h text-center bg-overlay">
         <div class="bg-img"><img src="http://7oroof.com/demos/babette/assets/images/backgrounds/8.jpg" alt="slide img"></div>
@@ -21,32 +21,17 @@
               <div class="slide__content">
                 <span class="slide__subtitle d-none">Text</span>
                 <h2 class="slide__title text-uppercase">Busca la ciudad o nombre del restaurant</h2>
-                <p class="slide__desc"></p> <input type="text"  style="text-align:center;font-size:2.5em" class="form-control">
-
-
-
-                <a href="#" class="btn btn__white btn__bordered my-5">Buscar restaurantes cercanos a mi posición</a>
+                <p class="slide__desc"></p>
+                <form action="{{ route('list') }}" method="get">
+                  <input type="text"  name="search" style="text-align:center;font-size:2.5em" class="form-control">
+                </form>
+                <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
               </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->
           </div><!-- /.row -->
         </div><!-- /.container -->
       </div><!-- /.slide-item -->
-      <div class="slide-item align-v-h text-center bg-overlay bg-overlay-2">
-          <div class="bg-img"><img src="http://7oroof.com/demos/babette/assets/images/backgrounds/2.jpg" alt="slide img"></div>
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-12">
-                <div class="slide__content">
-                  <span class="slide__subtitle d-none">Fresh Ingredient, Tasty Meals</span>
-                  <h2 class="slide__title text-uppercase">todo en un solo lugar </h2>
-                  <p class="slide__desc">Somos una plataforma virtual, brindando servicio delivery</p>
-                  {{-- <a href="reservation.html" class="btn btn__primary mx-2 my-1">Boton 01</a>
-                  <a href="menu-classic.html" class="btn btn__white mx-2 my-1">Boton 02</a> --}}
-                </div><!-- /.slide-content -->
-              </div><!-- /.col-lg-12 -->
-            </div><!-- /.row -->
-          </div><!-- /.container -->
-        </div><!-- /.slide-item -->
+
     </div><!-- /.carousel -->
     <svg class="slider__divider-shape" xmlns="http://www.w3.org/2000/svg" width="22" height="61" viewBox="0 0 22 61">
       <path

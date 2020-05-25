@@ -1,24 +1,24 @@
 /*---------------------------
       Table of Contents
     --------------------
-    
+
     01- Mobile Menu
     02- Sticky Navbar
     03- Search Popup
     04- Cart Popup
     05- Scroll Top Button
-    06- Set Background-img to section 
+    06- Set Background-img to section
     07- Increase and Decrease Input Value
     08- Add active class to accordions
     09- Switch Between List view and Grid View
     10- Owl Carousel
     11- Products Filtering and Sorting
     12- Range Slider
-    13- lightbox Gallery 
+    13- lightbox Gallery
     14- NiceSelect Plugin
-    15- image zoomsl Plugin 
+    15- image zoomsl Plugin
     16- AOS Animation Plugin
-    
+
  ----------------------------*/
 
 $(function () {

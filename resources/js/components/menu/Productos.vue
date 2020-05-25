@@ -1,5 +1,6 @@
 <template>
     <div class="container text-center">
+		<loader :mostrar="mostrarLoader"></loader>
         <div class="row">
             <div class="table-responsive">
                 <b-container fluid>
@@ -7,7 +8,7 @@
 						<template v-slot:cell(opciones)="row">
 							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
 							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor>Editar</b-button>
-							<b-button variant="danger" size="sm" @click="eliminar(row.item)">Eliminar</b-button>
+							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
 						</template>
 					</b-table>
 				</b-container>
@@ -26,6 +27,7 @@
 				label-size="sm"
 				class="mb-0">
 					<b-form-input v-model="producto.nombre" placeholder="Nombre"></b-form-input>
+					<div class="text-danger" v-if="!$v.producto.nombre.required">Campo requerido</div>
 				</b-form-group>
 				<b-form-group
 				label="Descripcion"
@@ -35,6 +37,7 @@
 				label-size="sm"
 				class="mb-0">
 					<b-form-input v-model="producto.descripcion" placeholder="Descripcion"></b-form-input>
+					<div class="text-danger" v-if="!$v.producto.descripcion.required">Campo requerido</div>
 				</b-form-group>
 				<b-form-group
 				label="Categoría"
@@ -44,6 +47,7 @@
 				label-size="sm"
 				class="mb-0">
 					<model-list-select v-model="producto.categorias_menu_id" :list="categorias" option-value="value" option-text="text" placeholder="Seleccione Categoría"></model-list-select>
+					<div class="text-danger" v-if="!$v.producto.categorias_menu_id.required">Seleccione una categoría</div>
 				</b-form-group>
 				<b-form-group
 				label="Precio"
@@ -53,6 +57,7 @@
 				label-size="sm"
 				class="mb-0">
 					<b-form-input v-model="producto.precio" type="number" placeholder="Precio"></b-form-input>
+					<div class="text-danger" v-if="!$v.producto.precio.minValue">El precio debe ser mayor a 0</div>
 				</b-form-group>
 				<b-form-group
 				label="Foto del Producto"
@@ -70,8 +75,10 @@
 			</b-col>
 			<div class="text-center">
 				<br>
+				<loader :mostrar="mostrarLoader"></loader>
+				<br>
 				<b-button variant="danger" size="sm" @click="cerrarModal">Cancelar</b-button>
-				<b-button variant="success" :disabled="deshabilitaboton" size="sm" @click="setupddel(false)">{{texto}}</b-button>
+				<b-button variant="success" size="sm" @click="setupddel(false)" :disabled="$v.$invalid || mostrarLoader || deshabilitaboton">{{texto}}</b-button>
 			</div>
 			<br>
 		</b-modal>
@@ -80,6 +87,7 @@
 
 <script>
 import { ModelListSelect } from 'vue-search-select'
+import { required, minValue } from 'vuelidate/lib/validators'
 import Swal from 'sweetalert2'
 export default {
 	data() {
@@ -107,9 +115,19 @@ export default {
 			},
 			rutaImagenes: '',
 			texto: 'Registrar',
-			deshabilitaboton: false
+			deshabilitaboton: false,
+			mostrarLoader: false,
 		}
 	},
+	validations: {
+		producto: {
+			nombre: { required },
+			descripcion: { required },
+			categorias_menu_id: { required },
+			precio: { minValue: (value) => value > 0 }
+		},
+	},
+
 	methods: {
 		archivosubido: function({valor, fileRecords}){
 			if (fileRecords.length == 1)
@@ -175,6 +193,7 @@ export default {
 					return;
 				}
 			}
+			this.mostrarLoader = true;
 			var that = this;
 			axios.post(this.ruta+'/setupddel', {producto: this.producto, eliminar: eliminar})
 			.then(function (response) {
@@ -192,19 +211,25 @@ export default {
 				Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
 			})
 			.finally(function(){
-
+				that.mostrarLoader = true;
 			});
 		},
 		cargarProductos: function(){
+			this.datos = [];
+			this.mostrarLoader = true;
 			var that = this;
 			axios.post(this.ruta+'/listar')
 			.then(function (response) {
 				that.datos = response.data.productos;
 				that.rutaImagenes = response.data.rutaImagenes;
+			})
+			.finally(()=>{
+				that.mostrarLoader = false;
 			});
 		}
 	},
 	mounted() {
+		console.log(this.$v.producto);
 	},
 	created: function(){
 		this.cargarCategorias();
