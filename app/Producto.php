@@ -18,7 +18,7 @@ class Producto extends Model
 		'updated_at'
 	];
 	public static function listar($empresa_id){
-		return Producto::where(['productos.estado' => '1'])
+		return Producto::where(['productos.estado' => '1', 'empresa_id' => $empresa_id])
 			->select('productos.id', 'productos.nombre', 'productos.descripcion',
 				'productos.precio', 'categorias_menus.id as categorias_menu_id',
 				'categorias_menus.descripcion as categoria', 'productos.foto as foto')
