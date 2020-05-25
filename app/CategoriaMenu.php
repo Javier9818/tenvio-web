@@ -18,12 +18,12 @@ class CategoriaMenu extends Model
 			->get()) == 0;
 	}
 	public static function listarvselect($empresa_id){
-		return CategoriaMenu::where(['estado' => '1'])
+		return CategoriaMenu::where(['estado' => '1', 'empresa_id' => $empresa_id])
 			->select('id as value', 'descripcion as text')
 			->get();
 	}
 	public static function listar($empresa_id){
-		return CategoriaMenu::where(['estado' => '1'])
+		return CategoriaMenu::where(['estado' => '1', 'empresa_id' => $empresa_id])
 			->select('id', 'descripcion')
 			->get();
 	}
