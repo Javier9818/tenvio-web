@@ -97,6 +97,9 @@ export default {
 					that.cerrarModal();
 					that.cargarCategorias();
 				}
+				else if(response.data.mensaje != null){
+					Swal.fire('Hay un problema', response.data.mensaje, 'error');
+				}
 				else{
 					Swal.fire('Error', 'Ha sucedido un error, recargue la página e intente nuevamente', 'error');
 				}
