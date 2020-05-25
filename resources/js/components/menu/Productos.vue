@@ -78,7 +78,7 @@
 				<loader :mostrar="mostrarLoader"></loader>
 				<br>
 				<b-button variant="danger" size="sm" @click="cerrarModal">Cancelar</b-button>
-				<b-button variant="success" :disabled="deshabilitaboton" size="sm" @click="setupddel(false)">{{texto}}</b-button>
+				<b-button variant="success" size="sm" @click="setupddel(false)" :disabled="$v.$invalid || mostrarLoader || deshabilitaboton">{{texto}}</b-button>
 			</div>
 			<br>
 		</b-modal>
