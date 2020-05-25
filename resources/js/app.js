@@ -48,6 +48,9 @@ Vue.component('asignacion-component', require('./components/AsignacionComponent.
 Vue.component('form-empleado', require('./components/negocio/FormEmpleado.vue').default);
 Vue.component('table-empleados', require('./components/negocio/TableEmpleados.vue').default);
 Vue.component('info-empresa', require('./components/negocio/InformacionEmpresaComponent.vue').default);
+Vue.component('foto-portada-empresa', require('./components/negocio/PortadaEmpresa.vue').default);
+Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.vue').default);
+Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);

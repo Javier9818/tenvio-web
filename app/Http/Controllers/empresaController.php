@@ -47,9 +47,8 @@ class empresaController extends Controller
         $empresa->telefono = $request->telefono;
         $empresa->celular = $request->celular;
         $empresa->direccion = $request->direccion;
-        $empresa->distrito = $request->distrito;
         $empresa->categoria_id = $request->categoria;
-        $empresa->ciudad = $request->ciudad;
+        $empresa->ciudad_id = $request->ciudad_id;
 
         $empresa->save();
         return response()->json(["message" => "Actualización exitosa"], 200);
