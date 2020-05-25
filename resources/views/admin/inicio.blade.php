@@ -46,6 +46,7 @@
 @section('scripts')
     <script>
         let empresa = @json($empresa);
+        let ciudades = @json($ciudades);
     </script>
 @endsection
 

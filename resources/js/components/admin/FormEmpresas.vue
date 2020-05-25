@@ -71,8 +71,9 @@
                     <b-form-select
                         v-model="form.distrito"
                         :options="distritos"
-                        value-field="name"
+                        value-field="id"
                         text-field="name"
+                        v-on:change="handleDistrito()"
                         required
                     >
                         <template v-slot:first>
@@ -81,13 +82,30 @@
                     </b-form-select>
                 </div>
 
-                <div class="col-md-6 mt-2">
-                    <label>Ciudad</label>
-                    <input type="text" class="form-control" placeholder="Ingrese el nombre de su ciudad" required v-model="form.ciudad">
+                    <div class="col-md-6 mt-2" v-if="nuevaCiudad === false">
+                        <label>Ciudad</label>
+                        <b-overlay :show="loadCiudades" rounded spinner-small spinner-variant="primary">
+                            <b-form-select
+                                v-model="form.ciudad"
+                                :options="ciudades"
+                                value-field="id"
+                                text-field="nombre"
+                                required=""
+                            >
+                                <template v-slot:first>
+                                    <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                                </template>
+                            </b-form-select>
+                        </b-overlay>
+                        <a href="javascript:void(0)" v-on:click="() => {nuevaCiudad=true; form.ciudad=null;}">¿No encontraste la ciudad? Crear ciudad</a>
+                    </div>
+
+
+               <div class="col-md-6 mt-2" v-if="nuevaCiudad">
+                    <label>Nueva ciudad</label>
+                    <input type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad" required v-model="form.ciudadCreate">
+                    <a href="javascript:void(0)" v-on:click="() => {nuevaCiudad=false; form.ciudadCreate=null;}">Cancelar</a>
                 </div>
-
-
-
             </div>
         </form>
     </div>
@@ -102,21 +120,22 @@
     import Swal from 'sweetalert2'
     export default {
         mounted() {
-           axios.get('/json/departamentos.json').then(({data}) => {
-                this.departamentos = data;
-            });
+            axios.get('/json/departamentos.json').then(({data}) => { this.departamentos = data;});
             axios.get('/json/provincias.json').then(({data}) => { this.provinciasGlobal = data });
             axios.get('/json/distritos.json').then(({data}) => { this.distritosGlobal = data });
             axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
         },
         data() {
             return {
+                loadCiudades:false,
+                nuevaCiudad:false,
                 provinciasGlobal:[],
                 distritosGlobal:[],
                 optionsCategorias: [],
                 departamentos:[],
                 provincias:[],
                 distritos:[],
+                ciudades:[],
                 form:{
                     categoria: null,
                     ruc:'',
@@ -124,7 +143,8 @@
                     telefono:'',
                     celular:'',
                     direccion:'',
-                    ciudad:'',
+                    ciudad:null,
+                    ciudadCreate:null,
                     distrito:null,
                     provincia:null,
                     departamento:null
@@ -143,6 +163,7 @@
                     console.log(error);
                     Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                 });
+
             },
             handleDepartamento: async function(){
                 this.form.provincia = null;
@@ -159,6 +180,18 @@
                 this.distritosGlobal.map((distrito) => {
                    if(distrito.province_id === this.form.provincia) this.distritos.push(distrito);
                 })
+            },
+            handleDistrito: async function(){
+                this.form.ciudad = null;
+                this.ciudades = [];
+                this.loadCiudades = true;
+                await axios.get(`/api/ciudades/${this.form.distrito}`).then(({data})=>{
+                    this.ciudades = data.ciudades;
+                    this.loadCiudades = false;
+                });
+            },
+            validaCiudad(){
+                return (this.form.ciudad === null && this.form.ciudadCreate === null) ? false : true;
             }
         }
     }

@@ -10,7 +10,7 @@ class adminController extends Controller
 {
 
     public function listarEmpresas(){
-        $empresas = DB::select('select * from empresas order by estado DESC', []);
+        $empresas = DB::select('select e.id, e.nombre, e.ruc, e.celular, c.distrito_id, c.nombre as ciudad  from empresas e inner join ciudad c on e.ciudad_id = c.id order by estado DESC', []);
         return view('superadmin.empresas.mantenedor', ["empresas" => $empresas]);
     }
 

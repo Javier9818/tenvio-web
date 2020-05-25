@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contrato;
 use App\Empresa;
+use App\Ciudad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,8 @@ class empresaController extends Controller
 {
 
     public function setEmpresa(Request $request){
+
+        $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => $request->ciudadCreate, "distrito_id" => $request->distrito]))->id : $request->ciudad;
         $empresa = Empresa::create([
             "ruc" => $request->ruc,
             "nombre" => $request->nombre,
@@ -20,11 +23,9 @@ class empresaController extends Controller
             "telefono" => $request->telefono,
             "celular" => $request->celular,
             "direccion" => $request->direccion,
-            "distrito" => $request->distrito,
             "categoria_id" => $request->categoria,
-            "ciudad" => $request->ciudad,
+            "ciudad_id" => $ciudad,
         ]);
-
 
         DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
         DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
@@ -46,9 +47,8 @@ class empresaController extends Controller
         $empresa->telefono = $request->telefono;
         $empresa->celular = $request->celular;
         $empresa->direccion = $request->direccion;
-        $empresa->distrito = $request->distrito;
         $empresa->categoria_id = $request->categoria;
-        $empresa->ciudad = $request->ciudad;
+        $empresa->ciudad_id = $request->ciudad_id;
 
         $empresa->save();
         return response()->json(["message" => "Actualización exitosa"], 200);
@@ -78,10 +78,13 @@ class empresaController extends Controller
         $idempresa = Session::get('empresa');
         // $permisos = Auth::user()->permisoUser;
         // return dd($permisos[5]->descripcion);
-        $empresa = DB::select('select e.*, c.descripcion as categoriaName, c.id as categoria from empresas e
+        $empresa = DB::select('select e.*, c.descripcion as categoriaName, c.id as categoria, ci.nombre as ciudad, ci.distrito_id as distrito
+                                from empresas e
                                 inner join categorias c on e.categoria_id = c.id
+                                inner join ciudad ci on ci.id = e.ciudad_id
                                 where e.id = ?', [$idempresa]);
-        return view('admin.inicio', ["empresa" => $empresa[0]]);
+        $ciudades = Ciudad::where('distrito_id', $empresa[0]->distrito)->get();
+        return view('admin.inicio', ["empresa" => $empresa[0], "ciudades" => $ciudades]);
     }
 
     public function listarEmpresas(){

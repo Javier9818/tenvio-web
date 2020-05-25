@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/roles', 'generalController@roles');
+Route::get('/ciudades/{distrito}', 'generalController@ciudades');
 Route::get('/categorias', 'generalController@categoriasEmpresa');
 Route::get('/cargos', 'generalController@cargosEmpleado');
 Route::get('/username/{username}', 'generalController@validateUsername');
