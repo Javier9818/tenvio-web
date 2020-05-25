@@ -125,12 +125,13 @@
                         </div>
 
                         <div class="col-md-6 mt-2">
-                            <label>Distrito {{form.distrito}}</label>
+                            <label>Distrito</label>
                             <b-form-select
                                 v-model="form.distrito"
                                 :options="distritos"
-                                value-field="name"
+                                value-field="id"
                                 text-field="name"
+                                v-on:change="handleDistrito()"
                                 required
                             >
                                 <template v-slot:first>
@@ -139,12 +140,21 @@
                             </b-form-select>
                         </div>
 
-                        <div class="col-md-6 mt-2">
+                         <div class="col-md-6 mt-2">
                             <label>Ciudad</label>
-                            <input type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad" required v-model="form.ciudad">
-                        </div>
-                        <div class="col-md-6 mt-2 ">
-                            <button type="submit" form="formEmpresa" class="btn btn-primary" v-on:click="changeEdit">{{edit}}</button>
+                            <b-overlay :show="loadCiudades" rounded spinner-small spinner-variant="primary">
+                                <b-form-select
+                                    v-model="form.ciudad_id"
+                                    :options="ciudades"
+                                    value-field="id"
+                                    text-field="nombre"
+                                    required=""
+                                >
+                                    <template v-slot:first>
+                                        <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
+                            </b-overlay>
                         </div>
                     </form>
                 </div>
@@ -162,12 +172,12 @@
         mounted() {
             console.log('Component mounted.')
             console.log(empresa);
-            console.log(this.editar);
+            console.log(ciudades);
             axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
             axios.get('/json/departamentos.json').then(({data}) => {this.departamentos = data;});
             axios.get('/json/distritos.json').then(({data}) => {
                  data.forEach(distrito => {
-                    if(distrito.name === empresa.distrito){
+                    if( parseInt(distrito.id, 10) === empresa.distrito){
                         data.forEach( e => {
                            if(e.province_id === distrito.province_id){
                                this.distritos.push(e);
@@ -189,12 +199,14 @@
         },
         data () {
             return {
+                loadCiudades:false,
                 optionsCategorias:[],
                 provinciasGlobal:[],
                 distritosGlobal:[],
                 departamentos:[],
                 provincias:[],
                 distritos:[],
+                ciudades,
                 edit:'editar',
                 image:'',
                 form:{
@@ -253,7 +265,16 @@
                 this.distritosGlobal.map((distrito) => {
                    if(distrito.province_id === this.form.provincia) this.distritos.push(distrito);
                 })
-            }
+            },
+            handleDistrito: async function(){
+                this.form.ciudad_id = null;
+                this.ciudades = [];
+                this.loadCiudades = true;
+                await axios.get(`/api/ciudades/${this.form.distrito}`).then(({data})=>{
+                    this.ciudades = data.ciudades;
+                    this.loadCiudades = false;
+                });
+            },
         }
     }
 </script>

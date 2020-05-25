@@ -45,31 +45,7 @@
                 <div class="card-content collapse show">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>RUC</th>
-                                        <th>Celular</th>
-                                        <th>Distrito</th>
-                                        <th>Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($empresas as $empresa)
-                                        <tr>
-                                            <td>{{$empresa->nombre}}</td>
-                                            <td>{{$empresa->ruc}}</td>
-                                            <td>{{$empresa->celular}}</td>
-                                            <td>{{$empresa->distrito}}</td>
-                                            <td>
-                                                <a href="/admin/empresa/{{$empresa->id}}" class="mr-2" title="Editar"><i class="ft-edit success"></i></a>
-                                                <a href="" title="Eliminar"><i class="ft-delete red"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            <table-empresas></table-empresas>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#empresa">
                                 Nueva Empresa
                              </button>
@@ -95,4 +71,10 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        let empresas = @json($empresas);
+    </script>
 @endsection

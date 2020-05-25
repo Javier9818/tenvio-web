@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Ciudad;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,5 +50,10 @@ class generalController extends Controller
 
     public function vistaConfiguraciones(){
         return view('admin.config', ["empresa" => Session::get('empresa')]);
+    }
+
+    public function ciudades($ditritoId){
+        $ciudades = Ciudad::where('distrito_id', $ditritoId)->get();
+        return response()->json(["ciudades" => $ciudades], 200);
     }
 }

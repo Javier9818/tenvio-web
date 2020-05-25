@@ -51,6 +51,7 @@ Vue.component('info-empresa', require('./components/negocio/InformacionEmpresaCo
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
+Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
