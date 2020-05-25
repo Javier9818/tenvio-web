@@ -29,12 +29,13 @@
           <div class="navbar-actions-wrap">
             <div class="navbar-actions d-flex align-items-center">
               <a href="#" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
+              <modal-carrito></modal-carrito>
               {{-- <a href="reservation.html"
                 class="navbar__action-btn navbar__action-btn-reserve btn btn__primary">Reservation</a> --}}
               <ul class="social__icons">
                 <!-- <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
                 <li><a href="#"><i class="fab fa-twitter-square"></i></a></li> -->
-                <modal-carrito></modal-carrito>
+                
               </ul><!-- /.social__icons -->
             </div><!-- /.navbar-actions -->
           </div><!-- /.navbar-actions-wrap -->

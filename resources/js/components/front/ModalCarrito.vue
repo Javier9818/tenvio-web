@@ -3,8 +3,8 @@
         <a href="#" class="navbar__action-btn navbar__action-btn-cart">
                 <i class="icon-cart"></i><span class="cart__label">{{productos.length}}</span>
         </a>
-        <div class="cart-popup">
-            <ul class="list-unstyled">
+        <div class="cart-popup ">
+            <ul class="list-unstyled ">
                 <li class="cart-item" v-for="(item, index) of productos" :key="index">
                 <div class="cart__item-img"><img :src="'/storage/imgproductos/'+item.foto" alt="Product"></div>
                 <div class="cart__item-content">
@@ -19,8 +19,8 @@
                 <span class="color-theme">S/ {{calcularTotal}}</span>
             </div><!-- /.cart-subtotal -->
             <div class="cart-action d-flex justify-content-between">
-                <a href="#" class="btn btn__primary btn__hover2">Ver Pedidos</a>
-                <a href="#" class="btn btn__white">Finalizar</a>
+                <a href="/cart" class="btn btn__primary btn__hover2">Ver Pedidos</a>
+                <a href="/cart" class="btn btn__white">Finalizar</a>
             </div><!-- /.cart-action -->
         </div>        
     </div>
@@ -28,7 +28,7 @@
 
 <script>
      
-       import EventBus from '../../event-bus';
+    import EventBus from '../../event-bus';
     export default {      
         data(){
             return {
@@ -41,7 +41,8 @@
             eliminar: function(index){                 
                 this.productos.splice(index,1);
                 let cockie=this.productos;
-                this.$cookies.set('carrito',JSON.stringify(cockie));                 
+                this.$cookies.set('carrito',JSON.stringify(cockie));     
+                EventBus.$emit('EliminarenModal', true);               
             },
             recarga: function () {
                 let cockie=JSON.parse(this.$cookies.get('carrito'));
@@ -76,6 +77,14 @@
             cockie.push(producto);
             this.productos=cockie;          
             this.$cookies.set('carrito',JSON.stringify(cockie));             
+            }.bind(this));
+            EventBus.$on('elimiarEnCart', function(boolean)  {           
+                if(boolean)
+                    this.recarga();             
+            }.bind(this));
+            EventBus.$on('ActualizaEnCart', function(boolean)  {           
+                if(boolean)
+                    this.recarga();             
             }.bind(this));
         }
     }

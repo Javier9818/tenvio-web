@@ -217,7 +217,7 @@ export default {
           this.hideModal();
           break;
         case 'x':
-          this.hideModal();
+           location.href="/cart";
           break;
         default:
           break;
