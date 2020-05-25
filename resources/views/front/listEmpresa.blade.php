@@ -64,10 +64,10 @@
               <div class="post__meta">
                 <span class="post__meta-date d-none">Jan 20, 2020</span>
                 <div class="post__meta-cat">
-                  <a href="#">Polleria</a><a href="#">Parrillas</a>
+                  <a href="#">{{$empresa->categoria}}</a>
                 </div><!-- /.post-meta-cat -->
               </div><!-- /.post-meta -->
-              <h4 class="post__title"><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre))}}">{{$empresa->nombre}}</a></h4>
+              <h4 class="post__title"><a href="{{url('/empresa/'.$empresa->id.'-'.str_replace(' ','-',$empresa->nombre))}}">{{$empresa->nombre}}</a></h4>
               <p class="post__desc">{{$empresa->descripcion}}</p>
               <!-- <a href=" " class="btn btn__secondary btn__link d-none">Ver más</a> -->
             </div><!-- /.post__content -->

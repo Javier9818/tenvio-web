@@ -25,24 +25,22 @@ class FrontController extends Controller
     }
   }
   public function ListEmpresas( Request $request){
-    $empresas =DB::table('empresas')
-      //->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-      ->select('id','nombre','descripcion','foto')
-      ->where('nombre','=',$request->get('search'))
-      ->get();
-      // $empresas = DB::select('select e.*, c.descripcion as categoriaName from empresas e
-      // inner join categorias c on e.categoria_id = c.id
-      // where e.nombre = '+$request->get('search'));
-      //var_dump($request->get('search'));
-      //var_dump($empresas);
+    $empresas =DB::table('empresas')      
+      ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+      ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')     
+      ->where('empresas.nombre','like','%'.$request->get('search').'%')
+      ->get();     
        return view('front.listEmpresa', ["empresas" => $empresas]);
   }
   public function Empresa($nombre){
-
+      
       try {
         $empresa =DB::table('empresas')
-        ->select('id','nombre','descripcion', 'ciudad_id')
-        ->where('nombre','=',str_replace('-',' ',$nombre))
+        ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+        ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
+        ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria', 'ciudad.nombre', 'ciudad.distrito_id')  
+        // ->where('empresas.nombre','=',str_replace('-',' ',$nombre))
+        ->where('empresas.id','=',explode('-',$nombre)[0])
         ->get();
         return view('front.empresa')->with("data",$empresa);
       }catch (\Exception  $e) {
@@ -50,6 +48,7 @@ class FrontController extends Controller
         //   'Message'=> $e->getMessage(),
         //   'success'=>false
         // ];
+        //dd($e->getMessage());
         return abort(404);
      }
 

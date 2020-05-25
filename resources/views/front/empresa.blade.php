@@ -18,13 +18,21 @@
     </svg>
     <div class="container">
       <div class="row">
-
+      <?php
+        $distrito="";
+        $distritos=json_decode(file_get_contents('./json/distritos.json'));
+        foreach ($distritos as $key => $value) {
+           if ($value->id==$data[0]->distrito_id) {
+              $distrito=$value->name;
+           }
+        }
+      ?>         
         <div class="col-sm-12 col-md-12 col-lg-12">
           <span class="pagetitle__subheading">Restaurant</span>
           <h1 class="pagetitle__heading">{{$data[0]->nombre}}</h1>
           <nav aria-label="breadcrumb" >
             <ol class="breadcrumb justify-content-center">
-              <li class="breadcrumb-item active">{{$data[0]->ciudad_id}} - {{$data[0]->ciudad_id}}</li>
+              <li class="breadcrumb-item active">{{$data[0]->nombre}} - {{$distrito}}</li>
             </ol>
           </nav>
         </div><!-- /.col-lg-12 -->

@@ -1,23 +1,28 @@
 <template>
     <div>
-        <ul class="list-unstyled">
-            <li class="cart-item" v-for="(item, index) of productos" :key="index">
-            <div class="cart__item-img"><img :src="'/storage/imgproductos/'+item.foto" alt="Product"></div>
-            <div class="cart__item-content">
-                <h6 class="cart__item-title"> [ {{item.cant}} ] {{item.nombre}}</h6>
-                <div class="cart__item-detail">S/. {{item.precio}}</div>
-                <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
-            </div><!-- /.cart-item-content -->
-            </li>
-        </ul>
-        <div class="cart-subtotal">
-            <span>Total:</span>
-            <span class="color-theme">S/ {{calcularTotal}}</span>
-        </div><!-- /.cart-subtotal -->
-        <div class="cart-action d-flex justify-content-between">
-            <a href="#" class="btn btn__primary btn__hover2">Ver Pedidos</a>
-            <a href="#" class="btn btn__white">Finalizar</a>
-        </div><!-- /.cart-action -->
+        <a href="#" class="navbar__action-btn navbar__action-btn-cart">
+                <i class="icon-cart"></i><span class="cart__label">{{productos.length}}</span>
+        </a>
+        <div class="cart-popup">
+            <ul class="list-unstyled">
+                <li class="cart-item" v-for="(item, index) of productos" :key="index">
+                <div class="cart__item-img"><img :src="'/storage/imgproductos/'+item.foto" alt="Product"></div>
+                <div class="cart__item-content">
+                    <h6 class="cart__item-title"> [ {{item.cant}} ] {{item.nombre}}</h6>
+                    <div class="cart__item-detail">S/. {{item.precio}}</div>
+                    <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
+                </div><!-- /.cart-item-content -->
+                </li>
+            </ul>
+            <div class="cart-subtotal">
+                <span>Total:</span>
+                <span class="color-theme">S/ {{calcularTotal}}</span>
+            </div><!-- /.cart-subtotal -->
+            <div class="cart-action d-flex justify-content-between">
+                <a href="#" class="btn btn__primary btn__hover2">Ver Pedidos</a>
+                <a href="#" class="btn btn__white">Finalizar</a>
+            </div><!-- /.cart-action -->
+        </div>        
     </div>
 </template>
 

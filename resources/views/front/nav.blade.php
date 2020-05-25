@@ -2,7 +2,7 @@
 <header id="header" class="header header-transparent header-layout1">
     <nav class="navbar navbar-expand-lg sticky-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/">
         <img src="{!! asset('assets/images/logo/LogoDeliveryLight.png') !!}" class="logo-light" alt="logo">
           <img src="{!! asset('assets/images/logo/LogoDeliveryDark.png') !!}" class="logo-dark" alt="logo">
         </a>
@@ -40,12 +40,7 @@
         <div class="navbar-actions-wrap">
         <div class="navbar-actions d-flex align-items-center">
             <a href="#" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
-            <a href="#" class="navbar__action-btn navbar__action-btn-cart">
-                <i class="icon-cart"></i><span class="cart__label">3</span>
-            </a>
-            <div class="cart-popup">
-                    <modal-carrito ref="carritoComponent"></modal-carrito>
-            </div><!-- /.cart-popup -->
+            <modal-carrito></modal-carrito>
         </div>
         </div>
     </div>
