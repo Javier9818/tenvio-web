@@ -15,10 +15,8 @@
 		@select="filesSelected($event)"
 		@delete="fileDeleted($event)"
 		v-model="fileRecords"></VueFileAgent>
-		<div class="text-center" :hidden="!mostrarLoader">
-			<loader :mostrar="mostrarLoader"></loader>
-			<br>
-			Su archivo se está procesando, espere un momento por favor
+		<div class="text-center">
+			<loader :mostrar="mostrarLoader" texto="Su archivo se está procesando, espere un momento por favor"></loader>
 		</div>
 		<br>
 	</div>

@@ -32,6 +32,8 @@ class CategoriasMenusController extends Controller
 		$descripcion = $request->get('categoria')['descripcion'];
 		$eliminar = $request->get('eliminar');
 		if ($eliminar == true){
+			if(!CategoriaMenu::puedeEliminarse($id))
+				return array('mensaje' => 'La categoría registra productos, elimine los productos de estas categorías e intente nuevamente');
 			CategoriaMenu::eliminar($id);
 		}
 		else{

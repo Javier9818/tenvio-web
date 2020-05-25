@@ -1,5 +1,6 @@
 <template>
     <div class="container text-center">
+		<loader :mostrar="mostrarLoader"></loader>
         <div class="row">
             <div class="table-responsive">
                 <b-container fluid>
@@ -7,7 +8,7 @@
 						<template v-slot:cell(opciones)="row">
 							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
 							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor>Editar</b-button>
-							<b-button variant="danger" size="sm" @click="eliminar(row.item)">Eliminar</b-button>
+							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
 						</template>
 					</b-table>
 				</b-container>
@@ -23,15 +24,18 @@
 				label-cols-sm="12"
 				label-align-sm="left"
 				label-align="center"
-				label-size="sm"
+				label-size="md"
 				class="mb-0">
-					<b-form-input v-model="categoria.descripcion" placeholder="Descripcion"></b-form-input>
+					<b-form-input v-model="categoria.descripcion" placeholder="Descripcion" :state="$v.categoria.descripcion.required"></b-form-input>
+					<div class="text-danger" v-if="!$v.categoria.descripcion.required">La descripcion es requerida</div>
 				</b-form-group>
 			</b-col>
 			<div class="text-center">
 				<br>
+				<loader :mostrar="mostrarLoader"></loader>
+				<br>
 				<b-button variant="danger" size="sm" @click="cerrarModal">Cancelar</b-button>
-				<b-button variant="success" size="sm" @click="setupddel(false)">{{texto}}</b-button>
+				<b-button variant="success" size="sm" @click="setupddel(false)" :disabled="$v.$invalid || mostrarLoader">{{texto}}</b-button>
 			</div>
 			<br>
 		</b-modal>
@@ -40,6 +44,7 @@
 
 <script>
 import Swal from 'sweetalert2'
+import { required } from 'vuelidate/lib/validators'
 export default {
 	data() {
 		return {
@@ -55,21 +60,32 @@ export default {
 				descripcion: ''
 			},
 			texto: 'Registrar',
+			mostrarLoader: false,
+		}
+	},
+	validations: {
+		categoria: {
+			descripcion: { required }
 		}
 	},
 	methods: {
 		cargarCategorias: function(){
+			this.datos = [];
+			this.mostrarLoader = true;
 			var that = this;
 			axios.post(this.ruta+'/listar')
 			.then(function (response) {
 				that.datos = response.data;
+			})
+			.finally(() =>{
+				that.mostrarLoader = false;
 			});
 		},
 		cerrarModal(){
 			this.$bvModal.hide('modal-mantenedor');
 		},
 		setupddel: function(eliminar){
-			//console.log(this.categoria);
+			this.mostrarLoader = true;
 			var that = this;
 			axios.post(this.ruta+'/setupddel', {categoria: this.categoria, eliminar: eliminar})
 			.then(function (response) {
@@ -81,6 +97,9 @@ export default {
 					that.cerrarModal();
 					that.cargarCategorias();
 				}
+				else if(response.data.mensaje != null){
+					Swal.fire('Hay un problema', response.data.mensaje, 'error');
+				}
 				else{
 					Swal.fire('Error', 'Ha sucedido un error, recargue la página e intente nuevamente', 'error');
 				}
@@ -89,7 +108,7 @@ export default {
 				Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
 			})
 			.finally(function(){
-
+				that.mostrarLoader = false;
 			});
 		},
 		nuevo: function(){
