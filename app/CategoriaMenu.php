@@ -13,9 +13,9 @@ class CategoriaMenu extends Model
 	];
 	public static function puedeEliminarse($id){
 		//valida si dicha categoria tiene productos a su nombre con estado 1
-		return count(CategoriaMenu::where(['productos.estado' => '1', 'categorias_menus.id' => $id])
+		return CategoriaMenu::where(['productos.estado' => '1', 'categorias_menus.id' => $id])
 			->join('productos', 'productos.categorias_menu_id', '=', 'categorias_menus.id')
-			->get()) == 0;
+			->count() == 0;
 	}
 	public static function listarvselect($empresa_id){
 		return CategoriaMenu::where(['estado' => '1', 'empresa_id' => $empresa_id])

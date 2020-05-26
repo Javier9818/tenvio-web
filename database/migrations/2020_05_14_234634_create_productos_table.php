@@ -22,6 +22,7 @@ class CreateProductosTable extends Migration
             $table->integer('categorias_menu_id');
             $table->integer('empresa_id');
             $table->string('estado', 1);
+            $table->string('usuario_puede_ver', 1);
             $table->timestamps();
         });
     }
