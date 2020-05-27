@@ -30,6 +30,7 @@ class ProductosController extends Controller
 		$descripcion = $request->get('producto')['descripcion'];
 		$precio = $request->get('producto')['precio'];
 		$categorias_menu_id = $request->get('producto')['categorias_menu_id'];
+		$usuario_puede_ver = $request->get('producto')['usuario_puede_ver'];
 		$foto = $request->get('producto')['foto']??'';
 		$fotosubida = $request->get('producto')['fotosubida']??[];
 		$sesubiofoto = false;
@@ -50,7 +51,7 @@ class ProductosController extends Controller
 			if ($id == 0)
 				Producto::registrar($nombre, $descripcion, $precio, $fotosubida, $categorias_menu_id, $empresa_id);
 			else
-				Producto::editar($id, $nombre, $descripcion, $precio, $fotosubida, $categorias_menu_id);
+				Producto::editar($id, $nombre, $descripcion, $precio, $fotosubida, $categorias_menu_id, $usuario_puede_ver);
 			if ($sesubiofoto == true)
 				ExtrasController::moverFotoProducto($fotosubida);
 		}

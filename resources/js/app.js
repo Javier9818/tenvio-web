@@ -88,7 +88,7 @@ Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').de
 /*Front*/
 Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
 Vue.component('front-cart-component', require('./components/front/cartComponent.vue').default)
-
+Vue.component('form-wizard-unt', require('./components/formWizard/App.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
