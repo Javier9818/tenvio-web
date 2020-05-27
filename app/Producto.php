@@ -14,9 +14,16 @@ class Producto extends Model
 		'categorias_menu_id',
 		'empresa_id',
 		'estado',
+		'usuario_puede_ver',
 		'created_at',
 		'updated_at'
 	];
+	public static function puedeEliminarse($id){
+		//valida si dicha categoria tiene productos a su nombre con estado 1
+		return Producto::where(['productos.id' => $id])
+			->join('detalle_pedidos', 'productos.id', '=', 'detalle_pedidos.producto_id')
+			->count() == 0;
+	}
 	public static function listar($empresa_id){
 		return Producto::where(['productos.estado' => '1', 'productos.empresa_id' => $empresa_id])
 			->select('productos.id', 'productos.nombre', 'productos.descripcion',
@@ -50,6 +57,7 @@ class Producto extends Model
 			'categorias_menu_id' => $categorias_menu_id,
 			'empresa_id' => $empresa_id,
 			'estado' => 1,
+			'usuario_puede_ver' => 1
 		]);
 	}
 }

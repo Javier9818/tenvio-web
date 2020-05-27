@@ -41,6 +41,8 @@ class ProductosController extends Controller
 			$fotosubida = $foto;
 		$eliminar = $request->get('eliminar');
 		if ($eliminar == true){
+			if(!Producto::puedeEliminarse($id))
+				return array('mensaje' => 'El producto no puede eliminarse debido a que se registra en un pedido, pero usted puede ocultar el producto al público');
 			Producto::eliminar($id);
 		}
 		else{

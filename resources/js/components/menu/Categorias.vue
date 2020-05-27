@@ -7,7 +7,7 @@
 					<b-table show-empty small stacked="md" :items="datos" :fields="columnas" empty-text="No hay elementos para mostrar">
 						<template v-slot:cell(opciones)="row">
 							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
-							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor>Editar</b-button>
+							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
 							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
 						</template>
 					</b-table>
