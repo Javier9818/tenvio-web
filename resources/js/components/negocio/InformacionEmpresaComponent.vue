@@ -50,6 +50,7 @@
         props:['editar'],
         mounted() {
             console.log('Component mounted.')
+            console.log(empresa);
         },
         data () {
             return {
