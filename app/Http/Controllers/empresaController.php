@@ -16,6 +16,7 @@ class empresaController extends Controller
     public function setEmpresa(Request $request){
 
         $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => $request->ciudadCreate, "distrito_id" => $request->distrito]))->id : $request->ciudad;
+        $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
         $empresa = Empresa::create([
             "ruc" => $request->ruc,
             "nombre" => $request->nombre,
@@ -25,6 +26,7 @@ class empresaController extends Controller
             "direccion" => $request->direccion,
             "categoria_id" => $request->categoria,
             "ciudad_id" => $ciudad,
+            "nombre_unico" => $usernameEmpresa
         ]);
 
         DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
@@ -40,7 +42,6 @@ class empresaController extends Controller
 
     public function updateEmpresa(Request $request, $empresa){
         $empresa = Empresa::find($empresa);
-
         $empresa->nombre = $request->nombre;
         $empresa->ruc =  $request->ruc;
         $empresa->descripcion = $request->descripcion;

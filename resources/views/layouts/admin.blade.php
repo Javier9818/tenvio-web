@@ -33,10 +33,10 @@
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
     <style>
-        .modal {
+        /* .modal {
             background: rgba(0,0,0,0.4);
             z-index: 2050;
-        }
+        } */
     </style>
 
     @yield('styles')
@@ -58,10 +58,10 @@
       </div>
     </div>
 
-    <footer class="footer footer-static footer-light navbar-border navbar-shadow">
+    {{-- <footer class="footer footer-static footer-light navbar-border navbar-shadow">
       <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2020  &copy; Copyright <a class="text-bold-800 grey darken-2" href="/">Delivery</a></span>
       </div>
-    </footer>
+    </footer> --}}
 
     @yield('scripts')
     <script src="/js/app.js" type="text/javascript"></script>

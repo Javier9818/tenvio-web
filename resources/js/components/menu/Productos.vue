@@ -7,7 +7,9 @@
 					<b-table show-empty small stacked="md" :items="datos" :fields="columnas" empty-text="No hay elementos para mostrar">
 						<template v-slot:cell(opciones)="row">
 							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
-							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor>Editar</b-button>
+							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
+							<b-button variant="info" size="sm" v-if="row.item.usuario_puede_ver==0" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar al usuario</b-button>
+							<b-button variant="success" size="sm" v-else @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Mostrar al usuario</b-button>
 							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
 						</template>
 					</b-table>
@@ -112,6 +114,7 @@ export default {
 				foto: '',
 				categorias_menu_id: null,
 				fotosubida: null,
+				usuario_puede_ver: 1
 			},
 			rutaImagenes: '',
 			texto: 'Registrar',
@@ -156,6 +159,7 @@ export default {
 			this.producto.foto = '';
 			this.producto.fotosubida = null;
 			this.producto.categorias_menu_id = null;
+			this.producto.usuario_puede_ver = 1;
 		},
 		editar: function(item){
 			console.log(item);
@@ -166,6 +170,7 @@ export default {
 			this.producto.precio = item.precio;
 			this.producto.foto = item.foto;
 			this.producto.categorias_menu_id = item.categorias_menu_id;
+			this.producto.usuario_puede_ver = item.usuario_puede_ver;
 		},
 		eliminar: function(item){
 			this.producto.id = item.id;
@@ -173,26 +178,16 @@ export default {
 			this.producto.fotoSubida = '';
 			this.setupddel(true);
 		},
+		mostrarocultar: function(item){
+			this.editar(item);
+			if (this.producto.usuario_puede_ver == 0)
+				this.producto.usuario_puede_ver = 1;
+			else
+				this.producto.usuario_puede_ver = 0;
+			this.setupddel(false);
+		},
 		setupddel: function(eliminar){
 			console.log(this.producto);
-			if(eliminar == false){
-				if (this.producto.nombre == ''){
-					Swal.fire('Advertencia', 'Debe ingresar un nombre de producto', 'warning');
-					return;
-				}
-				if (this.producto.descripcion == ''){
-					Swal.fire('Advertencia', 'Debe ingresar una descripcion del producto ', 'warning');
-					return;
-				}
-				if (this.producto.precio <= 0){
-					Swal.fire('Advertencia', 'El precio del producto debe ser mayor a s/0.00', 'warning');
-					return;
-				}
-				if (this.producto.categorias_menu_id == null){
-					Swal.fire('Advertencia', 'Debe ingresar la categoría del producto ', 'warning');
-					return;
-				}
-			}
 			this.mostrarLoader = true;
 			var that = this;
 			axios.post(this.ruta+'/setupddel', {producto: this.producto, eliminar: eliminar})
@@ -203,6 +198,9 @@ export default {
 					that.cerrarModal();
 					that.cargarProductos();
 				}
+				else if(response.data.mensaje != null){
+					Swal.fire('Hay un problema', response.data.mensaje, 'error');
+				}
 				else{
 					Swal.fire('Error', 'Ha sucedido un error, recargue la página e intente nuevamente', 'error');
 				}
@@ -211,7 +209,7 @@ export default {
 				Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
 			})
 			.finally(function(){
-				that.mostrarLoader = true;
+				that.mostrarLoader = false;
 			});
 		},
 		cargarProductos: function(){

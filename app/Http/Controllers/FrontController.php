@@ -25,21 +25,22 @@ class FrontController extends Controller
     }
   }
   public function ListEmpresas( Request $request){
-    $empresas =DB::table('empresas')      
+    $empresas =DB::table('empresas')
       ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-      ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')     
+      ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
       ->where('empresas.nombre','like','%'.$request->get('search').'%')
-      ->get();     
+      ->get();
        return view('front.listEmpresa', ["empresas" => $empresas]);
   }
   public function Empresa($nombre){
-      
+
       try {
         $empresa =DB::table('empresas')
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
         ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
-        ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')         
-        ->where('empresas.id','=',explode('-',$nombre)[0])
+        ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')
+        // ->where('empresas.nombre','=',str_replace('-',' ',$nombre))
+        ->where('empresas.nombre_unico','=', $nombre)
         ->get();
         return view('front.empresa')->with("data",$empresa);
       }catch (\Exception  $e) {         

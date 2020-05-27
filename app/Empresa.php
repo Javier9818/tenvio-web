@@ -3,13 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class Empresa extends Model
 {
-    protected $fillable = ['id', 'ruc', 'nombre', 'descripcion', 'telefono', 'celular', 'direccion', 'foto','ciudad_id', 'categoria_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'ruc', 'nombre', 'descripcion', 'telefono', 'celular', 'direccion', 'foto', 'nombre_unico','ciudad_id', 'categoria_id', 'created_at', 'updated_at'];
 
     public static function setImagen($data, $actual = false){
         if($data){
@@ -34,6 +35,15 @@ class Empresa extends Model
             return true;
         }else{
             return false;
+        }
+    }
+
+    public static function crearNombreUnico($nombre){
+        $empresas = DB::table('empresas')->where('nombre_unico', '=', $nombre)->get();
+        if(count($empresas) > 0){
+            return $nombre.(count($empresas) + 1);
+        }else{
+            return $nombre;
         }
     }
 }
