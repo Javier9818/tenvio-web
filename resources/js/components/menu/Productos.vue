@@ -8,7 +8,7 @@
 						<template v-slot:cell(opciones)="row">
 							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
 							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
-							<b-button variant="info" size="sm" v-if="row.item.usuario_puede_ver==0" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar al usuario</b-button>
+							<b-button variant="info" size="sm" v-if="row.item.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar al usuario</b-button>
 							<b-button variant="success" size="sm" v-else @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Mostrar al usuario</b-button>
 							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
 						</template>
