@@ -15,7 +15,9 @@ class CreatePedidosTable extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->string('estado',20);
+            $table->integer('empresa_id');
+            $table->string('estado', 20);
+            $table->string('comentario', 100);
             $table->string('latitud');
             $table->string('longitud');
             $table->string('meta_latitud');
