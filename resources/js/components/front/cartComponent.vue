@@ -1,7 +1,7 @@
 <template>
    <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12">
-      <div class="cart-table table-responsive">
+      <div class="cart-table table-responsive" >
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -11,8 +11,9 @@
               <th>Total</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="cart__product " v-for="(item, index) of productos" :key="index">
+          <tbody> 
+            <tr><td colspan="4">sadasd</td></tr>
+            <tr class="cart__product " v-for="(item, index) of productos" :key="index">               
               <td class="cart__product-item">
                 <div class="cart__product-remove">
                   <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>

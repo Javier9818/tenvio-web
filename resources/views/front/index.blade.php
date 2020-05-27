@@ -24,8 +24,8 @@
                 <p class="slide__desc"></p>
                 <form action="{{ route('list') }}" method="get">
                   <input type="text"  name="search" style="text-align:center;font-size:2.5em" class="form-control">
-                </form>
-                <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
+                  <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
+                </form>                
               </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->
           </div><!-- /.row -->

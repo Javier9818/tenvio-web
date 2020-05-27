@@ -38,17 +38,11 @@ class FrontController extends Controller
         $empresa =DB::table('empresas')
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
         ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
-        ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria', 'ciudad.nombre', 'ciudad.distrito_id')  
-        // ->where('empresas.nombre','=',str_replace('-',' ',$nombre))
+        ->select('empresas.id','empresas.nombre','empresas.descripcion','empresas.foto','categorias.descripcion as categoria', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')         
         ->where('empresas.id','=',explode('-',$nombre)[0])
         ->get();
         return view('front.empresa')->with("data",$empresa);
-      }catch (\Exception  $e) {
-        // return [
-        //   'Message'=> $e->getMessage(),
-        //   'success'=>false
-        // ];
-        //dd($e->getMessage());
+      }catch (\Exception  $e) {         
         return abort(404);
      }
 
@@ -61,7 +55,7 @@ class FrontController extends Controller
         ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
         ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
         ->where([
-          ['empresas.id', 'like', $request->get('id')],
+          ['empresas.id', '=', $request->get('id')],
         ])
         ->get();
       }

@@ -26,13 +26,13 @@
               $distrito=$value->name;
            }
         }
-      ?>         
+      ?>               
         <div class="col-sm-12 col-md-12 col-lg-12">
           <span class="pagetitle__subheading">Restaurant</span>
           <h1 class="pagetitle__heading">{{$data[0]->nombre}}</h1>
           <nav aria-label="breadcrumb" >
             <ol class="breadcrumb justify-content-center">
-              <li class="breadcrumb-item active">{{$data[0]->nombre}} - {{$distrito}}</li>
+              <li class="breadcrumb-item active">{{$data[0]->ciudad}} - {{$distrito}}</li>
             </ol>
           </nav>
         </div><!-- /.col-lg-12 -->
