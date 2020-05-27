@@ -8,6 +8,7 @@
         <div class="col-12 mt-2"> <h5 class="d-inline label">Dirección</h5><br><h5 class="d-inline">{{form.direccion}}</h5></div>
         <div class="col-md-6 mt-2"> <h5 class="d-inline label">Distrito </h5><br><h5 class="d-inline">{{form.distritoName}}</h5></div>
         <div class="col-md-6 mt-2"> <h5 class="d-inline label">Ciudad </h5><br><h5 class="d-inline">{{form.ciudad}}</h5></div>
+        <div class="col-md-6 mt-2"> <h5 class="d-inline label">Página web del negocio </h5><br><a href="/empresa/POLLO">www.teloenvio.com/empresa/POLLO</a></div>
      </div>
 </template>
 

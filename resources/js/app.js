@@ -61,6 +61,7 @@ Vue.component('foto-portada-empresa', require('./components/negocio/PortadaEmpre
 Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.vue').default);
 Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
+Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
 Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);
@@ -78,6 +79,7 @@ Vue.component('foto-perfil', require('./components/auth/fotoPerfil.vue').default
 Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
 Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default);
 
+Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue').default);
 
 //FRONT CLIENTE
 Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)

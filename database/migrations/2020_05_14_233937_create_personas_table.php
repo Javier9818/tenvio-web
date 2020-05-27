@@ -20,7 +20,7 @@ class CreatePersonasTable extends Migration
             $table->string('apmaterno', 100);
             $table->string('dni', 11)->nullable();
             $table->string('celular', 10);
-            $table->string('direccion', 100);
+            $table->string('direccion', 100)->nullable();
             $table->timestamps();
         });
     }
