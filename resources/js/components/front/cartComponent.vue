@@ -1,20 +1,21 @@
 <template>
 
    <div class="row">      
-    <div class="col-sm-12 col-md-12 col-lg-12">
-      <div class="cart-table table-responsive" >
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Producto</th>
-              <th>Precio</th>
-              <th>Cantidad</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody> 
-              <template v-for="empresa in empresas">
-                <tr><td colspan="4" > <h4>{{empresa.name_empresa}}</h4></td></tr>
+    <div class="col-sm-12 col-md-12 col-lg-12">     
+      
+        <template v-for="empresa in empresas">
+          <h4> <input type="checkbox" name="" id="" class=" form-check-inline"  style="transform: scale(1.5);" :checked="empresa.checked"> {{empresa.name_empresa}}</h4> 
+          <div class="cart-table table-responsive" >
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>                 
                 <tr class="cart__product " v-for="(item, index) of productos" v-if="empresa.name_empresa==item.name_empresa" :key="index">               
                   <td class="cart__product-item">
                     <div class="cart__product-remove">
@@ -37,47 +38,12 @@
                     S/. {{item.precio*item.cant}}
                   </td>
                 </tr>
-              </template>
-            <!-- <tr><td colspan="4">sadasd</td></tr>
-            <tr class="cart__product " v-for="(item, index) of productos" :key="index">               
-              <td class="cart__product-item">
-                <div class="cart__product-remove">
-                  <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
-                </div>
-                <div class="cart__product-img">
-                  <img :src="'/storage/imgproductos/'+item.foto" alt="product" />
-                </div>
-                <div class="cart__product-title">
-                  <h6>{{item.nombre}}{{item.name_empresa}}</h6>
-                </div>
-              </td>
-              <td class="cart__product-price">S/. {{item.precio}}</td>
-              <td class="cart__product-quantity">
-                <i class="fa fa-minus decrease-qty text-danger  " style=" cursor: pointer" @click="funAdd('-',index)"></i>
-                <span style=" border: lightgray 0.5px solid" class=" px-2">{{item.cant}}</span>
-                <i class="fa fa-plus increase-qty text-success  " style=" cursor: pointer" @click="funAdd('+',index)"></i>
-              </td>
-              <td class="cart__product-total"> 
-                S/. {{item.precio*item.cant}}
-              </td>
-            </tr> -->
-
-            <tr class="cart__product-action">
-              <td colspan="4">
-                <div class="row">
-                  <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content">
-                    <!-- <div class="d-flex flex-wrap">
-                      <input type="text" class="form-control mb-10 mr-10" placeholder="Cupon de descuento">
-                      <button type="submit" class="btn btn-primary mb-10">Aplicar Cupon</button>
-                    </div> --> 
-                    <button class="btn btn-primary ">Realizar Pedido</button>                                        
-                  </div><!-- /.col-lg-2  -->
-                </div><!-- /.row  -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div><!-- /.cart-table -->
+                
+              </tbody>
+            </table>
+          </div><!-- /.cart-table -->
+      </template>           
+    
     </div><!-- /.col-lg-12 -->
     <div class="col-sm-12 col-md-6 col-lg-6">
       <div class="cart__shiping">
@@ -97,9 +63,14 @@
           <li><span>IGV :</span><span>S/ {{calcularTotal*0.18}}</span></li>
           <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
         </ul>
+        <br>
+        <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">          
+          <button class="btn btn-primary">Realizar Pedido</button>                                        
+        </div>
       </div><!-- /.cart__total-amount -->
-    </div><!-- /.col-lg-6 -->
+    </div><!-- /.col-lg-6 -->    
    </div>
+   
 </template>
 
 <script>  
@@ -167,7 +138,8 @@ export default {
             empresa => {
               return{
                 empresa: empresa,
-                name_empresa: array.find(s=> s.empresa===empresa).name_empresa
+                name_empresa: array.find(s=> s.empresa===empresa).name_empresa,
+                checked:true
               }
             }
           );

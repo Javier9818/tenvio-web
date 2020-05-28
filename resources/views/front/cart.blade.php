@@ -15,7 +15,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-6">
-          <h1 class="pagetitle__heading color-dark">Cart</h1>
+          <h1 class="pagetitle__heading color-dark">Carrito de compras</h1>
         </div><!-- /.col-lg-6 -->
         <div class="col-sm-12 col-md-6 col-lg-6 d-none">
           <nav aria-label="breadcrumb">
@@ -34,8 +34,7 @@
               Shopping Cart
       =========================== -->
   <section id="ShoppinCcart" class="shop shopping-cart pb-50">
-    <div class="container">
-      
+    <div class="container">      
         <front-cart-component></front-cart-component>
       <!-- /.row -->
     </div><!-- /.container -->
