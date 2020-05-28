@@ -1,7 +1,6 @@
 <template>
 
-   <div class="row">
-     {{temp_productos}}
+   <div class="row">      
     <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="cart-table table-responsive" >
         <table class="table table-bordered">
@@ -14,7 +13,32 @@
             </tr>
           </thead>
           <tbody> 
-            <tr><td colspan="4">sadasd</td></tr>
+              <template v-for="empresa in empresas">
+                <tr><td colspan="4" > <h4>{{empresa.name_empresa}}</h4></td></tr>
+                <tr class="cart__product " v-for="(item, index) of productos" v-if="empresa.name_empresa==item.name_empresa" :key="index">               
+                  <td class="cart__product-item">
+                    <div class="cart__product-remove">
+                      <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
+                    </div>
+                    <div class="cart__product-img">
+                      <img :src="'/storage/imgproductos/'+item.foto" alt="product" />
+                    </div>
+                    <div class="cart__product-title">
+                      <h6>{{item.nombre}}</h6>
+                    </div>
+                  </td>
+                  <td class="cart__product-price">S/. {{item.precio}}</td>
+                  <td class="cart__product-quantity">
+                    <i class="fa fa-minus decrease-qty text-danger  " style=" cursor: pointer" @click="funAdd('-',index)"></i>
+                    <span style=" border: lightgray 0.5px solid" class=" px-2">{{item.cant}}</span>
+                    <i class="fa fa-plus increase-qty text-success  " style=" cursor: pointer" @click="funAdd('+',index)"></i>
+                  </td>
+                  <td class="cart__product-total"> 
+                    S/. {{item.precio*item.cant}}
+                  </td>
+                </tr>
+              </template>
+            <!-- <tr><td colspan="4">sadasd</td></tr>
             <tr class="cart__product " v-for="(item, index) of productos" :key="index">               
               <td class="cart__product-item">
                 <div class="cart__product-remove">
@@ -36,7 +60,7 @@
               <td class="cart__product-total"> 
                 S/. {{item.precio*item.cant}}
               </td>
-            </tr>
+            </tr> -->
 
             <tr class="cart__product-action">
               <td colspan="4">
@@ -86,7 +110,8 @@ export default {
             productos: [],
             total: 0,
             producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
-            temp_productos:[]
+            temp_productos:[],
+            empresas:[]
         }
     },
     methods:{
@@ -120,24 +145,32 @@ export default {
         recarga: function () {
           let cockie=JSON.parse(this.$cookies.get('carrito'));
           this.productos = (cockie==null)? []:cockie; 
-          this.temp(this.productos);
+          //this.temp(this.productos);
+          this.empresas=this.distinct(this.productos);
         },
         temp: function (productos) {
-
-          this.temp_productos= productos.sort(this.compara);
+          this.temp_productos= productos.sort(
+            function (a, b) {
+              if (a.name_empresa < b.name_empresa)
+                return -1;
+              if (a.name_empresa > b.name_empresa)
+                return 1;
+              return 0;
+            }
+          );
+          this.empresas=this.distinct(this.temp_productos);
+          console.log(this.empresas);
         },
-        compara:function (a, b) {
-          if (a[7] < b[7])          
-          {
-            console.log(a[7]);
-            return -1;
-          }
-          if (a[7] > b[7])
-           {
-            console.log(a[7]);
-            return 1;
-           }
-          return 0;
+        distinct: function (array) {
+          return Array.from(new Set(array.map(s=>s.empresa)))
+          .map(
+            empresa => {
+              return{
+                empresa: empresa,
+                name_empresa: array.find(s=> s.empresa===empresa).name_empresa
+              }
+            }
+          );
         }
          
     },
