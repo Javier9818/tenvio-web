@@ -72,22 +72,6 @@
                         subtitle: '',
                         component: StepTwo,
                         completed: false
-                    },
-                    {
-                        icon: 'group',
-                        name: 'third',
-                        title: 'Información de salud',
-                        subtitle: '',
-                        component: StepThree,
-                        completed: false
-                    },
-                    {
-                        icon: 'work',
-                        name: 'fourth',
-                        title: 'Información laboral',
-                        subtitle: '',
-                        component: StepFour,
-                        completed: false
                     }
                 ],
                 activeStep: 0
@@ -144,13 +128,13 @@
         margin-top: 40px;
     }
     .section{
-        min-height: 100vh;
-        background-image: url('/images/logo.png');
+        /* min-height: 100vh; */
+        /* background-image: url('/assets/images/backgrounds/LoginDelivery-02.png'); */
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
-        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0);
     }
     #app {
         -webkit-font-smoothing: antialiased;

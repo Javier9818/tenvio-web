@@ -21,27 +21,34 @@
         <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link href="assets/styles_registro.css" rel="stylesheet" />
         @yield('styles')
     </head>
-    <body id="page-top">
+    <body>
 
-        <div id="app_vue">
 
-            <div class="content-wizard" id="app">
-                <form-wizard-unt></form-wizard-unt>
+
+
+            <div class="d-flex align-items-center justify-content-center" style="height: 100vh;background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');background-size: cover; height: 100vh">
+                <div class="content-wizard" id="app">
+                    <form-wizard-unt></form-wizard-unt>
+                </div>
             </div>
-             <!-- Copyright Section-->
-            <section class="copyright py-4 text-center text-white">
-                <div class="container"><small>Copyright © Nortec © 2020 - Escuela de Ingeniería de Sistemas - UNT</small></div>
-            </section>
-            <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-            <div class="scroll-to-top d-lg-none position-fixed">
-                <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
-            </div>
+                <!-- Copyright Section-->
+                {{-- <section class="copyright py-4 text-center text-white">
+                    <div class="container"><small>Copyright © Nortec © 2020 - Escuela de Ingeniería de Sistemas - UNT</small></div>
+                </section> --}}
 
-            @yield('modals')
-        </div>
+
+                <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+                {{-- <div class="scroll-to-top d-lg-none position-fixed">
+                    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a>
+                </div> --}}
+
+                @yield('modals')
+
+
+
 
         <!-- Bootstrap core JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
