@@ -21,8 +21,7 @@
                             class="d-inline-block"
                         >
                             <horizontal-stepper :steps="demoSteps" @completed-step="completeStep" :top-buttons="true"
-                                            @active-step="isStepActive" @stepper-finished="submit" @data-form="handleData"
-                                            :names="names" :appaterno="appaterno" :apmaterno="apmaterno" :email="email" :dni="dni" >
+                                            @active-step="isStepActive" @stepper-finished="submit" @data-form="handleData">
                             </horizontal-stepper>
                         </b-overlay>
                     </div>
@@ -48,7 +47,7 @@
         components: {
             HorizontalStepper
         },
-        props: ['names', 'appaterno', 'apmaterno', 'email', 'dni'],
+        //props: ['names', 'appaterno', 'apmaterno', 'email', 'dni'],
         data(){
             return {
                 busy:null,
@@ -67,7 +66,7 @@
 
                     },
                     {
-                        icon: 'group',
+                        icon: 'insert_emoticon',
                         name: 'second',
                         title: 'Información de contacto',
                         subtitle: '',
@@ -75,7 +74,7 @@
                         completed: false
                     },
                     {
-                        icon: 'insert_emoticon',
+                        icon: 'group',
                         name: 'third',
                         title: 'Información de salud',
                         subtitle: '',

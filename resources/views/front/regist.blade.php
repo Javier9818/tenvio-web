@@ -21,14 +21,16 @@
         <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
 
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/assets_client/css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         @yield('styles')
     </head>
     <body id="page-top">
 
         <div id="app_vue">
-            @yield('nav')
-            @yield('content')
+
+            <div class="content-wizard" id="app">
+                <form-wizard-unt></form-wizard-unt>
+            </div>
              <!-- Copyright Section-->
             <section class="copyright py-4 text-center text-white">
                 <div class="container"><small>Copyright © Nortec © 2020 - Escuela de Ingeniería de Sistemas - UNT</small></div>
@@ -46,13 +48,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <!-- Third party plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="/assets_client/mail/jqBootstrapValidation.js"></script>
-        <script src="/assets_client/mail/contact_me.js"></script>
-        <!-- Core theme JS-->
-        <script src="/assets_client/js/scripts.js"></script>
-
-
         @yield('scripts')
     </body>
 </html>

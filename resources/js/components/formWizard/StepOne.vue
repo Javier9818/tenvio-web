@@ -1,21 +1,27 @@
 <template>
     <div style="padding: 2rem 3rem; text-align: left;" class="row">
         <div class="field col-12">
-            <label class="label">Nombres y apellidos</label>
+            <label class="label" >Nombres {{form.names}}</label>
             <div class="control">
-                <input type="text" class="input" placeholder="Ingrese  sus nombres y apellidos" v-model="nameComplete" disabled>
+                <input type="text" v-model="form.names" :class="['input', ($v.form.names.$error) ? 'is-danger' : '']" placeholder="Ingrese  su nombre">
+            </div>
+        </div>
+        <div class="field col-md-6">
+            <label class="label">Ap. Paterno  {{form.appaterno}}</label>
+            <div class="control">
+                <input  type="text" v-model="form.appaterno" :class="['input', ($v.form.appaterno.$error) ? 'is-danger' : '']" placeholder="Ingrese su apellido paterno">
+            </div>
+        </div>
+        <div class="field col-md-6">
+            <label class="label">Ap. Materno  {{form.apmaterno}}</label>
+            <div class="control">
+                <input  type="text" v-model="form.apmaterno" :class="['input', ($v.form.apmaterno.$error) ? 'is-danger' : '']" placeholder="Ingrese su apellido materno">
             </div>
         </div>
         <div class="field col-12">
-            <label class="label">DNI</label>
+            <label class="label">Email {{form.correo}}</label>
             <div class="control">
-                <input  type="text" class="input" placeholder="Ingrese su número de DNI" v-model="form.dni" disabled>
-            </div>
-        </div>
-        <div class="field col-12">
-            <label class="label">Email</label>
-            <div class="control">
-                <input type="email" class="input"  placeholder="Ingrese su correo electrónico" v-model="form.email" disabled>
+                <input type="email" v-model="form.correo" :class="['input', ($v.form.correo.$error) ? 'is-danger' : '']"  placeholder="Ingrese su correo electrónico" >
             </div>
         </div>
          <div class="field col-12">
@@ -25,74 +31,52 @@
             </div>
             <p v-if="$v.form.celular.$error" class="help is-danger">Este campo es inválido</p>
         </div>
-        <div class="field col-12 col-md-6">
-            <label class="label">Edad</label>
-            <div class="control">
-                <input :class="['input', ($v.form.edad.$error) ? 'is-danger' : '']"  type="text" placeholder="Ingrese su edad" v-model="form.edad">
-            </div>
-            <p v-if="$v.form.edad.$error" class="help is-danger">Este campo es inválido</p>
-        </div>
-        <div class="field col-12 col-md-6">
-            <b-form-group label="Sexo">
-                <b-form-radio-group id="radio-group-2" v-model="form.sexo" name="radio-sub-component">
-                    <b-form-radio value="masculino">Masculino</b-form-radio>
-                    <b-form-radio value="femenino">Femenino</b-form-radio>
-                </b-form-radio-group>
-                <p v-if="$v.form.sexo.$error" class="help is-danger">Este campo es requerido</p>
-            </b-form-group>
-        </div>
-        <div class="field col-12">
-            <label class="label">Dirección</label>
-            <div class="control">
-                <input :class="['input', ($v.form.direccion.$error) ? 'is-danger' : '']"  type="text" placeholder="Ingrese dirección de contacto" v-model="form.direccion">
-            </div>
-            <p v-if="$v.form.direccion.$error" class="help is-danger">Este campo es inválido</p>
-        </div>
+
+
     </div>
 </template>
 
 <script>
     import {validationMixin} from 'vuelidate'
-    import {required, numeric, minValue, maxValue, maxLength, minLength} from 'vuelidate/lib/validators'
+    import {required, numeric, minValue, maxValue,email, maxLength, minLength} from 'vuelidate/lib/validators'
 
     export default {
-        props: ['clickedNext', 'currentStep', 'names', 'email', 'dni', 'appaterno', 'apmaterno'],
+        props: ['clickedNext', 'currentStep'],
         mixins: [validationMixin],
         data() {
             return {
-                nameComplete : `${this.names} ${this.appaterno} ${this.apmaterno}`,
+                //nameComplete : ``,
                 form: {
-                    names: this.names,
-                    appaterno: this.appaterno,
-                    apmaterno: this.apmaterno,
-                    email: this.email,
-                    dni: this.dni,
-                    edad:'',
-                    sexo:'',
-                    celular:'',
-                    direccion:''
+                    names: '',
+                    appaterno: '',
+                    apmaterno: '',
+                    correo: '',
+                    celular:''
                 }
             }
         },
         validations: {
             form: {
-                edad: {
+                names:{
                     required,
-                    numeric,
-                    minValue: minValue(20),
-                    maxValue: maxValue(100)
+                    maxLength: maxLength(50)
                 },
-                sexo: {
-                    required
+                appaterno:{
+                    required,
+                    maxLength: maxLength(50)
+                },
+                apmaterno:{
+                    required,
+                    maxLength: maxLength(50)
                 },
                 celular:{
                     required,
                     maxLength: maxLength(10),
                     minLength: minLength(6)
                 },
-                direccion: {
+                correo:{
                     required,
-                    maxLength: maxLength(100)
+                    email
                 }
             }
         },

@@ -30,10 +30,10 @@
             <transition :enter-active-class="enterAnimation" :leave-active-class="leaveAnimation" mode="out-in">
                 <!--If keep alive-->
                 <keep-alive v-if="keepAliveData">
-                    <component :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep" :names="names" :appaterno="appaterno" :apmaterno="apmaterno"  :email="email" :dni="dni"></component>
+                    <component :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep" ></component>
                 </keep-alive>
                 <!--If not show component and destroy it in each step change-->
-                <component v-else :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep" :names="names" :appaterno="appaterno" :apmaterno="apmaterno" :email="email" :dni="dni"></component>
+                <component v-else :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep" ></component>
             </transition>
         </div>
         <div :class="['bottom', (currentStep.index > 0) ? '' : 'only-next']">
@@ -60,21 +60,6 @@ export default {
   },
 
   props: {
-    names:{
-        type: String
-    },
-     appaterno:{
-        type: String
-    },
-     apmaterno:{
-        type: String
-    },
-    email:{
-        type: String
-    },
-    dni:{
-        type: String
-    },
     locale: {
       type: String,
       default: "es"
