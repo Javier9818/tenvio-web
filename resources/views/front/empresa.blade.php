@@ -43,7 +43,7 @@
      shop Products
   =========================== -->
   <div >
-    <front-menu-component id="{{$data[0]->id}}"></front-menu-component>
+    <front-menu-component id="{{$data[0]->id}}" nombre="{{$data[0]->nombre}}"></front-menu-component>
   </div>
 
   <!-- /.shop Products -->

@@ -1,5 +1,7 @@
 <template>
+
    <div class="row">
+     {{temp_productos}}
     <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="cart-table table-responsive" >
         <table class="table table-bordered">
@@ -22,7 +24,7 @@
                   <img :src="'/storage/imgproductos/'+item.foto" alt="product" />
                 </div>
                 <div class="cart__product-title">
-                  <h6>{{item.nombre}}</h6>
+                  <h6>{{item.nombre}}{{item.name_empresa}}</h6>
                 </div>
               </td>
               <td class="cart__product-price">S/. {{item.precio}}</td>
@@ -81,10 +83,10 @@ import EventBus from '../../event-bus';
 export default {      
     data(){
         return {
-            productos: [ 
-            ],
+            productos: [],
             total: 0,
-            producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0}
+            producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
+            temp_productos:[]
         }
     },
     methods:{
@@ -116,12 +118,28 @@ export default {
              EventBus.$emit('elimiarEnCart', true);            
         },
         recarga: function () {
-            let cockie=JSON.parse(this.$cookies.get('carrito'));
-            if (cockie==null) {
-                cockie=[];
-            }                
-            this.productos=cockie;
-        } 
+          let cockie=JSON.parse(this.$cookies.get('carrito'));
+          this.productos = (cockie==null)? []:cockie; 
+          this.temp(this.productos);
+        },
+        temp: function (productos) {
+
+          this.temp_productos= productos.sort(this.compara);
+        },
+        compara:function (a, b) {
+          if (a[7] < b[7])          
+          {
+            console.log(a[7]);
+            return -1;
+          }
+          if (a[7] > b[7])
+           {
+            console.log(a[7]);
+            return 1;
+           }
+          return 0;
+        }
+         
     },
     computed:{
         

@@ -162,7 +162,7 @@
 <script>
 import EventBus from '../../event-bus';
 export default {
-  props: ['id'],
+  props: ['id','nombre'],
   data()
   {
     return{
@@ -171,7 +171,7 @@ export default {
       carrito:[],
       categoria:'all',
       options: { value: 0, text: '' },
-      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0}
+      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0, name_empresa:''}
     }
   },
   methods:{
@@ -202,6 +202,7 @@ export default {
       this.producto.precio=item.precio
       this.producto.id=item.id
       this.producto.empresa=this.id
+      this.producto.name_empresa=this.nombre
       this.producto.cant=0;
       this.showModal();
     },
