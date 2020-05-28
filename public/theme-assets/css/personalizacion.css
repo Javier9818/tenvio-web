@@ -5,6 +5,7 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu {
 .vertical-overlay-menu .main-menu, .vertical-overlay-menu.menu-hide .main-menu{
     width: 290px;
 }
+
 .main-menu ul {
     overflow: auto;
     height: 100%;

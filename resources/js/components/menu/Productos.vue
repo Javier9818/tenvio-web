@@ -8,8 +8,8 @@
 						<template v-slot:cell(opciones)="row">
 							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
 							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
-							<b-button variant="info" size="sm" :disabled="mostrarLoader">Ocultar al usuario</b-button>
-							<b-button variant="success" size="sm" :disabled="mostrarLoader">Mostrar al usuario</b-button>
+							<b-button variant="info" size="sm" v-if="row.item.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar al usuario</b-button>
+							<b-button variant="success" size="sm" v-else @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Mostrar al usuario</b-button>
 							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
 						</template>
 					</b-table>
@@ -114,6 +114,7 @@ export default {
 				foto: '',
 				categorias_menu_id: null,
 				fotosubida: null,
+				usuario_puede_ver: 1
 			},
 			rutaImagenes: '',
 			texto: 'Registrar',
@@ -158,6 +159,7 @@ export default {
 			this.producto.foto = '';
 			this.producto.fotosubida = null;
 			this.producto.categorias_menu_id = null;
+			this.producto.usuario_puede_ver = 1;
 		},
 		editar: function(item){
 			console.log(item);
@@ -168,12 +170,21 @@ export default {
 			this.producto.precio = item.precio;
 			this.producto.foto = item.foto;
 			this.producto.categorias_menu_id = item.categorias_menu_id;
+			this.producto.usuario_puede_ver = item.usuario_puede_ver;
 		},
 		eliminar: function(item){
 			this.producto.id = item.id;
 			this.producto.foto = '';
 			this.producto.fotoSubida = '';
 			this.setupddel(true);
+		},
+		mostrarocultar: function(item){
+			this.editar(item);
+			if (this.producto.usuario_puede_ver == 0)
+				this.producto.usuario_puede_ver = 1;
+			else
+				this.producto.usuario_puede_ver = 0;
+			this.setupddel(false);
 		},
 		setupddel: function(eliminar){
 			console.log(this.producto);
