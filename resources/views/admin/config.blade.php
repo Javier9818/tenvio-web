@@ -28,7 +28,7 @@
     </div>
 @endsection
 @section('content')
-<section id="chartjs-bar-charts">
+<section>
     <div class="row">
         <div class="col-12 col-md-4">
             <div class="card">
@@ -38,6 +38,18 @@
                 <div class="card-content collapse show">
                     <div class="card-body">
                         <tipo-entrega></tipo-entrega>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <h4 class="card-title">Nombre público del negocio</h4>
+                        <p>El nombre público del negocio es el nombre que aparece en el enlace de la web del negocio.</p>
+                        <nombre-publico></nombre-publico>
                     </div>
                 </div>
             </div>
