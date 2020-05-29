@@ -5,7 +5,7 @@
       
         <template v-for="empresa in empresas">
           <h4> 
-            <input type="checkbox" name="" id="" class=" form-check-inline"  style="transform: scale(1.5);" :checked="empresa.checked"  >
+            <!-- <input type="checkbox" name="" id="" class=" form-check-inline"  style="transform: scale(1.5);" :checked="empresa.checked"  > -->
             {{empresa.name_empresa}}
           </h4> 
           <div class="cart-table table-responsive" >
@@ -53,7 +53,7 @@
         <h6>A donde llevamos tu pedido ?</h6>
         <form class="row">
           <div class="col-md-12">
-            AQUI VA EL MAPA
+           <mapa-interactivo width='100%' height='100%'></mapa-interactivo>
           </div>
         </form>
       </div><!-- /.cart__shiping -->
@@ -72,12 +72,14 @@
         </div>
       </div><!-- /.cart__total-amount -->
     </div><!-- /.col-lg-6 -->    
-    <!-- <b-modal ref="my-modal" hide-footer title="Generar pedido">
-      <div class="d-block "> 
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
-      
-    </b-modal> -->
+    <b-modal ref="my-modal" hide-footer title="Generar pedido">
+    <div class="d-block "> 
+
+    </div>
+    <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
+    
+    </b-modal>  
+    <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select>
    </div>
    
 </template>
@@ -91,7 +93,9 @@ export default {
             total: 0,
             producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
             temp_productos:[],
-            empresas:[]
+            empresas:[],     
+            tipoPedidos:[],
+            selected:''       
         }
     },
     methods:{
@@ -130,19 +134,35 @@ export default {
         this.empresas=this.distinct(this.productos);
         this.temp_productos=this.productos;
       },
-      // temp: function (productos) {
-      //   this.temp_productos= productos.sort(
-      //     function (a, b) {
-      //       if (a.name_empresa < b.name_empresa)
-      //         return -1;
-      //       if (a.name_empresa > b.name_empresa)
-      //         return 1;
-      //       return 0;
-      //     }
-      //   );
-      //   this.empresas=this.distinct(this.temp_productos);
-      //   //console.log(this.empresas);
-      // },
+      temp: function () {
+        var that = this;
+          Vue.swal.fire({
+            icon: 'question',
+            title: '¿Desea enviar?',
+            showCancelButton: true,
+            text: 'Aviso'
+          }).then((result) => {
+            if (!result.value)
+              return;
+            axios.post('/front/GeneraPedido',{empresas:that.empresas, productos:that.productos})
+            .then(function (response) {
+              if(response.data)
+                Swal.fire('Éxito', 'Se ha generado su pedido', 'success');        
+              else
+                Swal.fire('ERROR', 'Ha ocurrido un error', 'error'); 
+            });
+
+          });
+
+        
+      },
+      tiposEntrega: function () {
+        var that = this;
+        axios.post('/front/TipoPedido')
+        .then(function (response) {
+          that.tipoPedidos= response.data;
+        });
+      },
       distinct: function (array) {
         return Array.from(new Set(array.map(s=>s.empresa)))
         .map(
@@ -150,7 +170,8 @@ export default {
             return{
               empresa: empresa,
               name_empresa: array.find(s=> s.empresa===empresa).name_empresa,
-              checked:true
+              checked:true,
+              tipoEntrega:''
             }
           }
         );

@@ -19,10 +19,41 @@ class FrontController extends Controller
       case 'categorias':
         return $this::categorias($request);
         break;
+      case 'GeneraPedido':
+        return $this::GeneraPedido($request);
+        break;
+      case 'TipoPedido':
+        return $this::TipoPedido();
+        break;
       default:
         # code...
         break;
     }
+  }
+  public function TipoPedido()
+  {
+    try {
+      return DB::table('empresas')
+        ->join('tipo_entregas_empresa', 'tipo_entregas_empresa.empresa_id', '=', 'empresas.id')
+        ->join('tipo_entregas', 'tipo_entregas.id', '=', 'tipo_entregas_empresa.tipo_entregas_id')         
+        ->selectRaw('tipo_entregas.id, tipo_entregas.nombre')         
+        ->get();
+     }catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+  }
+  public function GeneraPedido( Request $request)
+  {
+    foreach ($request->get('empresas') as $key => $empresa) {
+      $id = DB::table('pedidos')->insertGetId(
+        ['empresa_id' => $empresa->id, 'estado' => 'ACTIVO', 'comentario'=>'', 'latitud'=>'', 'longitud'=>'', 'meta_latitud'=>'', 'meta_longitud'=>'', 'user_id'=>'', 'tipo_id'=>'']
+      );
+
+    }
+    
   }
   public function ListEmpresas( Request $request){
     $empresas =DB::table('empresas')
