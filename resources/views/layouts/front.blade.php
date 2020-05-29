@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{!! asset('assets/css/libraries.css') !!}" />
   <!-- <link rel="stylesheet" href="assets/css/animate.css" /> -->
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
+  <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   @yield('styles')
 </head>

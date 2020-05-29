@@ -67,7 +67,7 @@
                   <a href="#">{{$empresa->categoria}}</a>
                 </div><!-- /.post-meta-cat -->
               </div><!-- /.post-meta -->
-              <h4 class="post__title"><a href="{{url('/empresa/'.$empresa->id.'-'.str_replace(' ','-',$empresa->nombre))}}">{{$empresa->nombre}}</a></h4>
+              <h4 class="post__title"><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}">{{$empresa->nombre}}</a></h4>
               <p class="post__desc">{{$empresa->descripcion}}</p>
               <!-- <a href=" " class="btn btn__secondary btn__link d-none">Ver más</a> -->
             </div><!-- /.post__content -->

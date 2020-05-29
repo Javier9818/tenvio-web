@@ -21,8 +21,7 @@
                             class="d-inline-block"
                         >
                             <horizontal-stepper :steps="demoSteps" @completed-step="completeStep" :top-buttons="true"
-                                            @active-step="isStepActive" @stepper-finished="submit" @data-form="handleData"
-                                            :names="names" :appaterno="appaterno" :apmaterno="apmaterno" :email="email" :dni="dni" >
+                                            @active-step="isStepActive" @stepper-finished="submit" @data-form="handleData">
                             </horizontal-stepper>
                         </b-overlay>
                     </div>
@@ -48,7 +47,7 @@
         components: {
             HorizontalStepper
         },
-        props: ['names', 'appaterno', 'apmaterno', 'email', 'dni'],
+        //props: ['names', 'appaterno', 'apmaterno', 'email', 'dni'],
         data(){
             return {
                 busy:null,
@@ -67,27 +66,11 @@
 
                     },
                     {
-                        icon: 'group',
+                        icon: 'insert_emoticon',
                         name: 'second',
                         title: 'Información de contacto',
                         subtitle: '',
                         component: StepTwo,
-                        completed: false
-                    },
-                    {
-                        icon: 'insert_emoticon',
-                        name: 'third',
-                        title: 'Información de salud',
-                        subtitle: '',
-                        component: StepThree,
-                        completed: false
-                    },
-                    {
-                        icon: 'work',
-                        name: 'fourth',
-                        title: 'Información laboral',
-                        subtitle: '',
-                        component: StepFour,
                         completed: false
                     }
                 ],
@@ -145,13 +128,13 @@
         margin-top: 40px;
     }
     .section{
-        min-height: 100vh;
-        background-image: url('/images/logo.png');
+        /* min-height: 100vh; */
+        /* background-image: url('/assets/images/backgrounds/LoginDelivery-02.png'); */
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
-        background-color: rgb(255, 255, 255);
+        background-color: rgba(255, 255, 255, 0);
     }
     #app {
         -webkit-font-smoothing: antialiased;

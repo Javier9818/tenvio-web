@@ -18,6 +18,16 @@ class Producto extends Model
 		'created_at',
 		'updated_at'
 	];
+	public static function listarProductosDePedido($empresa_id){
+		return Producto::where(['productos.empresa_id' => $empresa_id])
+			->select('productos.id', 'productos.nombre', 'productos.descripcion',
+				'productos.foto', 'productos.precio', 'cm.descripcion as categoria')
+			->join('categorias_menus as cm', 'cm.id', '=', 'productos.categorias_menu_id')
+			->join('detalle_pedidos as dp', 'dp.producto_id', '=', 'productos.id')
+			->join('pedidos as pe', 'pe.id', '=', 'dp.pedido_id')
+			->distinct()
+			->get();
+	}
 	public static function puedeEliminarse($id){
 		//valida si dicha categoria tiene productos a su nombre con estado 1
 		return Producto::where(['productos.id' => $id])

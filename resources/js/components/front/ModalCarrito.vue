@@ -3,8 +3,8 @@
         <a href="#" class="navbar__action-btn navbar__action-btn-cart">
                 <i class="icon-cart"></i><span class="cart__label">{{productos.length}}</span>
         </a>
-        <div class="cart-popup ">
-            <ul class="list-unstyled ">
+        <div class="cart-popup main-menu">
+            <ul class="list-unstyled  " style=" overflow: auto; height:350px;word-wrap: break-word; width:110%;">
                 <li class="cart-item" v-for="(item, index) of productos" :key="index">
                 <div class="cart__item-img"><img :src="'/storage/imgproductos/'+item.foto" alt="Product"></div>
                 <div class="cart__item-content">
