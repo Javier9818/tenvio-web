@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Session;
 */
 
 
-Route::get('/intranet', 'empresaController@verEmpresa')->middleware('can:visit-company');
-Route::get('/intranet/empleados', 'generalController@vistaEmpleados')->middleware('can:gestionar-personal, visit-company');
-Route::get('/intranet/nuevo-empleado', 'generalController@vistaNuevoEmpleado')->middleware('can:gestionar-personal, visit-company');
-Route::get('/intranet/empleado/edit/{id}', 'empleadoController@edit')->middleware('can:gestionar-personal, visit-company');
-Route::get('/intranet/configuraciones', 'generalController@vistaConfiguraciones')->middleware('can:edit-company, visit-company');
+Route::get('/intranet', 'EmpresaController@verEmpresa')->middleware('can:visit-company');
+Route::get('/intranet/empleados', 'GeneralController@vistaEmpleados')->middleware('can:gestionar-personal, visit-company');
+Route::get('/intranet/nuevo-empleado', 'GeneralController@vistaNuevoEmpleado')->middleware('can:gestionar-personal, visit-company');
+Route::get('/intranet/empleado/edit/{id}', 'EmpleadoController@edit')->middleware('can:gestionar-personal, visit-company');
+Route::get('/intranet/configuraciones', 'GeneralController@vistaConfiguraciones')->middleware('can:edit-company, visit-company');
 Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');})->middleware('can:gestionar-contabilidad, visit-company');
 Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');})->middleware('can:gestionar-contabilidad, visit-company');
 Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');})->middleware('can:gestionar-pedidos, visit-company');
@@ -36,8 +36,8 @@ Route::post('/intranet/productos/{funcion}', 'ProductosController@fn')->middlewa
 
 Route::any('/extras/{funcion}', 'ExtrasController@fn');
 
-Route::get('/admin/empresas', 'adminController@listarEmpresas')->name('admin-total-inicio')->middleware('can:gestionar-panel-general');
-Route::get('/admin/empresa/{idEmpresa}', 'adminController@verEmpresa')->middleware('can:gestionar-panel-general');
+Route::get('/admin/empresas', 'AdminController@listarEmpresas')->name('admin-total-inicio')->middleware('can:gestionar-panel-general');
+Route::get('/admin/empresa/{idEmpresa}', 'AdminController@verEmpresa')->middleware('can:gestionar-panel-general');
 
 Auth::routes();
 Route::get('/login', function(){return view('front.login');})->name('loginForm');
@@ -58,4 +58,4 @@ Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
 
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
-//Route::get('/list','empresaController@listarEmpresas');
+//Route::get('/list','EmpresaController@listarEmpresas');
