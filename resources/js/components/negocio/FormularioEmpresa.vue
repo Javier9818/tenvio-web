@@ -2,17 +2,19 @@
     <form  class="row" v-on:submit.prevent="update()" id="forEmpresa">
         <div class="col-md-12 mt-2">
             <label for="">Foto de negocio</label><br>
-                <img :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'"
-                alt="No se encontró imagen"
-                width="40%">
+            <img :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'"
+            alt="No se encontró imagen"
+            width="40%">
         </div>
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->
             <input type="text" class="form-control" placeholder="Ingrese el nombre de la empresa" v-model="form.nombre">
+            <p v-if="$v.form.nombre.$error" class="help text-danger">Este campo es inválido</p>
         </div>
         <div class="col-md-6 mt-2">
             <label for="validationCustom01">RUC</label>
             <input type="text" class="form-control" placeholder="Ingrese el RUC de la empresa" v-model="form.ruc">
+            <p v-if="$v.form.ruc.$error" class="help text-danger">Este campo es inválido</p>
         </div>
         <div class="col-md-6 mt-2">
             <label>Categoría</label>
@@ -25,14 +27,18 @@
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Descripción del negocio</label>
             <textarea class="form-control" cols="30" rows="3" v-model="form.descripcion"></textarea>
+            <p v-if="$v.form.descripcion.$error" class="help text-danger">Este campo es inválido</p>
         </div>
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Celular</label>
             <input type="text" class="form-control" placeholder="Ingrese el celular de la empresa" v-model="form.celular">
+            <p v-if="$v.form.celular.$error" class="help text-danger">Este campo es inválido</p>
+
         </div>
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Dirección</label>
             <input type="text" class="form-control" placeholder="Ingrese la dirección de la empresa" v-model="form.direccion">
+            <p v-if="$v.form.direccion.$error" class="help text-danger">Este campo es inválido</p>
         </div>
 
             <div class="col-md-6 mt-2">
@@ -106,9 +112,13 @@
 </template>
 
 <script>
+    import {validationMixin} from 'vuelidate'
+    import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
+    const alpha = helpers.regex('alpha', /^[a-zA-Z0-9À-ÿ#.\u00f1\u00d1\s]*$/)
     import Swal from 'sweetalert2'
     export default {
         props:['edit', 'form'],
+        mixins: [validationMixin],
         mounted() {
             console.log('Component mounted.')
             console.log(empresa);
@@ -150,15 +160,45 @@
                 ciudades
             }
         },
+         validations: {
+            form: {
+                ruc: {
+                    maxLength: maxLength(11)
+                },
+                nombre: {
+                    required,
+                    alpha,
+                    maxLength: maxLength(50)
+                },
+                celular:{
+                    required,
+                    numeric,
+                    maxLength:maxLength(12),
+                    minLength: minLength(6)
+                },
+                direccion:{
+                    required,
+                    alpha,
+                    maxLength:maxLength(150)
+                },
+                descripcion:{
+                    alpha,
+                    maxLength:maxLength(200)
+                }
+            }
+        },
          methods: {
             update(){
-                axios.put(`/api/empresa/${this.form.id}`, this.form).then( data => {
-                    console.log(data);
-                    Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
+                this.$v.$touch()
+                console.log(this.$v.$invalid);
+                if(!this.$v.$invalid)
+                    axios.put(`/api/empresa/${this.form.id}`, this.form).then( data => {
+                        console.log(data);
+                        Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
 
-                }).catch(error => {
-                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
-                });
+                    }).catch(error => {
+                        Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                    });
             },
             handleDepartamento: async function(){
                 this.form.provincia = null;

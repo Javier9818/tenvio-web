@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-5">
             <div class="card">
                 <div class="card-content collapse show">
                     <div class="card-body">

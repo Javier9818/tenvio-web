@@ -1,12 +1,14 @@
 <template>
     <div>
-        <h5>wwww.teloenvio.com/empresas/<p class="namePublic">{{nombreUnico}}</p></h5>
-       <form v-on:submit.prevent="submit">
+        <h6>wwww.teloenvio.com/empresas/<p class="namePublic d-inline">{{nombreUnico}}</p></h6>
+        <a href="javascript:void(0)" v-on:click="stateComponent=true" v-if="!stateComponent"> <i class="ft-edit"></i> Modificar</a>
+       <form v-on:submit.prevent="submit" v-if="stateComponent">
            <div class="row">
                 <div class="col-md-12">
                     <label>Nombre público del negocio</label>
                     <input type="text" class="form-control" placeholder="Ingrese nombre único" v-model="nombreUnico" required
                      v-on:keyup="convert" :class="{ 'is-invalid': (error), 'is-valid': (error === false) }" >
+                    <p v-if="$v.nombreUnico.$error" class="help is-danger text-danger">Este campo es inválido</p>
                     <div class="valid-tooltip">
                      El nombre está disponible
                     </div>
@@ -16,22 +18,20 @@
                     <p v-if="busy">Validando...</p>
                 </div>
            </div>
-           <button type="submit" class="btn btn-sm btn-primary mt-3">Actualizar</button>
+           <a href="javascript:void(0)" v-on:click="() => {stateComponent=false; nombreUnico = data.nombreUnico}" class="mt-1"> <i class="ft-edit"></i> Cancelar</a>
+           <button type="submit" class="btn btn-sm btn-primary my-1 float-right" v-if="nombreUnico!== data.nombreUnico">Guardar cambios</button>
+           <button type="submit" class="btn btn-sm btn-primary my-1 float-right" disabled v-else>Guardar cambios</button>
+
        </form>
     </div>
 </template>
 
 <script>
 import Swal from 'sweetalert2'
+import {validationMixin} from 'vuelidate'
+import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
+const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ\s]*$/)
     export default {
-        data() {
-            return {
-                nombreUnico:'',
-                error:null,
-                data:null,
-                busy:null
-            }
-        },
         mounted() {
             console.log('Component mounted.')
             axios.get(`/api/nombre-unico/${empresa}`).then( ({data}) => {
@@ -39,8 +39,25 @@ import Swal from 'sweetalert2'
                 this.data = data;
             });
         },
+        data() {
+            return {
+                stateComponent:false,
+                nombreUnico:'',
+                error:null,
+                data:null,
+                busy:null
+            }
+        },
+        validations: {
+            nombreUnico: {
+                required,
+                alpha,
+                maxLength: maxLength(100)
+            }
+        },
         methods:{
             convert: function(){
+                this.error = null
                 this.nombreUnico = (this.nombreUnico.toLowerCase()).replace(/\s/gi, "")
             },
             valida: async function(){
@@ -55,7 +72,9 @@ import Swal from 'sweetalert2'
                 return res;
             },
             submit: async function (){
-                if(this.nombreUnico !== this.data.nombreUnico){
+                this.$v.$touch()
+                console.log(this.$v.$invalid);
+                if(this.nombreUnico !== this.data.nombreUnico && !this.$v.$invalid){
                     this.busy = true;
                     var valida = await this.valida();
                     if(!valida) this.update();
