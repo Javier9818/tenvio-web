@@ -37,6 +37,8 @@ Vue.use(VueLoaders)
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
+ 
+//import Leaflet from 'leaflet'
 
 /**
  * The following block of code may be used to automatically register your

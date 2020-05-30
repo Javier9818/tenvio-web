@@ -15,10 +15,12 @@
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
   <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
   @yield('styles')
 </head>
 
 <body >
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
   <div class="wrapper" id="app">
     <!-- =========================
         Header

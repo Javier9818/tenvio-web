@@ -1,6 +1,6 @@
 <template>
     <div class="mapaInteractivo">
-        <div id="map" :style="'height:'+height+'; width:' + width"></div>
+        <div id="map" :style="'height:'+height+'; width:' + width" ></div>
     </div>
 </template>
 

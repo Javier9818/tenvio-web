@@ -48,17 +48,17 @@
       </template>           
     
     </div><!-- /.col-lg-12 -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="col-sm-12 col-md-8 col-lg-8">
       <div class="cart__shiping">
         <h6>A donde llevamos tu pedido ?</h6>
         <form class="row">
-          <div class="col-md-12">
-           <mapa-interactivo width='100%' height='100%'></mapa-interactivo>
+          <div class="col-12">
+           <mapa-interactivo width='100' height='400px'></mapa-interactivo>
           </div>
         </form>
       </div><!-- /.cart__shiping -->
     </div><!-- /.col-lg-6 -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="col-sm-12 col-md-4 col-lg-4">
       <div class="cart__total-amount">
         <h6>TOTAL:</h6>
         <ul class="list-unstyled mb-0">
@@ -79,7 +79,7 @@
     <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
     
     </b-modal>  
-    <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select>
+    <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
    </div>
    
 </template>
