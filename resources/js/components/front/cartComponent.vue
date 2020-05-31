@@ -90,6 +90,7 @@
 
 <script>  
 import EventBus from '../../event-bus';
+import Swal from 'sweetalert2'
 export default {      
     data(){
         return {
@@ -206,7 +207,7 @@ export default {
       );
       // this.showModal();
       var that = this;
-      Vue.swal.fire({
+      Swal.fire({
 				icon: 'question',
 				title: '¿Desea generar el pedido?',
 				showCancelButton: true,
@@ -238,7 +239,7 @@ export default {
 						default:
 							break;
 					}
-						Vue.swal.fire({
+						Swal.fire({
 						icon: icon,
 						title: title,
 						text: messsage
@@ -252,7 +253,7 @@ export default {
 
 				})
 				.catch(function (response){
-					Vue.swal.fire({
+					Swal.fire({
 						icon: 'error',
 						title: 'ERROR',
 						text: 'Sucedió un problema, intente nuevamente en los próximos minutos'

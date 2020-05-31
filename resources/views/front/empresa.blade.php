@@ -9,7 +9,7 @@
 @section('contenido')
 
 <section id="page-title" class="page-title page-title-layout6 text-center bg-overlay bg-overlay-2 bg-parallax">
-    <div class="bg-img"><img src="https://i.pinimg.com/originals/12/b1/45/12b145b9a4aad221ead5b87f38d76d03.jpg" alt="background"></div>
+    <div class="bg-img"><img src="/storage/images/perfilEmpresa/{{$data[0]->foto}}" alt="background"></div>
     <svg class="pagetitle__divider-shape" xmlns="http://www.w3.org/2000/svg" width="22" height="61"
       viewBox="0 0 22 61">
       <path
