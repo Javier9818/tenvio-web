@@ -4,10 +4,14 @@
     <div class="col-sm-12 col-md-12 col-lg-12">     
       
         <template v-for="empresa in empresas">
-          <h4> 
-            <input type="checkbox" name="" id="" class=" form-check-inline"  style="transform: scale(1.5);" :checked="empresa.checked"  >
-            {{empresa.name_empresa}}
-          </h4> 
+          <div class=" row">
+            <div class=" col-8">
+              <h4> {{empresa.name_empresa}}</h4> 
+            </div>
+            <div class=" col-4 text-right">
+              <b-form-select v-model="empresa.tipoEntrega" :options="tipoPedidos"></b-form-select>
+            </div>
+          </div>          
           <div class="cart-table table-responsive" >
             <table class="table table-bordered">
               <thead>
@@ -48,17 +52,17 @@
       </template>           
     
     </div><!-- /.col-lg-12 -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="col-sm-12 col-md-8 col-lg-8">
       <div class="cart__shiping">
         <h6>A donde llevamos tu pedido ?</h6>
         <form class="row">
-          <div class="col-md-12">
-            AQUI VA EL MAPA
+          <div class="col-12">
+           <mapa-interactivo ref="mapaComponent" width='100' height='400px'></mapa-interactivo>
           </div>
         </form>
       </div><!-- /.cart__shiping -->
     </div><!-- /.col-lg-6 -->
-    <div class="col-sm-12 col-md-6 col-lg-6">
+    <div class="col-sm-12 col-md-4 col-lg-4">
       <div class="cart__total-amount">
         <h6>TOTAL:</h6>
         <ul class="list-unstyled mb-0">
@@ -68,16 +72,18 @@
         </ul>
         <br>
         <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">          
-          <button class="btn btn-primary" @click="showModal">Realizar Pedido</button>                                        
+          <button class="btn btn-primary" @click="setPedido">Realizar Pedido</button>                                        
         </div>
       </div><!-- /.cart__total-amount -->
     </div><!-- /.col-lg-6 -->    
-    <!-- <b-modal ref="my-modal" hide-footer title="Generar pedido">
-      <div class="d-block "> 
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
-      
-    </b-modal> -->
+    <b-modal ref="my-modal" hide-footer title="Generar pedido">
+    <div class="d-block "> 
+
+    </div>
+    <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
+    
+    </b-modal>  
+    <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
    </div>
    
 </template>
@@ -91,7 +97,11 @@ export default {
             total: 0,
             producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
             temp_productos:[],
-            empresas:[]
+            empresas:[],     
+            tipoPedidos:[],
+            selected:'',
+            marker:L.marker([0,0]),
+            ubicacion:[]       
         }
     },
     methods:{
@@ -130,19 +140,35 @@ export default {
         this.empresas=this.distinct(this.productos);
         this.temp_productos=this.productos;
       },
-      // temp: function (productos) {
-      //   this.temp_productos= productos.sort(
-      //     function (a, b) {
-      //       if (a.name_empresa < b.name_empresa)
-      //         return -1;
-      //       if (a.name_empresa > b.name_empresa)
-      //         return 1;
-      //       return 0;
-      //     }
-      //   );
-      //   this.empresas=this.distinct(this.temp_productos);
-      //   //console.log(this.empresas);
-      // },
+      temp: function () {
+        var that = this;
+          Vue.swal.fire({
+            icon: 'question',
+            title: '¿Desea enviar?',
+            showCancelButton: true,
+            text: 'Aviso'
+          }).then((result) => {
+            if (!result.value)
+              return;
+            axios.post('/front/GeneraPedido',{empresas:that.empresas, productos:that.productos})
+            .then(function (response) {
+              if(response.data)
+                Swal.fire('Éxito', 'Se ha generado su pedido', 'success');        
+              else
+                Swal.fire('ERROR', 'Ha ocurrido un error', 'error'); 
+            });
+
+          });
+
+        
+      },
+      tiposEntrega: function () {
+        var that = this;
+        axios.post('/front/TipoPedido')
+        .then(function (response) {
+          that.tipoPedidos= response.data;
+        });
+      },
       distinct: function (array) {
         return Array.from(new Set(array.map(s=>s.empresa)))
         .map(
@@ -150,7 +176,10 @@ export default {
             return{
               empresa: empresa,
               name_empresa: array.find(s=> s.empresa===empresa).name_empresa,
-              checked:true
+              checked:true,
+              tipoEntrega:0,
+              lat:0, 
+              lng:0
             }
           }
         );
@@ -160,19 +189,87 @@ export default {
       },
       hideModal() {
         this.$refs['my-modal'].hide()
-       },
-      // empresaChecked: function (params) {
-      //   this.empresas
-      // }
-         
+      },
+      setPedido:function (params) {
+      this.marker=this.$refs.mapaComponent.marker;
+      console.log("Longitud: "+this.marker.getLatLng().lng);
+      console.log("Latitud: "+this.marker.getLatLng().lat);
+      this.empresas.forEach(element => {
+        element.lat=this.marker.getLatLng().lat,
+        element.lng=this.marker.getLatLng().lng
+      });
+      this.ubicacion.push(       
+        {
+          lat:this.marker.getLatLng().lat, 
+          lng:this.marker.getLatLng().lng
+        }
+      );
+      // this.showModal();
+      var that = this;
+      Vue.swal.fire({
+				icon: 'question',
+				title: '¿Desea generar el pedido?',
+				showCancelButton: true,
+				text: 'Aviso'
+			}).then((result) => {
+        if (!result.value)
+					return;
+        axios.post('/front/GeneraPedido', { 
+          empresas: that.empresas, 
+          productos: that.productos,
+          // ubicacion: that.ubicacion
+				})
+				.then(function (response) {
+				//	console.log(response.data);
+					let messsage='';
+					let icon= '';
+					let	title= '';
+					switch (response.data) {
+						case 1:
+							messsage='Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
+							icon= 'success';
+							title= 'Éxito';
+							break;
+						case 2:						 
+							messsage='Error, por favor recargue la página.';
+							icon= 'error';
+							title= 'ERROR';
+							break;
+						default:
+							break;
+					}
+						Vue.swal.fire({
+						icon: icon,
+						title: title,
+						text: messsage
+						}).then(() => {
+               //redireccionar a seguimiento
+               
+               //borrar cockie de productos
+                this.$cookies.set('carrito',null);
+
+						});
+
+				})
+				.catch(function (response){
+					Vue.swal.fire({
+						icon: 'error',
+						title: 'ERROR',
+						text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
+					}).then(() => {
+						 	location.reload();
+						});
+				});
+      });   
+      }
     },
     computed:{      
-      calcularTotal(){
+      calcularTotal(){        
         this.total = 0;
         var item;
         this.productos.forEach(element => {
               this.total = this.total + (element.precio*element.cant);
-        });                
+        });  
         return this.total;
       }
     },

@@ -18,21 +18,28 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/roles', 'generalController@roles');
-Route::get('/ciudades/{distrito}', 'generalController@ciudades');
-Route::get('/categorias', 'generalController@categoriasEmpresa');
-Route::get('/cargos', 'generalController@cargosEmpleado');
-Route::get('/username/{username}', 'generalController@validateUsername');
-Route::get('/email/{email}', 'generalController@validateEmail');
+Route::get('/roles', 'GeneralController@roles');
+Route::get('/ciudades/{distrito}', 'GeneralController@ciudades');
+Route::get('/categorias', 'GeneralController@categoriasEmpresa');
+Route::get('/cargos', 'GeneralController@cargosEmpleado');
+Route::get('/username/{username}', 'GeneralController@validateUsername');
+Route::get('/email/{email}', 'GeneralController@validateEmail');
 
-Route::post('/empleado', 'empleadoController@setEmpleado');
-Route::put('/empleado', 'empleadoController@updateEmpleado');
-Route::get('/empleados/{empresa}', 'empleadoController@listByEmpresa');
-Route::post('/empresa', 'empresaController@setEmpresa');
-Route::put('/empresa/{empresa}', 'empresaController@updateEmpresa');
-Route::put('/fotoEmpresa/{empresa}', 'empresaController@updateFoto');
-Route::get('/tipo-entregas/{empresa}', 'empresaController@tiposEntrega');
-Route::put('/tipo-entregas', 'empresaController@updateTipoEntrega');
+Route::post('/empleado', 'EmpleadoController@setEmpleado');
+Route::put('/empleado', 'EmpleadoController@updateEmpleado');
+Route::get('/empleados/{empresa}', 'EmpleadoController@listByEmpresa');
+
+Route::post('/empresa', 'EmpresaController@setEmpresa');
+Route::put('/empresa/{empresa}', 'EmpresaController@updateEmpresa');
+Route::put('/fotoEmpresa/{empresa}', 'EmpresaController@updateFoto');
+
+Route::get('/tipo-entregas/{empresa}', 'EmpresaController@tiposEntrega');
+Route::put('/tipo-entregas', 'EmpresaController@updateTipoEntrega');
+
+Route::get('/nombre-unico/{empresa}', 'EmpresaController@nombreUnico');
+Route::post('/nombre-unico', 'EmpresaController@validaNombreUnico');
+Route::put('/nombre-unico', 'EmpresaController@updateNombreUnico');
+
 
 Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');

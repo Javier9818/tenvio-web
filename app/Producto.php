@@ -19,12 +19,12 @@ class Producto extends Model
 		'updated_at'
 	];
 	public static function listarProductosDePedido($empresa_id){
-		return Producto::where(['productos.empresa_id' => $empresa_id])
+		return Producto::where(['productos.empresa_id' => $empresa_id, 'productos.estado' => 1])
 			->select('productos.id', 'productos.nombre', 'productos.descripcion',
 				'productos.foto', 'productos.precio', 'cm.descripcion as categoria')
 			->join('categorias_menus as cm', 'cm.id', '=', 'productos.categorias_menu_id')
-			->join('detalle_pedidos as dp', 'dp.producto_id', '=', 'productos.id')
-			->join('pedidos as pe', 'pe.id', '=', 'dp.pedido_id')
+			//->join('detalle_pedidos as dp', 'dp.producto_id', '=', 'productos.id')
+			//->join('pedidos as pe', 'pe.id', '=', 'dp.pedido_id')
 			->distinct()
 			->get();
 	}

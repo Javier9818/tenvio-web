@@ -62,8 +62,8 @@ group by(pe.id)
 select distinct pr.id, pr.nombre, pr.descripcion, pr.foto, pr.precio, cm.descripcion
 from productos pr
 join categorias_menus cm on cm.id = pr.categorias_menu_id
-join detalle_pedidos dp on dp.producto_id = pr.id
-join pedidos pe on pe.id = dp.pedido_id
-where pe.empresa_id = 1
+-- join detalle_pedidos dp on dp.producto_id = pr.id
+-- join pedidos pe on pe.id = dp.pedido_id
+where pr.estado = 1 and pr.empresa_id = 1
 ;
 */

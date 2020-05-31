@@ -5,23 +5,27 @@
             <div class="row">
                 <div class="col-md-6 mt-2">
                     <label>RUC</label> <!--is-invalid-->
-                        <input type="number" class="form-control" placeholder="Ingrese apellidos paternos" v-model="form.ruc">
+                    <input type="number" class="form-control" placeholder="Ingrese apellidos paternos" v-model="form.ruc">
+                    <p v-if="$v.form.ruc.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
-                    <label>Nombre</label>
-                        <input type="text" class="form-control" placeholder="Ingrese apellidos maternos" required v-model="form.nombre">
+                    <label>Nombre*</label>
+                    <input type="text" class="form-control" placeholder="Ingrese apellidos maternos" required v-model="form.nombre">
+                    <p v-if="$v.form.nombre.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
                     <label>Teléfono</label>
-                        <input type="number" class="form-control" placeholder="Ingrese nombres"  v-model="form.telefono">
+                    <input type="number" class="form-control" placeholder="Ingrese nombres"  v-model="form.telefono">
+                    <p v-if="$v.form.telefono.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
-                    <label>Celular</label>
-                        <input type="number" class="form-control" placeholder="Ingrese su número de celular" required v-model="form.celular">
+                    <label>Celular*</label>
+                    <input type="number" class="form-control" placeholder="Ingrese su número de celular" required v-model="form.celular">
+                    <p v-if="$v.form.celular.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
 
                 <div class="col-md-12 mt-2">
-                    <label>Categoría</label>
+                    <label>Categoría*</label>
                     <b-form-select v-model="form.categoria" :options="optionsCategorias" required>
                         <template v-slot:first>
                             <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
@@ -30,12 +34,13 @@
                 </div>
 
                 <div class="col-md-12 mt-2">
-                    <label>Dirección</label>
+                    <label>Dirección*</label>
                     <input type="text" class="form-control" placeholder="Ingrese la direccion de su empresa" required v-model="form.direccion">
+                    <p v-if="$v.form.direccion.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
 
                 <div class="col-md-6 mt-2">
-                    <label>Departamento</label>
+                    <label>Departamento*</label>
                     <b-form-select
                         v-model="form.departamento"
                         :options="departamentos"
@@ -51,7 +56,7 @@
                 </div>
 
                 <div class="col-md-6 mt-2">
-                    <label>Provincia</label>
+                    <label>Provincia*</label>
                     <b-form-select
                         v-model="form.provincia"
                         :options="provincias"
@@ -67,7 +72,7 @@
                 </div>
 
                 <div class="col-md-6 mt-2">
-                    <label>Distrito</label>
+                    <label>Distrito*</label>
                     <b-form-select
                         v-model="form.distrito"
                         :options="distritos"
@@ -83,7 +88,7 @@
                 </div>
 
                     <div class="col-md-6 mt-2" v-if="nuevaCiudad === false">
-                        <label>Ciudad</label>
+                        <label>Ciudad*</label>
                         <b-overlay :show="loadCiudades" rounded spinner-small spinner-variant="primary">
                             <b-form-select
                                 v-model="form.ciudad"
@@ -117,8 +122,13 @@
 </template>
 
 <script>
+    import {validationMixin} from 'vuelidate'
+    import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
+    const alpha = helpers.regex('alpha', /^[a-zA-Z0-9À-ÿ#.\u00f1\u00d1\s]*$/)
+
     import Swal from 'sweetalert2'
     export default {
+        mixins: [validationMixin],
         mounted() {
             axios.get('/json/departamentos.json').then(({data}) => { this.departamentos = data;});
             axios.get('/json/provincias.json').then(({data}) => { this.provinciasGlobal = data });
@@ -151,18 +161,50 @@
                 }
             }
         },
+         validations: {
+            form: {
+                ruc: {
+                    maxLength: maxLength(11)
+                },
+                nombre: {
+                    required,
+                    alpha,
+                    maxLength: maxLength(50)
+                },
+                telefono: {
+                    numeric,
+                    maxLength:maxLength(12),
+                    minLength: minLength(6)
+                },
+                celular:{
+                    required,
+                    numeric,
+                    maxLength:maxLength(12),
+                    minLength: minLength(6)
+                },
+                direccion:{
+                    required,
+                    alpha,
+                    maxLength:maxLength(150)
+                }
+            }
+        },
         methods:{
             submit: async function(){
-                await axios.post('/api/empresa', this.form).then((data)=>{
-                    console.log(data);
-                    Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
-                        window.location.reload();
+                this.$v.$touch()
+                console.log(this.$v.$invalid);
+                if(!this.$v.$invalid){
+                    await axios.post('/api/empresa', this.form).then((data)=>{
+                        console.log(data);
+                        Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
+                            window.location.reload();
+                        });
+                    }).catch((error) => {
+                        console.log(error);
+                        Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                     });
+                }
 
-                }).catch((error) => {
-                    console.log(error);
-                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
-                });
 
             },
             handleDepartamento: async function(){

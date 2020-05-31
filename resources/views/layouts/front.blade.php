@@ -15,10 +15,12 @@
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
   <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
   @yield('styles')
 </head>
 
 <body >
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
   <div class="wrapper" id="app">
     <!-- =========================
         Header
@@ -117,9 +119,12 @@
 
     <div class="search-popup">
       <i class="fa fa-times close-search"></i>
-      <form class="module__search-form">
-        <input type="text" class="search__input" placeholder="Escriba algo...">
-        <button class="module__search-btn"><i class="fa fa-search"></i></button>
+      <form class="module__search-form" action="{{ route('list') }}" method="get">
+        <input type="text" class="search__input" name="search" placeholder="Escriba algo...">
+        <!-- <input type="submit"  class="module__search-btn"> -->
+          <!-- <i class="fa fa-search"></i> -->
+         
+        <!-- <button class="module__search-btn"><i class="fa fa-search"></i></button> -->
       </form>
     </div><!-- /.search-popup -->
 

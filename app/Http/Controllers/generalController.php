@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class generalController extends Controller
+class GeneralController extends Controller
 {
     public function roles(){
         $roles = DB::select('select id as value, descripcion as text from permisos where descripcion != "User"');

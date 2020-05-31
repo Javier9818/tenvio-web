@@ -37,6 +37,8 @@ Vue.use(VueLoaders)
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
+ 
+//import Leaflet from 'leaflet'
 
 /**
  * The following block of code may be used to automatically register your
@@ -61,6 +63,7 @@ Vue.component('foto-portada-empresa', require('./components/negocio/PortadaEmpre
 Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.vue').default);
 Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
+Vue.component('nombre-publico', require('./components/config/NombrePublico.vue').default);
 Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);

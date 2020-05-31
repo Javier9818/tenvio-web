@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contrato;
 use App\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -19,10 +20,72 @@ class FrontController extends Controller
       case 'categorias':
         return $this::categorias($request);
         break;
+      case 'GeneraPedido':
+        return $this::GeneraPedido($request);
+        break;
+      case 'TipoPedido':
+        return $this::TipoPedido();
+        break;
       default:
         # code...
         break;
     }
+  }
+  public function TipoPedido()
+  {
+    try {
+      return DB::table('empresas')
+        ->join('tipo_entregas_empresa', 'tipo_entregas_empresa.empresa_id', '=', 'empresas.id')
+        ->join('tipo_entregas', 'tipo_entregas.id', '=', 'tipo_entregas_empresa.tipo_entregas_id')         
+        ->selectRaw('tipo_entregas.id, tipo_entregas.nombre')         
+        ->get();
+     }catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+  }
+  public function GeneraPedido( Request $request)
+  {
+    try {
+      foreach ($request->get('empresas') as $key => $empresa) {
+        $idPedido = DB::table('pedidos')->insertGetId(
+          [
+            'empresa_id' => $empresa->id, 
+            'estado' => 'ACTIVO', 
+            'comentario'=>' ', 
+            'latitud'=>$empresa->lat,
+            'longitud'=>$empresa->lng,
+            'meta_latitud'=>$empresa->lat, 
+            'meta_longitud'=>$empresa->lng, 
+            'user_id'=>Auth::user()->persona_id, 
+            'tipo_id'=>$empresa->tipoEntrega
+          ]
+        );
+        if(($idPedido<=0))
+          return 2;
+        foreach ($request->get('productos') as $key => $producto) {
+          if ($producto->empresa==$empresa->id) {
+            $idDetallePedido =DB::table('detalle_pedidos')->insertGetId(
+              [
+                'productos_id'=>$producto->id,
+                'pedidos_id'=>$idPedido,
+                'cantidad'=>$producto->cant,
+                'precio_unit'=>$producto->precio
+              ]
+            );
+            if(($idDetallePedido<=0))
+              return 2;
+          }
+        }      
+      }
+      return 1;
+    } catch (\Throwable $th) {
+       return 2;
+    }
+    
+    
   }
   public function ListEmpresas( Request $request){
     $empresas =DB::table('empresas')

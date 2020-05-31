@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class empresaController extends Controller
+class EmpresaController extends Controller
 {
 
     public function setEmpresa(Request $request){
 
         $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => $request->ciudadCreate, "distrito_id" => $request->distrito]))->id : $request->ciudad;
         $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
+
         $empresa = Empresa::create([
             "ruc" => $request->ruc,
             "nombre" => $request->nombre,
@@ -104,6 +105,23 @@ class empresaController extends Controller
 
     public function updateTipoEntrega(Request $request){
         DB::update('update tipo_entrega_empresas set estado = ? where tipo_entrega_id = ? and empresa_id = ?', [$request->estado, $request->tipo_entrega_id, $request->empresa]);
+    }
+
+    public function nombreUnico($idempresa){
+        $empresa = Empresa::find($idempresa);
+        return response()->json(["nombreUnico" => $empresa->nombre_unico]);
+    }
+
+    public function updateNombreUnico(Request $request){
+        $empresa = Empresa::find($request->empresa);
+        $empresa->nombre_unico = $request->nombreUnico;
+        $empresa->save();
+        return response()->json(["Message" => 'Actualización exitosa']);
+    }
+
+    public function validaNombreUnico(Request $request){
+        $empresas = DB::table('empresas')->where('nombre_unico','=',$request->nombreUnico)->get();
+        return (count($empresas)>0) ? response()->json(["message" => true]) : response()->json(["message"=>false]);
     }
 
 }

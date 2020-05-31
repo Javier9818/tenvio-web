@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class empleadoController extends Controller
+class EmpleadoController extends Controller
 {
     public function setEmpleado(Request $request){
         $persona = Persona::create([
