@@ -49,8 +49,9 @@
               </tbody>
             </table>
           </div><!-- /.cart-table -->
-      </template>           
-    
+      </template>
+      <label for="">Ingresar dirección</label>           
+    <input type="text" v-model="direccion" class=" form-control focused" required placeholder="Ingresar dirección">
     </div><!-- /.col-lg-12 -->
     <div class="col-sm-12 col-md-8 col-lg-8">
       <div class="cart__shiping">
@@ -102,7 +103,8 @@ export default {
             tipoPedidos:[],
             selected:'',
             marker:L.marker([0,0]),
-            ubicacion:[]        
+            ubicacion:[],
+            direccion:''        
         }
     },
     methods:{
@@ -180,7 +182,8 @@ export default {
               checked:true,
               tipoEntrega:0,
               lat:0, 
-              lng:0
+              lng:0,
+              direccion:''
             }
           }
         );
@@ -197,7 +200,8 @@ export default {
       console.log("Latitud: "+this.marker.getLatLng().lat);
       this.empresas.forEach(element => {
         element.lat=this.marker.getLatLng().lat,
-        element.lng=this.marker.getLatLng().lng
+        element.lng=this.marker.getLatLng().lng,
+        element.direccion= this.direccion
       });
       this.ubicacion.push(       
         {

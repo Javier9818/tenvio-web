@@ -60,7 +60,8 @@ class FrontController extends Controller
             'meta_latitud'=>$empresa->lat, 
             'meta_longitud'=>$empresa->lng, 
             'user_id'=>Auth::user()->persona_id, 
-            'tipo_id'=>$empresa->tipoEntrega
+            'tipo_id'=>$empresa->tipoEntrega,
+            'direccion'=>$empresa->direccion
           ]
         );
         if(($idPedido<=0))
