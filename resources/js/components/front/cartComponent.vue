@@ -101,7 +101,7 @@ export default {
             tipoPedidos:[],
             selected:'',
             marker:L.marker([0,0]),
-            ubicacion:[]       
+            ubicacion:[]        
         }
     },
     methods:{
