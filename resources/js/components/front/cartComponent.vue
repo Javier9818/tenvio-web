@@ -241,6 +241,9 @@ export default {
 							title= 'ERROR';
 							break;
 						default:
+              messsage=response.data.Message;
+							icon= 'error';
+							title= 'ERROR';
 							break;
 					}
 						Swal.fire({
@@ -251,7 +254,7 @@ export default {
                //redireccionar a seguimiento
                
                //borrar cockie de productos
-                this.$cookies.set('carrito',null);
+                // this.$cookies.set('carrito',null);
 
 						});
 
