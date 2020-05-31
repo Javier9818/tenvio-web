@@ -106,7 +106,7 @@ class FrontController extends Controller
         ->where('empresas.nombre_unico','=', $nombre)
         ->get();
         return view('front.empresa')->with("data",$empresa);
-      }catch (\Exception  $e) {         
+      }catch (\Exception  $e) {
         return abort(404);
      }
 
