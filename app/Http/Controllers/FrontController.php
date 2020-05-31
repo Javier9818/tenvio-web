@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contrato;
 use App\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -47,12 +48,43 @@ class FrontController extends Controller
   }
   public function GeneraPedido( Request $request)
   {
-    foreach ($request->get('empresas') as $key => $empresa) {
-      $id = DB::table('pedidos')->insertGetId(
-        ['empresa_id' => $empresa->id, 'estado' => 'ACTIVO', 'comentario'=>'', 'latitud'=>'', 'longitud'=>'', 'meta_latitud'=>'', 'meta_longitud'=>'', 'user_id'=>'', 'tipo_id'=>'']
-      );
-
+    try {
+      foreach ($request->get('empresas') as $key => $empresa) {
+        $idPedido = DB::table('pedidos')->insertGetId(
+          [
+            'empresa_id' => $empresa->id, 
+            'estado' => 'ACTIVO', 
+            'comentario'=>' ', 
+            'latitud'=>$empresa->lat,
+            'longitud'=>$empresa->lng,
+            'meta_latitud'=>$empresa->lat, 
+            'meta_longitud'=>$empresa->lng, 
+            'user_id'=>Auth::user()->persona_id, 
+            'tipo_id'=>$empresa->tipoEntrega
+          ]
+        );
+        if(($idPedido<=0))
+          return 2;
+        foreach ($request->get('productos') as $key => $producto) {
+          if ($producto->empresa==$empresa->id) {
+            $idDetallePedido =DB::table('detalle_pedidos')->insertGetId(
+              [
+                'productos_id'=>$producto->id,
+                'pedidos_id'=>$idPedido,
+                'cantidad'=>$producto->cant,
+                'precio_unit'=>$producto->precio
+              ]
+            );
+            if(($idDetallePedido<=0))
+              return 2;
+          }
+        }      
+      }
+      return 1;
+    } catch (\Throwable $th) {
+       return 2;
     }
+    
     
   }
   public function ListEmpresas( Request $request){

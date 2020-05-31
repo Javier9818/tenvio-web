@@ -119,9 +119,12 @@
 
     <div class="search-popup">
       <i class="fa fa-times close-search"></i>
-      <form class="module__search-form">
-        <input type="text" class="search__input" placeholder="Escriba algo...">
-        <button class="module__search-btn"><i class="fa fa-search"></i></button>
+      <form class="module__search-form" action="{{ route('list') }}" method="get">
+        <input type="text" class="search__input" name="search" placeholder="Escriba algo...">
+        <!-- <input type="submit"  class="module__search-btn"> -->
+          <!-- <i class="fa fa-search"></i> -->
+         
+        <!-- <button class="module__search-btn"><i class="fa fa-search"></i></button> -->
       </form>
     </div><!-- /.search-popup -->
 
