@@ -17,6 +17,7 @@ class CreateDetallePedidosTable extends Migration
             $table->integer('producto_id');
             $table->integer('pedido_id');
             $table->integer('cantidad');
+            $table->integer('precio_unit');
             $table->timestamps();
         });
     }
