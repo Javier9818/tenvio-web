@@ -67,8 +67,8 @@
       <div class="cart__total-amount">
         <h6>TOTAL:</h6>
         <ul class="list-unstyled mb-0">
-          <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
-          <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li>
+          <!-- <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
+          <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li> -->
           <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
         </ul>
         <br>
