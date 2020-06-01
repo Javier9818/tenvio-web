@@ -136,6 +136,8 @@ class FrontController extends Controller
         ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
         ->where([
           ['empresas.id', '=', $request->get('id')],
+          ['productos.usuario_puede_ver', '=',1],
+          ['productos.estado', '=',1],
         ])
         ->get();
       }
@@ -146,6 +148,8 @@ class FrontController extends Controller
       ->where([
         ['categorias_menus.id', '=', $request->get('tipo')],
         ['empresas.id', '=', $request->get('id')],
+        ['productos.usuario_puede_ver', '=',1],
+        ['productos.estado', '=',1],
       ])
       ->get();
 
