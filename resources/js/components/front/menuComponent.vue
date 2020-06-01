@@ -106,7 +106,7 @@
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
     </div><!-- /.container -->
-    <b-modal ref="my-modal" hide-footer :title="producto.nombre">
+    <b-modal ref="my-modal" hide-footer :title="producto.nombre" hide-backdrop content-class="shadow"  >
         <div class="container">
           <div class="row  align-items-center">
             <div class="col-sm-12 col-md-12 col-lg-12 align-items-center text-center">
@@ -257,4 +257,4 @@ export default {
   }
 }
 </script>
-
+ 

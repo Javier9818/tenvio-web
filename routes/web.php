@@ -55,7 +55,7 @@ Route::get('/cart', function(){return view('front.cart');});
 Route::get('/list', 'FrontController@ListEmpresas')->name('list');
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
-
+Route::get('/profile', function (){return view('front.profile');});
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
 //Route::get('/list','EmpresaController@listarEmpresas');

@@ -1,7 +1,7 @@
 <header id="header" class="header header-layout2">
     <nav class="navbar navbar-expand-lg sticky-navbar">
         <div class="container">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <img src="assets/images/logo/LogoDeliveryLight.png" class="logo-light" alt="logo">
             <img src="assets/images/logo/LogoDeliveryDark.png" class="logo-dark" alt="logo">
           </a>

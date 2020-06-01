@@ -220,7 +220,7 @@ $(function () {
     });
 
     /*==========  NiceSelect Plugin  ==========*/
-    $('select').niceSelect();
+   // $('select').niceSelect();
 
     /*==========  image zoomsl Plugin  ==========*/
     $(".zoomin").imagezoomsl();

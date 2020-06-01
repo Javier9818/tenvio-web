@@ -119,20 +119,24 @@
 
     <div class="search-popup">
       <i class="fa fa-times close-search"></i>
-      <form class="module__search-form">
-        <input type="text" class="search__input" placeholder="Escriba algo...">
-        <button class="module__search-btn"><i class="fa fa-search"></i></button>
+      <form class="module__search-form" action="{{ route('list') }}" method="get">
+        <input type="text" class="search__input" name="search" placeholder="Escriba algo...">
+        <!-- <input type="submit"  class="module__search-btn"> -->
+          <!-- <i class="fa fa-search"></i> -->
+         
+        <!-- <button class="module__search-btn"><i class="fa fa-search"></i></button> -->
       </form>
     </div><!-- /.search-popup -->
 
   </div>
   <!-- /.wrapper -->
-  <script src="/js/app.js" type="text/javascript"></script> 
-  
+  <script src="/js/app.js" type="text/javascript"></script>
+
   <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
   <script src="{!! asset('assets/js/plugins.js') !!}"></script>
   <!-- <script src="assets/js/wow.min.js"></script> -->
   <script src="{!! asset('assets/js/main.js') !!}"></script>
+  @yield('script')
 </body>
 
 </html>

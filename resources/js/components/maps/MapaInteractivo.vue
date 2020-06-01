@@ -8,8 +8,7 @@
     export default {
         props:['height', 'width'],
         mounted() {
-            this.initMap();
-            console.log(this.marker.getLatLng().lng);
+            this.initMap();            
         },
         data(){
             return{
@@ -41,6 +40,8 @@
                 this.marker.addTo(this.map);
                 this.marker.bindPopup("Esta es mi ubicación").openPopup();
                 this.$emit('geoPosition', this.marker.getLatLng());
+                // console.log("Longitud: "+this.marker.getLatLng().lng);
+                // console.log("Latitud: "+this.marker.getLatLng().lat);
             },
             initLayers() {
                 this.layers.forEach((layer) => {
