@@ -3,13 +3,13 @@
    <div class="row">      
     <div class="col-sm-12 col-md-12 col-lg-12">     
       
-        <template v-for="empresa in empresas">
+        <template v-for=" empresa in empresas">
           <div class=" row">
             <div class=" col-8">
               <h4> {{empresa.name_empresa}}</h4> 
             </div>
-            <div class=" col-4 text-right">
-              <b-form-select v-model="empresa.tipoEntrega" :options="tipoPedidos"></b-form-select>
+            <div class=" col-4 text-right">               
+              <b-form-select v-model="empresa.tipoEntrega" :options="tipoPedidos" class=" d-block" ></b-form-select>
             </div>
           </div>          
           <div class="cart-table table-responsive" >
@@ -49,8 +49,9 @@
               </tbody>
             </table>
           </div><!-- /.cart-table -->
-      </template>           
-    
+      </template>
+      <label for="">Ingresar dirección</label>           
+    <input type="text" v-model="direccion" class=" form-control focused" required placeholder="Ingresar dirección">
     </div><!-- /.col-lg-12 -->
     <div class="col-sm-12 col-md-8 col-lg-8">
       <div class="cart__shiping">
@@ -66,8 +67,8 @@
       <div class="cart__total-amount">
         <h6>TOTAL:</h6>
         <ul class="list-unstyled mb-0">
-          <li><span>Subtotal :</span><span>S/ {{calcularTotal-calcularTotal*0.18}}</span></li>
-          <li><span>IGV :</span><span>S/ {{calcularTotal*0.18}}</span></li>
+          <!-- <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
+          <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li> -->
           <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
         </ul>
         <br>
@@ -90,6 +91,7 @@
 
 <script>  
 import EventBus from '../../event-bus';
+import Swal from 'sweetalert2'
 export default {      
     data(){
         return {
@@ -99,9 +101,11 @@ export default {
             temp_productos:[],
             empresas:[],     
             tipoPedidos:[],
+            tipoPedidosTemp:[],
             selected:'',
             marker:L.marker([0,0]),
-            ubicacion:[]       
+            ubicacion:[],
+            direccion:''        
         }
     },
     methods:{
@@ -135,12 +139,13 @@ export default {
       },
       recarga: function () {
         let cockie=JSON.parse(this.$cookies.get('carrito'));
-        this.productos = (cockie==null)? []:cockie; 
-        //this.temp(this.productos);
+        this.productos = (cockie==null)? []:cockie;          
         this.empresas=this.distinct(this.productos);
         this.temp_productos=this.productos;
+        this.tiposEntrega();
+        
       },
-      temp: function () {
+      temp: function ( ) {
         var that = this;
           Vue.swal.fire({
             icon: 'question',
@@ -162,12 +167,29 @@ export default {
 
         
       },
-      tiposEntrega: function () {
-        var that = this;
-        axios.post('/front/TipoPedido')
+      tiposEntregaData: function (id) {      
+           
+         setTimeout(() => {
+          this.tipoPedidos.forEach(element => {          
+          if (element.id==id) {
+            this.tipoPedidosTemp.push(element);
+          }
+          });
+          console.log(this.tipoPedidosTemp);
+          return  this.tipoPedidosTemp;
+         }, 1500);
+       
+      },
+      tiposEntrega: function () {          
+        var that = this;        
+        axios.post('/front/TipoPedido',{empresas:this.empresas})
         .then(function (response) {
-          that.tipoPedidos= response.data;
-        });
+           that.tipoPedidos= response.data;          
+        });        
+         
+      },
+      toFixed: function (params) {
+        return params.toFixed(2);
       },
       distinct: function (array) {
         return Array.from(new Set(array.map(s=>s.empresa)))
@@ -179,7 +201,8 @@ export default {
               checked:true,
               tipoEntrega:0,
               lat:0, 
-              lng:0
+              lng:0,
+              direccion:''
             }
           }
         );
@@ -191,80 +214,80 @@ export default {
         this.$refs['my-modal'].hide()
       },
       setPedido:function (params) {
-      this.marker=this.$refs.mapaComponent.marker;
-      console.log("Longitud: "+this.marker.getLatLng().lng);
-      console.log("Latitud: "+this.marker.getLatLng().lat);
-      this.empresas.forEach(element => {
-        element.lat=this.marker.getLatLng().lat,
-        element.lng=this.marker.getLatLng().lng
-      });
-      this.ubicacion.push(       
-        {
-          lat:this.marker.getLatLng().lat, 
-          lng:this.marker.getLatLng().lng
+        this.marker=this.$refs.mapaComponent.marker;
+        console.log("Longitud: "+this.marker.getLatLng().lng);
+        console.log("Latitud: "+this.marker.getLatLng().lat);
+        this.empresas.forEach(element => {
+          element.lat=this.marker.getLatLng().lat,
+          element.lng=this.marker.getLatLng().lng,
+          element.direccion= this.direccion
+        });
+         
+        
+        var that = this;
+        Swal.fire({
+          icon: 'question',
+          title: '¿Desea generar el pedido?',
+          showCancelButton: true,
+          text: 'Aviso'
+        }).then((result) => {
+          if (!result.value)
+            return;
+          axios.post('/front/GeneraPedido', { 
+            empresas: that.empresas, 
+            productos: that.productos,
+            // ubicacion: that.ubicacion
+          })
+          .then(function (response) {
+          //	console.log(response.data);
+            let messsage='';
+            let icon= '';
+            let	title= '';
+            switch (response.data) {
+              case 1:
+                messsage='Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
+                icon= 'success';
+                title= 'Éxito';
+                break;
+              case 2:						 
+                messsage='Error, por favor recargue la página.';
+                icon= 'error';
+                title= 'ERROR';
+                break;
+              default:
+                messsage=response.data.Message;
+                icon= 'error';
+                title= 'ERROR';
+                break;
+            }
+              Swal.fire({
+              icon: icon,
+              title: title,
+              text: messsage
+              }).then(() => {
+                //redireccionar a seguimiento
+                
+                //borrar cockie de productos
+                  // this.$cookies.set('carrito',null);
+
+              });
+
+          })
+          .catch(function (response){
+            Swal.fire({
+              icon: 'error',
+              title: 'ERROR',
+              text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
+            }).then(() => {
+              // 	location.reload();
+              });
+          });
+        });   
         }
-      );
-      // this.showModal();
-      var that = this;
-      Vue.swal.fire({
-				icon: 'question',
-				title: '¿Desea generar el pedido?',
-				showCancelButton: true,
-				text: 'Aviso'
-			}).then((result) => {
-        if (!result.value)
-					return;
-        axios.post('/front/GeneraPedido', { 
-          empresas: that.empresas, 
-          productos: that.productos,
-          // ubicacion: that.ubicacion
-				})
-				.then(function (response) {
-				//	console.log(response.data);
-					let messsage='';
-					let icon= '';
-					let	title= '';
-					switch (response.data) {
-						case 1:
-							messsage='Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
-							icon= 'success';
-							title= 'Éxito';
-							break;
-						case 2:						 
-							messsage='Error, por favor recargue la página.';
-							icon= 'error';
-							title= 'ERROR';
-							break;
-						default:
-							break;
-					}
-						Vue.swal.fire({
-						icon: icon,
-						title: title,
-						text: messsage
-						}).then(() => {
-               //redireccionar a seguimiento
-               
-               //borrar cockie de productos
-                this.$cookies.set('carrito',null);
-
-						});
-
-				})
-				.catch(function (response){
-					Vue.swal.fire({
-						icon: 'error',
-						title: 'ERROR',
-						text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
-					}).then(() => {
-						 	location.reload();
-						});
-				});
-      });   
-      }
     },
     computed:{      
-      calcularTotal(){        
+      calcularTotal(){    
+         
         this.total = 0;
         var item;
         this.productos.forEach(element => {
@@ -275,7 +298,7 @@ export default {
     },
     mounted() {
         this.recarga();
-
+        
         console.log('ModalCarrito - Mounted')
     },
     created: function () {
