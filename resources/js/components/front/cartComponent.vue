@@ -67,8 +67,8 @@
       <div class="cart__total-amount">
         <h6>TOTAL:</h6>
         <ul class="list-unstyled mb-0">
-          <li><span>Subtotal :</span><span>S/ {{calcularTotal-calcularTotal*0.18}}</span></li>
-          <li><span>IGV :</span><span>S/ {{calcularTotal*0.18}}</span></li>
+          <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
+          <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li>
           <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
         </ul>
         <br>
@@ -187,6 +187,9 @@ export default {
            that.tipoPedidos= response.data;          
         });        
          
+      },
+      toFixed: function (params) {
+        return params.toFixed(2);
       },
       distinct: function (array) {
         return Array.from(new Set(array.map(s=>s.empresa)))
