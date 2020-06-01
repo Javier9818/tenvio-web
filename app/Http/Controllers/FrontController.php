@@ -72,7 +72,7 @@ class FrontController extends Controller
             'meta_longitud'=>$empresa['lng'], 
             'user_id'=>Auth::user()->persona_id, 
             'tipo_id'=>$empresa['tipoEntrega'],
-            // 'direccion'=>$empresa['direccion']
+            'direccion'=>$empresa['direccion']
           ]
         );
          
@@ -80,17 +80,15 @@ class FrontController extends Controller
         if(($idPedido<=0))
           return 2;
         foreach ($request->get('productos') as $key => $producto) {
-          if ($producto->empresa==$empresa->id) {
-            $idDetallePedido =DB::table('detalle_pedidos')->insertGetId(
+          if ($producto['empresa']==$empresa['empresa']) {
+          DB::table('detalle_pedidos')->insert(
               [
-                'productos_id'=>$producto['id'],
-                'pedidos_id'=>$idPedido,
+                'producto_id'=>$producto['id'],
+                'pedido_id'=>$idPedido,
                 'cantidad'=>$producto['cant'],
                 'precio_unit'=>$producto['precio']
               ]
-            );
-            if(($idDetallePedido<=0))
-              return 2;
+            );             
           }
         }      
       }

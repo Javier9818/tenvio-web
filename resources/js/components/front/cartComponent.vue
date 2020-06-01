@@ -3,7 +3,7 @@
    <div class="row">      
     <div class="col-sm-12 col-md-12 col-lg-12">     
       
-        <template v-for="(empresa, index) in empresas">
+        <template v-for=" empresa in empresas">
           <div class=" row">
             <div class=" col-8">
               <h4> {{empresa.name_empresa}}</h4> 
@@ -219,13 +219,8 @@ export default {
           element.lng=this.marker.getLatLng().lng,
           element.direccion= this.direccion
         });
-        this.ubicacion.push(       
-          {
-            lat:this.marker.getLatLng().lat, 
-            lng:this.marker.getLatLng().lng
-          }
-        );
-        // this.showModal();
+         
+        
         var that = this;
         Swal.fire({
           icon: 'question',
