@@ -40,6 +40,19 @@ class Pedidos extends Model
 			->groupBy('pedidos.id')
 			->get();
 	}
+	public static function aceptar($idpedido){
+		return Pedidos::where('id', $idpedido)
+			->update([
+				'estado' => 'Aceptado'
+			]);
+	}
+	public static function anular($idpedido, $comentario){
+		return Pedidos::where('id', $idpedido)
+			->update([
+				'estado' => 'Anulado',
+				'comentario' => $comentario
+			]);
+	}
 }
 /*
 Laravel : Syntax error or access violation: 1055 Error

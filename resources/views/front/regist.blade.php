@@ -26,10 +26,7 @@
     </head>
     <body>
 
-
-
-
-            <div class="d-flex align-items-center justify-content-center" style="height: 100vh;background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');background-size: cover; height: 100vh">
+            <div class="d-flex align-items-center justify-content-center" style="overflow-x:hidden; overflow-y:hidden;height: 100vh;background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');background-size: cover; height: 100vh">
                 <div class="content-wizard" id="app">
                     <form-wizard-unt></form-wizard-unt>
                 </div>

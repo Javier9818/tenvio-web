@@ -8,8 +8,8 @@
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">
                         <!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
-                        <li><button class="btn bg-primary white" v-on:click="aceptar(item.id)">Aceptar</button></li>
-                        <li><button class="btn bg-danger white">Eliminar</button></li>
+                        <li><button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button></li>
+                        <li><button class="btn bg-danger white" v-on:click="anular(item)">Anular</button></li>
                     </ul>
                 </div>
             </div>
@@ -34,6 +34,10 @@
                             </ul>
                         </div>
                     </div>
+					<div class="text-center">
+						<button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button>
+						<button class="btn bg-danger white" v-on:click="anular(item)">Anular</button>
+					</div>
                 </div>
             </div>
         </div>
@@ -42,6 +46,7 @@
 </template>
 
 <script>
+	import Swal from 'sweetalert2'
     export default {
          data() {
             return {
@@ -53,16 +58,104 @@
                     {id:4, state:true}
                 ],
 				productos_pedido: [],
+				pedidoSeleccionado: null,
             }
         },
         methods:{
-            aceptar(id){
+			/*
+            aceptar(item){
                 this.pedidos.map((pedido) => {
-                    if(pedido.id === id){
+                    if(pedido.id === item.id){
                         pedido.state = false
                     }
                 });
             },
+			*/
+			cambiaestado: function(operacion, comentario){
+				if (operacion == 'Aceptar')
+					operacion = '/aceptar';
+				else if (operacion == 'Anular')
+					operacion = '/anular';
+				else
+					return;
+				var idpedido = this.pedidoSeleccionado.idpedido;
+				axios.post(this.ruta+operacion, {comentario:comentario, idpedido:idpedido})
+				.then(function (response) {
+					let datos = response.data;
+					Swal.fire(
+						'Éxito',
+						'Los cambios se realizaron correctamente',
+						'success'
+					)
+				})
+				.catch(()=>{
+					Swal.fire(
+						'Error',
+						'Hubo un error inesperado, por favor contactese con el administrador del sistema',
+						'error'
+					)
+				})
+				.finally(()=>{
+				});
+
+			},
+			aceptar: function(item){
+				this.pedidoSeleccionado = item;
+				var that = this;
+				Swal.fire({
+					title: '¿Estás seguro?',
+					text: '¿Está seguro que desea aceptar este pedido?',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Si',
+					cancelButtonText: 'No'
+				}).then((result) => {
+					if (result.value) {
+						that.cambiaestado('Aceptar', '')
+					}
+				})
+			},
+			anular: function(item){
+				this.pedidoSeleccionado = item;
+				var that = this;
+				Swal.fire({
+					title: '¿Estás seguro?',
+					text: '¿Está seguro que desea anular este pedido?',
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Si',
+					cancelButtonText: 'No'
+				}).then((result) => {
+					if (result.value) {
+						var thet = that;
+						Swal.fire({
+							title: 'Ingrese el motivo por el cual está cancelando el pedido',
+							input: 'textarea',
+							inputValue: '',
+							confirmButtonText: 'Confirmar',
+							showCancelButton: true,
+							cancelButtonText: 'Cancelar',
+							inputValidator: (value) => {
+								if (!value) {
+									return 'Por favor, ingrese el motivo'
+								}
+								else if (value.length > 100){
+									return 'El texto ingresado no debe tener más de 100 caracteres'
+								}
+							}
+						})
+						.then((text)=>{
+							//console.log(text.value);
+							if (text.value != null)
+								thet.cambiaestado('Anular', text.value);
+						});
+					}
+				})
+			},
 			refrescarProductoPedido: function(){
 				let productos_pedido = this.productos_pedido;
 				this.pedidos.forEach((itm, index)=>{
@@ -99,6 +192,13 @@
 					});
 					that.refrescarProductoPedido();
 					//console.log(that.pedidos);
+				})
+				.catch(()=>{
+					Swal.fire(
+						'Error',
+						'Hubo un error inesperado, por favor contactese con el administrador del sistema',
+						'error'
+					)
 				})
 				.finally(()=>{
 				});
