@@ -88,7 +88,22 @@ $(function () {
             $cartPopup.removeClass('active');
         }
     });
-
+    /*==========  pedido Popup   ==========*/
+    var $pedidoPopup = $('.pedido-popup');
+    // show module cart
+    $('.navbar__action-btn-pedido').on('click', function (e) {
+        e.preventDefault();
+        $pedidoPopup.toggleClass('active');
+    });
+    // Close Module Cart
+    $('.close-cart').on('click', function () {
+        $pedidoPopup.removeClass('active');
+    });
+    $(document).on('mouseup', function (e) {
+        if (!$pedidoPopup.is(e.target) && !$('.navbar__action-btn-pedido').is(e.target) && $pedidoPopup.has(e.target).length === 0 && $pedidoPopup.has(e.target).length === 0) {
+            $pedidoPopup.removeClass('active');
+        }
+    });
     /*==========   Scroll Top Button   ==========*/
     var $scrollTopBtn = $('#scrollTopBtn');
     // Show Scroll Top Button
