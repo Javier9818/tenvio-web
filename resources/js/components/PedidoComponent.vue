@@ -1,48 +1,73 @@
 <template>
-    <div class="col-12">
-        <div v-for="(item, index) in pedidos">
-            <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Pedido {{item.id}}</h4>
-                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                        <!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
-                        <li><button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button></li>
-                        <li><button class="btn bg-danger white" v-on:click="anular(item)">Anular</button></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-content collapse show">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h4>Descripción</h4>
-                            <ul>
-                                <li v-for="(itm, idx) in item.productos">
-									{{itm.nombre}} ({{itm.cantidad}} unidad(es))
-								</li>
-                                <!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Cliente</h4>
-                            <ul>
-                                <li>Celular: {{item.celular}}</li>
-                                <li>Nombres: {{item.nombres}}</li>
-                                <li>Destino: {{item.direccion}}</li>
-                            </ul>
-                        </div>
-                    </div>
-					<div class="text-center">
-						<button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button>
-						<button class="btn bg-danger white" v-on:click="anular(item)">Anular</button>
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">Buscar Pedidos</h4>
+			</div>
+			<div class="card-content collapse show">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<b-form-group
+							label="Filtro de Búsqueda"
+							label-cols-sm="4"
+							label-align-sm="center"
+							label-align="center"
+							label-size="sm"
+							class="mb-0">
+								<b-form-input v-model="textoBusqueda" placeholder="Palabra Clave"></b-form-input>
+							</b-form-group>
+						</div>
 					</div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
+					<div class="text-center">
+						<button class="btn bg-success white" v-on:click="buscar">Aceptar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div v-for="(item, index) in pedidos">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Pedido {{item.id}}</h4>
+					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+					<div class="heading-elements">
+						<ul class="list-inline mb-0">
+							<!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
+							<li><button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button></li>
+							<li><button class="btn bg-danger white" v-on:click="anular(item)">Anular</button></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-content collapse show">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-4">
+								<h4>Descripción</h4>
+								<ul>
+									<li v-for="(itm, idx) in item.productos">
+										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
+									</li>
+									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<h4>Cliente</h4>
+								<ul>
+									<li>Celular: {{item.celular}}</li>
+									<li>Nombres: {{item.nombres}}</li>
+									<li>Destino: {{item.direccion}}</li>
+								</ul>
+							</div>
+						</div>
+						<div class="text-center">
+							<button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button>
+							<button class="btn bg-danger white" v-on:click="anular(item)">Anular</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -51,6 +76,7 @@
          data() {
             return {
 				ruta: '/intranet/pedidos',
+				pedidosOriginal: [],
                 pedidos:[
                     {id:1, state:true},
                     {id:2, state:true},
@@ -59,6 +85,7 @@
                 ],
 				productos_pedido: [],
 				pedidoSeleccionado: null,
+				textoBusqueda: ''
             }
         },
         methods:{
@@ -71,6 +98,23 @@
                 });
             },
 			*/
+			buscar: function(){
+				let texto = this.textoBusqueda;
+				this.pedidos = [];
+				var that = this;
+				this.pedidosOriginal.forEach(function (item) {
+					if (
+						item.nombres.toUpperCase().includes(texto.toUpperCase()) ||
+						item.celular.toUpperCase().includes(texto.toUpperCase())
+					)
+						that.pedidos.push(item);
+				});
+
+				//this.pedidos = this.pedidosOriginal.filter(function (item) {
+					//return item.celular.match(/ANULADO/) || item.nombres.match(/ANULADO/)
+				//});
+				//console.log(this.items);
+			},
 			cambiaestado: function(operacion, comentario){
 				if (operacion == 'Aceptar')
 					operacion = '/aceptar';
@@ -189,6 +233,7 @@
 					that.productos_pedido = datos.productos_pedido;
 					datos.pedidos.forEach((itm)=>{
 						that.pedidos.push(itm);
+						that.pedidosOriginal.push(itm);
 					});
 					that.refrescarProductoPedido();
 					//console.log(that.pedidos);
@@ -206,6 +251,7 @@
         },
         mounted() {
 			this.pedidos = [];
+			this.pedidosOriginal = [];
 			this.cargarPedidos();
         }
     }
