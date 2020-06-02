@@ -66,7 +66,7 @@ class UserController extends Controller
 
     public function setUser(Request $request){
         $persona = Persona::create([
-            "nombres" => $request->nombres,
+            "nombres" => $request->names,
             "appaterno" => $request->appaterno,
             "apmaterno" => $request->apmaterno,
             "celular" => $request->celular,
@@ -75,12 +75,10 @@ class UserController extends Controller
         ]);
 
         $user = User::create([
-            "username" => $request->username,
-            "email" => $request->email,
-            "password" => Hash::make($request->dni),
-            "persona_id" => $persona->id,
-            "isCustomer" => false,
-            "isAdmin"=> false
+            "username" => $request->user,
+            "email" => $request->correo,
+            "password" => Hash::make($request->password),
+            "persona_id" => $persona->id
         ]);
     }
 

@@ -96,10 +96,11 @@
                 })
             },
             submit: async function (payload) {
-                //alert('up');
+                alert('up');
                 console.log(this.data);
                 this.busy = true;
-                await axios.post('/api/usuarios', this.data).then((response) => {
+                await axios.post('/api/usuarios', this.data)
+                .then((response) => {
                     this.busy = false;
                     console.log(response.data.message);
                 });
