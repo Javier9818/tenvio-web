@@ -2798,7 +2798,129 @@ textarea.form-control {
   -o-transform: translateY(0);
   transform: translateY(0);
 }
+/* Module Cart */
+.pedido-popup {
+  background-color: #161616;
+  width: 310px;
+  padding: 40px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1055;
+  visibility: hidden;
+  opacity: 0;
+  box-shadow: 0px 2px 6px 0px rgba(40, 40, 40, 0.1);
+  -webkit-transform: translateY(10px);
+  -moz-transform: translateY(10px);
+  -ms-transform: translateY(10px);
+  -o-transform: translateY(10px);
+  transform: translateY(10px);
+  -webkit-transition: 0.4s ease;
+  -moz-transition: 0.4s ease;
+  -ms-transition: 0.4s ease;
+  -o-transition: 0.4s ease;
+  transition: 0.4s ease;
+}
 
+.pedido-popup .cart-item {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #f4f4f4;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.pedido-popup .cart-item:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+.pedido-popup .cart-item .cart__item-img {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 2px;
+  margin-right: 15px;
+}
+
+.pedido-popup .cart-item .cart__item-content {
+  flex: 1;
+  padding-right: 22px;
+}
+
+.pedido-popup .cart-item .cart__item-title {
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 4px;
+}
+
+.pedido-popup .cart-item .cart__item-detail {
+  color: #c7a254;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.pedido-popup .cart-item .cart__item-detail span:first-child {
+  padding-right: 4px;
+}
+
+.pedido-popup .cart-item .cart__item-delete {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  background-color: #c7a254;
+  color: #ffffff;
+  text-align: center;
+  font-style: normal;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+}
+
+.pedido-popup .cart-item .cart__item-delete:hover {
+  background-color: #ffffff;
+  color: #c7a254;
+}
+
+.pedido-popup .cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px solid #494b4f;
+  border-bottom: 2px solid #494b4f;
+  padding: 18px 0;
+  margin-bottom: 20px;
+}
+
+.pedido-popup .cart-subtotal span {
+  font-family: "Rubik", sans-serif;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.pedido-popup .cart-action .btn {
+  min-width: 105px;
+  height: 42px;
+  line-height: 40px;
+}
+
+.pedido-popup.active {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
 @media only screen and (min-width: 320px) and (max-width: 575px) {
   .search-popup .module__search-form {
     max-width: 90%;

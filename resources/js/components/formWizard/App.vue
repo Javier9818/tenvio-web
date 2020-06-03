@@ -2,7 +2,7 @@
     <div id="app">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.min.css">
 
-        <section class="section" style="padding-top: .5rem">
+        <section class="section" style="padding-top: 0rem">
 
             <div class="container">
                 <div class="card" v-if="busy === false">
@@ -96,10 +96,11 @@
                 })
             },
             submit: async function (payload) {
-                //alert('up');
+                alert('up');
                 console.log(this.data);
                 this.busy = true;
-                await axios.post('/api/paciente', this.data).then((response) => {
+                await axios.post('/api/usuarios', this.data)
+                .then((response) => {
                     this.busy = false;
                     console.log(response.data.message);
                 });

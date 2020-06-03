@@ -44,3 +44,4 @@ Route::put('/nombre-unico', 'EmpresaController@updateNombreUnico');
 Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');
 Route::put('/pass', 'UserController@updatePassword');
+Route::post('/usuarios', 'UserController@setUser');

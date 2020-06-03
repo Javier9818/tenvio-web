@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Crypt;
 class FrontController extends Controller
 {
   public function Funciones($opcion,Request $request)
@@ -27,10 +27,65 @@ class FrontController extends Controller
       case 'TipoPedido':
         return $this::TipoPedido($request);
         break;
+      case 'ListPedido':
+        return $this::ListPedido();
+        break;
+      case 'encripta':
+        return $this::encripta($request);
+        break;
+      case 'getPedido':
+        return $this::getPedido($request);
+        break;
       default:
         # code...
         break;
     }
+  }
+
+
+  public function encripta($request)
+	{
+		return "/seguimiento/".Crypt::encrypt(json_encode(["id" => $request->id]));
+	}
+  public function seguimiento($cifrado)
+	{
+		try {
+      $decrypted = Crypt::decrypt($cifrado);
+      $decrypted = json_decode($decrypted);
+      return view('front.seguimiento', ["data"=>$decrypted]);
+    } catch ( \Throwable $th) {
+      return abort(404);
+    }
+  }
+  public function ListPedido()
+  {
+     return DB::table('pedidos')
+     ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
+     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date')
+     ->where('pedidos.user_id','=', Auth::user()->persona_id)
+     ->get();
+  }
+  public function getPedido($request)
+  {
+    try {
+      return DB::table('pedidos')
+     ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
+     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date')
+     ->where(
+       [
+         ['pedidos.user_id','=', Auth::user()->persona_id],
+         ['pedidos.id','=', $request->get('id')]
+       ]
+     )
+     ->get();
+
+    } catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+
   }
   public function TipoPedido(Request $request)
   {
@@ -102,7 +157,7 @@ class FrontController extends Controller
       ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
       ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
       // ->where('empresas.nombre','like','%'.$request->get('search').'%')
-      ->whereRaw('MATCH(empresas.nombre,empresas.celular,empresas.telefono ) AGAINST (?)', ["'".$request->get('search')."'"])
+      ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
       ->get();
        return view('front.listEmpresa', ["empresas" => $empresas]);
   }
