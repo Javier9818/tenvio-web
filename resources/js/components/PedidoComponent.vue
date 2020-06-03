@@ -73,21 +73,24 @@
 <script>
 	import Swal from 'sweetalert2'
     export default {
-         data() {
-            return {
+		props: {
+			tipo: String
+		},
+		data() {
+			return {
 				ruta: '/intranet/pedidos',
 				pedidosOriginal: [],
-                pedidos:[
-                    {id:1, state:true},
-                    {id:2, state:true},
-                    {id:3, state:true},
-                    {id:4, state:true}
-                ],
+				pedidos:[
+					{id:1, state:true},
+					{id:2, state:true},
+					{id:3, state:true},
+					{id:4, state:true}
+				],
 				productos_pedido: [],
 				pedidoSeleccionado: null,
 				textoBusqueda: ''
-            }
-        },
+			}
+		},
         methods:{
 			/*
             aceptar(item){
@@ -131,6 +134,9 @@
 						'Los cambios se realizaron correctamente',
 						'success'
 					)
+					.then(()=>{
+						location.reload();
+					});
 				})
 				.catch(()=>{
 					Swal.fire(
@@ -227,7 +233,7 @@
 			},
 			cargarPedidos: function(){
 				var that = this;
-				axios.post(this.ruta+'/listar')
+				axios.post(this.ruta+'/listar', {tipo: this.tipo})
 				.then(function (response) {
 					let datos = response.data;
 					that.productos_pedido = datos.productos_pedido;

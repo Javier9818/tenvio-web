@@ -268,7 +268,7 @@ export default {
                 //redireccionar a seguimiento
                 
                 //borrar cockie de productos
-                  // this.$cookies.set('carrito',null);
+                this.$cookies.set('carrito',null);
 
               });
 
@@ -279,7 +279,7 @@ export default {
               title: 'ERROR',
               text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
             }).then(() => {
-              // 	location.reload();
+               	location.reload();
               });
           });
         });   

@@ -21,8 +21,14 @@ class Pedidos extends Model
 		'updated_at'
     ];
 
-	public static function listar($empresa_id){
-		return Pedidos::where(['pedidos.empresa_id' => $empresa_id])
+	public static function listar($empresa_id, $tipo){
+		$where = array(
+				'pedidos.empresa_id' => $empresa_id,
+				'pedidos.estado' => 'ACTIVO'
+			);
+		if ($tipo != 0)
+			$where['pedidos.tipo_id'] = $tipo;
+		return Pedidos::where($where)
 			->select(
 				'pedidos.id as idpedido',
 				DB::raw("GROUP_CONCAT(dp.producto_id) as ids"),
