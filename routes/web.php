@@ -42,7 +42,7 @@ Route::get('/admin/empresa/{idEmpresa}', 'AdminController@verEmpresa')->middlewa
 Auth::routes();
 Route::get('/login', function(){return view('front.login');})->name('loginForm');
 Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
-Route::get('/reg', function(){
+Route::get('/registro', function(){
     return view('front/regist');
 })->name('registro');
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');
