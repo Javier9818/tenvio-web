@@ -57,7 +57,7 @@ Route::get('/list', 'FrontController@ListEmpresas')->name('list');
 Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('seguimiento');
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
-Route::get('/profile', function (){return view('front.profile');});
+Route::get('/profile', 'UserController@getUser2')->middleware('auth');
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
 //Route::get('/list','EmpresaController@listarEmpresas');

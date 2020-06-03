@@ -35,6 +35,12 @@ class UserController extends Controller
                 where u.id = ?', [Auth::id()]);
         return view('auth.profile', ["user" => $user[0]]);
     }
+    public function getUser2(){
+        $user = DB::select('select u.id, foto, username, email, nombres, appaterno, apmaterno, celular, direccion, dni from users u
+                inner join personas p on p.id = u.persona_id
+                where u.id = ?', [Auth::id()]);
+        return view('front.profile', ["user" => $user[0]]);
+    }
 
     public function updateUser(Request $request){
         $user = User::find($request->id);
