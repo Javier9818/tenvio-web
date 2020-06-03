@@ -19,7 +19,8 @@ class Pedidos extends Model
 		'tipo_id',
 		'created_at',
 		'updated_at'
-	];
+    ];
+
 	public static function listar($empresa_id){
 		return Pedidos::where(['pedidos.empresa_id' => $empresa_id])
 			->select(
@@ -41,6 +42,11 @@ class Pedidos extends Model
 			->get();
 	}
 }
+
+
+
+
+
 /*
 Laravel : Syntax error or access violation: 1055 Error
 https://stackoverflow.com/questions/40917189/laravel-syntax-error-or-access-violation-1055-error

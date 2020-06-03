@@ -16,12 +16,12 @@ class CreatePedidosTable extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->integer('empresa_id');
-            $table->string('estado', 20);
-            $table->string('comentario', 100);
+            $table->string('estado', 20)->default('PENDIENTE');
+            $table->string('comentario', 100)->nullable();
             $table->string('latitud');
             $table->string('longitud');
-            $table->string('meta_latitud');
-            $table->string('meta_longitud');
+            $table->string('meta_latitud')->nullable();
+            $table->string('meta_longitud')->nullable();
             $table->integer('user_id');
             $table->integer('tipo_id');
             $table->string('direccion');

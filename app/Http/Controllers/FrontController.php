@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contrato;
 use App\Empresa;
+use App\Pedidos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -36,16 +37,16 @@ class FrontController extends Controller
     try {
       $where="";
      // dd($request->get('empresas')[0][0]);
-      foreach ($request->get('empresas') as $key => $value) {        
+      foreach ($request->get('empresas') as $key => $value) {
         $where.='empresas.id='.$value['empresa'];
         if($key!=count($request->get('empresas'))-1)
           $where.=' and ';
       }
       return DB::table('empresas')
         ->join('tipo_entrega_empresas', 'tipo_entrega_empresas.empresa_id', '=', 'empresas.id')
-        ->join('tipo_entregas', 'tipo_entregas.id', '=', 'tipo_entrega_empresas.tipo_entrega_id')         
-        ->selectRaw('tipo_entregas.id as value, tipo_entregas.nombre as text, empresas.id')  
-        ->whereRaw($where)       
+        ->join('tipo_entregas', 'tipo_entregas.id', '=', 'tipo_entrega_empresas.tipo_entrega_id')
+        ->selectRaw('tipo_entregas.id as value, tipo_entregas.nombre as text, empresas.id')
+        ->whereRaw($where)
         ->get();
      }catch (\Exception  $e) {
       return [
@@ -56,52 +57,46 @@ class FrontController extends Controller
   }
   public function GeneraPedido( Request $request)
   {
-    $log='';
-    
     try {
       foreach ($request->get('empresas') as $key => $empresa) {
-        $log='Pedido';
-        $idPedido = DB::table('pedidos')->insertGetId(
-          [
-            'empresa_id' => $empresa['empresa'], 
-            'estado' => 'ACTIVO', 
-            'comentario'=>' ', 
+        $pedido = Pedidos::create([
+            'empresa_id' => $empresa['empresa'],
             'latitud'=>$empresa['lat'],
             'longitud'=>$empresa['lng'],
-            'meta_latitud'=>$empresa['lat'], 
-            'meta_longitud'=>$empresa['lng'], 
-            'user_id'=>Auth::user()->persona_id, 
+            'user_id'=>Auth::id(),
             'tipo_id'=>$empresa['tipoEntrega'],
             'direccion'=>$empresa['direccion']
-          ]
-        );
-         
-        $log='a';
-        if(($idPedido<=0))
-          return 2;
+        ]);
+
+        $details = array();
+
         foreach ($request->get('productos') as $key => $producto) {
-          if ($producto['empresa']==$empresa['empresa']) {
-          DB::table('detalle_pedidos')->insert(
-              [
-                'producto_id'=>$producto['id'],
-                'pedido_id'=>$idPedido,
-                'cantidad'=>$producto['cant'],
-                'precio_unit'=>$producto['precio']
-              ]
-            );             
-          }
-        }      
+            if ($producto['empresa'] == $empresa['empresa']) {
+                array_push($details, $producto);
+                DB::table('detalle_pedidos')->insert(
+                    [
+                    'producto_id'=>$producto['id'],
+                    'pedido_id'=>$pedido->id,
+                    'cantidad'=>$producto['cant'],
+                    'precio_unit'=>$producto['precio']
+                    ]
+                );
+            }
+        }
+        event(new \App\Events\NewOrderEvent($pedido, $details, $empresa['empresa']));
       }
       return 1;
     } catch (\Exception  $e) {
       return [
-        'Message'=> $e->getMessage().' '.$log,
+        'Message'=> $e->getMessage(),
         'success'=>false
       ];
    }
-    
-    
+
+
   }
+
+
   public function ListEmpresas( Request $request){
     $empresas =DB::table('empresas')
       ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
