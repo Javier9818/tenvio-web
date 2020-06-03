@@ -30,7 +30,7 @@
 import Swal from 'sweetalert2'
 import {validationMixin} from 'vuelidate'
 import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
-const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ\s]*$/)
+const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ&\s]*$/)
     export default {
         mounted() {
             console.log('Component mounted.')

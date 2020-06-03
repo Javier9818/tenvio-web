@@ -86,7 +86,7 @@ Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue
 
 //FRONT CLIENTE
 Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
-
+Vue.component('modal-pedidos', require('./components/front/ModalPedidos.vue').default)
 
 /*Front*/
 Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)

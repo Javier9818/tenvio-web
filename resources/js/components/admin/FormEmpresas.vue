@@ -124,7 +124,7 @@
 <script>
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
-    const alpha = helpers.regex('alpha', /^[a-zA-Z0-9À-ÿ#.\u00f1\u00d1\s]*$/)
+    const text = helpers.regex('alpha', /^[a-zA-Z0-9&À-ÿ#.\u00f1\u00d1\s]*$/)
 
     import Swal from 'sweetalert2'
     export default {
@@ -168,7 +168,7 @@
                 },
                 nombre: {
                     required,
-                    alpha,
+                    text,
                     maxLength: maxLength(50)
                 },
                 telefono: {
@@ -184,7 +184,7 @@
                 },
                 direccion:{
                     required,
-                    alpha,
+                    text,
                     maxLength:maxLength(150)
                 }
             }
