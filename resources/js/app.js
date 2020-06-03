@@ -37,7 +37,7 @@ Vue.use(VueLoaders)
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
- 
+
 //import Leaflet from 'leaflet'
 
 /**
