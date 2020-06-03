@@ -31,7 +31,7 @@
 @section('content')
 <section id="chartjs-bar-charts">
     <div class="row">
-        <pedido-component></pedido-component>
+        <pedido-component tipo="2"></pedido-component>
     </div>
 </section>
 @endsection
