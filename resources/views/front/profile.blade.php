@@ -7,8 +7,6 @@
     <title>Perfil - </title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="/js/app.js" type="text/javascript"></script>
 
     <style>
 body{
@@ -109,149 +107,97 @@ body{
     </style>
 </head>
 <body>
-    <div class="container emp-profile">
+    <div class="container emp-profile" id="app">
         <form method="post">
             <div class="row">
                 <div class="col-md-4">
+<<<<<<< HEAD
                     <div class="profile-img">
 
                     </div>
+=======
+                    <div class="card card-cascade">
+
+                        <!-- Card image -->
+                        <div class="view view-cascade overlay">
+                          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/men.jpg" alt="Card image cap">
+                          <a>
+                            <div class="mask rgba-white-slight"></div>
+                          </a>
+                        </div>
+
+                        <!-- Card content -->
+                        <div class="card-body card-body-cascade text-center">
+
+                          <!-- Title -->
+                          <h4 class="card-title"><strong>Javier Briceño</strong></h4>
+                          <!-- Subtitle -->
+                          <h6 class="font-weight-bold indigo-text py-2">Usuario</h6>
+                          <!-- Text -->
+                          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, ex, recusandae.
+                            Facere modi sunt, quod quibusdam.
+                          </p>
+
+                          <!-- Facebook -->
+                          <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i></a>
+                          <!-- Twitter -->
+                          <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
+                          <!-- Google + -->
+                          <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
+
+                        </div>
+
+                        <!-- Card footer -->
+                        <div class="card-footer text-muted text-center">
+                          Actualizado hace 2 dias
+                        </div>
+
+                      </div>
+                      <!-- Card Regular -->
+>>>>>>> a153aec80da1d8014cd4b9e1b3e35883b0856410
                 </div>
                 <div class="col-md-6">
-                    <div class="profile-head">
-                                <h5>
-                                    Kshiti Ghelani
-                                </h5>
-                                <h6>
-                                    Web Developer and Designer
-                                </h6>
-                                <p class="proile-rating">RANKINGS : <span>8/10</span></p>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-work">
-                        <p>WORK LINK</p>
-                        <a href="">Website Link</a><br/>
-                        <a href="">Bootsnipp Profile</a><br/>
-                        <a href="">Bootply Profile</a>
-                        <p>SKILLS</p>
-                        <a href="">Web Designer</a><br/>
-                        <a href="">Web Developer</a><br/>
-                        <a href="">WordPress</a><br/>
-                        <a href="">WooCommerce</a><br/>
-                        <a href="">PHP, .Net</a><br/>
-                    </div>
-                </div>
-                <user-perfil></user-perfil>
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                            aria-selected="true">Informacion</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="pedidos-tab" data-toggle="tab" href="#pedidos" role="tab" aria-controls="profile"
+                            aria-selected="false">Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                            aria-selected="false">Otro</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>User Id</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Kshiti123</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Name</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Kshiti Ghelani</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Email</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>kshitighelani@gmail.com</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Phone</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>123 456 7890</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Profession</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Web Developer and Designer</p>
-                                        </div>
-                                    </div>
+                            <user-perfil></user-perfil>
                         </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Experience</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Expert</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Hourly Rate</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>10$/hr</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Total Projects</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>230</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>English Level</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>Expert</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Availability</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>6 months</p>
-                                        </div>
-                                    </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Your Bio</label><br/>
-                                    <p>Your detail description</p>
-                                </div>
-                            </div>
+                        <div class="tab-pane fade" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
+                            <front-pedidos-component></front-pedidos-component>
                         </div>
-                    </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            sfsf.</div>
+                      </div>
                 </div>
+                {{-- <div class="col-md-2">
+                    <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Editar Perfil"/>
+                </div> --}}
             </div>
+
         </form>
     </div>
+    <script>
+        let user = @json($user);
+    </script>
+    <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
+    <script src="{!! asset('assets/js/plugins.js') !!}"></script>
+    <!-- <script src="assets/js/wow.min.js"></script> -->
+    <script src="{!! asset('assets/js/main.js') !!}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/js/app.js" type="text/javascript"></script>
+
 </body>
 </html>

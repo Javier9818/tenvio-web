@@ -10,9 +10,7 @@
 
 @section('contenido')
 <section id="slider" class="slider slider-layout1">
-    <div class="carousel owl-carousel carousel-arrows" data-slide="1" data-slide-md="1" data-slide-sm="1"
-      data-autoplay="false" data-nav="false" data-dots="false" data-space="0" data-loop="false" data-speed="3000"
-      data-transition="fade" data-animate-out="fadeOut" data-animate-in="fadeIn">
+    <div >
       <div class="slide-item align-v-h text-center bg-overlay">
         <div class="bg-img"><img src="http://7oroof.com/demos/babette/assets/images/backgrounds/8.jpg" alt="slide img"></div>
         <div class="container">
@@ -25,7 +23,7 @@
                 <form action="{{ route('list') }}" method="get">
                   <input type="text"  name="search" style="text-align:center;font-size:2.5em" class="form-control">
                   <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
-                </form>                
+                </form>
               </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->
           </div><!-- /.row -->

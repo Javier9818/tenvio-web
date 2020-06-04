@@ -33,7 +33,7 @@
                 </li>
             @else
                 <li class="nav__item"><a href="/login" class="nav__item-link">Iniciar Sesion</a></li>
-                <li class="nav__item"><a href="#" class="nav__item-link">Registrarse</a></li>
+                <li class="nav__item"><a href="/registro" class="nav__item-link">Registrarse</a></li>
             @endauth
         </ul>
         </div>

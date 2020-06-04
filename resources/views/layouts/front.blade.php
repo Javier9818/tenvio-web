@@ -123,7 +123,7 @@
         <input type="text" class="search__input" name="search" placeholder="Escriba algo...">
         <!-- <input type="submit"  class="module__search-btn"> -->
           <!-- <i class="fa fa-search"></i> -->
-         
+
         <!-- <button class="module__search-btn"><i class="fa fa-search"></i></button> -->
       </form>
     </div><!-- /.search-popup -->

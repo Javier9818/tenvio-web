@@ -37,7 +37,7 @@ Vue.use(VueLoaders)
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 
- 
+
 //import Leaflet from 'leaflet'
 
 /**
@@ -55,6 +55,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('ventas-component', require('./components/VentasComponent.vue').default);
 Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
 Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);
+Vue.component('entrega-local-component', require('./components/EntregaLocalComponent.vue').default);
 Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);
 Vue.component('form-empleado', require('./components/negocio/FormEmpleado.vue').default);
 Vue.component('table-empleados', require('./components/negocio/TableEmpleados.vue').default);
@@ -103,4 +104,3 @@ const EventBus = new Vue();
 const app = new Vue({
     el: '#app',
 });
-

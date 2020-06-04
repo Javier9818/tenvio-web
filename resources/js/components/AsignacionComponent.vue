@@ -1,9 +1,10 @@
 <template>
   <div>
     <b-form-group label="Repartidor:" label-cols-md="4">
-      <b-form-select v-model="selectRepartidor" :options="repartidores" class="mb-1"></b-form-select>
+      <!--<b-form-select v-model="selectRepartidor" :options="repartidores" class="mb-1"></b-form-select>-->
+	  <model-list-select v-model="selectRepartidor" :list="repartidores" option-value="id" option-text="nombres" placeholder="Seleccione Repartidor"></model-list-select>
     </b-form-group>
-    <h4>{{selected.length}} pedidos asignados</h4>
+    <h4>{{selected.length}} pedidos seleccionados</h4>
     <b-table
       ref="selectableTable"
       selectable
@@ -28,37 +29,178 @@
     <p>
       <b-button size="sm" @click="selectAllRows">Seleccionar todos</b-button>
       <b-button size="sm" @click="clearSelected">Limpiar seleccionados</b-button>
-      <button class="btn bg-primary white float-right">Asignar</button>
+      <button class="btn bg-primary white float-right" @click="asignar" :disabled="selected.length == 0 || selectRepartidor==null">Asignar</button>
     </p>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        fields: ['selected', 'pedido', 'cliente', 'descripcion', 'direccion'],
-        repartidores:['Montes Caceres Javier', 'Jose de la Vega Miguel'],
-        items: [
-          {  pedido: 1, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-          {  pedido: 2, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-          {  pedido: 3, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-          {  pedido: 4, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' }
-        ],
-        selectRepartidor: '',
-        selected: []
-      }
-    },
-    methods: {
-      onRowSelected(items) {
-        this.selected = items
-      },
-      selectAllRows() {
-        this.$refs.selectableTable.selectAllRows()
-      },
-      clearSelected() {
-        this.$refs.selectableTable.clearSelected()
-      }
+import { ModelListSelect } from 'vue-search-select'
+import Swal from 'sweetalert2'
+export default {
+	data() {
+		return {
+			ruta: '/intranet/pedidos',
+			productos_pedido: [],
+			pedidos: [],
+			pedidoSeleccionado: [],
+			fields: ['selected', 'idpedido', 'nombres', 'descripcion', 'direccion'],
+			repartidores:['Montes Caceres Javier', 'Jose de la Vega Miguel'],
+			items: [
+				{  pedido: 1, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
+				{  pedido: 2, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
+				{  pedido: 3, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
+				{  pedido: 4, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' }
+			],
+			selectRepartidor: null,
+			selected: []
+		}
+	},
+	methods: {
+		onRowSelected(items) {
+			this.selected = items
+		},
+		selectAllRows() {
+			this.$refs.selectableTable.selectAllRows()
+		},
+		clearSelected() {
+			this.$refs.selectableTable.clearSelected()
+		},
+		cambiaestado: function(operacion, comentario, bul, idrepartidor){
+			if (operacion == 'Asignar')
+				operacion = '/asignar';
+			else
+				return;
+			var idpedido = this.pedidoSeleccionado.idpedido;
+			axios.post(this.ruta+operacion, {
+				comentario:comentario,
+				idpedido:idpedido,
+				idrepartidor:idrepartidor
+			})
+			.then(function (response) {
+				let datos = response.data;
+				Swal.fire(
+					'Éxito',
+					'Los cambios se realizaron correctamente',
+					'success'
+				)
+				.then(()=>{
+					if (bul){
+						location.reload();
+					}
+				});
+			})
+			.catch(()=>{
+				Swal.fire(
+					'Error',
+					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
+					'error'
+				)
+			})
+			.finally(()=>{
+			});
+		},
+		asignar: function(){
+			console.log(this.selectRepartidor);
+			var that = this;
+			Swal.fire({
+				title: '¿Estás seguro?',
+				text: '¿Está seguro que desea Asignar este pedido?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Si',
+				cancelButtonText: 'No'
+			}).then((result) => {
+				if (result.value) {
+					console.log(that.selected);
+					//that.pedidoSeleccionado = item;
+					var thet = that;
+					that.selected.forEach((item) => {
+						thet.pedidoSeleccionado = item;
+						that.cambiaestado('Asignar', '', true, this.selectRepartidor)
+					});
+				}
+			})
+		},
+		refrescarProductoPedido: function(){
+			let productos_pedido = this.productos_pedido;
+			this.pedidos.forEach((itm, index)=>{
+				let ids = itm.ids.split(',');
+				let cantidades = itm.cantidades.split(',');
+				var longitud = ids.length;
+				itm.productos = [];
+				this.pedidos[index].descripcion = '';
+				for (var i = 0; i < longitud; i++){
+					var cantidad = cantidades[i];
+					var idBuscarProducto = ids[i];
+					var descripcionProducto;
+					productos_pedido.forEach((item)=>{
+						if (item.id == idBuscarProducto){
+							descripcionProducto = item.nombre;
+							return;
+						}
+					});
+					itm.productos.push({
+						nombre: descripcionProducto,
+						cantidad: cantidad
+					});
+					this.pedidos[index].descripcion += descripcionProducto + '(' + cantidad + ') | ';
+				}
+				this.pedidos[index].descripcion = this.pedidos[index].descripcion.substr(0, this.pedidos[index].descripcion.length - 3);
+				this.pedidos[index].productos = itm.productos;
+			});
+			this.items = this.pedidos;
+		},
+		cargarPedidos: function(){
+			var that = this;
+			axios.post(this.ruta+'/listardelivery')
+			.then(function (response) {
+				let datos = response.data;
+				that.productos_pedido = datos.productos_pedido;
+				datos.pedidos.forEach((itm)=>{
+					that.pedidos.push(itm);
+				});
+				that.refrescarProductoPedido();
+			})
+			.catch(()=>{
+				Swal.fire(
+					'Error',
+					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
+					'error'
+				)
+			})
+			.finally(()=>{
+			});
+		},
+		cargarEmpleados: function(){
+			var that = this;
+			axios.post(this.ruta+'/listarempleados')
+			.then(function (response) {
+				let datos = response.data;
+				that.repartidores = datos;
+				console.log(datos);
+			})
+			.catch(()=>{
+				Swal.fire(
+					'Error',
+					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
+					'error'
+				)
+			})
+			.finally(()=>{
+			});
+		}
+	},
+	mounted() {
+		this.pedidos = [];
+		this.pedidosOriginal = [];
+		this.cargarPedidos();
+		this.cargarEmpleados();
+	},
+    components: {
+      ModelListSelect
     }
-  }
+}
 </script>

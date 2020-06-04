@@ -73,21 +73,21 @@
 <script>
 	import Swal from 'sweetalert2'
     export default {
-         data() {
-            return {
+		data() {
+			return {
 				ruta: '/intranet/pedidos',
 				pedidosOriginal: [],
-                pedidos:[
-                    {id:1, state:true},
-                    {id:2, state:true},
-                    {id:3, state:true},
-                    {id:4, state:true}
-                ],
+				pedidos:[
+					{id:1, state:true},
+					{id:2, state:true},
+					{id:3, state:true},
+					{id:4, state:true}
+				],
 				productos_pedido: [],
 				pedidoSeleccionado: null,
 				textoBusqueda: ''
-            }
-        },
+			}
+		},
         methods:{
 			/*
             aceptar(item){
@@ -115,7 +115,7 @@
 				//});
 				//console.log(this.items);
 			},
-			cambiaestado: function(operacion, comentario){
+			cambiaestado: function(operacion, comentario, bul, idrepartidor){
 				if (operacion == 'Aceptar')
 					operacion = '/aceptar';
 				else if (operacion == 'Anular')
@@ -123,7 +123,11 @@
 				else
 					return;
 				var idpedido = this.pedidoSeleccionado.idpedido;
-				axios.post(this.ruta+operacion, {comentario:comentario, idpedido:idpedido})
+				axios.post(this.ruta+operacion, {
+					comentario:comentario,
+					idpedido:idpedido,
+					idrepartidor:idrepartidor
+				})
 				.then(function (response) {
 					let datos = response.data;
 					Swal.fire(
@@ -131,6 +135,11 @@
 						'Los cambios se realizaron correctamente',
 						'success'
 					)
+					.then(()=>{
+						if (bul){
+							location.reload();
+						}
+					});
 				})
 				.catch(()=>{
 					Swal.fire(
@@ -141,7 +150,6 @@
 				})
 				.finally(()=>{
 				});
-
 			},
 			aceptar: function(item){
 				this.pedidoSeleccionado = item;
@@ -157,7 +165,7 @@
 					cancelButtonText: 'No'
 				}).then((result) => {
 					if (result.value) {
-						that.cambiaestado('Aceptar', '')
+						that.cambiaestado('Aceptar', '', true, 0);
 					}
 				})
 			},
@@ -195,14 +203,14 @@
 						.then((text)=>{
 							//console.log(text.value);
 							if (text.value != null)
-								thet.cambiaestado('Anular', text.value);
+								thet.cambiaestado('Anular', text.value, true, 0);
 						});
 					}
 				})
 			},
 			refrescarProductoPedido: function(){
 				let productos_pedido = this.productos_pedido;
-				this.pedidos.forEach((itm, index)=>{
+				this.pedidosOriginal.forEach((itm, index)=>{
 					let ids = itm.ids.split(',');
 					let cantidades = itm.cantidades.split(',');
 					var longitud = ids.length;
@@ -227,7 +235,7 @@
 			},
 			cargarPedidos: function(){
 				var that = this;
-				axios.post(this.ruta+'/listar')
+				axios.post(this.ruta+'/listartodo')
 				.then(function (response) {
 					let datos = response.data;
 					that.productos_pedido = datos.productos_pedido;
