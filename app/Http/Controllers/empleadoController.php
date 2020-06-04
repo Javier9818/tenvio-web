@@ -32,6 +32,7 @@ class EmpleadoController extends Controller
         DB::insert('insert into users_empresas (user_id, empresa_id, cargo_id) values (?, ?, ?)', [$user->id, $request->empresa, $request->cargo]);
 
         DB::insert('insert into permiso_user (permiso_id, user_id) values (?, ?)', [7, $user->id]);
+
         foreach ($request->roles as $key => $value) {
             DB::insert('insert into permiso_user (permiso_id, user_id) values (?, ?)', [$value, $user->id]);
         }

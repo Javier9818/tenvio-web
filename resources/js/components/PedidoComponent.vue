@@ -252,7 +252,19 @@
         mounted() {
 			this.pedidos = [];
 			this.pedidosOriginal = [];
-			this.cargarPedidos();
+            this.cargarPedidos();
+        },
+        created(){
+             Echo.channel(`ordersCompany.${empresa}`)
+                .listen('NewOrderEvent', (e) => {
+                    console.log(e);
+                    Swal.fire(
+						'Éxito',
+						'Ya llego un pedido nuevo, apura!',
+						'success'
+					)
+                });
+            console.log(`ordersCompany.${empresa}`);
         }
     }
 </script>

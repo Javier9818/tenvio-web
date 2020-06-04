@@ -14,7 +14,7 @@ class PedidosController extends Controller
 		if ($funcion == 'listar') return $this->listar($request);
 		else if ($funcion == 'aceptar') return $this->aceptar($request);
 		else if ($funcion == 'anular') return $this->anular($request);
-		else return view('admin.pedidos.pedidos');
+		else return view('admin.pedidos.pedidos', ["empresa" => Session::get('empresa')]);
     }
 
 	static function listar(Request $request){

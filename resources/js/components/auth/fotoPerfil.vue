@@ -4,7 +4,7 @@
            <div class="text-center" v-if="edit === false">
                <span class="avatar avatar-online">
                     <img class="desvanecer"
-                    :src="foto ? '/storage/images/perfilEmpresa/'+foto : '/img/perfil.png'"
+                    :src="foto ? '/storage/images/fotosPerfil/'+foto : '/img/perfil.png'"
                     alt="avatar">
                 </span>
                 <label class="mt-1" style="font-size:1.2em;"><a href="javascript:void(0);" v-on:click="edit=true"><i class="ft-edit"></i>Editar foto</a></label>
