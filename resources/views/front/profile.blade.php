@@ -111,11 +111,9 @@ body{
         <form method="post">
             <div class="row">
                 <div class="col-md-4">
-<<<<<<< HEAD
                     <div class="profile-img">
 
                     </div>
-=======
                     <div class="card card-cascade">
 
                         <!-- Card image -->
