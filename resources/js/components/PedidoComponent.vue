@@ -73,9 +73,6 @@
 <script>
 	import Swal from 'sweetalert2'
     export default {
-		props: {
-			tipo: String
-		},
 		data() {
 			return {
 				ruta: '/intranet/pedidos',
@@ -118,7 +115,7 @@
 				//});
 				//console.log(this.items);
 			},
-			cambiaestado: function(operacion, comentario){
+			cambiaestado: function(operacion, comentario, bul, idrepartidor){
 				if (operacion == 'Aceptar')
 					operacion = '/aceptar';
 				else if (operacion == 'Anular')
@@ -126,7 +123,11 @@
 				else
 					return;
 				var idpedido = this.pedidoSeleccionado.idpedido;
-				axios.post(this.ruta+operacion, {comentario:comentario, idpedido:idpedido})
+				axios.post(this.ruta+operacion, {
+					comentario:comentario,
+					idpedido:idpedido,
+					idrepartidor:idrepartidor
+				})
 				.then(function (response) {
 					let datos = response.data;
 					Swal.fire(
@@ -135,7 +136,9 @@
 						'success'
 					)
 					.then(()=>{
-						location.reload();
+						if (bul){
+							location.reload();
+						}
 					});
 				})
 				.catch(()=>{
@@ -147,7 +150,6 @@
 				})
 				.finally(()=>{
 				});
-
 			},
 			aceptar: function(item){
 				this.pedidoSeleccionado = item;
@@ -163,7 +165,7 @@
 					cancelButtonText: 'No'
 				}).then((result) => {
 					if (result.value) {
-						that.cambiaestado('Aceptar', '')
+						that.cambiaestado('Aceptar', '', true, 0);
 					}
 				})
 			},
@@ -201,14 +203,14 @@
 						.then((text)=>{
 							//console.log(text.value);
 							if (text.value != null)
-								thet.cambiaestado('Anular', text.value);
+								thet.cambiaestado('Anular', text.value, true, 0);
 						});
 					}
 				})
 			},
 			refrescarProductoPedido: function(){
 				let productos_pedido = this.productos_pedido;
-				this.pedidos.forEach((itm, index)=>{
+				this.pedidosOriginal.forEach((itm, index)=>{
 					let ids = itm.ids.split(',');
 					let cantidades = itm.cantidades.split(',');
 					var longitud = ids.length;
@@ -233,7 +235,7 @@
 			},
 			cargarPedidos: function(){
 				var that = this;
-				axios.post(this.ruta+'/listar', {tipo: this.tipo})
+				axios.post(this.ruta+'/listartodo')
 				.then(function (response) {
 					let datos = response.data;
 					that.productos_pedido = datos.productos_pedido;
@@ -258,7 +260,19 @@
         mounted() {
 			this.pedidos = [];
 			this.pedidosOriginal = [];
-			this.cargarPedidos();
+            this.cargarPedidos();
+        },
+        created(){
+             Echo.channel(`ordersCompany.${empresa}`)
+                .listen('NewOrderEvent', (e) => {
+                    console.log(e);
+                    Swal.fire(
+						'Éxito',
+						'Ya llego un pedido nuevo, apura!',
+						'success'
+					)
+                });
+            console.log(`ordersCompany.${empresa}`);
         }
     }
 </script>

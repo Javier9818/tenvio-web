@@ -111,106 +111,87 @@ body{
         <form method="post">
             <div class="row">
                 <div class="col-md-4">
-
+<<<<<<< HEAD
                     <div class="profile-img">
-                        {{-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                        <div class="file btn btn-lg btn-primary">
-                            Change Photo
-                            <input type="file" name="file"/>
-                        </div> --}}
 
-                        <foto-perfil></foto-perfil>
                     </div>
+=======
+                    <div class="card card-cascade">
+
+                        <!-- Card image -->
+                        <div class="view view-cascade overlay">
+                          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/men.jpg" alt="Card image cap">
+                          <a>
+                            <div class="mask rgba-white-slight"></div>
+                          </a>
+                        </div>
+
+                        <!-- Card content -->
+                        <div class="card-body card-body-cascade text-center">
+
+                          <!-- Title -->
+                          <h4 class="card-title"><strong>Javier Briceño</strong></h4>
+                          <!-- Subtitle -->
+                          <h6 class="font-weight-bold indigo-text py-2">Usuario</h6>
+                          <!-- Text -->
+                          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, ex, recusandae.
+                            Facere modi sunt, quod quibusdam.
+                          </p>
+
+                          <!-- Facebook -->
+                          <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i></a>
+                          <!-- Twitter -->
+                          <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
+                          <!-- Google + -->
+                          <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
+
+                        </div>
+
+                        <!-- Card footer -->
+                        <div class="card-footer text-muted text-center">
+                          Actualizado hace 2 dias
+                        </div>
+
+                      </div>
+                      <!-- Card Regular -->
+>>>>>>> a153aec80da1d8014cd4b9e1b3e35883b0856410
                 </div>
                 <div class="col-md-6">
-                    <div class="profile-head">
-                                <h5>
-                                    Robert Gutierrez Castañeda
-                                </h5>
-                                <h6>
-                                    Usuario
-                                </h6>
-                                <p class="proile-rating">Pedidos : <span>150</span></p>
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informacion</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mis Pedidos</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                            aria-selected="true">Informacion</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="pedidos-tab" data-toggle="tab" href="#pedidos" role="tab" aria-controls="profile"
+                            aria-selected="false">Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+                            aria-selected="false">Otro</a>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <user-perfil></user-perfil>
+                        </div>
+                        <div class="tab-pane fade" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
+                            <front-pedidos-component></front-pedidos-component>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            sfsf.</div>
+                      </div>
                 </div>
                 {{-- <div class="col-md-2">
                     <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Editar Perfil"/>
                 </div> --}}
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="profile-work">
-                        <p>Menu</p>
-                        <a href="">Opcion 01</a><br/>
-                    </div>
-                </div>
 
-                <div class="col-md-8">
-                    <div class="tab-content profile-tab" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <user-perfil></user-perfil>
-                            {{-- <example-component></example-component>
-                            <foto-perfil></foto-perfil> --}}
-                        </div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <table class="table">
-                                        <thead class="thead-dark">
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Descripcion</th>
-                                            <th scope="col">Negocio</th>
-                                            <th scope="col">Cantidad</th>
-                                            <th scope="col">Cantidad</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-
-                                      <table class="table">
-                                        <thead class="thead-light">
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
-                                            <th scope="col">Handle</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </form>
     </div>
-
+    <script>
+        let user = @json($user);
+    </script>
     <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
     <script src="{!! asset('assets/js/plugins.js') !!}"></script>
     <!-- <script src="assets/js/wow.min.js"></script> -->

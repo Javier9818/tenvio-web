@@ -65,6 +65,7 @@
 
     @yield('scripts')
     <script src="/js/app.js" type="text/javascript"></script>
+
     <!-- BEGIN VENDOR JS-->
     <script src="/theme-assets/js/core/vendors.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/switchery.min.js.descargar" type="text/javascript"></script>
@@ -76,7 +77,6 @@
     <script src="/theme-assets/js/core/customizer.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/prism.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
-
     <!-- END CHAMELEON  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     {{-- <script src="/theme-assets/js/scripts/charts/chartjs/bar/column.js" type="text/javascript"></script>

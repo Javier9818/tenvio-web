@@ -12,7 +12,6 @@ use Illuminate\Queue\SerializesModels;
 
 class NewOrderEvent implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
     public $order;
     public $details;
     public $channel;
@@ -27,7 +26,6 @@ class NewOrderEvent implements ShouldBroadcast
         $this->details = $details;
         $this->channel = $empresaId;
     }
-
     /**
      * Get the channels the event should broadcast on.
      *

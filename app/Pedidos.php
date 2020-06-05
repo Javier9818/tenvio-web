@@ -2,6 +2,7 @@
 namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\PedidosUsers;
 
 class Pedidos extends Model
 {
@@ -22,12 +23,18 @@ class Pedidos extends Model
     ];
 
 	public static function listar($empresa_id, $tipo){
-		$where = array(
-				'pedidos.empresa_id' => $empresa_id,
-				'pedidos.estado' => 'ACTIVO'
-			);
-		if ($tipo != 0)
-			$where['pedidos.tipo_id'] = $tipo;
+		$where = array('pedidos.empresa_id' => $empresa_id);
+		if ($tipo == 'Todo'){
+			$where['pedidos.estado'] = 'PENDIENTE';
+		}
+		if ($tipo == 'Recepcion'){
+			$where['pedidos.estado'] = 'Aceptado';
+			$where['pedidos.tipo_id'] = 2;
+		}
+		if ($tipo == 'Delivery'){
+			$where['pedidos.estado'] = 'Aceptado';
+			$where['pedidos.tipo_id'] = 1;
+		}
 		return Pedidos::where($where)
 			->select(
 				'pedidos.id as idpedido',
@@ -47,6 +54,12 @@ class Pedidos extends Model
 			->groupBy('pedidos.id')
 			->get();
 	}
+	public static function entregar($idpedido){
+		return Pedidos::where('id', $idpedido)
+			->update([
+				'estado' => 'Entregado'
+			]);
+	}
 	public static function aceptar($idpedido){
 		return Pedidos::where('id', $idpedido)
 			->update([
@@ -58,6 +71,34 @@ class Pedidos extends Model
 			->update([
 				'estado' => 'Anulado',
 				'comentario' => $comentario
+			]);
+	}
+	public static function listarEmpleados($empresa_id){
+		$where = array(
+			'ue.empresa_id' => $empresa_id,
+			'permiso_id' => 5
+		);
+		return DB::table('personas')
+			->where($where)
+			->select(
+				'personas.id as id',
+				DB::raw("CONCAT(personas.appaterno, ' ', personas.apmaterno, ', ', personas.nombres) as nombres")
+				//'personas.dni',
+				//'personas.celular'
+			)
+			->join('users as u', 'u.persona_id', '=', 'personas.id')
+			->join('users_empresas as ue', 'ue.user_id', '=', 'u.id')
+			->join('permiso_user as pu', 'pu.user_id', '=', 'ue.user_id')
+			->get();
+	}
+	public static function asignar($idpedido, $idrepartidor){
+		Pedidos::where('id', $idpedido)
+			->update([
+				'estado' => 'Enviando'
+			]);
+		return PedidosUsers::create([
+				'pedidos_id' => $idpedido,
+				'users_id' => $idrepartidor
 			]);
 	}
 }
@@ -91,4 +132,11 @@ join categorias_menus cm on cm.id = pr.categorias_menu_id
 -- join pedidos pe on pe.id = dp.pedido_id
 where pr.estado = 1 and pr.empresa_id = 1
 ;
+
+---------------- empleados con el rol 5, repartidor Deliveryselect p.id, nombres, dni, celular, direccion
+from personas p
+join users u on u.persona_id = p.id
+join users_empresas ue on ue.user_id = u.id
+join permiso_user pu on pu.user_id = ue.user_id
+where ue.empresa_id = 1 and permiso_id = 5
 */

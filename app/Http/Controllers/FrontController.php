@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contrato;
 use App\Empresa;
 use App\Pedidos;
+use App\Events\NewOrderEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -152,7 +153,7 @@ class FrontController extends Controller
                 );
             }
         }
-        event(new \App\Events\NewOrderEvent($pedido, $details, $empresa['empresa']));
+        event(new NewOrderEvent($pedido, $details, $empresa['empresa']));
       }
       return 1;
     } catch (\Exception  $e) {
