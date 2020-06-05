@@ -42,8 +42,22 @@ class FrontController extends Controller
         break;
     }
   }
-
-
+  public function categoriasIndex()
+  {
+     try {      
+      return view(
+        'front.index', 
+        ["data"=> DB::table('categorias')       
+        ->selectRaw(' categorias.descripcion as categoria')         
+        ->get()
+        ]);
+     }catch (\Exception  $e) {
+      return view(
+        'front.index', 
+        ["data"=> []
+        ]);
+   }
+  }
   public function encripta($request)
 	{
 		return "/seguimiento/".Crypt::encrypt(json_encode(["id" => $request->id]));
