@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [3, 'RESTAURANT']);
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [4, 'PIZZERIA']);
         DB::insert('insert into categorias (id, descripcion) values (?, ?)', [5, 'FUENTE DE SODA']);
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [6, 'RESPOTERIA']);
+        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [6, 'REPOSTERIA']);
 
         DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [1, 'DELIVERY']);
         DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [2, 'RECEPCIÓN EN LOCAL']);

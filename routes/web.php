@@ -52,7 +52,8 @@ Route::get('/registro', function(){
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');
 
 /* CLIENTE **/
-Route::get('/', function(){return view('front.index');});
+// Route::get('/', function(){return view('front.index');});
+Route::get('/', 'FrontController@categoriasIndex')->name('inicio');
 //Route::get('/lista', function(){return view('front.empresa');});
  Route::get('/empresa', function(){return view('front.empresa');});
 Route::get('/cart', function(){return view('front.cart');});
