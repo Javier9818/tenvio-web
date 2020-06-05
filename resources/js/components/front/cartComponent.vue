@@ -264,12 +264,9 @@ export default {
               icon: icon,
               title: title,
               text: messsage
-              }).then(() => {
-                //redireccionar a seguimiento
-                
-                //borrar cockie de productos
-                this.$cookies.set('carrito',null);
-
+              }).then(() => {               
+                that.$cookies.set('carrito',JSON.stringify([])) 
+                location.href="/";
               });
 
           })
