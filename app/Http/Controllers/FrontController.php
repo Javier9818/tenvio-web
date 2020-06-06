@@ -44,16 +44,16 @@ class FrontController extends Controller
   }
   public function categoriasIndex()
   {
-     try {      
+     try {
       return view(
-        'front.index', 
-        ["data"=> DB::table('categorias')       
-        ->selectRaw(' categorias.descripcion as categoria')         
+        'front.index',
+        ["data"=> DB::table('categorias')
+        ->selectRaw(' categorias.descripcion as categoria')
         ->get()
         ]);
      }catch (\Exception  $e) {
       return view(
-        'front.index', 
+        'front.index',
         ["data"=> []
         ]);
    }
@@ -153,7 +153,8 @@ class FrontController extends Controller
                 );
             }
         }
-        event(new NewOrderEvent($pedido, $details, $empresa['empresa']));
+		$dato_pedido = Pedidos::obtenerPedido($pedido->id);
+        event(new NewOrderEvent($pedido, $details, $empresa['empresa'], $dato_pedido));
       }
       return 1;
     } catch (\Exception  $e) {

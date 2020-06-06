@@ -15,16 +15,18 @@ class NewOrderEvent implements ShouldBroadcast
     public $order;
     public $details;
     public $channel;
+    public $order_;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($order, $details, $empresaId)
+    public function __construct($order, $details, $empresaId, $order_)
     {
         $this->order = $order;
         $this->details = $details;
         $this->channel = $empresaId;
+        $this->order_ = $order_;
     }
     /**
      * Get the channels the event should broadcast on.
