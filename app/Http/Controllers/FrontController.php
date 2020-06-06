@@ -168,13 +168,42 @@ class FrontController extends Controller
 
 
   public function ListEmpresas( Request $request){
-    $empresas =DB::table('empresas')
+    try {
+      $empresas =DB::table('empresas')
       ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
       ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
       // ->where('empresas.nombre','like','%'.$request->get('search').'%')
       ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
       ->get();
-       return view('front.listEmpresa', ["empresas" => $empresas]);
+      return view('front.listEmpresa', ["empresas" => $empresas]);
+    } catch (\Throwable $th) {
+      try {
+        $empresas =DB::table('empresas')
+        ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria') 
+        ->where('categorias.descripcion','like','%'.$request->get('search').'%')
+        ->get();
+        return view('front.listEmpresa', ["empresas" => $empresas]);
+      } catch (\Throwable $th) {
+        return view('front.listEmpresa', ["empresas" => null]);
+      }      
+    } 
+ 
+  }
+  public function BuscaxCategoria(  $Categoria){
+    
+      try {
+        $empresas =DB::table('empresas')
+        ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria') 
+        ->where('categorias.descripcion','like','%'.$Categoria.'%')
+        ->get();
+        return view('front.listEmpresa', ["empresas" => $empresas]);
+      } catch (\Throwable $th) {
+        return view('front.listEmpresa', ["empresas" => null]);
+      }      
+      
+ 
   }
   public function Empresa($nombre){
 
