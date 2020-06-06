@@ -8,7 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title')</title>
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/fronted.js') }}" defer></script>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->

@@ -11,8 +11,8 @@
            </div>
            <picture-input v-else
                 ref="pictureInput"
-                width="600"
-                height="600"
+                width="250"
+                height="250"
                 margin="0"
                 accept="image/jpeg,image/png"
                 size="10"
