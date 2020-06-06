@@ -3,22 +3,20 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
+window.Vue = require('vue');
 require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-window.Vue = require('vue');
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
-import VueCookies from 'vue-cookies'
-Vue.use(VueCookies)
-Vue.$cookies.config('1d')
+
+
 
 //bustrapVue
 //import { BootstrapVueIcons } from 'bootstrap-vue'
 //Vue.use(BootstrapVueIcons)
 
-//sweetalert
-import Swal from 'sweetalert2'
-//Vue.use(Swal);
+
 
 //File agent
 import VueFileAgent from 'vue-file-agent';
@@ -32,6 +30,7 @@ import 'vue-search-select/dist/VueSearchSelect.css';
 import 'vue-loaders/dist/vue-loaders.css'
 import VueLoaders from 'vue-loaders'
 Vue.use(VueLoaders)
+
 
 //Vuelidate
 import Vuelidate from 'vuelidate'
@@ -69,8 +68,7 @@ Vue.component('transporte-component', require('./components/transporte/Transport
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
 Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+
 
 
 Vue.component('loader', require('./components/extras/Loader.vue').default)
@@ -92,7 +90,7 @@ Vue.component('modal-pedidos', require('./components/front/ModalPedidos.vue').de
 /*Front*/
 Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
 Vue.component('front-cart-component', require('./components/front/cartComponent.vue').default)
-Vue.component('form-wizard-unt', require('./components/formWizard/App.vue').default);
+
 Vue.component('front-pedidos-component', require('./components/front/pedidosComponent.vue').default);
 Vue.component('front-seguimiento-component', require('./components/front/seguimientoComponent.vue').default);
 /**
@@ -100,7 +98,7 @@ Vue.component('front-seguimiento-component', require('./components/front/seguimi
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-const EventBus = new Vue();
+
 const app = new Vue({
     el: '#app',
 });
