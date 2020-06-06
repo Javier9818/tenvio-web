@@ -59,6 +59,7 @@ Route::get('/', 'FrontController@categoriasIndex')->name('inicio');
 Route::get('/cart', function(){return view('front.cart');});
 Route::get('/pedidos', function(){return view('front.pedidos');});
 Route::get('/list', 'FrontController@ListEmpresas')->name('list');
+Route::get('/list/{Categoria}', 'FrontController@BuscaxCategoria')->name('BuscaxCategoria');
 Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('seguimiento');
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
