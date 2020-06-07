@@ -11,21 +11,22 @@
 @section('contenido')
 <section id="slider" class="slider slider-layout1">
   <div >
-    <div class="slide-item align-v-h text-center bg-overlay">
-      <div class="bg-img"><img src="http://7oroof.com/demos/babette/assets/images/backgrounds/8.jpg" alt="slide img"></div>
+    <div class="slide-item align-v-h text-center  bg-white ">
+      <div class="bg-img"><img src="/img/header.png"  alt="slide img"></div>
       <div class="container">
         <div class="row">
-          <div class="col-sm-12 col-md-12 col-lg-12">
+          <div class="col-sm-12 col-md-6 col-lg-6">
             <div class="slide__content">
-              <span class="slide__subtitle d-none">Text</span>
-              <h2 class="slide__title text-uppercase">Busca la ciudad o nombre del restaurant</h2>
+              <!-- <span class="slide__subtitle d-none">Text</span> -->
+              <h2 class="slide__title text-capitalize text-dark" style="font-family: 'Nunito', sans-serif;">Busca lo que quieres</h2>
               <p class="slide__desc"></p>
               <form action="{{ route('list') }}" method="get">
-                <input type="text"  name="search" style="text-align:center;font-size:2.5em;border-radius: 15px" class="form-control">
-                <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
+                <input type="text"  name="search" style="text-align:center;font-size:2.5em;border-radius: 7px; border: solid 0.2px gray;" class="form-control">
+                <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__primary btn__hover2 my-5"  >
               </form>
             </div><!-- /.slide-content -->
           </div><!-- /.col-lg-12 -->
+          
         </div><!-- /.row -->
       </div><!-- /.container -->
     </div><!-- /.slide-item -->
@@ -42,7 +43,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
         <div class="heading text-center mb-50">
-          <span class="heading__subtitle">Restaurantes, Chifas, Pollerias ,etc</span>          
+          <span class="heading__subtitle">Restaurantes, Chifas, Pollerias ,etc</span>
           <div class="heading__icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
               <path
@@ -68,9 +69,9 @@
           </div>
         </div>
 
- 
+
       </div><!-- /.col-lg-4 -->
-      @endforeach      
+      @endforeach
     </div><!-- /.row -->
   </div><!-- /.container -->
 </section><!-- /.blog Grid -->

@@ -10,6 +10,7 @@
   <title>@yield('title')</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Rubik:400,500,700%7cShadows+Into+Light&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{!! asset('assets/css/libraries.css') !!}" />
   <!-- <link rel="stylesheet" href="assets/css/animate.css" /> -->
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
