@@ -6,26 +6,15 @@
 			</div>
 			<div class="card-content collapse show">
 				<div class="card-body">
-					<div class="row">
-						<div class="col-md-12">
-							<b-form-group
-							label="Filtro de Búsqueda"
-							label-cols-sm="4"
-							label-align-sm="center"
-							label-align="center"
-							label-size="sm"
-							class="mb-0">
-								<b-form-input v-model="textoBusqueda" placeholder="Palabra Clave"></b-form-input>
-							</b-form-group>
-						</div>
-					</div>
-					<div class="text-center">
-						<button class="btn bg-success white" v-on:click="buscar">Aceptar</button>
-					</div>
+                    <label for="">Buscar pedido</label>
+                    <div class="row ml-2">
+                        <input type="text" class="form-control col-8 col-md-10" v-model="textoBusqueda">
+                        <button class="btn bg-success white" v-on:click="buscar">Aceptar</button>
+                    </div>
 				</div>
 			</div>
 		</div>
-		<div v-for="(item, index) in pedidos">
+		<div v-for="item in pedidos" :key="item.id">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title">Pedido {{item.id}}</h4>
@@ -44,7 +33,7 @@
 							<div class="col-md-4">
 								<h4>Descripción</h4>
 								<ul>
-									<li v-for="(itm, idx) in item.productos">
+									<li v-for="itm in item.productos" :key="itm.nombre + item.id">
 										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
 									</li>
 									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->

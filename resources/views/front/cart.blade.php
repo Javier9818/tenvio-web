@@ -11,12 +11,9 @@
 
 
 @section('contenido')
- 
+
 <section id="page-title" class="page-title page-title-layout6 text-center bg-overlay bg-overlay-2 bg-parallax  "  >
   <div class="bg-img"><img src="https://images.hdqwalls.com/wallpapers/delivery-boy-4k-6z.jpg" alt="background" ></div>
-  
-     
-  </svg> 
 </section>
 <section id="page-title" class="page-title page-title-layout7">
     <div class="container">
@@ -41,7 +38,7 @@
               Shopping Cart
       =========================== -->
   <section id="ShoppinCcart" class="shop shopping-cart pb-50">
-    <div class="container">      
+    <div class="container">
         <front-cart-component></front-cart-component>
       <!-- /.row -->
     </div><!-- /.container -->
