@@ -149,7 +149,8 @@ export default {
 			var that = this;
 			axios.post(this.ruta+'/listarrecepcion')
 			.then(function (response) {
-				let datos = response.data;
+                let datos = response.data;
+                console.log(response.data);
 				that.productos_pedido = datos.productos_pedido;
 				datos.pedidos.forEach((itm)=>{
 					that.pedidos.push(itm);

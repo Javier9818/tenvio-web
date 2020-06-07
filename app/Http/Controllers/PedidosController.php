@@ -43,10 +43,10 @@ class PedidosController extends Controller
 	}
 
 	static function listarPedidos($tipo){
-		$empresa_id = Session::get('empresa');
-		$pedidos = Pedidos::listar($empresa_id, $tipo);
-		$productos_pedido = Producto::listarProductosDePedido($empresa_id);
-		return array('pedidos' => $pedidos, 'productos_pedido' => $productos_pedido);
+        $empresa_id = Session::get('empresa');
+        $pedidos = Pedidos::listar($empresa_id, $tipo);
+        $productos_pedido = Producto::listarProductosDePedido($empresa_id);
+        return response()->json(['pedidos' => $pedidos, 'productos_pedido' => $productos_pedido], 200);
 	}
 
 	static function listarempleados(Request $request){
