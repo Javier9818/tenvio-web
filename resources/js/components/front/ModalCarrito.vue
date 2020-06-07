@@ -4,11 +4,13 @@
                 <i class="icon-cart"></i><span class="cart__label">{{productos.length}}</span>
         </a>
         <div class="cart-popup main-menu">
-            <ul class="list-unstyled  " style=" overflow: auto; height:350px;word-wrap: break-word; width:110%;">
+            <h6 class="text-center">Carrito de compras</h6>
+            <hr>
+            <ul class="list-unstyled  " style=" overflow: auto; height:250px;word-wrap: break-word; width:110%;">
                 <li class="cart-item" v-for="(item, index) of productos" :key="index">
                 <div class="cart__item-img"><img :src="'/storage/imgproductos/'+item.foto" alt="Product"></div>
                 <div class="cart__item-content">
-                    <h6 class="cart__item-title"> [ {{item.cant}} ] {{item.nombre}}</h6>
+                    <h6 class="cart__item-title" style="color:black;">{{item.nombre}} (Cant.{{item.cant}})</h6>
                     <div class="cart__item-detail">S/. {{item.precio}}</div>
                     <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
                 </div><!-- /.cart-item-content -->
@@ -18,48 +20,47 @@
                 <span>Total:</span>
                 <span class="color-theme">S/ {{calcularTotal}}</span>
             </div><!-- /.cart-subtotal -->
-            <div class="cart-action d-flex justify-content-between">
-                <a href="/cart" class="btn btn__primary btn__hover2">Ver Pedidos</a>
-                <a href="/cart" class="btn btn__white">Finalizar</a>
+            <div class="cart-action d-flex justify-content-center">
+                <a href="/micarrito" class="btn btn__primary">Ir a carrito</a>
             </div><!-- /.cart-action -->
-        </div>        
+        </div>
     </div>
 </template>
 
 <script>
-     
+
     import EventBus from '../../event-bus';
-    export default {      
+    export default {
         data(){
             return {
-                productos: [ 
+                productos: [
                 ],
                 total: 0
             }
         },
         methods:{
-            eliminar: function(index){                 
+            eliminar: function(index){
                 this.productos.splice(index,1);
                 let cockie=this.productos;
-                this.$cookies.set('carrito',JSON.stringify(cockie));     
-                EventBus.$emit('EliminarenModal', true);               
+                this.$cookies.set('carrito',JSON.stringify(cockie));
+                EventBus.$emit('EliminarenModal', true);
             },
             recarga: function () {
                 let cockie=JSON.parse(this.$cookies.get('carrito'));
                 if (cockie==null) {
                     cockie=[];
-                }                
+                }
                 this.productos=cockie;
-            } 
+            }
         },
         computed:{
-            
+
             calcularTotal(){
                 this.total = 0;
                 var item;
                 this.productos.forEach(element => {
                      this.total = this.total + (element.precio*element.cant);
-                });                
+                });
                 return this.total;
             }
         },
@@ -69,22 +70,22 @@
             console.log('ModalCarrito - Mounted')
         },
         created: function () {
-            EventBus.$on('i-got-clicked', function(producto)  {           
+            EventBus.$on('i-got-clicked', function(producto)  {
             let cockie=JSON.parse(this.$cookies.get('carrito'));
             if (cockie==null) {
                 cockie=[];
             }
             cockie.push(producto);
-            this.productos=cockie;          
-            this.$cookies.set('carrito',JSON.stringify(cockie));             
+            this.productos=cockie;
+            this.$cookies.set('carrito',JSON.stringify(cockie));
             }.bind(this));
-            EventBus.$on('elimiarEnCart', function(boolean)  {           
+            EventBus.$on('elimiarEnCart', function(boolean)  {
                 if(boolean)
-                    this.recarga();             
+                    this.recarga();
             }.bind(this));
-            EventBus.$on('ActualizaEnCart', function(boolean)  {           
+            EventBus.$on('ActualizaEnCart', function(boolean)  {
                 if(boolean)
-                    this.recarga();             
+                    this.recarga();
             }.bind(this));
         }
     }
