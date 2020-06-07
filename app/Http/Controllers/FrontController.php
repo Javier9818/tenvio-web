@@ -138,10 +138,11 @@ class FrontController extends Controller
             'direccion'=>$empresa['direccion']
         ]);
 
-        $details = array();
+        //$details = array();
+
         foreach ($request->get('productos') as $key => $producto) {
             if ($producto['empresa'] == $empresa['empresa']) {
-                // array_push($details, $producto);
+                //array_push($details, $producto);
                 DB::table('detalle_pedidos')->insert(
                     [
                     'producto_id'=>$producto['id'],
@@ -153,7 +154,7 @@ class FrontController extends Controller
             }
         }
 		$dato_pedido = Pedidos::obtenerPedido($pedido->id);
-        try { event(new NewOrderEvent($pedido, $details, $empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
+        try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
       }
       return 1;
     } catch (\Exception  $e) {

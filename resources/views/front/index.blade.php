@@ -21,7 +21,7 @@
               <h2 class="slide__title text-uppercase">Busca la ciudad o nombre del restaurant</h2>
               <p class="slide__desc"></p>
               <form action="{{ route('list') }}" method="get">
-                <input type="text"  name="search" style="text-align:center;font-size:2.5em" class="form-control">
+                <input type="text"  name="search" style="text-align:center;font-size:2.5em;border-radius: 15px" class="form-control">
                 <input type="submit" value="Buscar restaurantes cercanos a mi posición" class="btn btn__white btn__bordered my-5">
               </form>
             </div><!-- /.slide-content -->
@@ -57,13 +57,13 @@
       <!-- Post Item #1 -->
       @foreach ($data as $categoria)
       <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-        <div class="card"  >
+        <div class="card" style=" border-radius: 15px" >
           <img class="card-img-top" src="/storage/categories/{{$categoria->categoria}}.jpg" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">{{$categoria->categoria}}</h5>
             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
             <div class=" text-center">
-              <a href="/list/{{$categoria->categoria}}" class="btn btn-info">Ver</a>
+              <a href="/list/{{$categoria->categoria}}" class="btn btn-primary btn-block">Ver</a>
             </div>
           </div>
         </div>

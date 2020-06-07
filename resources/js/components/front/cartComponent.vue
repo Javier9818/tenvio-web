@@ -1,19 +1,16 @@
 <template>
-   <form class="row" @submit.prevent="setPedido">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        <div v-for=" empresa in empresas" :key="empresa.id">
-          <div class="col-8"> <h4> Empresa: {{empresa.name_empresa}}</h4> </div>
 
-          <div class="form-group col-12">
-             <b-form-group label="Selecciona el método de envio" class="label">
-                <b-form-radio-group
-                    id="radio-group-1"
-                    v-model="empresa.tipoEntrega"
-                    :options="tipoPedidos"
-                    name="radio-options"
-                    required
-                ></b-form-radio-group>
-            </b-form-group>
+   <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+
+        <template v-for=" empresa in empresas">
+          <div class=" row">
+            <div class=" col-8">
+              <h4> {{empresa.name_empresa}}</h4>
+            </div>
+            <div class=" col-4 text-right">
+              <b-form-select v-model="empresa.tipoEntrega" :options="tipoPedidos" class=" d-block" ></b-form-select>
+            </div>
           </div>
           <div class="cart-table table-responsive" >
             <table class="table table-bordered">
@@ -26,65 +23,70 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="cart__product " v-for="(item, index) of productos" :key="index">
-                  <template v-if="empresa.name_empresa === item.name_empresa">
-                      <td class="cart__product-item">
-                        <div class="cart__product-remove">
-                        <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
-                        </div>
-                        <div class="cart__product-img">
-                            <img :src="'/storage/imgproductos/'+item.foto" alt="product" />
-                        </div>
-                        <div class="cart__product-title mt-1">
-                            <h6>{{item.nombre}}</h6>
-                        </div>
-                    </td>
-                    <td class="cart__product-price">S/. {{item.precio}}</td>
-                    <td class="cart__product-quantity">
-                        <i class="fa fa-minus decrease-qty text-danger  " style=" cursor: pointer" @click="funAdd('-',index)"></i>
-                        <span style=" border: lightgray 0.5px solid" class=" px-2">{{item.cant}}</span>
-                        <i class="fa fa-plus increase-qty text-success " style=" cursor: pointer" @click="funAdd('+',index)"></i>
-                    </td>
-                    <td class="cart__product-total">
-                        S/. {{item.precio*item.cant}}
-                    </td>
-                  </template>
+                <tr class="cart__product " v-for="(item, index) of productos" v-if="empresa.name_empresa==item.name_empresa" :key="index">
+                  <td class="cart__product-item">
+                    <div class="cart__product-remove">
+                      <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
+                    </div>
+                    <div class="cart__product-img">
+                      <img :src="'/storage/imgproductos/'+item.foto" alt="product" />
+                    </div>
+                    <div class="cart__product-title">
+                      <h6>{{item.nombre}}</h6>
+                    </div>
+                  </td>
+                  <td class="cart__product-price">S/. {{item.precio}}</td>
+                  <td class="cart__product-quantity">
+                    <i class="fa fa-minus decrease-qty text-danger  " style=" cursor: pointer" @click="funAdd('-',index)"></i>
+                    <span style=" border: lightgray 0.5px solid" class=" px-2">{{item.cant}}</span>
+                    <i class="fa fa-plus increase-qty text-success  " style=" cursor: pointer" @click="funAdd('+',index)"></i>
+                  </td>
+                  <td class="cart__product-total">
+                    S/. {{item.precio*item.cant}}
+                  </td>
                 </tr>
+
               </tbody>
             </table>
           </div><!-- /.cart-table -->
-      </div>
-    </div>
-    <div class="form-group col-12">
-        <label for="address" class="label">Ingrese la dirección de destino</label>
-        <input type="text" id="address" v-model="direccion" class=" form-control focused" placeholder="Ingresar dirección" required>
-    </div>
+      </template>
+      <label for="">Ingresar dirección</label>
+    <input type="text" v-model="direccion" class=" form-control focused" required placeholder="Ingresar dirección">
+    </div><!-- /.col-lg-12 -->
     <div class="col-sm-12 col-md-8 col-lg-8">
-        <div class="cart__shiping">
-            <p >Ayúdenos a que su órden se entregue lo más rápido posible.<br><b>Por favor indíque su ubicación en el mapa.</b></p>
-            <mapa-interactivo ref="mapaComponent" width='100' height='400px'></mapa-interactivo>
-        </div><!-- /.cart__shiping -->
-    </div>
+      <div class="cart__shiping">
+        <h6>A donde llevamos tu pedido ?</h6>
+        <form class="row">
+          <div class="col-12">
+           <mapa-interactivo ref="mapaComponent" width='100' height='400px'></mapa-interactivo>
+          </div>
+        </form>
+      </div><!-- /.cart__shiping -->
+    </div><!-- /.col-lg-6 -->
     <div class="col-sm-12 col-md-4 col-lg-4">
-        <div class="cart__total-amount">
-            <h6>TOTAL:</h6>
-            <ul class="list-unstyled mb-0">
-            <!-- <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
-            <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li> -->
-            <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
-            </ul>
-            <br>
-            <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">
-                <button class="btn btn-primary" type="submit">Realizar Pedido</button>
-            </div>
+      <div class="cart__total-amount">
+        <h6>TOTAL:</h6>
+        <ul class="list-unstyled mb-0">
+          <!-- <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
+          <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li> -->
+          <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
+        </ul>
+        <br>
+        <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">
+          <button class="btn btn-primary" @click="setPedido">Realizar Pedido</button>
         </div>
-    </div>
+      </div><!-- /.cart__total-amount -->
+    </div><!-- /.col-lg-6 -->
     <b-modal ref="my-modal" hide-footer title="Generar pedido">
-        <div class="d-block "></div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
+    <div class="d-block ">
+
+    </div>
+    <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
+
     </b-modal>
     <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
-   </form>
+   </div>
+
 </template>
 
 <script>
@@ -213,81 +215,71 @@ export default {
       },
       setPedido:function (params) {
         this.marker=this.$refs.mapaComponent.marker;
-        if(this.$refs.mapaComponent.marker.getLatLng().lng === 0 && this.$refs.mapaComponent.marker.getLatLng().lat === 0){
+        console.log("Longitud: "+this.marker.getLatLng().lng);
+        console.log("Latitud: "+this.marker.getLatLng().lat);
+        this.empresas.forEach(element => {
+          element.lat=this.marker.getLatLng().lat,
+          element.lng=this.marker.getLatLng().lng,
+          element.direccion= this.direccion
+        });
+
+
+        var that = this;
+        Swal.fire({
+          icon: 'question',
+          title: '¿Desea generar el pedido?',
+          showCancelButton: true,
+          text: 'Aviso'
+        }).then((result) => {
+          if (!result.value)
+            return;
+          axios.post('/front/GeneraPedido', {
+            empresas: that.empresas,
+            productos: that.productos,
+            // ubicacion: that.ubicacion
+          })
+          .then(function (response) {
+          //	console.log(response.data);
+            let messsage='';
+            let icon= '';
+            let	title= '';
+            switch (response.data) {
+              case 1:
+                messsage='Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
+                icon= 'success';
+                title= 'Éxito';
+                break;
+              case 2:
+                messsage='Error, por favor recargue la página.';
+                icon= 'error';
+                title= 'ERROR';
+                break;
+              default:
+                messsage=response.data.Message;
+                icon= 'error';
+                title= 'ERROR';
+                break;
+            }
+              Swal.fire({
+              icon: icon,
+              title: title,
+              text: messsage
+              }).then(() => {
+                that.$cookies.set('carrito',JSON.stringify([]))
+                location.href="/";
+              });
+
+          })
+          .catch(function (response){
             Swal.fire({
-            icon: 'error',
-            title: 'ERROR',
-            showCancelButton: true,
-            text: 'Debe de aceptar el acceso a su ubicación para continuar con el pedido'
-            });
-        }
-        else{
-            console.log("Longitud: "+this.marker.getLatLng().lng);
-            console.log("Latitud: "+this.marker.getLatLng().lat);
-            this.empresas.forEach(element => {
-            element.lat=this.marker.getLatLng().lat,
-            element.lng=this.marker.getLatLng().lng,
-            element.direccion= this.direccion
-            });
-
-
-            var that = this;
-            Swal.fire({
-            icon: 'question',
-            title: '¿Desea generar el pedido?',
-            showCancelButton: true,
-            text: 'Aviso'
-            }).then((result) => {
-            if (!result.value)
-                return;
-            axios.post('/front/GeneraPedido', {
-                empresas: that.empresas,
-                productos: that.productos,
-                // ubicacion: that.ubicacion
-            })
-            .then(function (response) {
-            //	console.log(response.data);
-                let messsage='';
-                let icon= '';
-                let	title= '';
-                switch (response.data) {
-                case 1:
-                    messsage='Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
-                    icon= 'success';
-                    title= 'Éxito';
-                    break;
-                case 2:
-                    messsage='Error, por favor recargue la página.';
-                    icon= 'error';
-                    title= 'ERROR';
-                    break;
-                default:
-                    messsage=response.data.Message;
-                    icon= 'error';
-                    title= 'ERROR';
-                    break;
-                }
-                Swal.fire({
-                icon: icon,
-                title: title,
-                text: messsage
-                }).then(() => {
-                    that.$cookies.set('carrito',JSON.stringify([]))
-                    location.href="/";
-                });
-
-            })
-            .catch(function (response){
-                Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
-                }).then(() => {
-                    location.reload();
-                });
-            });
-            });
-        }
+              icon: 'error',
+              title: 'ERROR',
+              text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
+            }).then(() => {
+               	location.reload();
+              });
+          });
+        });
         }
     },
     computed:{
@@ -316,17 +308,5 @@ export default {
 </script>
 
 <style>
-    .label{
-        font-size: 1em !important;
-        color: rgb(122, 122, 122);
-    }
 
-    th{
-        font-size: 1em !important;
-    }
-
-    td{
-        font-size: 1em !important;
-        color: rgb(122, 122, 122) !important;
-    }
 </style>
