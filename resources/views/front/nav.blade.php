@@ -1,10 +1,10 @@
 
-<header id="header" class="header header-transparent header-layout1">
+<header id="header" class="header   header-layout1">
     <nav class="navbar navbar-expand-lg sticky-navbar">
     <div class="container">
         <a class="navbar-brand" href="/">
-        <img src="{!! asset('assets/images/logo/LogoDeliveryLight.png') !!}" class="logo-light" alt="logo">
-          <img src="{!! asset('assets/images/logo/LogoDeliveryDark.png') !!}" class="logo-dark" alt="logo">
+        <img src="{!! asset('assets/images/logo/prueba.png') !!}" class="logo-light" alt="logo">
+          <img src="{!! asset('assets/images/logo/prueba.png') !!}" class="logo-dark" alt="logo">
         </a>
         <button class="navbar-toggler" type="button">
         <span class="menu-lines"><span></span></span>

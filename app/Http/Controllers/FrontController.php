@@ -176,18 +176,22 @@ class FrontController extends Controller
       // ->where('empresas.nombre','like','%'.$request->get('search').'%')
       ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
       ->get();
-      return view('front.listEmpresa', ["empresas" => $empresas]);
-    } catch (\Throwable $th) {
-      try {
+      if (count($empresas)>0) {
+        return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search')]);
+      }else{
         $empresas =DB::table('empresas')
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$request->get('search').'%')
-        ->get();
-        return view('front.listEmpresa', ["empresas" => $empresas]);
-      } catch (\Throwable $th) {
-        return view('front.listEmpresa', ["empresas" => null]);
+        ->get();        
+        if (count($empresas)>0) {
+          return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search') ]);
+        }        
+        return view('front.listEmpresa', ["empresas" => null, 'search'=>$request->get('search')]);
       }
+           
+    } catch (\Throwable $th) {
+       
     }
 
   }
@@ -199,9 +203,9 @@ class FrontController extends Controller
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$Categoria.'%')
         ->get();
-        return view('front.listEmpresa', ["empresas" => $empresas]);
+        return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$Categoria]);
       } catch (\Throwable $th) {
-        return view('front.listEmpresa', ["empresas" => null]);
+        return view('front.listEmpresa', ["empresas" => null, 'search'=>$Categoria]);
       }
 
 
