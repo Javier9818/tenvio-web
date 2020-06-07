@@ -9,6 +9,11 @@
 @endsection
 
 @section('contenido')
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,700&display=swap');
+</style>
+
 <section id="slider" class="slider slider-layout1">
   <div >
     <div class="slide-item align-v-h text-center  bg-white ">
@@ -26,7 +31,7 @@
               </form>
             </div><!-- /.slide-content -->
           </div><!-- /.col-lg-12 -->
-          
+
         </div><!-- /.row -->
       </div><!-- /.container -->
     </div><!-- /.slide-item -->
@@ -54,25 +59,41 @@
         </div><!-- /.heading -->
       </div><!-- /.col-lg-6 -->
     </div><!-- /.row -->
+
     <div class="row">
-      <!-- Post Item #1 -->
-      @foreach ($data as $categoria)
-      <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-        <div class="card" style=" border-radius: 15px" >
-          <img class="card-img-top" src="/storage/categories/{{$categoria->categoria}}.jpg" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">{{$categoria->categoria}}</h5>
-            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-            <div class=" text-center">
-              <a href="/list/{{$categoria->categoria}}" class="btn btn-primary btn-block">Ver</a>
+    @foreach ($data as $categoria)
+        <div class="col-md-4 d-flex justify-content-around">
+            <div class="card d-flex align-items-center p-5 my-3" style="width: 18rem; width: 250px;
+            height: 250px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: .5s;
+            box-shadow: 0 0 25px 5px rgba(0,0,0,.2);">
+                {{-- <img src="..." class="card-img-top" alt="..."> --}}
+
+                <h5 class="card-title" style="background: linear-gradient(#fe4b7d, #ff8a4d);
+                background-clip: border-box;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;"><i class="fas fa-utensils fa-2x"></i></h5>
+                <p class="card-text" style="font-family: 'Poppins';
+                font-size: 24px;
+
+                font-size: 1.2em;
+                color: #656064;
+                font-weight: bold;">{{ucfirst($categoria->categoria)}}</p>
+                {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+
             </div>
-          </div>
         </div>
+    @endforeach
+    </div>
 
 
-      </div><!-- /.col-lg-4 -->
-      @endforeach
-    </div><!-- /.row -->
   </div><!-- /.container -->
 </section><!-- /.blog Grid -->
 @endsection
