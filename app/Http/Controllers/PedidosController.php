@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Pedidos;
 use App\Producto;
+use App\Events\ChangeStateOrderEvent;
 
 class PedidosController extends Controller
 {
@@ -55,9 +56,11 @@ class PedidosController extends Controller
 	}
 
 	static function asignar(Request $request){
-		$idpedido = $request->get('idpedido');
+        $idpedido = $request->get('idpedido');
+        $idCliente = $request->get('idusuario');
 		$idrepartidor = $request->get('idrepartidor');
-		Pedidos::asignar($idpedido, $idrepartidor);
+        Pedidos::asignar($idpedido, $idrepartidor);
+        try { event( new ChangeStateOrderEvent(["idpedido" => $idpedido, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
 	static function entregar(Request $request){
@@ -66,14 +69,18 @@ class PedidosController extends Controller
 	}
 
 	static function aceptar(Request $request){
-		$idpedido = $request->get('idpedido');
-		Pedidos::aceptar($idpedido);
+        $idpedido = $request->get('idpedido');
+        $idCliente = $request->get('idusuario');
+        Pedidos::aceptar($idpedido);
+        try { event( new ChangeStateOrderEvent(["idpedido" => $idpedido, "state" => 'ACEPTADO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
 	static function anular(Request $request){
 		$idpedido = $request->get('idpedido');
-		$comentario = $request->get('comentario');
-		Pedidos::anular($idpedido, $comentario);
+        $comentario = $request->get('comentario');
+        $idCliente = $request->get('idusuario');
+        Pedidos::anular($idpedido, $comentario);
+        try { event( new ChangeStateOrderEvent(["idpedido" => $idpedido, "state" => 'CANCELADO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
 	static function funcion(Request $request){

@@ -111,11 +111,13 @@
 					operacion = '/anular';
 				else
 					return;
-				var idpedido = this.pedidoSeleccionado.idpedido;
+                var idpedido = this.pedidoSeleccionado.idpedido;
+                var idusuario = this.pedidoSeleccionado.idusuario;
 				axios.post(this.ruta+operacion, {
-					comentario:comentario,
-					idpedido:idpedido,
-					idrepartidor:idrepartidor
+					comentario,
+					idpedido,
+                    idrepartidor,
+                    idusuario
 				})
 				.then(function (response) {
 					let datos = response.data;
@@ -260,11 +262,6 @@
 					this.pedidos = [e.order,...this.pedidos];
 					this.pedidosOriginal = [e.order,...this.pedidosOriginal];
 					this.refrescarProductoPedido();
-                    Swal.fire(
-						'Éxito',
-						'Ya llego un pedido nuevo, apura!',
-						'success'
-					)
                 });
             console.log(`ordersCompany.${empresa}`);
         }

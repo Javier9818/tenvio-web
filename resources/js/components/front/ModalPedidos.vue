@@ -11,7 +11,12 @@
                 <div class="cart__item-content">
                     <h6 class="cart__item-title">Restaurante: {{item.empresa}}</h6>
                     <div class="cart__item-detail"> {{item.date}}</div>
-                    <div :class="color(item.state) + ' btn-sm btn-block mt-2'" style="color:white;"> {{item.state}} </div>
+                    <button
+                        :class="color(item.state).color + ' btn-sm btn-block mt-2'"
+                        :title="color(item.state).title"
+                        style="color:white;"> {{(item.state).toUpperCase()}}
+
+                    </button>
                 </div><!-- /.cart-item-content -->
                 </li>
             </ul>
@@ -24,7 +29,9 @@
 
 <script>
     import EventBus from '../../event-bus';
+    import Swal from 'sweetalert2'
     export default {
+        props:['user'],
         data(){
             return {
                 items: [
@@ -37,32 +44,42 @@
                 axios.post('/front/ListPedido')
                 .then(function (response) {
                     that.items= response.data;
+                    console.log(response.data);
                 });
             },
             color: function (key) {
-                switch (key) {
+                switch (key.toUpperCase()) {
                     case 'PENDIENTE':
-                        return 'btn btn-warning '
+                        return { title: 'Su pedido será atentido pronto.', color:'btn btn-warning '}
                     case 'ACEPTADO':
-                        return 'btn btn-primary '
+                        return { title: 'Estamos preparando su pedido.', color:'btn btn-success '}
                     case 'CANCELADO':
-                        return 'btn btn-danger '
+                        return { title: '', color:'btn btn-danger '}
                     case 'ENVIANDO':
-                        return 'btn btn-primary '
+                        return { title: 'Su pedido está en camino, muchas gracias :)' , color:'btn btn-primary '}
                     case 'ENTREGADO':
-                        return 'btn btn-success '
+                        return { title: 'Su pedido está en camino, muchas gracias :)' , color:'btn btn-success '}
                     default:
                         break;
                 }
             }
-        } ,
-        computed()
-        {
-
         },
         mounted() {
             this.listPedidos();
-            console.log('ModalPedidos - Mounted')
+            console.log('ModalPedidos - Mountedww');
+        },
+        created(){
+             Echo.channel(`ordersClient.${this.user}`)
+                .listen('ChangeStateOrderEvent', ({data}) => {
+                    this.items.map( (item) => {
+                       if(item.pedido === data.idpedido) item.state = data.state;
+                    });
+                    Swal.fire(
+						'Cambio de estado',
+						'Uno de sus pedidos a cambiado de estado.',
+						'success'
+					).then((data) => {location.href = '/pedidos'});
+                });
         }
     }
 </script>

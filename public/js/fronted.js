@@ -3049,6 +3049,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../event-bus */ "./resources/js/event-bus.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3074,7 +3081,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
   data: function data() {
     return {
       items: []
@@ -3085,34 +3094,64 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       axios.post('/front/ListPedido').then(function (response) {
         that.items = response.data;
+        console.log(response.data);
       });
     },
     color: function color(key) {
-      switch (key) {
+      switch (key.toUpperCase()) {
         case 'PENDIENTE':
-          return 'btn btn-warning ';
+          return {
+            title: 'Su pedido será atentido pronto.',
+            color: 'btn btn-warning '
+          };
 
         case 'ACEPTADO':
-          return 'btn btn-primary ';
+          return {
+            title: 'Estamos preparando su pedido.',
+            color: 'btn btn-success '
+          };
 
         case 'CANCELADO':
-          return 'btn btn-danger ';
+          return {
+            title: '',
+            color: 'btn btn-danger '
+          };
 
         case 'ENVIANDO':
-          return 'btn btn-primary ';
+          return {
+            title: 'Su pedido está en camino, muchas gracias :)',
+            color: 'btn btn-primary '
+          };
 
         case 'ENTREGADO':
-          return 'btn btn-success ';
+          return {
+            title: 'Su pedido está en camino, muchas gracias :)',
+            color: 'btn btn-success '
+          };
 
         default:
           break;
       }
     }
   },
-  computed: function computed() {},
   mounted: function mounted() {
     this.listPedidos();
-    console.log('ModalPedidos - Mounted');
+    console.log('ModalPedidos - Mountedww');
+  },
+  created: function created() {
+    var _this = this;
+
+    Echo.channel("ordersClient.".concat(this.user)).listen('ChangeStateOrderEvent', function (_ref) {
+      var data = _ref.data;
+
+      _this.items.map(function (item) {
+        if (item.pedido === data.idpedido) item.state = data.state;
+      });
+
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', 'Uno de sus pedidos a cambiado de estado.', 'success').then(function (data) {
+        location.href = '/pedidos';
+      });
+    });
   }
 });
 
@@ -81989,12 +82028,19 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c(
-                "div",
+                "button",
                 {
-                  class: _vm.color(item.state) + " btn-sm btn-block mt-2",
-                  staticStyle: { color: "white" }
+                  class: _vm.color(item.state).color + " btn-sm btn-block mt-2",
+                  staticStyle: { color: "white" },
+                  attrs: { title: _vm.color(item.state).title }
                 },
-                [_vm._v(" " + _vm._s(item.state) + " ")]
+                [
+                  _vm._v(
+                    " " +
+                      _vm._s(item.state.toUpperCase()) +
+                      "\n\n                "
+                  )
+                ]
               )
             ])
           ])

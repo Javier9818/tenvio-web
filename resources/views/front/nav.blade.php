@@ -41,11 +41,10 @@
         <div class="navbar-actions d-flex align-items-center">
             <a href="#" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
             <modal-carrito></modal-carrito>
-            <modal-pedidos></modal-pedidos>
+            <modal-pedidos user={{Auth::id()}}></modal-pedidos>
         </div>
         </div>
     </div>
     </nav>
 </header>
-
 

@@ -26,7 +26,7 @@ class Pedidos extends Model
 	public static function listar($empresa_id, $tipo){
 		$where = array('pedidos.empresa_id' => $empresa_id);
 		if ($tipo == 'Todo'){
-			$where['pedidos.estado'] = 'PENDIENTE';
+			$where['pedidos.estado'] = 'Pendiente';
 		}
 		if ($tipo == 'Recepcion'){
 			$where['pedidos.estado'] = 'Aceptado';
@@ -71,13 +71,13 @@ class Pedidos extends Model
 	public static function aceptar($idpedido){
 		return Pedidos::where('id', $idpedido)
 			->update([
-				'estado' => 'Aceptado'
+				'estado' => 'ACEPTADO'
 			]);
 	}
 	public static function anular($idpedido, $comentario){
 		return Pedidos::where('id', $idpedido)
 			->update([
-				'estado' => 'Anulado',
+				'estado' => 'CANCELADO',
 				'comentario' => $comentario
 			]);
 	}
