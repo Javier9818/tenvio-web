@@ -12,27 +12,16 @@ use Illuminate\Queue\SerializesModels;
 
 class NewOrderEvent implements ShouldBroadcast
 {
-    public $order;
-    public $details;
     public $channel;
-    public $order_;
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct($order, $details, $empresaId, $order_)
+    //public $details;
+    public $order;
+
+    public function __construct($empresaId, $order)
     {
-        $this->order = $order;
-        $this->details = $details;
         $this->channel = $empresaId;
-        $this->order_ = $order_;
+        $this->order = $order;
     }
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
+
     public function broadcastOn()
     {
         return new Channel('ordersCompany.'.$this->channel);

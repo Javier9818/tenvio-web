@@ -266,8 +266,10 @@
              Echo.channel(`ordersCompany.${empresa}`)
                 .listen('NewOrderEvent', (e) => {
                     console.log(e);
-					this.pedidos = [e.order_,...this.pedidos];
-					this.pedidosOriginal = [e.order_,...this.pedidosOriginal];
+					if (e.order == null)
+						return;
+					this.pedidos = [e.order,...this.pedidos];
+					this.pedidosOriginal = [e.order,...this.pedidosOriginal];
 					this.refrescarProductoPedido();
                     Swal.fire(
 						'Éxito',
