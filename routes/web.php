@@ -56,7 +56,7 @@ Route::get('/perfil', 'UserController@getUser')->middleware('auth');
 Route::get('/', 'FrontController@categoriasIndex')->name('inicio');
 //Route::get('/lista', function(){return view('front.empresa');});
  Route::get('/empresa', function(){return view('front.empresa');});
-Route::get('/cart', function(){return view('front.cart');});
+Route::get('/micarrito', function(){return view('front.cart');});
 Route::get('/pedidos', function(){return view('front.pedidos');});
 Route::get('/list', 'FrontController@ListEmpresas')->name('list');
 Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('seguimiento');

@@ -1,17 +1,17 @@
 <template>
 
-   <div class="row">      
-    <div class="col-sm-12 col-md-12 col-lg-12">     
-      
+   <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+
         <template v-for=" empresa in empresas">
           <div class=" row">
             <div class=" col-8">
-              <h4> {{empresa.name_empresa}}</h4> 
+              <h4> {{empresa.name_empresa}}</h4>
             </div>
-            <div class=" col-4 text-right">               
+            <div class=" col-4 text-right">
               <b-form-select v-model="empresa.tipoEntrega" :options="tipoPedidos" class=" d-block" ></b-form-select>
             </div>
-          </div>          
+          </div>
           <div class="cart-table table-responsive" >
             <table class="table table-bordered">
               <thead>
@@ -22,8 +22,8 @@
                   <th>Total</th>
                 </tr>
               </thead>
-              <tbody>                 
-                <tr class="cart__product " v-for="(item, index) of productos" v-if="empresa.name_empresa==item.name_empresa" :key="index">               
+              <tbody>
+                <tr class="cart__product " v-for="(item, index) of productos" v-if="empresa.name_empresa==item.name_empresa" :key="index">
                   <td class="cart__product-item">
                     <div class="cart__product-remove">
                       <i  @click="eliminar(index)" class="cart__item-delete">&times;</i>
@@ -41,16 +41,16 @@
                     <span style=" border: lightgray 0.5px solid" class=" px-2">{{item.cant}}</span>
                     <i class="fa fa-plus increase-qty text-success  " style=" cursor: pointer" @click="funAdd('+',index)"></i>
                   </td>
-                  <td class="cart__product-total"> 
+                  <td class="cart__product-total">
                     S/. {{item.precio*item.cant}}
                   </td>
                 </tr>
-                
+
               </tbody>
             </table>
           </div><!-- /.cart-table -->
       </template>
-      <label for="">Ingresar dirección</label>           
+      <label for="">Ingresar dirección</label>
     <input type="text" v-model="direccion" class=" form-control focused" required placeholder="Ingresar dirección">
     </div><!-- /.col-lg-12 -->
     <div class="col-sm-12 col-md-8 col-lg-8">
@@ -72,46 +72,46 @@
           <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
         </ul>
         <br>
-        <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">          
-          <button class="btn btn-primary" @click="setPedido">Realizar Pedido</button>                                        
+        <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">
+          <button class="btn btn-primary" @click="setPedido">Realizar Pedido</button>
         </div>
       </div><!-- /.cart__total-amount -->
-    </div><!-- /.col-lg-6 -->    
+    </div><!-- /.col-lg-6 -->
     <b-modal ref="my-modal" hide-footer title="Generar pedido">
-    <div class="d-block "> 
+    <div class="d-block ">
 
     </div>
     <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
-    
-    </b-modal>  
+
+    </b-modal>
     <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
    </div>
-   
+
 </template>
 
-<script>  
+<script>
 import EventBus from '../../event-bus';
 import Swal from 'sweetalert2'
-export default {      
+export default {
     data(){
         return {
             productos: [],
             total: 0,
             producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
             temp_productos:[],
-            empresas:[],     
+            empresas:[],
             tipoPedidos:[],
             tipoPedidosTemp:[],
             selected:'',
             marker:L.marker([0,0]),
             ubicacion:[],
-            direccion:''        
+            direccion:''
         }
     },
     methods:{
       funAdd: function (key,index) {
-        
-         this.producto=this.productos[index];         
+
+         this.producto=this.productos[index];
         switch (key) {
           case '+':
             this.producto.cant++;
@@ -128,22 +128,22 @@ export default {
         let cockie=this.productos;
         this.$cookies.set('carrito',JSON.stringify(cockie))
         ;
-        EventBus.$emit('ActualizaEnCart', true);          
+        EventBus.$emit('ActualizaEnCart', true);
       },
       eliminar: function(index){
           this.productos.splice(index,1);
           let cockie=this.productos;
-          this.$cookies.set('carrito',JSON.stringify(cockie));           
-            EventBus.$emit('elimiarEnCart', true);      
-          this.empresas=this.distinct(this.productos);      
+          this.$cookies.set('carrito',JSON.stringify(cockie));
+            EventBus.$emit('elimiarEnCart', true);
+          this.empresas=this.distinct(this.productos);
       },
       recarga: function () {
         let cockie=JSON.parse(this.$cookies.get('carrito'));
-        this.productos = (cockie==null)? []:cockie;          
+        this.productos = (cockie==null)? []:cockie;
         this.empresas=this.distinct(this.productos);
         this.temp_productos=this.productos;
         this.tiposEntrega();
-        
+
       },
       temp: function ( ) {
         var that = this;
@@ -158,19 +158,19 @@ export default {
             axios.post('/front/GeneraPedido',{empresas:that.empresas, productos:that.productos})
             .then(function (response) {
               if(response.data)
-                Swal.fire('Éxito', 'Se ha generado su pedido', 'success');        
+                Swal.fire('Éxito', 'Se ha generado su pedido', 'success');
               else
-                Swal.fire('ERROR', 'Ha ocurrido un error', 'error'); 
+                Swal.fire('ERROR', 'Ha ocurrido un error', 'error');
             });
 
           });
 
-        
+
       },
-      tiposEntregaData: function (id) {      
-           
+      tiposEntregaData: function (id) {
+
          setTimeout(() => {
-          this.tipoPedidos.forEach(element => {          
+          this.tipoPedidos.forEach(element => {
           if (element.id==id) {
             this.tipoPedidosTemp.push(element);
           }
@@ -178,15 +178,15 @@ export default {
           console.log(this.tipoPedidosTemp);
           return  this.tipoPedidosTemp;
          }, 1500);
-       
+
       },
-      tiposEntrega: function () {          
-        var that = this;        
+      tiposEntrega: function () {
+        var that = this;
         axios.post('/front/TipoPedido',{empresas:this.empresas})
         .then(function (response) {
-           that.tipoPedidos= response.data;          
-        });        
-         
+           that.tipoPedidos= response.data;
+        });
+
       },
       toFixed: function (params) {
         return params.toFixed(2);
@@ -200,7 +200,7 @@ export default {
               name_empresa: array.find(s=> s.empresa===empresa).name_empresa,
               checked:true,
               tipoEntrega:0,
-              lat:0, 
+              lat:0,
               lng:0,
               direccion:''
             }
@@ -222,8 +222,8 @@ export default {
           element.lng=this.marker.getLatLng().lng,
           element.direccion= this.direccion
         });
-         
-        
+
+
         var that = this;
         Swal.fire({
           icon: 'question',
@@ -233,8 +233,8 @@ export default {
         }).then((result) => {
           if (!result.value)
             return;
-          axios.post('/front/GeneraPedido', { 
-            empresas: that.empresas, 
+          axios.post('/front/GeneraPedido', {
+            empresas: that.empresas,
             productos: that.productos,
             // ubicacion: that.ubicacion
           })
@@ -249,7 +249,7 @@ export default {
                 icon= 'success';
                 title= 'Éxito';
                 break;
-              case 2:						 
+              case 2:
                 messsage='Error, por favor recargue la página.';
                 icon= 'error';
                 title= 'ERROR';
@@ -264,8 +264,8 @@ export default {
               icon: icon,
               title: title,
               text: messsage
-              }).then(() => {               
-                that.$cookies.set('carrito',JSON.stringify([])) 
+              }).then(() => {
+                that.$cookies.set('carrito',JSON.stringify([]))
                 location.href="/";
               });
 
@@ -279,29 +279,29 @@ export default {
                	location.reload();
               });
           });
-        });   
+        });
         }
     },
-    computed:{      
-      calcularTotal(){    
-         
+    computed:{
+      calcularTotal(){
+
         this.total = 0;
         var item;
         this.productos.forEach(element => {
               this.total = this.total + (element.precio*element.cant);
-        });  
+        });
         return this.total;
       }
     },
     mounted() {
         this.recarga();
-        
+
         console.log('ModalCarrito - Mounted')
     },
     created: function () {
-        EventBus.$on('EliminarenModal', function(boolean)  {           
+        EventBus.$on('EliminarenModal', function(boolean)  {
           if(boolean)
-           this.recarga(); 
+           this.recarga();
         }.bind(this));
     }
 }
