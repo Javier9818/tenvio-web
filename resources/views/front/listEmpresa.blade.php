@@ -34,7 +34,8 @@
 
 
 <section id="blogGrid" class="blog blog-grid pb-60">
-  <div class="bg-img"><img src="/img/header.png"  alt="slide img"></div>
+  <div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave.png') !!}"  alt="slide img"></div>
+  
     <div class="container">    
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
@@ -50,7 +51,10 @@
             </div>
 
           </div><!-- /.heading -->
-          <div class="row ">
+          
+        </div><!-- /.col-lg-6 -->
+        <div class="col-sm-12 col-md-12 col-lg-12   text-center">
+        <div class="row ">
           <!-- Post Item #1 -->
           @if($empresas===null)      
             <div class="alert alert-primary text-center" role="alert">
@@ -72,7 +76,7 @@
                       <a href="#">{{$empresa->categoria}}</a>
                     </div><!-- /.post-meta-cat -->
                   </div><!-- /.post-meta -->
-                  <h4 class="post__title"><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}">{{$empresa->nombre}}</a></h4>
+                  <h2 class="post__title" ><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}">{{$empresa->nombre}}</a></h2>
                   <p class="post__desc">{{$empresa->descripcion}}</p>
                   <!-- <a href=" " class="btn btn__secondary btn__link d-none">Ver más</a> -->
                 </div><!-- /.post__content -->
@@ -80,8 +84,8 @@
             </div><!-- /.col-lg-4 -->
             @endforeach 
           @endif     
-        </div><!-- /.row -->
-      </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+        </div>
     </div><!-- /.row -->  
   </div><!-- /.container -->
 </section><!-- /.blog Grid -->
