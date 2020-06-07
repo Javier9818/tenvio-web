@@ -154,7 +154,7 @@ class FrontController extends Controller
             }
         }
 		$dato_pedido = Pedidos::obtenerPedido($pedido->id);
-        event(new NewOrderEvent(/*$pedido, $details, */$empresa['empresa'], $dato_pedido));
+        try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
       }
       return 1;
     } catch (\Exception  $e) {
