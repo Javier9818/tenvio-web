@@ -44,16 +44,16 @@ class FrontController extends Controller
   }
   public function categoriasIndex()
   {
-     try {      
+     try {
       return view(
-        'front.index', 
-        ["data"=> DB::table('categorias')       
-        ->selectRaw(' categorias.descripcion as categoria')         
+        'front.index',
+        ["data"=> DB::table('categorias')
+        ->selectRaw(' categorias.descripcion as categoria')
         ->get()
         ]);
      }catch (\Exception  $e) {
       return view(
-        'front.index', 
+        'front.index',
         ["data"=> []
         ]);
    }
@@ -138,11 +138,11 @@ class FrontController extends Controller
             'direccion'=>$empresa['direccion']
         ]);
 
-        $details = array();
+        //$details = array();
 
         foreach ($request->get('productos') as $key => $producto) {
             if ($producto['empresa'] == $empresa['empresa']) {
-                array_push($details, $producto);
+                //array_push($details, $producto);
                 DB::table('detalle_pedidos')->insert(
                     [
                     'producto_id'=>$producto['id'],
@@ -153,7 +153,8 @@ class FrontController extends Controller
                 );
             }
         }
-        event(new NewOrderEvent($pedido, $details, $empresa['empresa']));
+		$dato_pedido = Pedidos::obtenerPedido($pedido->id);
+        event(new NewOrderEvent(/*$pedido, $details, */$empresa['empresa'], $dato_pedido));
       }
       return 1;
     } catch (\Exception  $e) {
@@ -180,30 +181,30 @@ class FrontController extends Controller
       try {
         $empresas =DB::table('empresas')
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria') 
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$request->get('search').'%')
         ->get();
         return view('front.listEmpresa', ["empresas" => $empresas]);
       } catch (\Throwable $th) {
         return view('front.listEmpresa', ["empresas" => null]);
-      }      
-    } 
- 
+      }
+    }
+
   }
   public function BuscaxCategoria(  $Categoria){
-    
+
       try {
         $empresas =DB::table('empresas')
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria') 
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$Categoria.'%')
         ->get();
         return view('front.listEmpresa', ["empresas" => $empresas]);
       } catch (\Throwable $th) {
         return view('front.listEmpresa', ["empresas" => null]);
-      }      
-      
- 
+      }
+
+
   }
   public function Empresa($nombre){
 

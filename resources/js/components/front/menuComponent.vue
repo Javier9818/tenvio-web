@@ -50,7 +50,7 @@
                     <a href="#">{{item.descripcion}}</a>
                   </div>
                   <h4 class="product__title"><a href="#">{{item.nombre}}</a></h4>
-                  <span class="product__price">S/. {{item.precio}}</span>
+                  <span class="product__price display-4">S/. {{item.precio}}</span>
                 </div><!-- /.product-content -->
               </div><!-- /.product-item -->
             </div><!-- /.col-lg-4 -->
@@ -107,7 +107,7 @@
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
     </div><!-- /.container -->
-    <b-modal ref="my-modal" hide-footer :title="producto.nombre" hide-backdrop content-class="shadow"  >
+    <b-modal ref="my-modal" hide-footer title="Detalle Producto"  centered  content-class="shadow" style="background-color:#0000009e," >
         <div class="container">
           <div class="row  align-items-center">
             <div class="col-sm-12 col-md-12 col-lg-12 align-items-center text-center">
@@ -116,8 +116,8 @@
                   <img :src="'/storage/imgproductos/'+producto.foto" alt="Product" class="zoomin text-center" style="visibility: visible;">
                 </div>
                 <div class="col-12  col-lg-6 col-sm-6">
-                  <h4 class="product__title">{{producto.nombre}}</h4>
-                  <span class="product__price">S/. {{producto.precio}}</span>
+                  <h4 class="product__title my-2" style="font-size: 1.5em">{{producto.nombre}}</h4>
+                  <span class="product__price" style="font-size: 2em;">S/. {{producto.precio}}</span>
                 </div>
               </div>
             </div>
@@ -219,7 +219,7 @@ export default {
           this.hideModal();
           break;
         case 'x':
-           location.href="/cart";
+           location.href="/micarrito";
           break;
         default:
           break;
@@ -258,4 +258,4 @@ export default {
   }
 }
 </script>
- 
+
