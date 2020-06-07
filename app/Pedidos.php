@@ -35,6 +35,13 @@ class Pedidos extends Model
 			$where['pedidos.estado'] = 'Aceptado';
 			$where['pedidos.tipo_id'] = 1;
 		}
+		return static::consultaPedido($where);
+	}
+	public static function obtenerPedido($id_pedido){
+		$where = array('pedidos.id' => $id_pedido);
+		return static::consultaPedido($where)->first();
+	}
+	public static function consultaPedido($where){
 		return Pedidos::where($where)
 			->select(
 				'pedidos.id as idpedido',

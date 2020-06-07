@@ -9,15 +9,20 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
     <style>
-body{
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-}
+        .card-body{
+            padding: 0px !important;
+        }
+        body{
+            background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+            height: 100vh !important;
+            padding: 30px !important;
+        }
 .emp-profile{
-    padding: 3%;
-    margin-top: 3%;
-    margin-bottom: 3%;
+     padding: 3%;
+    /* margin-bottom: 3%; */
     border-radius: 0.5rem;
     background: #fff;
+    box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */
 }
 .profile-img{
     text-align: center;
@@ -104,21 +109,35 @@ body{
     font-weight: 600;
     color: #0062cc;
 }
-    </style>
+
+.avatar{
+    position: relative !important;
+    display: inline-block !important;
+    vertical-align: bottom !important;
+    white-space: nowrap !important;
+    border-radius: 1000px !important;
+    width: 80% !important;
+}
+.avatar img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border: 0 none;
+    border-radius: 1000px;
+}
+</style>
 </head>
 <body>
     <div class="container emp-profile" id="app">
         <form method="post">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="profile-img">
-
-                    </div>
                     <div class="card card-cascade">
 
                         <!-- Card image -->
                         <div class="view view-cascade overlay">
-                          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/men.jpg" alt="Card image cap">
+                          {{-- <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/men.jpg" alt="Card image cap"> --}}
+                          <foto-perfil></foto-perfil>
                           <a>
                             <div class="mask rgba-white-slight"></div>
                           </a>
@@ -152,7 +171,6 @@ body{
 
                       </div>
                       <!-- Card Regular -->
->>>>>>> a153aec80da1d8014cd4b9e1b3e35883b0856410
                 </div>
                 <div class="col-md-6">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">

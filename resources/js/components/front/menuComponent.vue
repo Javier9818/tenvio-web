@@ -18,11 +18,12 @@
                       </div><!-- /.sort-box -->
 
                     </div><!-- /.filter-option-sorting -->
-                    <div class="filter-option-view">
+                    <!-- <div class="filter-option-view">
                       <span>Ver Como:</span>
                       <a id="gridView" class="active" href="#"><i class="fa fa-th-large"></i></a>
-                      <a id="listView" href="#"><i class="fa fa-th-list"></i></a>
-                    </div><!-- /.filter-option-view -->
+                      <a id="listView" class="active" href="#"><i class="fa fa-th-list"></i></a>
+                    </div> -->
+                    <!-- /.filter-option-view -->
                   </div><!-- /.filtering-options -->
 
 
@@ -31,8 +32,8 @@
           <div class="row">
             <!--For-->
 
-            <div class="col-sm-6 col-md-6 col-lg-4" v-for="(item, key) in productos" :key="key">
-              <div class="product-item">
+            <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
+              <div class="product-item ">
                 <div class="product__img align-items-center">
                   <img :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
                   <div class="product__hover">
