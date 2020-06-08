@@ -64,7 +64,7 @@ class PedidosController extends Controller
         $idCliente = $request->get('idusuario');
 		$idrepartidor = $request->get('idrepartidor');
         Pedidos::asignar($idpedido, $idrepartidor);
-        try { event( new ChangeStateOrderEvent(["idpedido" => $idpedido, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
+        try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
 	static function entregar(Request $request){
@@ -76,7 +76,7 @@ class PedidosController extends Controller
         $idpedido = $request->get('idpedido');
         $idCliente = $request->get('idusuario');
         Pedidos::aceptar($idpedido);
-        try { event( new ChangeStateOrderEvent(["idpedido" => $idpedido, "state" => 'ACEPTADO'], $idCliente));} catch (\Throwable $th) {}
+        try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ACEPTADO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
 	static function anular(Request $request){
@@ -84,7 +84,7 @@ class PedidosController extends Controller
         $comentario = $request->get('comentario');
         $idCliente = $request->get('idusuario');
         Pedidos::anular($idpedido, $comentario);
-        try { event( new ChangeStateOrderEvent(["idpedido" => $idpedido, "state" => 'CANCELADO'], $idCliente));} catch (\Throwable $th) {}
+        try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'CANCELADO', "comentario" => $comentario], $idCliente));} catch (\Throwable $th) {}
 	}
 
 	static function funcion(Request $request){

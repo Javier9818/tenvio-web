@@ -177,7 +177,8 @@
 					comentario,
 					idpedido,
                     idrepartidor,
-                    idusuario
+                    idusuario,
+                    pedido: this.pedidoSeleccionado
 				})
 				.then(function (response) {
 					let datos = response.data;

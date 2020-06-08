@@ -71,14 +71,20 @@
         created(){
             Echo.channel(`ordersClient.${this.user}`)
                 .listen('ChangeStateOrderEvent', ({data}) => {
+                    console.log(data);
                     this.items.map( (item) => {
-                    if(item.pedido === data.idpedido) {item.state = data.state; console.log(item);}
+                        if(item.pedido === data.pedido.idpedido) {
+                            item.state = data.state;
+                            Swal.fire(
+                                'Cambio de estado',
+                                `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
+                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`,
+                                `${data.state === 'CANCELADO' ? 'error' : 'success'}`
+                            ).then((data) => {location.href = '/pedidos'});
+
+                        }
                     });
-                    Swal.fire(
-                        'Cambio de estado',
-                        'Uno de sus pedidos a cambiado de estado.',
-                        'success'
-                    ).then((data) => {location.href = '/pedidos'});
+
             });
         }
     }

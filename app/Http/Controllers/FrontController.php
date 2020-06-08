@@ -74,11 +74,17 @@ class FrontController extends Controller
   }
   public function ListPedido()
   {
-     return DB::table('pedidos')
+    return DB::table('pedidos')
      ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
-     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date')
+     ->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
+     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date'
+    //  ,DB::raw("GROUP_CONCAT(dp.producto_id) as ids"),
+    //  DB::raw("GROUP_CONCAT(dp.cantidad) as cantidades"),
+    //  DB::raw("GROUP_CONCAT(dp.precio_unit) as precios")
+     )
      ->where('pedidos.user_id','=', Auth::user()->persona_id)
      ->orderBy('pedidos.created_at', 'desc')
+     ->groupBy('pedidos.id')
      ->get();
   }
   public function getPedido($request)
