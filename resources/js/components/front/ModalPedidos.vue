@@ -45,7 +45,7 @@
                 .then(function (response) {
                     that.items= response.data;
                     console.log(response.data);
-                });
+                }).catch((error)=>{ console.log('Login please')});
             },
             color: function (key) {
                 switch (key.toUpperCase()) {
@@ -69,17 +69,17 @@
             console.log('ModalPedidos - Mountedww');
         },
         created(){
-             Echo.channel(`ordersClient.${this.user}`)
+            Echo.channel(`ordersClient.${this.user}`)
                 .listen('ChangeStateOrderEvent', ({data}) => {
                     this.items.map( (item) => {
-                       if(item.pedido === data.idpedido) item.state = data.state;
+                    if(item.pedido === data.idpedido) {item.state = data.state; console.log(item);}
                     });
                     Swal.fire(
-						'Cambio de estado',
-						'Uno de sus pedidos a cambiado de estado.',
-						'success'
-					).then((data) => {location.href = '/pedidos'});
-                });
+                        'Cambio de estado',
+                        'Uno de sus pedidos a cambiado de estado.',
+                        'success'
+                    ).then((data) => {location.href = '/pedidos'});
+            });
         }
     }
 </script>

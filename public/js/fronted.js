@@ -3095,6 +3095,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/front/ListPedido').then(function (response) {
         that.items = response.data;
         console.log(response.data);
+      })["catch"](function (error) {
+        console.log('Login please');
       });
     },
     color: function color(key) {
@@ -3145,7 +3147,10 @@ __webpack_require__.r(__webpack_exports__);
       var data = _ref.data;
 
       _this.items.map(function (item) {
-        if (item.pedido === data.idpedido) item.state = data.state;
+        if (item.pedido === data.idpedido) {
+          item.state = data.state;
+          console.log(item);
+        }
       });
 
       sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', 'Uno de sus pedidos a cambiado de estado.', 'success').then(function (data) {

@@ -78,6 +78,7 @@ class FrontController extends Controller
      ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
      ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date')
      ->where('pedidos.user_id','=', Auth::user()->persona_id)
+     ->orderBy('pedidos.created_at', 'desc')
      ->get();
   }
   public function getPedido($request)
@@ -181,15 +182,15 @@ class FrontController extends Controller
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$request->get('search').'%')
-        ->get();        
+        ->get();
         if (count($empresas)>0) {
           return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search') ]);
-        }        
+        }
         return view('front.listEmpresa', ["empresas" => null, 'search'=>$request->get('search')]);
       }
-           
+
     } catch (\Throwable $th) {
-       
+
     }
 
   }
