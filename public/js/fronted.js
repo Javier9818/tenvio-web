@@ -3145,16 +3145,15 @@ __webpack_require__.r(__webpack_exports__);
 
     Echo.channel("ordersClient.".concat(this.user)).listen('ChangeStateOrderEvent', function (_ref) {
       var data = _ref.data;
+      console.log(data);
 
       _this.items.map(function (item) {
-        if (item.pedido === data.idpedido) {
+        if (item.pedido === data.pedido.idpedido) {
           item.state = data.state;
-          console.log(item);
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : ''), "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
+            location.href = '/pedidos';
+          });
         }
-      });
-
-      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', 'Uno de sus pedidos a cambiado de estado.', 'success').then(function (data) {
-        location.href = '/pedidos';
       });
     });
   }

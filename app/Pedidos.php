@@ -65,7 +65,7 @@ class Pedidos extends Model
 	public static function entregar($idpedido){
 		return Pedidos::where('id', $idpedido)
 			->update([
-				'estado' => 'Entregado'
+				'estado' => 'ENTREGADO'
 			]);
 	}
 	public static function aceptar($idpedido){
@@ -102,7 +102,7 @@ class Pedidos extends Model
 	public static function asignar($idpedido, $idrepartidor){
 		Pedidos::where('id', $idpedido)
 			->update([
-				'estado' => 'Enviando'
+				'estado' => 'ENVIANDO'
 			]);
 		return PedidosUsers::create([
 				'pedidos_id' => $idpedido,

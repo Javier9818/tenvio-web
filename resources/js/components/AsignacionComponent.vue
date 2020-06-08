@@ -46,12 +46,7 @@ export default {
 			pedidoSeleccionado: [],
 			fields: ['selected', 'idpedido', 'nombres', 'descripcion', 'direccion'],
 			repartidores:['Montes Caceres Javier', 'Jose de la Vega Miguel'],
-			items: [
-				{  pedido: 1, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 2, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 3, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 4, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' }
-			],
+			items: [],
 			selectRepartidor: null,
 			selected: []
 		}
@@ -71,11 +66,14 @@ export default {
 				operacion = '/asignar';
 			else
 				return;
-			var idpedido = this.pedidoSeleccionado.idpedido;
+            var idpedido = this.pedidoSeleccionado.idpedido;
+            var idusuario = this.pedidoSeleccionado.idusuario;
 			axios.post(this.ruta+operacion, {
-				comentario:comentario,
-				idpedido:idpedido,
-				idrepartidor:idrepartidor
+				comentario,
+                idpedido,
+                idusuario,
+                idrepartidor,
+                pedido: this.pedidoSeleccionado
 			})
 			.then(function (response) {
 				let datos = response.data;
