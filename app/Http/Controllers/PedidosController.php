@@ -32,22 +32,26 @@ class PedidosController extends Controller
     }
 
 	static function listartodo(Request $request){
-		return static::listarPedidos('Todo');
+		return static::listarPedidos('Todo', $request);
 	}
 
 	static function listarrecepcion(Request $request){
-		return static::listarPedidos('Recepcion');
+		return static::listarPedidos('Recepcion', $request);
 	}
 
 	static function listardelivery(Request $request){
-		return static::listarPedidos('Delivery');
+		return static::listarPedidos('Delivery', $request);
 	}
 
-	static function listarPedidos($tipo){
+	static function listarPedidos($tipo, $request){
         $empresa_id = Session::get('empresa');
-        $pedidos = Pedidos::listar($empresa_id, $tipo);
-        $productos_pedido = Producto::listarProductosDePedido($empresa_id);
-        return response()->json(['pedidos' => $pedidos, 'productos_pedido' => $productos_pedido], 200);
+		$datos = array();
+		$datos['pedidos'] = Pedidos::listar($empresa_id, $tipo);
+		$datos['productos_pedido'] = Producto::listarProductosDePedido($empresa_id);
+		if ($tipo == 'Todo')
+			$datos['categorias_productos'] = CategoriasMenusController::listarvselect($request)->original;
+		//return (CategoriasMenusController::listarvselect($request));
+        return response()->json($datos, 200);
 	}
 
 	static function listarempleados(Request $request){

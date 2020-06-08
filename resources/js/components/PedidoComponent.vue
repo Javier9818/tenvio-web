@@ -2,8 +2,25 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Buscar Pedidos</h4>
+				<h4 class="card-title">Filtrar Pedidos</h4>
 			</div>
+			<div class="card-content collapse show">
+				<div class="card-body text-center">
+					<b-button v-b-modal.modal-center variant="success">Click acá para filtrar</b-button>
+				</div>
+			</div>
+			<b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
+                <label for="">Filtrar Pedidos</label>
+                <div class="container">
+					<select class="form-control" v-model="filtropedido" @change="filtrar">
+						<option value="TODOS">TODOS</option>
+						<option value="DELIVERY">DELIVERY</option>
+						<option value="RECEPCIÓN EN LOCAL">RECEPCIÓN EN LOCAL</option>
+					</select>
+                </div>
+				<!--<label for="">Filtrar por Categorías</label>-->
+  			</b-modal>
+			<!--
 			<div class="card-content collapse show">
 				<div class="card-body">
                     <label for="">Buscar pedido</label>
@@ -13,8 +30,21 @@
                     </div>
 				</div>
 			</div>
+			<div class="card-content collapse show">
+				<div class="card-body">
+                    <label for="">Filtrar pedidos</label>
+                    <div class="row ml-2">
+						<select class="form-control col-12 col-md-12" v-model="filtropedido" @change="filtrar">
+							<option value="TODOS">TODOS</option>
+							<option value="DELIVERY">DELIVERY</option>
+							<option value="RECEPCIÓN EN LOCAL">RECEPCIÓN EN LOCAL</option>
+						</select>
+                    </div>
+				</div>
+			</div>
+			-->
 		</div>
-		<div v-for="item in pedidos" :key="item.id">
+		<div v-for="(item, index) in pedidos" :key="item.id">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title">Pedido {{item.id}}</h4>
@@ -22,8 +52,8 @@
 					<div class="heading-elements">
 						<ul class="list-inline mb-0">
 							<!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
-							<li><button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button></li>
-							<li><button class="btn bg-danger white" v-on:click="anular(item)">Anular</button></li>
+							<li><button class="btn bg-primary white" v-on:click="aceptar(item, index)">Aceptar</button></li>
+							<li><button class="btn bg-danger white" v-on:click="anular(item, index)">Anular</button></li>
 						</ul>
 					</div>
 				</div>
@@ -47,10 +77,14 @@
 									<li>Destino: {{item.direccion}}</li>
 								</ul>
 							</div>
+							<div class="col-md-12">
+								<h4 style="display:inline;">Tipo de Pedido:</h4>
+								<h5 style="display:inline;">{{item.tipo_entrega}}</h5>
+							</div>
 						</div>
 						<div class="text-center">
-							<button class="btn bg-primary white" v-on:click="aceptar(item)">Aceptar</button>
-							<button class="btn bg-danger white" v-on:click="anular(item)">Anular</button>
+							<button class="btn bg-primary white" v-on:click="aceptar(item, index)">Aceptar</button>
+							<button class="btn bg-danger white" v-on:click="anular(item, index)">Anular</button>
 						</div>
 					</div>
 				</div>
@@ -73,8 +107,12 @@
 					{id:4, state:true}
 				],
 				productos_pedido: [],
+				categorias_productos: [],
 				pedidoSeleccionado: null,
-				textoBusqueda: ''
+				indexPedidoSeleccionado: -1,
+				textoBusqueda: '',
+				filtropedido: 'TODOS',
+				filtrocategoria: ''
 			}
 		},
         methods:{
@@ -104,6 +142,27 @@
 				//});
 				//console.log(this.items);
 			},
+			filtrar: function(){
+				//TODOS
+				//DELIVERY
+				//RECEPCIÓN EN LOCAL
+		        switch (this.filtropedido){
+		            case('DELIVERY'):
+		                this.pedidos = this.pedidosOriginal.filter(function (item) {
+		                    return item.tipo_entrega.match(/DELIVERY/)
+		                });
+		                break;
+					case('RECEPCIÓN EN LOCAL'):
+						this.pedidos = this.pedidosOriginal.filter(function (item) {
+							return item.tipo_entrega.match(/RECEPCIÓN EN LOCAL/)
+						});
+						break;
+		            case('TODOS'):
+		            default:
+		                this.pedidos = this.pedidosOriginal;
+		                break;
+				}
+			},
 			cambiaestado: function(operacion, comentario, bul, idrepartidor){
 				if (operacion == 'Aceptar')
 					operacion = '/aceptar';
@@ -113,6 +172,7 @@
 					return;
                 var idpedido = this.pedidoSeleccionado.idpedido;
                 var idusuario = this.pedidoSeleccionado.idusuario;
+				var that = this;
 				axios.post(this.ruta+operacion, {
 					comentario,
 					idpedido,
@@ -121,16 +181,14 @@
 				})
 				.then(function (response) {
 					let datos = response.data;
+					that.pedidos.splice(that.indexPedidoSeleccionado, 1);
+					that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
+					that.indexPedidoSeleccionado = -1;
 					Swal.fire(
 						'Éxito',
 						'Los cambios se realizaron correctamente',
 						'success'
 					)
-					.then(()=>{
-						if (bul){
-							location.reload();
-						}
-					});
 				})
 				.catch(()=>{
 					Swal.fire(
@@ -142,8 +200,9 @@
 				.finally(()=>{
 				});
 			},
-			aceptar: function(item){
+			aceptar: function(item, index){
 				this.pedidoSeleccionado = item;
+				this.indexPedidoSeleccionado = index;
 				var that = this;
 				Swal.fire({
 					title: '¿Estás seguro?',
@@ -160,8 +219,9 @@
 					}
 				})
 			},
-			anular: function(item){
+			anular: function(item, index){
 				this.pedidoSeleccionado = item;
+				this.indexPedidoSeleccionado = index;
 				var that = this;
 				Swal.fire({
 					title: '¿Estás seguro?',
@@ -229,6 +289,7 @@
 				axios.post(this.ruta+'/listartodo')
 				.then(function (response) {
 					let datos = response.data;
+					that.categorias_productos = datos.categorias_productos;
 					that.productos_pedido = datos.productos_pedido;
 					datos.pedidos.forEach((itm)=>{
 						that.pedidos.push(itm);
@@ -264,6 +325,6 @@
 					this.refrescarProductoPedido();
                 });
             console.log(`ordersCompany.${empresa}`);
-        }
+        },
     }
 </script>

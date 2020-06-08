@@ -54,11 +54,13 @@ class Pedidos extends Model
 				//'personas.appaterno',
 				//'personas.apmaterno',
 				'personas.celular',
-				'personas.direccion'
+				'personas.direccion',
+				'te.nombre as tipo_entrega'
 			)
 			->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
 			->join('users as u', 'u.id', '=', 'pedidos.user_id')
 			->join('personas as personas', 'personas.id', '=', 'u.persona_id')
+			->join('tipo_entregas as te', 'te.id', '=', 'pedidos.tipo_id')
 			->groupBy('pedidos.id')
 			->get();
 	}
