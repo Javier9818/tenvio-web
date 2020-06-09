@@ -1,49 +1,19 @@
 <template>
 	<div class="col-12">
-		<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">Filtrar Pedidos</h4>
-			</div>
-			<div class="card-content collapse show">
-				<div class="card-body text-center">
-					<b-button v-b-modal.modal-center variant="success">Click acá para filtrar</b-button>
-				</div>
-			</div>
-			<b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
-                <label for="">Filtrar Pedidos</label>
-                <div class="container">
-					<select class="form-control" v-model="filtropedido" @change="filtrar">
-						<option value="TODOS">TODOS</option>
-						<option value="DELIVERY">DELIVERY</option>
-						<option value="RECEPCIÓN EN LOCAL">RECEPCIÓN EN LOCAL</option>
-					</select>
-                </div>
-				<!--<label for="">Filtrar por Categorías</label>-->
-  			</b-modal>
-			<!--
-			<div class="card-content collapse show">
-				<div class="card-body">
-                    <label for="">Buscar pedido</label>
-                    <div class="row ml-2">
-                        <input type="text" class="form-control col-8 col-md-10" v-model="textoBusqueda">
-                        <button class="btn bg-success white" v-on:click="buscar">Aceptar</button>
-                    </div>
-				</div>
-			</div>
-			<div class="card-content collapse show">
-				<div class="card-body">
-                    <label for="">Filtrar pedidos</label>
-                    <div class="row ml-2">
-						<select class="form-control col-12 col-md-12" v-model="filtropedido" @change="filtrar">
-							<option value="TODOS">TODOS</option>
-							<option value="DELIVERY">DELIVERY</option>
-							<option value="RECEPCIÓN EN LOCAL">RECEPCIÓN EN LOCAL</option>
-						</select>
-                    </div>
-				</div>
-			</div>
-			-->
-		</div>
+        <b-button v-b-modal.modal-center variant="warning" class="mb-2">{{pedidos.length}} pedidos</b-button>
+        <b-button v-b-modal.modal-center variant="success" class="mb-2">Filtrar</b-button>
+        <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
+            <label for="">Filtrar Pedidos</label>
+            <div class="container">
+                <select class="form-control" v-model="filtropedido" @change="filtrar">
+                    <option value="TODOS">TODOS</option>
+                    <option value="DELIVERY">DELIVERY</option>
+                    <option value="RECEPCIÓN EN LOCAL">RECEPCIÓN EN LOCAL</option>
+                </select>
+            </div>
+            <!--<label for="">Filtrar por Categorías</label>-->
+        </b-modal>
+
 		<div v-for="(item, index) in pedidos" :key="item.id">
 			<div class="card">
 				<div class="card-header">

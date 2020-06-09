@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title') Transporte  @endsection
 @section('nav')
-    @include('admin.components.nav')
+    {{-- @include('admin.components.nav') --}}
 @endsection
 
 @section('styles')

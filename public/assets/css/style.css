@@ -73,6 +73,51 @@
     border: solid 0.2px gray;
 }
 
+.product__title__javier{
+    font-size: 1.8em;
+    text-transform: none !important;
+    font-size: Poppins !important;
+    font-weight: bolder !important;
+    margin-bottom: 10px;
+  }
+
+  .product__cat__javier{
+      font-size: 1.5em;
+      margin-bottom: 5px;
+  }
+
+  .product__price__javier{
+      font-size: 2.6em;
+      font-size: Poppins !important;
+      font-weight: bolder !important;
+      color: #f38e35 !important;
+  }
+
+  .btn__javier{
+    font-family: Poppins;
+    font-size: 1em !important;
+    font-weight: 700;
+    min-width: 170px;
+    height: 50px;
+    border-radius: 3px;
+    text-align: center;
+    background: #f38e35 ;
+    color: white;
+    /* -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; */
+  }
+
+
+
+
+
+
+
+
+
 body {
   background-color: #ffffff;
   font-family: 'Nunito', sans-serif;
@@ -6090,8 +6135,9 @@ color: #f38e35;
 }
 
 .product__title {
-  font-size: 19px;
-  line-height: 26px;
+  font-size: 1.8em;
+  text-transform: none !important;
+  font-size: Poppins !important;
   margin-bottom: 10px;
 }
 

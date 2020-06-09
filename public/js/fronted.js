@@ -3654,16 +3654,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id', 'nombre'],
@@ -3685,7 +3675,7 @@ __webpack_require__.r(__webpack_exports__);
         foto: '',
         nombre: '',
         precio: '',
-        cant: 0,
+        cant: 1,
         id: 0,
         empresa: 0,
         name_empresa: ''
@@ -3722,7 +3712,7 @@ __webpack_require__.r(__webpack_exports__);
       this.producto.id = item.id;
       this.producto.empresa = this.id;
       this.producto.name_empresa = this.nombre;
-      this.producto.cant = 0;
+      this.producto.cant = 1;
       this.showModal();
     },
     funAgregar: function funAgregar() {
@@ -82061,9 +82051,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cart-action" }, [
+    return _c("div", { staticClass: "cart-action text-center" }, [
       _c("a", { staticClass: "mt-2", attrs: { href: "/pedidos" } }, [
-        _vm._v("Ir a panel de seguimiento")
+        _vm._v("Ver todos mis pedidos")
       ])
     ])
   }
@@ -82474,7 +82464,7 @@ var render = function() {
                     staticClass: "col-sm-6 col-md-6 col-lg-4 list-view"
                   },
                   [
-                    _c("div", { staticClass: "product-item " }, [
+                    _c("div", { staticClass: "product-item" }, [
                       _c(
                         "div",
                         { staticClass: "product__img align-items-center" },
@@ -82492,7 +82482,7 @@ var render = function() {
                               _c(
                                 "button",
                                 {
-                                  staticClass: "btn btn-primary",
+                                  staticClass: "btn__javier",
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
@@ -82501,20 +82491,13 @@ var render = function() {
                                   }
                                 },
                                 [
-                                  _vm._v(
-                                    "\n                      Comprar\n                    "
+                                  _vm._v("\n                      Comprar "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "d-inline d-md-none" },
+                                    [_vm._v("S/. " + _vm._s(item.precio))]
                                   )
                                 ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "btn btn__primary btn__hover2 d-none",
-                                  attrs: { href: "#" }
-                                },
-                                [_vm._v("Comprar")]
                               )
                             ])
                           ])
@@ -82522,21 +82505,20 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "product__content" }, [
-                        _c("div", { staticClass: "product__cat" }, [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(item.descripcion))
-                          ])
+                        _c("h4", { staticClass: "product__title__javier" }, [
+                          _vm._v(_vm._s(item.nombre))
                         ]),
                         _vm._v(" "),
-                        _c("h4", { staticClass: "product__title" }, [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(item.nombre))
-                          ])
+                        _c("div", { staticClass: "product__cat__javier" }, [
+                          _vm._v(_vm._s(item.descripcion))
                         ]),
                         _vm._v(" "),
                         _c(
                           "span",
-                          { staticClass: "product__price display-4" },
+                          {
+                            staticClass:
+                              "product__price__javier d-none d-md-block"
+                          },
                           [_vm._v("S/. " + _vm._s(item.precio))]
                         )
                       ])

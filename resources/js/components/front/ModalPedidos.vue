@@ -20,8 +20,8 @@
                 </div><!-- /.cart-item-content -->
                 </li>
             </ul>
-            <div class="cart-action">
-                <a href="/pedidos" class="mt-2">Ir a panel de seguimiento</a>
+            <div class="cart-action text-center">
+                <a href="/pedidos" class="mt-2">Ver todos mis pedidos</a>
             </div><!-- /.cart-action -->
         </div>
     </div>

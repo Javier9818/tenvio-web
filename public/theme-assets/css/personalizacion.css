@@ -78,3 +78,7 @@ body.vertical-layout[data-color=bg-gradient-x-purple-blue] .navbar-container, bo
 .navbar-semi-light{
     background-color: #f3be12;
 } */
+
+.header-navbar .navbar-container ul.nav li .scrollable-container {
+    overflow-y: scroll;
+}
