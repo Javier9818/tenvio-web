@@ -52,9 +52,7 @@
         </div>
     </div>
 
-    @if(!empty(Session::get('empresa')))
-        {{$company = Session::get('empresa')}}
-    @endif
+    {{$company = Session::get('empresa') ?? ''}}
 
     <script>
         let company = @json($company);
