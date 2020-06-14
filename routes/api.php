@@ -45,3 +45,7 @@ Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');
 Route::put('/pass', 'UserController@updatePassword');
 Route::post('/usuarios', 'UserController@setUser');
+
+Route::get('/notifications/{empresa}', 'GeneralController@notification');
+Route::get('/detallePedido/{pedido}', 'PedidosController@show');
+Route::post('/entregaPedido', 'PedidosController@entregar');

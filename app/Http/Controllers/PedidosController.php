@@ -1,16 +1,23 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\ExtrasController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use App\Pedidos;
 use App\Producto;
 use App\Events\ChangeStateOrderEvent;
 
 class PedidosController extends Controller
 {
+    public function show($id){
+        $detalle = DB::table('detalle_pedidos')
+            ->join('productos', 'productos.id', '=', 'detalle_pedidos.producto_id')
+            ->where('detalle_pedidos.pedido_id', '=', $id)
+            ->get();
+            return response()->json(["detalle" => $detalle], 200);
+    }
+
 	public function fn2($funcion='', Request $request){
 		return $this->fn('2', $request);
 	}
@@ -26,9 +33,9 @@ class PedidosController extends Controller
 		else if ($funcion == 'anular') return $this->anular($request);
 		else if ($funcion == 'entregar') return $this->entregar($request);
 		else if ($funcion == 'asignar') return $this->asignar($request);
-		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion');
-		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery');
-		else return view('admin.pedidos.pedidos',  ["empresa" => Session::get('empresa')]);
+		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
+		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
+		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
     }
 
 	static function listartodo(Request $request){
@@ -44,7 +51,7 @@ class PedidosController extends Controller
 	}
 
 	static function listarPedidos($tipo, $request){
-        $empresa_id = Session::get('empresa');
+        $empresa_id = session('empresa');
 		$datos = array();
 		$datos['pedidos'] = Pedidos::listar($empresa_id, $tipo);
 		$datos['productos_pedido'] = Producto::listarProductosDePedido($empresa_id);
@@ -55,7 +62,7 @@ class PedidosController extends Controller
 	}
 
 	static function listarempleados(Request $request){
-		$empresa_id = Session::get('empresa');
+		$empresa_id = session('empresa');
 		return Pedidos::listarEmpleados($empresa_id);
 	}
 
@@ -67,9 +74,10 @@ class PedidosController extends Controller
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
-	static function entregar(Request $request){
+	public static function entregar(Request $request){
 		$idpedido = $request->get('idpedido');
-		Pedidos::entregar($idpedido);
+        Pedidos::entregar($idpedido);
+        return response()->json(["Message" => "ok"], 200);
 	}
 
 	static function aceptar(Request $request){

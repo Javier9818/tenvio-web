@@ -2,7 +2,7 @@
     <li class="dropdown dropdown-notification nav-item">
         <a class="nav-link nav-link-label" href="javascript:void(0)" data-toggle="dropdown">
             <i class="ficon ft-bell bell-shake" id="notification-navbar-link"></i>
-            <span class="badge badge-pill badge-sm badge-danger badge-up badge-glow">{{orders.length}}</span>
+            <span class="badge badge-pill badge-sm badge-danger badge-up badge-glow">{{orders.length + 3}}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
             <div class="arrow_box_right">
@@ -20,23 +20,39 @@
                         </div>
                     </div>
                 </a>
-                <a href="javascript:void(0)" v-if="orders.length === 0">
+                <a href="/intranet/pedidos">
+                    <div class="media">
+                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
+                        <div class="media-body">
+                        <h6 class="media-heading secondary">{{pendientes}} pedidos pendientes</h6>
+                        </div>
+                    </div>
+                </a>
+                <a href="/intranet/pedidos">
+                    <div class="media">
+                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
+                        <div class="media-body">
+                        <h6 class="media-heading secondary">{{aceptadas}} pedidos aceptados</h6>
+                        </div>
+                    </div>
+                </a>
+                <a href="/intranet/pedidos">
+                    <div class="media">
+                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
+                        <div class="media-body">
+                        <h6 class="media-heading secondary">{{enviadas}} pedidos en transporte</h6>
+                        </div>
+                    </div>
+                </a>
+                <!-- <a href="javascript:void(0)" v-if="orders.length === 0">
                     <div class="media">
                         <div class="media-body">
                             <h6 class="media-heading info">No tiene nuevos pedidos</h6>
                         </div>
                     </div>
-                </a>
-                <!-- <a href="javascript:void(0)">
-                    <div class="media">
-                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
-                        <div class="media-body">
-                        <h6 class="media-heading warning">New User Registered</h6>
-                        <p class="notification-text font-small-3 text-muted text-bold-600">Aliquam tincidunt mauris eu risus.</p><small>
-                            <time class="media-meta text-muted" datetime="2015-06-11T18:29:20+08:00">10:05 AM</time></small>
-                        </div>
-                    </div>
-                </a>
+                </a> -->
+
+                <!--
                 <a href="javascript:void(0)">
                     <div class="media">
                         <div class="media-left align-self-center"><i class="ft-repeat font-medium-4 mt-2 danger"></i></div>
@@ -81,13 +97,29 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2'
     export default {
         mounted() {
-            console.log('Component mounted.')
+            axios.get(`/api/notifications/${empresa.id || empresa}`)
+				.then(({data}) => {
+                    this.pendientes = data.ordenesPendientes;
+                    this.aceptadas = data.ordenesAceptadas;
+                    this.enviadas = data.ordenesEnviadas;
+				})
+				.catch(()=>{
+					Swal.fire(
+						'Error',
+						'Hubo un error inesperado, por favor contactese con el administrador del sistema',
+						'error'
+					)
+				});
         },
         data(){
             return {
-                orders:[]
+                orders:[],
+                pendientes:0,
+                aceptadas:0,
+                enviadas:0
             }
         },
         created(){

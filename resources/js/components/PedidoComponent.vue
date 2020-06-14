@@ -33,7 +33,7 @@
 							<div class="col-md-4">
 								<h4>Descripción</h4>
 								<ul>
-									<li v-for="itm in item.productos" :key="itm.nombre + item.id">
+									<li v-for="itm in item.productos" :key="itm.nombre + (item.id || 10)">
 										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
 									</li>
 									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->

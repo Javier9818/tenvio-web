@@ -77,7 +77,7 @@ class EmpresaController extends Controller
     }
 
     public function verEmpresa(){
-        $idempresa = Session::get('empresa');
+        $idempresa = session('empresa');
         // $permisos = Auth::user()->permisoUser;
         // return dd($permisos[5]->descripcion);
         $empresa = DB::select('select e.*, c.descripcion as categoriaName, c.id as categoria, ci.nombre as ciudad, ci.distrito_id as distrito

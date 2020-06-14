@@ -51,7 +51,8 @@ class LoginController extends Controller
                 return redirect(route('admin-total-inicio'));
             else if($user[0]->isCustomer){
                 $empresa = DB::select('select * from users_empresas where user_id = ?', [$user[0]->id]);
-                Session::put('empresa', $empresa[0]->empresa_id);
+                session(['empresa' => $empresa[0]->empresa_id]);
+                // Session::put('empresa', $empresa[0]->empresa_id);
                 return redirect()->intended('/intranet');
             }
             else

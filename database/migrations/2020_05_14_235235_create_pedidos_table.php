@@ -25,6 +25,7 @@ class CreatePedidosTable extends Migration
             $table->integer('user_id');
             $table->integer('tipo_id');
             $table->string('direccion');
+            $table->double('monto');
             $table->timestamps();
         });
     }

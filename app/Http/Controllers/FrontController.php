@@ -142,7 +142,8 @@ class FrontController extends Controller
             'longitud'=>$empresa['lng'],
             'user_id'=>Auth::id(),
             'tipo_id'=>$empresa['tipoEntrega'],
-            'direccion'=>$empresa['direccion']
+            'direccion'=>$empresa['direccion'],
+            'monto'=>$request['total']
         ]);
 
         //$details = array();

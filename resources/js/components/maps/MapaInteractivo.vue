@@ -6,15 +6,15 @@
 
 <script>
     export default {
-        props:['height', 'width'],
+        props:['height', 'width', 'layers'],
         mounted() {
-            this.initMap();            
+            this.initMap();
+            console.log(this.layers);
         },
         data(){
             return{
                 map: null,
                 tileLayer: null,
-                layers: [],
                 marker: L.marker([0,0])
             }
         },
@@ -27,6 +27,7 @@
                 this.map.locate({setView: true, maxZoom: 17});
                 this.map.on('locationfound', (e) => {this.createMarker(e.latlng);});
                 this.map.on('click', (e) => { this.marker.removeFrom(this.map); this.createMarker(e.latlng);});
+                this.initLayers();
             },
             createMarker: function(LatLng){
                 this.marker = L.marker(LatLng, {draggable:'true', title: 'Mi ubicación'}).on('dragend', (event) => {
@@ -45,18 +46,30 @@
             },
             initLayers() {
                 this.layers.forEach((layer) => {
-                    const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
-                    const polygonFeatures = layer.features.filter(feature => feature.type === 'polygon');
+                    console.log(new L.LatLng(layer.latitud, layer.longitud));
+                    var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+                    bindPopup(`<b>${layer.direccion}</b>
+                    <p><b>Cliente: </b>${layer.cliente}</p>
+                    <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
+                    <div class='row'>
+                        <button class='btn btn-primary btn-sm d-inline mr-1' onclick="juega()">Entregar</button>
+                        <button class='btn btn-danger btn-sm d-inline'>Cancelar</button>
+                    </div>`);
+                    marker.bindTooltip(layer.direccion).openTooltip();
+                    marker.addTo(this.map);
 
-                    markerFeatures.forEach((feature) => {
-                    feature.leafletObject = L.marker(feature.coords)
-                        .bindPopup(feature.name);
-                    });
+                    // const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
+                    // const polygonFeatures = layer.features.filter(feature => feature.type === 'polygon');
 
-                    polygonFeatures.forEach((feature) => {
-                    feature.leafletObject = L.polygon(feature.coords)
-                        .bindPopup(feature.name);
-                    });
+                    // markerFeatures.forEach((feature) => {
+                    // feature.leafletObject = L.marker(new L.LatLng(position.lat, position.lng))
+                    //     .bindPopup(feature.name);
+                    // });
+
+                    // polygonFeatures.forEach((feature) => {
+                    // feature.leafletObject = L.polygon(feature.coords)
+                    //     .bindPopup(feature.name);
+                    // });
                 });
             },
             layerChanged(layerId, active) {
