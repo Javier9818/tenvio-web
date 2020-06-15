@@ -30,9 +30,10 @@ class PedidosController extends Controller
 		else if ($funcion == 'listardelivery') return $this->listardelivery($request);
 		else if ($funcion == 'listarempleados') return $this->listarempleados($request);
 		else if ($funcion == 'aceptar') return $this->aceptar($request);
-		else if ($funcion == 'anular') return $this->anular($request);
+		else if ($funcion == 'cancelar') return $this->cancelar($request);
 		else if ($funcion == 'entregar') return $this->entregar($request);
 		else if ($funcion == 'asignar') return $this->asignar($request);
+		else if ($funcion == 'cancelartodos') return $this->cancelartodos($request);
 		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
 		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
 		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
@@ -87,12 +88,26 @@ class PedidosController extends Controller
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ACEPTADO'], $idCliente));} catch (\Throwable $th) {}
 	}
 
-	static function anular(Request $request){
+	static function cancelar(Request $request){
 		$idpedido = $request->get('idpedido');
         $comentario = $request->get('comentario');
         $idCliente = $request->get('idusuario');
-        Pedidos::anular($idpedido, $comentario);
+        Pedidos::cancelar($idpedido, $comentario);
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'CANCELADO', "comentario" => $comentario], $idCliente));} catch (\Throwable $th) {}
+	}
+
+	static function cancelartodos(Request $request){
+		$comentario = $request->get('comentario');
+		$pedidos = $request->get('pedidos');
+		$id_pedidos = array();
+		foreach ($pedidos as $item) {
+			$id_pedidos[] = $item['idpedido'];
+		}
+		Pedidos::cancelarvarios($id_pedidos, $comentario);
+		foreach ($pedidos as $item) {
+			$idCliente = $item['idusuario'];
+			try { event( new ChangeStateOrderEvent(["pedido" => $item, "state" => 'CANCELADO', "comentario" => $comentario], $idCliente));} catch (\Throwable $th) {}
+		}
 	}
 
 	static function funcion(Request $request){
