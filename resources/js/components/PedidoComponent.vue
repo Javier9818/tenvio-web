@@ -5,12 +5,22 @@
         <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
             <label for="">Filtrar Pedidos</label>
             <div class="container">
-                <select class="form-control" v-model="filtropedido" @change="filtrar">
+                <select class="form-control" v-model="filtropedido" @change="filtrar_tipopedido">
                     <option value="TODOS">TODOS</option>
                     <option value="DELIVERY">DELIVERY</option>
                     <option value="RECEPCIÓN EN LOCAL">RECEPCIÓN EN LOCAL</option>
                 </select>
             </div>
+			<label for="">Filtrar por Categoria</label>
+			<div class="container">
+				<multi-select :options="categorias_productos"
+				   :selected-options="filtrocategorias"
+				   option-value="value"
+				   option-text="text"
+				   placeholder="Seleccionar Categorias"
+				   @select="filtrar_categorias">
+			   </multi-select>
+			</div>
             <!--<label for="">Filtrar por Categorías</label>-->
         </b-modal>
 
@@ -64,6 +74,7 @@
 </template>
 
 <script>
+	import { MultiSelect } from 'vue-search-select'
 	import Swal from 'sweetalert2'
     export default {
 		data() {
@@ -82,7 +93,9 @@
 				indexPedidoSeleccionado: -1,
 				textoBusqueda: '',
 				filtropedido: 'TODOS',
-				filtrocategoria: ''
+				//filtrocategoria: '',
+				filtrocategorias: [],
+				//lastSelectItem: [],
 			}
 		},
         methods:{
@@ -112,10 +125,16 @@
 				//});
 				//console.log(this.items);
 			},
+			filtrar_categorias: function(filtrocategorias, lastSelectItem){
+				this.filtrocategorias = filtrocategorias;
+				//this.lastSelectItem = lastSelectItem;
+				this.filtrar();
+			},
+			filtrar_tipopedido: function(){
+				this.filtrar();
+			},
 			filtrar: function(){
-				//TODOS
-				//DELIVERY
-				//RECEPCIÓN EN LOCAL
+				//filtro segun el modo de entrega
 		        switch (this.filtropedido){
 		            case('DELIVERY'):
 		                this.pedidos = this.pedidosOriginal.filter(function (item) {
@@ -132,6 +151,23 @@
 		                this.pedidos = this.pedidosOriginal;
 		                break;
 				}
+				//filtro segun productos por categoria
+				var that = this;
+				var pedidosTemp = [];
+				this.pedidos.forEach(function (item1) {
+					var bul = false;
+					item1.productos.forEach((item2, index)=>{
+						var categoria_id = item2.categoria_id;
+						that.filtrocategorias.forEach((item3, index)=>{
+							if(categoria_id == item3.value){
+								bul = true;
+							}
+						});
+					});
+					if (bul)
+						pedidosTemp.push(item1);
+				});
+				this.pedidos = pedidosTemp;
 			},
 			cambiaestado: function(operacion, comentario, bul, idrepartidor){
 				if (operacion == 'Aceptar')
@@ -241,15 +277,18 @@
 						var cantidad = cantidades[i];
 						var idBuscarProducto = ids[i];
 						var descripcionProducto;
+						var categoria_id;
 						productos_pedido.forEach((item)=>{
 							if (item.id == idBuscarProducto){
 								descripcionProducto = item.nombre;
+								categoria_id = item.categoria_id;
 								return;
 							}
 						});
 						itm.productos.push({
 							nombre: descripcionProducto,
-							cantidad: cantidad
+							cantidad: cantidad,
+							categoria_id: categoria_id
 						});
 					}
 					this.pedidos[index].productos = itm.productos;
@@ -268,6 +307,8 @@
 					});
 					that.refrescarProductoPedido();
 					//console.log(that.pedidos);
+					//para iniciar el filtro
+					that.filtrocategorias = that.categorias_productos;
 				})
 				.catch(()=>{
 					Swal.fire(
@@ -297,5 +338,8 @@
                 });
             console.log(`ordersCompany.${empresa}`);
         },
-    }
+		components: {
+			MultiSelect
+		}
+	}
 </script>
