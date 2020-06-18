@@ -5,8 +5,9 @@
 </template>
 
 <script>
+    import CardMap from './CardMapComponent';
     export default {
-        props:['height', 'width', 'layers'],
+        props:['height', 'width', 'layer', 'layers'],
         mounted() {
             this.initMap();
             console.log(this.layers);
@@ -18,6 +19,9 @@
                 marker: L.marker([0,0])
             }
         },
+        components:{
+            CardMap
+        },
         methods:{
             initMap() {
                 this.map = L.map('map');
@@ -27,7 +31,8 @@
                 this.map.locate({setView: true, maxZoom: 17});
                 this.map.on('locationfound', (e) => {this.createMarker(e.latlng);});
                 this.map.on('click', (e) => { this.marker.removeFrom(this.map); this.createMarker(e.latlng);});
-                this.initLayers();
+                if(this.layer)this.initLayer();
+                if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng){
                 this.marker = L.marker(LatLng, {draggable:'true', title: 'Mi ubicación'}).on('dragend', (event) => {
@@ -44,18 +49,16 @@
                 // console.log("Longitud: "+this.marker.getLatLng().lng);
                 // console.log("Latitud: "+this.marker.getLatLng().lat);
             },
-            initLayers() {
-                this.layers.forEach((layer) => {
-                    console.log(new L.LatLng(layer.latitud, layer.longitud));
-                    var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
-                    bindPopup(`<b>${layer.direccion}</b>
+            initLayer() {
+                var layer = this.layer;
+                var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+                    bindPopup(`
+                    <h3>Pedido Cod.${layer.id}</h3>
+                    <b>${layer.direccion}</b>
                     <p><b>Cliente: </b>${layer.cliente}</p>
                     <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
-                    <div class='row'>
-                        <button class='btn btn-primary btn-sm d-inline mr-1' onclick="juega()">Entregar</button>
-                        <button class='btn btn-danger btn-sm d-inline'>Cancelar</button>
-                    </div>`);
-                    marker.bindTooltip(layer.direccion).openTooltip();
+                    `).openPopup();
+                    marker.bindTooltip(layer.direccion);
                     marker.addTo(this.map);
 
                     // const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
@@ -70,6 +73,19 @@
                     // feature.leafletObject = L.polygon(feature.coords)
                     //     .bindPopup(feature.name);
                     // });
+            },
+            initLayers() {
+                this.layers.forEach((layer) => {
+                    console.log(layer);
+                    var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+                    bindPopup(`
+                    <h3>Pedido Cod.${layer.id}</h3>
+                    <b>${layer.direccion}</b>
+                    <p><b>Cliente: </b>${layer.cliente}</p>
+                    <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
+                    `);
+                    marker.bindTooltip(layer.direccion).openTooltip();
+                    marker.addTo(this.map);
                 });
             },
             layerChanged(layerId, active) {
@@ -80,6 +96,8 @@
                 });
             },
         }
+
+
     }
 </script>
 

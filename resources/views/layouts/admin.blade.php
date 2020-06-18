@@ -77,7 +77,16 @@
     <script src="/theme-assets/js/core/customizer.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/prism.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
-
+    <script>
+        function entregaPedido(id){
+            if(confirm('¿Está seguro de entregar el pedido?')){
+                axios.post('/api/entregaPedido', {idpedido: id}).then((data) => {
+                    alert('El pedido se entregó con éxito')
+                    location.reload();
+                }).catch(()=>{alert('Ha ocurrido un error')});
+            }
+        }
+    </script>
 
 
     <!-- END CHAMELEON  JS-->
