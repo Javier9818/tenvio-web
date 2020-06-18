@@ -63,25 +63,37 @@
           @else      
             @foreach ($empresas as $empresa)
             <div class="col-sm-12 col-md-6 col-lg-4">
-              <div class="post-item">
-                <div class="post__img">
-                  <a href="#">
-                  <img src="/storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
-                  </a>
-                </div><!-- /.post__img -->
-                <div class="post__content">
-                  <div class="post__meta">
-                    <span class="post__meta-date d-none">Jan 20, 2020</span>
-                    <div class="post__meta-cat">
-                      <a href="#">{{$empresa->categoria}}</a>
-                    </div><!-- /.post-meta-cat -->
-                  </div><!-- /.post-meta -->
-                  <h2 class="post__title" ><a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}">{{$empresa->nombre}}</a></h2>
-                  <p class="post__desc">{{$empresa->descripcion}}</p>
-                  <!-- <a href=" " class="btn btn__secondary btn__link d-none">Ver más</a> -->
-                </div><!-- /.post__content -->
-              </div><!-- /.post-item -->
-            </div><!-- /.col-lg-4 -->
+              <div class="card  " style=" background-color: #fff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                border: 2px solid #ddd;
+                border-radius: 10px;
+                transition: .5s;
+                box-shadow: 0 0 25px 5px rgba(0,0,0,.2);">
+                <div class="card-body">  
+                  <div class="post-item">
+                    <div class="post__img">
+                      <a href="#">
+                      <img src="/storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
+                      </a>
+                    </div><!-- /.post__img -->
+                    <div class="post__content">
+                      <div class="post__meta">                       
+                        <div class="post__meta-cat">
+                          <a href="#">{{$empresa->categoria}}</a>
+                        </div><!-- /.post-meta-cat -->
+                      </div><!-- /.post-meta -->
+                    </div>
+                  </div>               
+                  <h3 class="card-title">{{$empresa->nombre}}</h3>
+                  <p class="card-text">{{$empresa->descripcion}}</p>
+                  <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}" class="btn btn-primary   d-block " style=" font-size:large">Visitar</a>
+                </div>
+              </div>
+            </div>            
+             
             @endforeach 
           @endif     
           </div><!-- /.row -->

@@ -80,7 +80,7 @@
                 background-clip: border-box;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;"><i class="fas fa-utensils fa-2x"></i></h5>
-                <p class="card-text" style="font-family: 'Poppins';
+                <p class="card-text text-center" style="font-family: 'Nunito', sans-serif;
                 font-size: 24px;
 
                 font-size: 1.2em;
