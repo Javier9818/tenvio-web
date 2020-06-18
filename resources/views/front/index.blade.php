@@ -57,7 +57,7 @@
 
     <div class="row">
     @foreach ($data as $categoria)
-        <div class="col-md-4 d-flex justify-content-around">
+        <div class="col-md-4 d-flex justify-content-around"   > 
             <div class="card d-flex align-items-center p-5 my-3" style="width: 18rem; width: 250px;
             height: 250px;
             background-color: #fff;
@@ -68,20 +68,20 @@
             border: 2px solid #ddd;
             border-radius: 10px;
             transition: .5s;
-            box-shadow: 0 0 25px 5px rgba(0,0,0,.2);">
+            box-shadow: 0 0 25px 5px rgba(0,0,0,.2)">
                 {{-- <img src="..." class="card-img-top" alt="..."> --}}
 
                 <h5 class="card-title" style="background: linear-gradient(#fe4b7d, #ff8a4d);
                 background-clip: border-box;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;"><i class="fas fa-utensils fa-2x"></i></h5>
-                <p class="card-text" style="font-family: 'Poppins';
+                <p class="card-text text-center" style="font-family: 'Nunito', sans-serif;
                 font-size: 24px;
 
                 font-size: 1.2em;
                 color: #656064;
                 font-weight: bold;">{{ucfirst($categoria->categoria)}}</p>
-                {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
+                 <a href="/list/{{$categoria->categoria}}" class="btn btn-primary "  >Ver</a>  
 
             </div>
         </div>

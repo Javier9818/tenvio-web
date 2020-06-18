@@ -216,6 +216,20 @@ class FrontController extends Controller
 
 
   }
+  public function BuscaxUbicacion($Ubicacion){
+
+    try {
+      $empresas =DB::table('empresas')
+      ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
+      ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
+      ->where('ciudad.nombre','like','%'.$Ubicacion.'%')
+      ->get();
+      return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$Ubicacion]);
+    } catch (\Throwable $th) {
+      return view('front.listEmpresa', ["empresas" => null, 'search'=>$Ubicacion]);
+    }
+}
   public function Empresa($nombre){
 
       try {

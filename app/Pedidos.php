@@ -13,8 +13,8 @@ class Pedidos extends Model
 		'estado',
 		'comentario',
 		'latitud',
-        'longitud',
-        'direccion',
+		'longitud',
+		'direccion',
 		'meta_latitud',
 		'meta_longitud',
 		'user_id',
@@ -76,13 +76,21 @@ class Pedidos extends Model
 				'estado' => 'ACEPTADO'
 			]);
 	}
-	public static function anular($idpedido, $comentario){
+	public static function cancelar($idpedido, $comentario){
 		return Pedidos::where('id', $idpedido)
 			->update([
 				'estado' => 'CANCELADO',
 				'comentario' => $comentario
 			]);
 	}
+	public static function cancelarvarios($id_pedidos, $comentario){
+		return Pedidos::whereIn('id', $id_pedidos)
+			->update([
+				'estado' => 'CANCELADO',
+				'comentario' => $comentario
+			]);
+	}
+
 	public static function listarEmpleados($empresa_id){
 		$where = array(
 			'ue.empresa_id' => $empresa_id,
