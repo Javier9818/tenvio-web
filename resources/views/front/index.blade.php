@@ -92,3 +92,16 @@
   </div><!-- /.container -->
 </section><!-- /.blog Grid -->
 @endsection
+
+@section('script')
+    <script>
+        Push.create("Hola mundo",{
+            body: "Este es el cuerpo",
+            icon: 'https://i.imgur.com/0LA2f7K.png',
+            timeout: 2000,
+            onClick: function(){
+                this.close();
+            }
+        });
+    </script>
+@endsection
