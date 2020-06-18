@@ -209,7 +209,7 @@
         let user = @json($user);
     </script>
     <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
-    <script src="{!! asset('assets/js/plugins.js') !!}"></script>
+    {{-- <script src="{!! asset('assets/js/plugins.js') !!}"></script> --}}
     <!-- <script src="assets/js/wow.min.js"></script> -->
     <script src="{!! asset('assets/js/main.js') !!}"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

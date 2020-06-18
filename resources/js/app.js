@@ -51,6 +51,7 @@ Vue.use(Vuelidate)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('orders-notifications', require('./components/notifications/OrdersNotifications.vue').default);
 Vue.component('ventas-component', require('./components/VentasComponent.vue').default);
 Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
 Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);

@@ -15,7 +15,8 @@ class AdminController extends Controller
     }
 
     public function verEmpresa($idempresa){
-        Session::put('empresa', $idempresa);
+        session(['empresa' => $idempresa]);
+        // Session::put('empresa', $idempresa);
         return redirect('/intranet');
     }
 

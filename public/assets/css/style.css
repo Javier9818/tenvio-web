@@ -42,6 +42,82 @@
 /*--------------------------
       Global Styles
 ---------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,700&display=swap');
+.title__spam{
+    color: #fd4873 !important;
+}
+.containLine {
+    width: 400px;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 25px;
+}
+.line-low {
+    margin: 15px 0;
+    width: 60px;
+    height: 5px;
+}
+
+.bg1 {
+    background-color: #fd4873;
+}
+
+.input__search{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #656064 !important;
+    font-weight: 1px !important;
+    padding: 2px;
+    font-size:1.8em;
+    width: 450px;
+    border-radius: 7px;
+    border: solid 0.2px gray;
+}
+
+.product__title__javier{
+    font-size: 1.8em;
+    text-transform: none !important;
+    font-size: Poppins !important;
+    font-weight: bolder !important;
+    margin-bottom: 10px;
+  }
+
+  .product__cat__javier{
+      font-size: 1.5em;
+      margin-bottom: 5px;
+  }
+
+  .product__price__javier{
+      font-size: 2.6em;
+      font-size: Poppins !important;
+      font-weight: bolder !important;
+      color: #f38e35 !important;
+  }
+
+  .btn__javier{
+    font-family: Poppins;
+    font-size: 1em !important;
+    font-weight: 700;
+    min-width: 170px;
+    height: 50px;
+    border-radius: 3px;
+    text-align: center;
+    background: #f38e35 ;
+    color: white;
+    /* -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; */
+  }
+
+
+
+
+
+
+
+
+
 body {
   background-color: #ffffff;
   font-family: 'Nunito', sans-serif;
@@ -1065,9 +1141,16 @@ select {
   background-color: #f38e35 !important;
 }
 
-.bg-img {
-  position: relative;
+.bg-img ,.bg-img-2 {
+  position: relative !important;
   z-index: 1;
+}
+@media only screen and  (max-width: 600px) {
+    .bg-img-2 {
+        position: sticky !important;
+        display: none !important;
+        z-index: 1;
+      }
 }
 
 .bg-overlay:before {
@@ -1453,9 +1536,10 @@ h6 {
 .btn__primary:active,
 .btn__primary:focus,
 .btn__primary:hover {
-  background-color: #282828;
+  /* background-color: #282828; */
   color: #ffffff;
-  border-color: #282828;
+  transform: scale(1.1);
+  /* border-color: #282828; */
 }
 
 .btn__primary.btn__hover2:active,
@@ -2848,26 +2932,24 @@ color: #f38e35;
     width: 0;
     height: 0;
     position: absolute;
-    margin: -60px 0 0 72%;
+    margin: -60px 0 0 69%;
     border-bottom: 20px solid rgb(199, 199, 199);
     border-right: 18px solid transparent;
     border-left: 18px solid transparent;
     }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
     .pedido-popup  {
         right: -15px;
         top:122%;
-    }
-    .cart-popup{
-        right: -15px;
-        top:122%;
+        width: 270px;;
     }
     .cart-popup:before {
-        margin: -60px 0 0 60% !important;
+        margin: -60px 0 0 55% !important;
     }
     .cart-popup{
-        right: -10px !important;
+        right: -25px !important;
+        top:122%;
     }
 }
 
@@ -4081,6 +4163,14 @@ color: #f38e35;
 
 .slider {
   padding: 0;
+  background-image: url('/img/pedir5.png');
+  background-size: cover;
+  background-position: center;
+}
+@media only screen and (max-width: 700px) {
+    .slider{
+        background-image: none !important;
+    }
 }
 
 .slider .slide-item {
@@ -4096,9 +4186,12 @@ color: #f38e35;
 }
 
 .slider .slide__title {
-  font-size: 75px;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 45px;
+  font-weight: 70 !important;
+  text-transform: none;
+  font-family: Poppins !important;
+  color: #656064 !important;
+  text-align: start !important;
   margin-bottom: 20px;
 }
 
@@ -4177,6 +4270,7 @@ color: #f38e35;
   transform: translateX(-50%);
   fill: #f38e35;
   z-index: 3;
+  display: none !important;
 }
 
 .slider-layout2 .slide-item {
@@ -4252,9 +4346,8 @@ color: #f38e35;
   }
 
   .slider .slide__title {
-    font-size: 35px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin: 20px;
   }
 
   .slider .slide__desc {
@@ -4291,7 +4384,6 @@ color: #f38e35;
   }
 
   .slider .slide__title {
-    font-size: 25px;
     margin-bottom: 15px;
   }
 
@@ -6043,8 +6135,9 @@ color: #f38e35;
 }
 
 .product__title {
-  font-size: 19px;
-  line-height: 26px;
+  font-size: 1.8em;
+  text-transform: none !important;
+  font-size: Poppins !important;
   margin-bottom: 10px;
 }
 

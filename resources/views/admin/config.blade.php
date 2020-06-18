@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title') Configuraciones  @endsection
 @section('nav')
-    @include('admin.components.nav')
+    {{-- @include('admin.components.nav') --}}
 @endsection
 
 @section('sideNav')

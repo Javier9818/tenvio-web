@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title') Recepción  @endsection
 @section('nav')
-    @include('admin.components.nav')
+    {{-- @include('admin.components.nav') --}}
 @endsection
 
 @section('sideNav')
@@ -52,4 +52,10 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+    <script>
+        let empresa = @json($empresa);
+    </script>
 @endsection

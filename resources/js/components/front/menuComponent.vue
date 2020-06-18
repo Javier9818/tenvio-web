@@ -16,15 +16,8 @@
                           <b-form-select v-model="categoria" :options="categorias" class=" d-block" @change="funcAcciona"></b-form-select>
                         </div><!-- /.select-box -->
                       </div><!-- /.sort-box -->
-
-                    </div><!-- /.filter-option-sorting -->
-                    <!-- <div class="filter-option-view">
-                      <span>Ver Como:</span>
-                      <a id="gridView" class="active" href="#"><i class="fa fa-th-large"></i></a>
-                      <a id="listView" class="active" href="#"><i class="fa fa-th-list"></i></a>
-                    </div> -->
-                    <!-- /.filter-option-view -->
-                  </div><!-- /.filtering-options -->
+                    </div>
+                  </div>
 
 
             </div><!-- /.col-lg-12 -->
@@ -33,24 +26,21 @@
             <!--For-->
 
             <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
-              <div class="product-item ">
+              <div class="product-item">
                 <div class="product__img align-items-center">
                   <img :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
                   <div class="product__hover">
                     <div class="product__action">
-                      <button type="button" class="btn btn-primary" @click="funSelecciona(item)">
-                        Comprar
+                      <button type="button" class="btn__javier" @click="funSelecciona(item)">
+                        Comprar <p class="d-inline d-md-none">S/. {{item.precio}}</p>
                       </button>
-                      <a href="#" class="btn btn__primary btn__hover2 d-none" >Comprar</a>
                     </div><!-- /.product__action -->
                   </div><!-- /.product__hover-->
                 </div><!-- /.product-img -->
                 <div class="product__content">
-                  <div class="product__cat">
-                    <a href="#">{{item.descripcion}}</a>
-                  </div>
-                  <h4 class="product__title"><a href="#">{{item.nombre}}</a></h4>
-                  <span class="product__price display-4">S/. {{item.precio}}</span>
+                  <h4 class="product__title__javier">{{item.nombre}}</h4>
+                  <div class="product__cat__javier">{{item.descripcion}}</div>
+                  <span class="product__price__javier d-none d-md-block">S/. {{item.precio}}</span>
                 </div><!-- /.product-content -->
               </div><!-- /.product-item -->
             </div><!-- /.col-lg-4 -->
@@ -172,7 +162,7 @@ export default {
       carrito:[],
       categoria:'all',
       options: { value: 0, text: '' },
-      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0, name_empresa:''}
+      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:1, id:0, empresa:0, name_empresa:''}
     }
   },
   methods:{
@@ -204,7 +194,7 @@ export default {
       this.producto.id=item.id
       this.producto.empresa=this.id
       this.producto.name_empresa=this.nombre
-      this.producto.cant=0;
+      this.producto.cant=1;
       this.showModal();
     },
     funAgregar: function () {

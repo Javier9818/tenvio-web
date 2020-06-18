@@ -44,14 +44,10 @@ export default {
 			productos_pedido: [],
 			pedidos: [],
 			pedidoSeleccionado: [],
-			fields: ['selected', 'idpedido', 'nombres', 'descripcion', 'direccion'],
-			repartidores:['Montes Caceres Javier', 'Jose de la Vega Miguel'],
-			items: [
-				{  pedido: 1, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 2, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 3, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 4, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo', direccion:'Urb.Las Gardenias MazF.Lte23' }
-			],
+			indexPedidoSeleccionado: -1,
+			fields: ['selected', 'idpedido', {key:'nombres', label:'Cliente'}, 'descripcion', 'direccion'],
+			repartidores:[],
+			items: [],
 			selectRepartidor: null,
 			selected: []
 		}
@@ -72,6 +68,7 @@ export default {
 			else
 				return;
 			var idpedido = this.pedidoSeleccionado.idpedido;
+			var that = this;
 			axios.post(this.ruta+operacion, {
 				comentario:comentario,
 				idpedido:idpedido,
@@ -79,16 +76,14 @@ export default {
 			})
 			.then(function (response) {
 				let datos = response.data;
+				that.pedidos.splice(that.indexPedidoSeleccionado, 1);
+				that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
+				that.indexPedidoSeleccionado = -1;
 				Swal.fire(
 					'Éxito',
 					'Los cambios se realizaron correctamente',
 					'success'
 				)
-				.then(()=>{
-					if (bul){
-						location.reload();
-					}
-				});
 			})
 			.catch(()=>{
 				Swal.fire(
@@ -117,7 +112,8 @@ export default {
 					console.log(that.selected);
 					//that.pedidoSeleccionado = item;
 					var thet = that;
-					that.selected.forEach((item) => {
+					that.selected.forEach((item, index) => {
+						this.indexPedidoSeleccionado = index;
 						thet.pedidoSeleccionado = item;
 						that.cambiaestado('Asignar', '', true, this.selectRepartidor)
 					});

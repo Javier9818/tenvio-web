@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
   <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  {{-- <link rel="stylesheet" href= "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
   @yield('styles')
 </head>
@@ -134,7 +135,7 @@
   <script src="/js/fronted.js" type="text/javascript"></script>
 
   <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
-  <script src="{!! asset('assets/js/plugins.js') !!}"></script>
+  {{-- <script src="{!! asset('assets/js/plugins.js') !!}"></script> --}}
   <!-- <script src="assets/js/wow.min.js"></script> -->
   <script src="{!! asset('assets/js/main.js') !!}"></script>
 

@@ -21,8 +21,7 @@ Route::get('/intranet/empleado/edit/{id}', 'EmpleadoController@edit')->middlewar
 Route::get('/intranet/configuraciones', 'GeneralController@vistaConfiguraciones')->middleware('can:edit-company, visit-company');
 Route::get('/intranet/ventas', function () {return view('admin.negocio.ventas');})->middleware('can:gestionar-contabilidad, visit-company');
 Route::get('/intranet/pagos', function () {return view('admin.negocio.pagos');})->middleware('can:gestionar-contabilidad, visit-company');
-
-Route::get('/intranet/transporte', function () {return view('admin.transporte.transporte');})->middleware('can:gestionar-entregas, visit-company');
+Route::get('/intranet/transporte', 'GeneralController@vistaTransporte')->middleware('can:gestionar-entregas, visit-company');
 
 //Route::get('/intranet/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');})->middleware('can:gestionar-pedidos, visit-company');
 //Route::get('/intranet/pedidos', function () {return view('admin.pedidos.pedidos');})->middleware('can:gestionar-pedidos, visit-company');
