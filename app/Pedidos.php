@@ -128,18 +128,21 @@ class Pedidos extends Model
 			->join('permiso_user as pu', 'pu.user_id', '=', 'ue.user_id')
 			->get();
 	}
-	public static function asignar($idpedido, $idrepartidor){
-		Pedidos::where('id', $idpedido)->update(['estado' => 'ENVIANDO']);
-
-        $asignacion = Asignacion::create([
-            'user_id' => $idrepartidor
-        ]);
-
-        //ASIGNAR TODOS LOS PEDIDOS QUE LLEGAN AQUI
-        return PedidosUsers::create([
-				'pedidos_id' => $idpedido,
-				'asignacion_id' => $asignacion->id
+	public static function asignar($pedidos, $idrepartidor){
+		$asignacion = Asignacion::create([
+			'user_id' => $idrepartidor
 		]);
+		foreach ($pedidos as $item) {
+			Pedidos::where('id', $item['idpedido'])->update([
+				'estado' => 'ENVIANDO'
+			]);
+			//ASIGNAR TODOS LOS PEDIDOS QUE LLEGAN AQUI
+			PedidosUsers::create([
+				'pedidos_id' => $item['idpedido'],
+				'asignacion_id' => $asignacion->id
+			]);
+		}
+		return $asignacion;
 	}
 }
 

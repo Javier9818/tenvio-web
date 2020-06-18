@@ -71,12 +71,23 @@ class PedidosController extends Controller
 	}
 
 	static function asignar(Request $request){
+		$idrepartidor = $request->get('idrepartidor');
+		$pedidos = $request->get('pedidos');
+		Pedidos::asignar($pedidos, $idrepartidor);
+		foreach ($pedidos as $item) {
+			$idCliente = $item['idusuario'];
+			try { event( new ChangeStateOrderEvent(["pedido" => $item, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
+		}
+	}
+	/*
+	static function asignar(Request $request){
         $idpedido = $request->get('idpedido');
         $idCliente = $request->get('idusuario');
 		$idrepartidor = $request->get('idrepartidor');
         Pedidos::asignar($idpedido, $idrepartidor);
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
 	}
+	*/
 
 	public static function entregar(Request $request){
 		$idpedido = $request->get('idpedido');
