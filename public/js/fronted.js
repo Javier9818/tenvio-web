@@ -3095,6 +3095,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/front/ListPedido').then(function (response) {
         that.items = response.data;
         console.log(response.data);
+      })["catch"](function (error) {
+        console.log('Login please');
       });
     },
     color: function color(key) {
@@ -3143,13 +3145,15 @@ __webpack_require__.r(__webpack_exports__);
 
     Echo.channel("ordersClient.".concat(this.user)).listen('ChangeStateOrderEvent', function (_ref) {
       var data = _ref.data;
+      console.log(data);
 
       _this.items.map(function (item) {
-        if (item.pedido === data.idpedido) item.state = data.state;
-      });
-
-      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', 'Uno de sus pedidos a cambiado de estado.', 'success').then(function (data) {
-        location.href = '/pedidos';
+        if (item.pedido === data.pedido.idpedido) {
+          item.state = data.state;
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : ''), "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
+            location.href = '/pedidos';
+          });
+        }
       });
     });
   }
@@ -3414,7 +3418,8 @@ __webpack_require__.r(__webpack_exports__);
           if (!result.value) return;
           axios.post('/front/GeneraPedido', {
             empresas: that.empresas,
-            productos: that.productos // ubicacion: that.ubicacion
+            productos: that.productos,
+            total: that.total // ubicacion: that.ubicacion
 
           }).then(function (response) {
             //	console.log(response.data);
@@ -3650,16 +3655,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id', 'nombre'],
@@ -3681,7 +3676,7 @@ __webpack_require__.r(__webpack_exports__);
         foto: '',
         nombre: '',
         precio: '',
-        cant: 0,
+        cant: 1,
         id: 0,
         empresa: 0,
         name_empresa: ''
@@ -3718,7 +3713,7 @@ __webpack_require__.r(__webpack_exports__);
       this.producto.id = item.id;
       this.producto.empresa = this.id;
       this.producto.name_empresa = this.nombre;
-      this.producto.cant = 0;
+      this.producto.cant = 1;
       this.showModal();
     },
     funAgregar: function funAgregar() {
@@ -3936,15 +3931,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['height', 'width'],
+  props: ['height', 'width', 'layers'],
   mounted: function mounted() {
     this.initMap();
+    console.log(this.layers);
   },
   data: function data() {
     return {
       map: null,
       tileLayer: null,
-      layers: [],
       marker: L.marker([0, 0])
     };
   },
@@ -3968,6 +3963,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.createMarker(e.latlng);
       });
+      this.initLayers();
     },
     createMarker: function createMarker(LatLng) {
       var _this2 = this;
@@ -3993,29 +3989,34 @@ __webpack_require__.r(__webpack_exports__);
       // console.log("Latitud: "+this.marker.getLatLng().lat);
     },
     initLayers: function initLayers() {
+      var _this3 = this;
+
       this.layers.forEach(function (layer) {
-        var markerFeatures = layer.features.filter(function (feature) {
-          return feature.type === 'marker';
-        });
-        var polygonFeatures = layer.features.filter(function (feature) {
-          return feature.type === 'polygon';
-        });
-        markerFeatures.forEach(function (feature) {
-          feature.leafletObject = L.marker(feature.coords).bindPopup(feature.name);
-        });
-        polygonFeatures.forEach(function (feature) {
-          feature.leafletObject = L.polygon(feature.coords).bindPopup(feature.name);
-        });
+        console.log(new L.LatLng(layer.latitud, layer.longitud));
+        var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {
+          title: layer.direccion
+        }).bindPopup("<b>".concat(layer.direccion, "</b>\n                <p><b>Cliente: </b>").concat(layer.cliente, "</p>\n                <p><b>Celular: <a href=\"https://api.whatsapp.com/send?phone=51").concat(layer.celular, "&text=\" target=\"_blank\">").concat(layer.celular, "</a></b></p>\n                <div class='row'>\n                    <button class='btn btn-primary btn-sm d-inline mr-1' onclick=\"juega()\">Entregar</button>\n                    <button class='btn btn-danger btn-sm d-inline'>Cancelar</button>\n                </div>"));
+        marker.bindTooltip(layer.direccion).openTooltip();
+        marker.addTo(_this3.map); // const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
+        // const polygonFeatures = layer.features.filter(feature => feature.type === 'polygon');
+        // markerFeatures.forEach((feature) => {
+        // feature.leafletObject = L.marker(new L.LatLng(position.lat, position.lng))
+        //     .bindPopup(feature.name);
+        // });
+        // polygonFeatures.forEach((feature) => {
+        // feature.leafletObject = L.polygon(feature.coords)
+        //     .bindPopup(feature.name);
+        // });
       });
     },
     layerChanged: function layerChanged(layerId, active) {
-      var _this3 = this;
+      var _this4 = this;
 
       var layer = this.layers.find(function (layer) {
         return layer.id === layerId;
       });
       layer.features.forEach(function (feature) {
-        if (active) feature.leafletObject.addTo(_this3.map);else feature.leafletObject.removeFrom(_this3.map);
+        if (active) feature.leafletObject.addTo(_this4.map);else feature.leafletObject.removeFrom(_this4.map);
       });
     }
   }
@@ -44976,7 +44977,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -82057,9 +82058,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cart-action" }, [
+    return _c("div", { staticClass: "cart-action text-center" }, [
       _c("a", { staticClass: "mt-2", attrs: { href: "/pedidos" } }, [
-        _vm._v("Ir a panel de seguimiento")
+        _vm._v("Ver todos mis pedidos")
       ])
     ])
   }
@@ -82470,7 +82471,7 @@ var render = function() {
                     staticClass: "col-sm-6 col-md-6 col-lg-4 list-view"
                   },
                   [
-                    _c("div", { staticClass: "product-item " }, [
+                    _c("div", { staticClass: "product-item" }, [
                       _c(
                         "div",
                         { staticClass: "product__img align-items-center" },
@@ -82488,7 +82489,7 @@ var render = function() {
                               _c(
                                 "button",
                                 {
-                                  staticClass: "btn btn-primary",
+                                  staticClass: "btn__javier",
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
@@ -82497,20 +82498,13 @@ var render = function() {
                                   }
                                 },
                                 [
-                                  _vm._v(
-                                    "\n                      Comprar\n                    "
+                                  _vm._v("\n                      Comprar "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "d-inline d-md-none" },
+                                    [_vm._v("S/. " + _vm._s(item.precio))]
                                   )
                                 ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "btn btn__primary btn__hover2 d-none",
-                                  attrs: { href: "#" }
-                                },
-                                [_vm._v("Comprar")]
                               )
                             ])
                           ])
@@ -82518,21 +82512,20 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "product__content" }, [
-                        _c("div", { staticClass: "product__cat" }, [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(item.descripcion))
-                          ])
+                        _c("h4", { staticClass: "product__title__javier" }, [
+                          _vm._v(_vm._s(item.nombre))
                         ]),
                         _vm._v(" "),
-                        _c("h4", { staticClass: "product__title" }, [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v(_vm._s(item.nombre))
-                          ])
+                        _c("div", { staticClass: "product__cat__javier" }, [
+                          _vm._v(_vm._s(item.descripcion))
                         ]),
                         _vm._v(" "),
                         _c(
                           "span",
-                          { staticClass: "product__price display-4" },
+                          {
+                            staticClass:
+                              "product__price__javier d-none d-md-block"
+                          },
                           [_vm._v("S/. " + _vm._s(item.precio))]
                         )
                       ])

@@ -243,6 +243,7 @@ export default {
             axios.post('/front/GeneraPedido', {
                 empresas: that.empresas,
                 productos: that.productos,
+                total: that.total
                 // ubicacion: that.ubicacion
             })
             .then(function (response) {

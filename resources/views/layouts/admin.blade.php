@@ -32,31 +32,31 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
-    <style>
-        /* .modal {
-            background: rgba(0,0,0,0.4);
-            z-index: 2050;
-        } */
-    </style>
 
     @yield('styles')
-    <!-- END Page Level CSS-->
-    <!-- BEGIN Custom CSS-->
-    <!-- END Custom CSS-->
   </head>
   <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
-    @yield('nav')
-    @yield('sideNav')
+    <div id="app">
+        @include('admin.components.nav')
+        @yield('nav')
+        @yield('sideNav')
 
-    <div class="app-content content">
-      <div class="content-wrapper">
-        <div class="content-wrapper-before"></div>
-            @yield('header')
-            <div class="content-body" id="app"><!-- Bar charts section start -->
-                @yield('content')
-            </div>
-      </div>
+        <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-wrapper-before"></div>
+                @yield('header')
+                <div class="content-body"><!-- Bar charts section start -->
+                    @yield('content')
+                </div>
+        </div>
+        </div>
     </div>
+
+    {{$company = Session::get('empresa') ?? ''}}
+
+    <script>
+        let company = @json($company);
+    </script>
 
     {{-- <footer class="footer footer-static footer-light navbar-border navbar-shadow">
       <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2020  &copy; Copyright <a class="text-bold-800 grey darken-2" href="/">Delivery</a></span>
@@ -77,6 +77,9 @@
     <script src="/theme-assets/js/core/customizer.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/prism.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
+
+
+
     <!-- END CHAMELEON  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     {{-- <script src="/theme-assets/js/scripts/charts/chartjs/bar/column.js" type="text/javascript"></script>

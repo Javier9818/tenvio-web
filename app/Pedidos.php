@@ -54,18 +54,20 @@ class Pedidos extends Model
 				//'personas.appaterno',
 				//'personas.apmaterno',
 				'personas.celular',
-				'personas.direccion'
+				'personas.direccion',
+				'te.nombre as tipo_entrega'
 			)
 			->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
 			->join('users as u', 'u.id', '=', 'pedidos.user_id')
 			->join('personas as personas', 'personas.id', '=', 'u.persona_id')
+			->join('tipo_entregas as te', 'te.id', '=', 'pedidos.tipo_id')
 			->groupBy('pedidos.id')
 			->get();
 	}
 	public static function entregar($idpedido){
 		return Pedidos::where('id', $idpedido)
 			->update([
-				'estado' => 'Entregado'
+				'estado' => 'ENTREGADO'
 			]);
 	}
 	public static function aceptar($idpedido){
@@ -74,13 +76,21 @@ class Pedidos extends Model
 				'estado' => 'ACEPTADO'
 			]);
 	}
-	public static function anular($idpedido, $comentario){
+	public static function cancelar($idpedido, $comentario){
 		return Pedidos::where('id', $idpedido)
 			->update([
 				'estado' => 'CANCELADO',
 				'comentario' => $comentario
 			]);
 	}
+	public static function cancelarvarios($id_pedidos, $comentario){
+		return Pedidos::whereIn('id', $id_pedidos)
+			->update([
+				'estado' => 'CANCELADO',
+				'comentario' => $comentario
+			]);
+	}
+
 	public static function listarEmpleados($empresa_id){
 		$where = array(
 			'ue.empresa_id' => $empresa_id,
@@ -102,7 +112,7 @@ class Pedidos extends Model
 	public static function asignar($idpedido, $idrepartidor){
 		Pedidos::where('id', $idpedido)
 			->update([
-				'estado' => 'Enviando'
+				'estado' => 'ENVIANDO'
 			]);
 		return PedidosUsers::create([
 				'pedidos_id' => $idpedido,

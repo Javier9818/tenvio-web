@@ -9,11 +9,6 @@
 @endsection
 
 @section('contenido')
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,700&display=swap');
-</style>
-
 <section id="slider" class="slider slider-layout1">
     <div class="container slide-item align-v-h text-center">
         <div class="row">

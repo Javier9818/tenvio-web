@@ -16,13 +16,13 @@ class CategoriasMenusController extends Controller
     }
 
 	static function listarvselect(Request $request){
-		$empresa_id = Session::get('empresa');////////////////////////////////////
+		$empresa_id = session('empresa');////////////////////////////////////
 		$categorias = CategoriaMenu::listarvselect($empresa_id);
 		return response()->json($categorias, 200);
 	}
 
 	static function listar(Request $request){
-		$empresa_id = Session::get('empresa');////////////////////////////////////
+		$empresa_id = session('empresa');////////////////////////////////////
 		$categorias = CategoriaMenu::listar($empresa_id);
 		return response()->json($categorias, 200);
 	}
@@ -37,7 +37,7 @@ class CategoriasMenusController extends Controller
 			CategoriaMenu::eliminar($id);
 		}
 		else{
-			$empresa_id = Session::get('empresa');////////////////////////////////////
+			$empresa_id = session('empresa');////////////////////////////////////
 			if ($id == 0)
 				CategoriaMenu::registrar($descripcion, $empresa_id);
 				else

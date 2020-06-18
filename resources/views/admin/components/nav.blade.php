@@ -36,6 +36,7 @@
                     <div class="arrow_box_right"><a class="dropdown-item" href="#"><i class="ft-book"></i> Read Mail</a><a class="dropdown-item" href="#"><i class="ft-bookmark"></i> Read Later</a><a class="dropdown-item" href="#"><i class="ft-check-square"></i> Mark all Read       </a></div>
                 </div>
                 </li> --}}
+                <orders-notifications></orders-notifications>
                 <li class="dropdown dropdown-user nav-item">
                     <a class="dropdown-toggle nav-link dropdown-user-link" href="javascript:void(0);" data-toggle="dropdown">
                         <span class="avatar avatar-online">
@@ -46,26 +47,26 @@
                             @endif
                         </span>
                     </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="arrow_box_right">
-                        @if (strlen(Auth::user()->foto) >0)
-                            <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/storage/images/fotosPerfil/{{Auth::user()->foto}}" alt="avatar"><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
-                        @else
-                            <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/img/perfil.png" alt="avatar"><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
-                        @endif
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="arrow_box_right">
+                            @if (strlen(Auth::user()->foto) >0)
+                                <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/storage/images/fotosPerfil/{{Auth::user()->foto}}" alt="avatar"><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
+                            @else
+                                <a class="dropdown-item" href="javascript:void(0);"><span class="avatar avatar-online"><img src="/img/perfil.png" alt="avatar"><span class="user-name text-bold-700 ml-1">{{Auth::user()->username}}</span></span></a>
+                            @endif
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/perfil"><i class="ft-user"></i> Mi Perfil</a>
+                            <a class="dropdown-item" href="#"><i class="ft-mail"></i> Mis mensajes</a>
+                            {{-- <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
+                            <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a> --}}
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/perfil"><i class="ft-user"></i> Mi Perfil</a>
-                        <a class="dropdown-item" href="#"><i class="ft-mail"></i> Mis mensajes</a>
-                        {{-- <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
-                        <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a> --}}
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();"><i class="ft-power"></i> Cerrar Sesión</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"><i class="ft-power"></i> Cerrar Sesión</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        </div>
                     </div>
-                </div>
                 </li>
             </ul>
           @endauth

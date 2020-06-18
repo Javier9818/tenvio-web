@@ -20,8 +20,8 @@
                 </div><!-- /.cart-item-content -->
                 </li>
             </ul>
-            <div class="cart-action">
-                <a href="/pedidos" class="mt-2">Ir a panel de seguimiento</a>
+            <div class="cart-action text-center">
+                <a href="/pedidos" class="mt-2">Ver todos mis pedidos</a>
             </div><!-- /.cart-action -->
         </div>
     </div>
@@ -45,7 +45,7 @@
                 .then(function (response) {
                     that.items= response.data;
                     console.log(response.data);
-                });
+                }).catch((error)=>{ console.log('Login please')});
             },
             color: function (key) {
                 switch (key.toUpperCase()) {
@@ -69,17 +69,23 @@
             console.log('ModalPedidos - Mountedww');
         },
         created(){
-             Echo.channel(`ordersClient.${this.user}`)
+            Echo.channel(`ordersClient.${this.user}`)
                 .listen('ChangeStateOrderEvent', ({data}) => {
+                    console.log(data);
                     this.items.map( (item) => {
-                       if(item.pedido === data.idpedido) item.state = data.state;
+                        if(item.pedido === data.pedido.idpedido) {
+                            item.state = data.state;
+                            Swal.fire(
+                                'Cambio de estado',
+                                `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
+                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`,
+                                `${data.state === 'CANCELADO' ? 'error' : 'success'}`
+                            ).then((data) => {location.href = '/pedidos'});
+
+                        }
                     });
-                    Swal.fire(
-						'Cambio de estado',
-						'Uno de sus pedidos a cambiado de estado.',
-						'success'
-					).then((data) => {location.href = '/pedidos'});
-                });
+
+            });
         }
     }
 </script>
