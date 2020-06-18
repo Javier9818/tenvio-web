@@ -59,7 +59,6 @@
         mounted() {
             console.log('Component mounted.')
             this.items = pedidosAsignados;
-            console.log(pedidosAsignados);
         },
         data(){
             return{

@@ -110,14 +110,17 @@ class Pedidos extends Model
 			->get();
 	}
 	public static function asignar($idpedido, $idrepartidor){
-		Pedidos::where('id', $idpedido)
-			->update([
-				'estado' => 'ENVIANDO'
-			]);
-		return PedidosUsers::create([
+		Pedidos::where('id', $idpedido)->update(['estado' => 'ENVIANDO']);
+
+        $asignacion = Asignacion::create([
+            'user_id' => $idrepartidor
+        ]);
+
+        //ASIGNAR TODOS LOS PEDIDOS QUE LLEGAN AQUI
+        return PedidosUsers::create([
 				'pedidos_id' => $idpedido,
-				'users_id' => $idrepartidor
-			]);
+				'asignacion_id' => $asignacion->id
+		]);
 	}
 }
 

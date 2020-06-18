@@ -35,7 +35,19 @@
                 if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng){
-                this.marker = L.marker(LatLng, {draggable:'true', title: 'Mi ubicación'}).on('dragend', (event) => {
+                var deliveryIcon = L.icon({
+                    iconUrl: '/img/deliv.png',
+                    // shadowUrl: 'leaf-shadow.png',
+
+                    iconSize:     [50, 50], // size of the icon
+                    // shadowSize:   [50, 64], // size of the shadow
+                    iconAnchor:   [50, 50], // point of the icon which will correspond to marker's location
+                    // shadowAnchor: [4, 62],  // the same for the shadow
+                    popupAnchor:  [-3, -20] // point from which the popup should open relative to the iconAnchor
+                });
+
+
+                this.marker = L.marker(LatLng, {draggable:'true', title: 'Mi ubicación', icon: deliveryIcon}).on('dragend', (event) => {
                     var marker = event.target;
                     var position = marker.getLatLng();
                     marker.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true'});

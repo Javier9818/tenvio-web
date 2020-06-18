@@ -86,7 +86,12 @@ class PedidosController extends Controller
         $idCliente = $request->get('idusuario');
         Pedidos::aceptar($idpedido);
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ACEPTADO'], $idCliente));} catch (\Throwable $th) {}
-	}
+    }
+
+    static function cancelaByRepartidor(Request $request){
+        $pedido = Pedidos::where('id', $request->pedido)->update(['estado' => 'REPORTADO','comentario' => 'Problemas en la entrega']);
+        return response()->json([$pedido]);
+    }
 
 	static function cancelar(Request $request){
 		$idpedido = $request->get('idpedido');
