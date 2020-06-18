@@ -6,24 +6,29 @@ use App\PedidosUsers;
 
 class Pedidos extends Model
 {
-    protected $table = 'pedidos';
-    protected $fillable = [
+	protected $table = 'pedidos';
+	protected $fillable = [
 		'id',
 		'empresa_id',
 		'estado',
 		'comentario',
 		'latitud',
-        'longitud',
-        'direccion',
+		'longitud',
+		'direccion',
 		'meta_latitud',
 		'meta_longitud',
 		'user_id',
 		'tipo_id',
 		'created_at',
 		'updated_at'
-    ];
+	];
+	//update_at as fecha_entrega
+	protected $casts = [
+		'updated_at' => 'datetime:d/m/Y h:i a',
+		'fecha_entrega' => 'datetime:d/m/Y h:i a'
+	];
 
-	public static function listar($empresa_id, $tipo){
+	public static function listar($empresa_id, $tipo, $fecha){
 		$where = array('pedidos.empresa_id' => $empresa_id);
 		if ($tipo == 'Todo'){
 			$where['pedidos.estado'] = 'Pendiente';
@@ -36,27 +41,41 @@ class Pedidos extends Model
 			$where['pedidos.estado'] = 'Aceptado';
 			$where['pedidos.tipo_id'] = 1;
 		}
-		return static::consultaPedido($where);
+		if ($tipo == 'listarPedidos'){
+			$where['pedidos.estado'] = 'ENTREGADO';
+		}
+		$bul = false;
+		if ($fecha != 'Hoy'){
+			$bul = true;
+		}
+		else{
+			$fecha = '';
+		}
+		return static::consultaPedido($where, $bul, $fecha);
 	}
 	public static function obtenerPedido($id_pedido){
 		$where = array('pedidos.id' => $id_pedido);
-		return static::consultaPedido($where)->first();
+		return static::consultaPedido($where, false, '')->first();
 	}
-	public static function consultaPedido($where){
-		return Pedidos::where($where)
-			->select(
-				'pedidos.id as idpedido',
-				DB::raw("GROUP_CONCAT(dp.producto_id) as ids"),
-				DB::raw("GROUP_CONCAT(dp.cantidad) as cantidades"),
-				'personas.id as idusuario',
-				DB::raw("CONCAT(personas.appaterno, ' ', personas.apmaterno, ', ', personas.nombres) as nombres"),
-				//'personas.nombres',
-				//'personas.appaterno',
-				//'personas.apmaterno',
-				'personas.celular',
-				'personas.direccion',
-				'te.nombre as tipo_entrega'
-			)
+	public static function consultaPedido($where, $bul, $fecha){
+		$select = array(
+			'pedidos.id as idpedido',
+			DB::raw("GROUP_CONCAT(dp.producto_id) as ids"),
+			DB::raw("GROUP_CONCAT(dp.cantidad) as cantidades")
+		);
+		if ($bul){
+			$select[] = DB::raw("sum(dp.precio_unit * dp.cantidad) as monto");
+			$select[] = 'pedidos.updated_at as fecha_entrega';
+		}
+		else{
+			$select[] = 'personas.id as idusuario';
+			$select[] = DB::raw("CONCAT(personas.appaterno, ' ', personas.apmaterno, ', ', personas.nombres) as nombres");
+			$select[] = 'personas.celular';
+			$select[] = 'personas.direccion';
+			$select[] = 'te.nombre as tipo_entrega';
+		}
+		return Pedidos::whereRaw('pedidos.updated_at like ?', $fecha.'%')->where($where)
+			->select($select)
 			->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
 			->join('users as u', 'u.id', '=', 'pedidos.user_id')
 			->join('personas as personas', 'personas.id', '=', 'u.persona_id')
@@ -110,14 +129,17 @@ class Pedidos extends Model
 			->get();
 	}
 	public static function asignar($idpedido, $idrepartidor){
-		Pedidos::where('id', $idpedido)
-			->update([
-				'estado' => 'ENVIANDO'
-			]);
-		return PedidosUsers::create([
+		Pedidos::where('id', $idpedido)->update(['estado' => 'ENVIANDO']);
+
+        $asignacion = Asignacion::create([
+            'user_id' => $idrepartidor
+        ]);
+
+        //ASIGNAR TODOS LOS PEDIDOS QUE LLEGAN AQUI
+        return PedidosUsers::create([
 				'pedidos_id' => $idpedido,
-				'users_id' => $idrepartidor
-			]);
+				'asignacion_id' => $asignacion->id
+		]);
 	}
 }
 

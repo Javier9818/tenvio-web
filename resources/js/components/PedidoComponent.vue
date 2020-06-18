@@ -326,7 +326,7 @@
 						'success'
 					)
 					.then(()=>{
-						//location.reload();
+						location.reload();
 					});
 				})
 				.catch(()=>{

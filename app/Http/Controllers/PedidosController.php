@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Pedidos;
@@ -40,21 +39,25 @@ class PedidosController extends Controller
     }
 
 	static function listartodo(Request $request){
-		return static::listarPedidos('Todo', $request);
+		return static::listarPedidos('Todo', 'Hoy', $request);
 	}
 
 	static function listarrecepcion(Request $request){
-		return static::listarPedidos('Recepcion', $request);
+		return static::listarPedidos('Recepcion', 'Hoy', $request);
 	}
 
 	static function listardelivery(Request $request){
-		return static::listarPedidos('Delivery', $request);
+		return static::listarPedidos('Delivery', 'Hoy', $request);
 	}
 
-	static function listarPedidos($tipo, $request){
+	static function listarentregadofecha($fecha, Request $request){
+		return static::listarPedidos('Entregado', $fecha, $request);
+	}
+
+	static function listarPedidos($tipo, $fecha, $request){
         $empresa_id = session('empresa');
 		$datos = array();
-		$datos['pedidos'] = Pedidos::listar($empresa_id, $tipo);
+		$datos['pedidos'] = Pedidos::listar($empresa_id, $tipo, $fecha);
 		$datos['productos_pedido'] = Producto::listarProductosDePedido($empresa_id);
 		if ($tipo == 'Todo')
 			$datos['categorias_productos'] = CategoriasMenusController::listarvselect($request)->original;
@@ -86,7 +89,12 @@ class PedidosController extends Controller
         $idCliente = $request->get('idusuario');
         Pedidos::aceptar($idpedido);
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ACEPTADO'], $idCliente));} catch (\Throwable $th) {}
-	}
+    }
+
+    static function cancelaByRepartidor(Request $request){
+        $pedido = Pedidos::where('id', $request->pedido)->update(['estado' => 'REPORTADO','comentario' => 'Problemas en la entrega']);
+        return response()->json([$pedido]);
+    }
 
 	static function cancelar(Request $request){
 		$idpedido = $request->get('idpedido');

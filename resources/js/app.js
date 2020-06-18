@@ -12,6 +12,7 @@ Vue.use(IconsPlugin)
 
 
 
+
 //bustrapVue
 //import { BootstrapVueIcons } from 'bootstrap-vue'
 //Vue.use(BootstrapVueIcons)
@@ -83,6 +84,7 @@ Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
 Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default);
 
 Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue').default);
+Vue.component('card-map', require('./components/maps/CardMapComponent.vue').default);
 
 //FRONT CLIENTE
 Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
