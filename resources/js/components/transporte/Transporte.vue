@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a href="javascript:void(0)" @click="modeMap = !modeMap">{{modeMap ? 'Modo lista': 'Modo mapa'}}</a>
+        <a href="javascript:void(0)" @click="modeMap = !modeMap" class="link_map"> <i class="fa fa-edit"></i> {{modeMap ? 'Modo lista': 'Modo mapa'}}</a>
         <div v-if="!modeMap">
             <b-table responsive striped hover :items="items" :fields="fields">
                 <template v-slot:cell(opciones)="row">
@@ -37,7 +37,7 @@
                             <b-button  class="btn-primary" @click="entregaPedido(infoModal.data.id)">
                             Entregar
                             </b-button>
-                            <b-button  class="btn-danger">
+                            <b-button  class="btn-danger" @click="cancelaPedido(infoModal.data.id)">
                                 Cancelar
                             </b-button>
                         </div>
@@ -134,3 +134,9 @@
         }
     }
 </script>
+
+<style scoped>
+.link_map{
+    font-size: 1.7em;
+}
+</style>

@@ -55,12 +55,13 @@ class GeneralController extends Controller
     public function vistaTransporte(){
         $pedidos = DB::table('pedidos')
                 ->join("pedidos_users", "pedidos_users.pedidos_id", "pedidos.id")
+                ->join("asignacion", "asignacion.id", "pedidos_users.asignacion_id")
                 ->join("users", "users.id", "=", "pedidos.user_id")
                 ->join("personas", "personas.id", "=", "users.persona_id")
                 ->join("detalle_pedidos", "detalle_pedidos.pedido_id", "=", "pedidos.id")
                 ->selectRaw('pedidos.id, CONCAT(personas.appaterno ," ", personas.apmaterno ," ",personas.nombres) as cliente,
                 pedidos.direccion, pedidos.monto, pedidos.latitud, pedidos.longitud, personas.celular')
-                ->whereRaw("pedidos_users.users_id= ? and pedidos.estado ='ENVIANDO'", [Auth::id()])
+                ->whereRaw("asignacion.user_id= ? and pedidos.estado ='ENVIANDO'", [Auth::id()])
                 ->groupBy("pedidos.id")
                 ->get();
         return view('admin.transporte.transporte', ["empresa" => session('empresa'), "pedidosAsignados" => $pedidos]);
