@@ -5,7 +5,7 @@
             <b-table responsive striped hover :items="items" :fields="fields">
                 <template v-slot:cell(opciones)="row">
                     <b-button size="sm" class="mr-2 btn-primary" @click="entregaPedido(row.item.id)">
-                        Listo
+                        Entregar
                     </b-button>
                     <b-button size="sm" class="mr-2 btn-danger" @click="cancelaPedido(row.item.id)">
                         Cancelar
