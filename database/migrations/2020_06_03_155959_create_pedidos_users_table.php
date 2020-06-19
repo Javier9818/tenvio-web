@@ -15,9 +15,9 @@ class CreatePedidosUsersTable extends Migration
     {
         Schema::create('pedidos_users', function (Blueprint $table) {
             $table->id();
-			$table->integer('users_id');
+			$table->integer('asignacion_id');
 			$table->integer('pedidos_id');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

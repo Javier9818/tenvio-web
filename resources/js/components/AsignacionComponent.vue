@@ -67,18 +67,20 @@ export default {
 				operacion = '/asignar';
 			else
 				return;
-			var idpedido = this.pedidoSeleccionado.idpedido;
+			var pedidos = this.pedidoSeleccionado;
 			var that = this;
 			axios.post(this.ruta+operacion, {
 				comentario:comentario,
-				idpedido:idpedido,
+				pedidos:pedidos,
 				idrepartidor:idrepartidor
 			})
 			.then(function (response) {
 				let datos = response.data;
+				/*
 				that.pedidos.splice(that.indexPedidoSeleccionado, 1);
 				that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
 				that.indexPedidoSeleccionado = -1;
+				*/
 				Swal.fire(
 					'Éxito',
 					'Los cambios se realizaron correctamente',
@@ -100,7 +102,7 @@ export default {
 			var that = this;
 			Swal.fire({
 				title: '¿Estás seguro?',
-				text: '¿Está seguro que desea Asignar este pedido?',
+				text: '¿Está seguro que desea Asignar este/estos pedido(s)?',
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -112,11 +114,16 @@ export default {
 					console.log(that.selected);
 					//that.pedidoSeleccionado = item;
 					var thet = that;
+					that.pedidoSeleccionado = that.selected;
+					that.cambiaestado('Asignar', '', true, this.selectRepartidor);
+					/*
+					that.pedidoSeleccionado = that.selected
 					that.selected.forEach((item, index) => {
 						this.indexPedidoSeleccionado = index;
 						thet.pedidoSeleccionado = item;
 						that.cambiaestado('Asignar', '', true, this.selectRepartidor)
 					});
+					*/
 				}
 			})
 		},

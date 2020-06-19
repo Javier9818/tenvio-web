@@ -8,7 +8,8 @@ class PedidosUsers extends Model
     protected $table = 'pedidos_users';
     protected $fillable = [
 		'id',
-		'pedidos_id',
-		'users_id'
+        'pedidos_id',
+        'asignacion_id'
     ];
+    public $timestamps = false;
 }
