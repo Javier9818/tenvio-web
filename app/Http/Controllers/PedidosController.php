@@ -36,12 +36,39 @@ class PedidosController extends Controller
 		else if ($funcion == 'entregar') return $this->entregar($request);
 		else if ($funcion == 'asignar') return $this->asignar($request);
 		else if ($funcion == 'cancelartodos') return $this->cancelartodos($request);
+		else if ($funcion == 'listaxRepartidor') return $this->listaxRepartidor($request);
 		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
 		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
 		else if ($funcion == '4') return view('admin.pedidos.estadoPedido', ["empresa" => session('empresa')]);
 		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
     }
 
+	static function listaxRepartidor(Request $request)
+	{
+		try {
+      return DB::table('asignacion')
+      ->join('users', 'users.id', '=', 'asignacion.user_id')
+			->join('pedidos_users', 'asignacion.id', '=', 'pedidos_users.asignacion_id')
+			->join('pedidos', 'pedidos.id', '=', 'pedidos_users.pedidos_id')
+			->join('detalle_pedidos', 'detalle_pedidos.pedido_id', '=', 'pedidos.id')
+			->select('pedidos.id as Idpedido','pedidos.direccion as Direccion',
+					DB::raw('sum(detalle_pedidos.precio_unit*detalle_pedidos.cantidad) as Monto')
+				)
+      ->where(
+				[
+					['asignacion.created_at','=',$request->get('fecha')],
+					['asignacion.user_id','=',$request->get('user')]
+				]				
+				)
+      ->get();
+      
+    } catch (\Exception  $e) {
+			return [
+				'Message'=> $e->getMessage(),
+				'success'=>false
+			];
+	 }
+	}
 	static function listartodo(Request $request){
 		return static::listarPedidos('Todo', 'Hoy', $request);
 	}
