@@ -3262,6 +3262,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3290,7 +3291,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     funAdd: function funAdd(key, index) {
+      var _this = this;
+
       this.producto = this.productos[index];
+      this.generaTotal(this.producto.empresa, this.productos);
 
       switch (key) {
         case '+':
@@ -3306,6 +3310,11 @@ __webpack_require__.r(__webpack_exports__);
           break;
       }
 
+      this.empresas.forEach(function (element) {
+        if (element.empresa = _this.producto.empresa) {
+          element.total = _this.generaTotal(_this.producto.empresa, _this.productos);
+        }
+      });
       this.productos[index] = this.producto;
       var cockie = this.productos;
       this.$cookies.set('carrito', JSON.stringify(cockie));
@@ -3343,17 +3352,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     tiposEntregaData: function tiposEntregaData(id) {
-      var _this = this;
+      var _this2 = this;
 
       setTimeout(function () {
-        _this.tipoPedidos.forEach(function (element) {
+        _this2.tipoPedidos.forEach(function (element) {
           if (element.id == id) {
-            _this.tipoPedidosTemp.push(element);
+            _this2.tipoPedidosTemp.push(element);
           }
         });
 
-        console.log(_this.tipoPedidosTemp);
-        return _this.tipoPedidosTemp;
+        console.log(_this2.tipoPedidosTemp);
+        return _this2.tipoPedidosTemp;
       }, 1500);
     },
     tiposEntrega: function tiposEntrega() {
@@ -3368,6 +3377,8 @@ __webpack_require__.r(__webpack_exports__);
       return params.toFixed(2);
     },
     distinct: function distinct(array) {
+      var _this3 = this;
+
       return Array.from(new Set(array.map(function (s) {
         return s.empresa;
       }))).map(function (empresa) {
@@ -3380,9 +3391,20 @@ __webpack_require__.r(__webpack_exports__);
           tipoEntrega: 0,
           lat: 0,
           lng: 0,
-          direccion: ''
+          direccion: '',
+          total: _this3.generaTotal(empresa, array)
         };
       });
+    },
+    generaTotal: function generaTotal(empresa, array) {
+      var total = 0;
+      array.forEach(function (element) {
+        if (element.empresa == empresa) {
+          total += element.precio * element.cant;
+        }
+      });
+      console.log(total);
+      return total;
     },
     showModal: function showModal() {
       this.$refs['my-modal'].show();
@@ -3391,7 +3413,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs['my-modal'].hide();
     },
     setPedido: function setPedido(params) {
-      var _this2 = this;
+      var _this4 = this;
 
       this.marker = this.$refs.mapaComponent.marker;
 
@@ -3406,7 +3428,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Longitud: " + this.marker.getLatLng().lng);
         console.log("Latitud: " + this.marker.getLatLng().lat);
         this.empresas.forEach(function (element) {
-          element.lat = _this2.marker.getLatLng().lat, element.lng = _this2.marker.getLatLng().lng, element.direccion = _this2.direccion;
+          element.lat = _this4.marker.getLatLng().lat, element.lng = _this4.marker.getLatLng().lng, element.direccion = _this4.direccion;
         });
         var that = this;
         sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
@@ -3416,11 +3438,10 @@ __webpack_require__.r(__webpack_exports__);
           text: 'Aviso'
         }).then(function (result) {
           if (!result.value) return;
+          console.log(_this4.empresas[0].total);
           axios.post('/front/GeneraPedido', {
             empresas: that.empresas,
-            productos: that.productos,
-            total: that.total // ubicacion: that.ubicacion
-
+            productos: that.productos
           }).then(function (response) {
             //	console.log(response.data);
             var messsage = '';
@@ -3470,12 +3491,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     calcularTotal: function calcularTotal() {
-      var _this3 = this;
+      var _this5 = this;
 
       this.total = 0;
       var item;
       this.productos.forEach(function (element) {
-        _this3.total = _this3.total + element.precio * element.cant;
+        _this5.total = _this5.total + element.precio * element.cant;
       });
       return this.total;
     }
@@ -82206,111 +82227,141 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "tbody",
-                  _vm._l(_vm.productos, function(item, index) {
-                    return _c(
-                      "tr",
-                      { key: index, staticClass: "cart__product " },
-                      [
-                        empresa.name_empresa === item.name_empresa
-                          ? [
-                              _c("td", { staticClass: "cart__product-item" }, [
+                  [
+                    _vm._l(_vm.productos, function(item, index) {
+                      return _c(
+                        "tr",
+                        { key: index, staticClass: "cart__product " },
+                        [
+                          empresa.name_empresa === item.name_empresa
+                            ? [
                                 _c(
-                                  "div",
-                                  { staticClass: "cart__product-remove" },
+                                  "td",
+                                  { staticClass: "cart__product-item" },
                                   [
                                     _c(
-                                      "i",
-                                      {
-                                        staticClass: "cart__item-delete",
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.eliminar(index)
+                                      "div",
+                                      { staticClass: "cart__product-remove" },
+                                      [
+                                        _c(
+                                          "i",
+                                          {
+                                            staticClass: "cart__item-delete",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.eliminar(index)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("×")]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "cart__product-img" },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              "/storage/imgproductos/" +
+                                              item.foto,
+                                            alt: "product"
                                           }
-                                        }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "cart__product-title mt-1"
                                       },
-                                      [_vm._v("×")]
+                                      [_c("h6", [_vm._v(_vm._s(item.nombre))])]
                                     )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
-                                  "div",
-                                  { staticClass: "cart__product-img" },
+                                  "td",
+                                  { staticClass: "cart__product-price" },
+                                  [_vm._v("S/. " + _vm._s(item.precio))]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  { staticClass: "cart__product-quantity" },
                                   [
-                                    _c("img", {
-                                      attrs: {
-                                        src:
-                                          "/storage/imgproductos/" + item.foto,
-                                        alt: "product"
+                                    _c("i", {
+                                      staticClass:
+                                        "fa fa-minus decrease-qty text-danger  ",
+                                      staticStyle: { cursor: "pointer" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.funAdd("-", index)
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass: " px-2",
+                                        staticStyle: {
+                                          border: "lightgray 0.5px solid"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(item.cant))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("i", {
+                                      staticClass:
+                                        "fa fa-plus increase-qty text-success ",
+                                      staticStyle: { cursor: "pointer" },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.funAdd("+", index)
+                                        }
                                       }
                                     })
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
-                                  "div",
-                                  { staticClass: "cart__product-title mt-1" },
-                                  [_c("h6", [_vm._v(_vm._s(item.nombre))])]
+                                  "td",
+                                  { staticClass: "cart__product-total" },
+                                  [
+                                    _vm._v(
+                                      "\n                     S/. " +
+                                        _vm._s(item.precio * item.cant) +
+                                        "\n                 "
+                                    )
+                                  ]
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "cart__product-price" }, [
-                                _vm._v("S/. " + _vm._s(item.precio))
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                { staticClass: "cart__product-quantity" },
-                                [
-                                  _c("i", {
-                                    staticClass:
-                                      "fa fa-minus decrease-qty text-danger  ",
-                                    staticStyle: { cursor: "pointer" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.funAdd("-", index)
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass: " px-2",
-                                      staticStyle: {
-                                        border: "lightgray 0.5px solid"
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(item.cant))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("i", {
-                                    staticClass:
-                                      "fa fa-plus increase-qty text-success ",
-                                    staticStyle: { cursor: "pointer" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.funAdd("+", index)
-                                      }
-                                    }
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "cart__product-total" }, [
-                                _vm._v(
-                                  "\n                     S/. " +
-                                    _vm._s(item.precio * item.cant) +
-                                    "\n                 "
-                                )
-                              ])
-                            ]
-                          : _vm._e()
-                      ],
-                      2
-                    )
-                  }),
-                  0
+                              ]
+                            : _vm._e()
+                        ],
+                        2
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c("td", { attrs: { colspan: "3" } }),
+                      _c(
+                        "td",
+                        {
+                          staticClass: " text-center",
+                          staticStyle: {
+                            "font-weight": "bolder",
+                            "font-size": "1rem"
+                          }
+                        },
+                        [_vm._v("S/. " + _vm._s(empresa.total))]
+                      )
+                    ])
+                  ],
+                  2
                 )
               ])
             ])
