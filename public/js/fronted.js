@@ -4016,13 +4016,12 @@ __webpack_require__.r(__webpack_exports__);
         iconAnchor: [50, 50],
         // point of the icon which will correspond to marker's location
         // shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -20] // point from which the popup should open relative to the iconAnchor
+        popupAnchor: [-20, -50] // point from which the popup should open relative to the iconAnchor
 
       });
       this.marker = L.marker(LatLng, {
         draggable: 'true',
-        title: 'Mi ubicación',
-        icon: deliveryIcon
+        title: 'Mi ubicación'
       }).on('dragend', function (event) {
         var marker = event.target;
         var position = marker.getLatLng();
@@ -4035,6 +4034,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$emit('geoPosition', position);
       });
+      if (this.layer || this.layers) this.marker.setIcon(deliveryIcon);
       this.marker.addTo(this.map);
       this.marker.bindPopup("Esta es mi ubicación").openPopup();
       this.$emit('geoPosition', this.marker.getLatLng()); // console.log("Longitud: "+this.marker.getLatLng().lng);
