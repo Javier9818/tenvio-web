@@ -11,5 +11,5 @@ class PedidosUsers extends Model
         'pedidos_id',
         'asignacion_id'
     ];
-    protected $timestamps = false;
+    public $timestamps = false;
 }

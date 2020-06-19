@@ -23,6 +23,9 @@ class PedidosController extends Controller
 	public function fn3($funcion='', Request $request){
 		return $this->fn('3', $request);
 	}
+	public function fn4($funcion='', Request $request){
+		return $this->fn('4', $request);
+	}
     public function fn($funcion='', Request $request){
 		if ($funcion == 'listartodo') return $this->listartodo($request);
 		else if ($funcion == 'listarrecepcion') return $this->listarrecepcion($request);
@@ -35,6 +38,7 @@ class PedidosController extends Controller
 		else if ($funcion == 'cancelartodos') return $this->cancelartodos($request);
 		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
 		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
+		else if ($funcion == '4') return view('admin.pedidos.estadoPedido', ["empresa" => session('empresa')]);
 		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
     }
 
@@ -71,12 +75,23 @@ class PedidosController extends Controller
 	}
 
 	static function asignar(Request $request){
+		$idrepartidor = $request->get('idrepartidor');
+		$pedidos = $request->get('pedidos');
+		Pedidos::asignar($pedidos, $idrepartidor);
+		foreach ($pedidos as $item) {
+			$idCliente = $item['idusuario'];
+			try { event( new ChangeStateOrderEvent(["pedido" => $item, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
+		}
+	}
+	/*
+	static function asignar(Request $request){
         $idpedido = $request->get('idpedido');
         $idCliente = $request->get('idusuario');
 		$idrepartidor = $request->get('idrepartidor');
         Pedidos::asignar($idpedido, $idrepartidor);
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'ENVIANDO'], $idCliente));} catch (\Throwable $th) {}
 	}
+	*/
 
 	public static function entregar(Request $request){
 		$idpedido = $request->get('idpedido');

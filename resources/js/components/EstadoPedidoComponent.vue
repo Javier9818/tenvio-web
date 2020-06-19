@@ -1,10 +1,19 @@
 <template>
   <div>
-    <b-form-group label="Repartidor:" label-cols-md="4">
-      <!--<b-form-select v-model="selectRepartidor" :options="repartidores" class="mb-1"></b-form-select>-->
-	  <model-list-select v-model="selectRepartidor" :list="repartidores" option-value="id" option-text="nombres" placeholder="Seleccione Repartidor"></model-list-select>
-    </b-form-group>
-    <h4>{{selected.length}} pedidos seleccionados</h4>
+		<b-row>
+			<b-col cols="6">
+				<label for="example-datepicker">Choose a date</label>
+			 	<input type="date" v-model="value">
+				<p>Value: '{{ value }}'</p>
+			</b-col>
+			<b-col cols="6">
+				<b-form-group label="Repartidor:" label-cols-md="4">
+     		 <!--<b-form-select v-model="selectRepartidor" :options="repartidores" class="mb-1"></b-form-select>-->
+				<model-list-select v-model="selectRepartidor" :list="repartidores" option-value="id" option-text="nombres" placeholder="Seleccione Repartidor"></model-list-select>
+				</b-form-group> 
+			</b-col>
+		</b-row> 
+    
     <b-table
       ref="selectableTable"
       selectable
@@ -13,18 +22,7 @@
       :fields="fields"
       @row-selected="onRowSelected"
       responsive="sm"
-    >
-      <!-- Example scoped slot for select state illustrative purposes -->
-      <template v-slot:cell(selected)="{ rowSelected }">
-        <template v-if="rowSelected">
-          <span aria-hidden="true">&check;</span>
-          <span class="sr-only">Selected</span>
-        </template>
-        <template v-else>
-          <span aria-hidden="true">&nbsp;</span>
-          <span class="sr-only">Not selected</span>
-        </template>
-      </template>
+    > 
     </b-table><br><br>
     <p>
       <b-button size="sm" @click="selectAllRows">Seleccionar todos</b-button>
@@ -45,11 +43,12 @@ export default {
 			pedidos: [],
 			pedidoSeleccionado: [],
 			indexPedidoSeleccionado: -1,
-			fields: ['selected', 'idpedido', {key:'nombres', label:'Cliente'}, 'descripcion', 'direccion'],
+			fields: [  'idpedido', {key:'nombres', label:'Cliente'}, 'descripcion', 'direccion'],
 			repartidores:[],
 			items: [],
 			selectRepartidor: null,
-			selected: []
+			selected: [],
+			 value: ''
 		}
 	},
 	methods: {
@@ -67,20 +66,18 @@ export default {
 				operacion = '/asignar';
 			else
 				return;
-			var pedidos = this.pedidoSeleccionado;
+			var idpedido = this.pedidoSeleccionado.idpedido;
 			var that = this;
 			axios.post(this.ruta+operacion, {
 				comentario:comentario,
-				pedidos:pedidos,
+				idpedido:idpedido,
 				idrepartidor:idrepartidor
 			})
 			.then(function (response) {
 				let datos = response.data;
-				/*
 				that.pedidos.splice(that.indexPedidoSeleccionado, 1);
 				that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
 				that.indexPedidoSeleccionado = -1;
-				*/
 				Swal.fire(
 					'Éxito',
 					'Los cambios se realizaron correctamente',
@@ -102,7 +99,7 @@ export default {
 			var that = this;
 			Swal.fire({
 				title: '¿Estás seguro?',
-				text: '¿Está seguro que desea Asignar este/estos pedido(s)?',
+				text: '¿Está seguro que desea Asignar este pedido?',
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -114,16 +111,11 @@ export default {
 					console.log(that.selected);
 					//that.pedidoSeleccionado = item;
 					var thet = that;
-					that.pedidoSeleccionado = that.selected;
-					that.cambiaestado('Asignar', '', true, this.selectRepartidor);
-					/*
-					that.pedidoSeleccionado = that.selected
 					that.selected.forEach((item, index) => {
 						this.indexPedidoSeleccionado = index;
 						thet.pedidoSeleccionado = item;
 						that.cambiaestado('Asignar', '', true, this.selectRepartidor)
 					});
-					*/
 				}
 			})
 		},

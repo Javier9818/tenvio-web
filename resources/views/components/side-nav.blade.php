@@ -39,7 +39,7 @@
                 <li class="{{ $isSelected('4', '1') ? 'active' : '' }}"><a class="menu-item" href="/intranet/pedidos">Atención de pedidos</a></li>
                 <li class="{{ $isSelected('4', '2') ? 'active' : '' }}"><a class="menu-item" href="/intranet/pedidos-cocina">Entrega en local</a></li>
                 <li class="{{ $isSelected('4', '3') ? 'active' : '' }}"><a class="menu-item" href="/intranet/asignar-delivery">Asignar delivery</a></li>
-                <li class="{{ $isSelected('4', '4') ? 'active' : '' }}"><a class="menu-item" href="/intranet/asignar-delivery">Estado de pedidos</a></li>
+                <li class="{{ $isSelected('4', '4') ? 'active' : '' }}"><a class="menu-item" href="/intranet/estado-pedido">Estado de pedidos</a></li>
             </ul>
         </li>
         @endcan
