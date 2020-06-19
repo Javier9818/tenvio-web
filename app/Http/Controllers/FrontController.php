@@ -134,6 +134,7 @@ class FrontController extends Controller
   }
   public function GeneraPedido( Request $request)
   {
+    // return $request->get('total');
     try {
       foreach ($request->get('empresas') as $key => $empresa) {
         $pedido = Pedidos::create([
@@ -143,7 +144,7 @@ class FrontController extends Controller
             'user_id'=>Auth::id(),
             'tipo_id'=>$empresa['tipoEntrega'],
             'direccion'=>$empresa['direccion'],
-            'monto'=>$request['total']
+            'monto'=>$empresa['total']
         ]);
 
         //$details = array();
