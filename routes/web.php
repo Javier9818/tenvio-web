@@ -26,6 +26,7 @@ Route::get('/intranet/transporte', 'GeneralController@vistaTransporte')->middlew
 //Route::get('/intranet/pedidos-cocina', function () {return view('admin.pedidos.pedidosRecepcion');})->middleware('can:gestionar-pedidos, visit-company');
 //Route::get('/intranet/pedidos', function () {return view('admin.pedidos.pedidos');})->middleware('can:gestionar-pedidos, visit-company');
 //Route::get('/intranet/asignar-delivery', function () {return view('admin.pedidos.asignacionDelivery');})->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/estado-pedido', 'PedidosController@fn4')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/asignar-delivery', 'PedidosController@fn3')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos-cocina', 'PedidosController@fn2')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');

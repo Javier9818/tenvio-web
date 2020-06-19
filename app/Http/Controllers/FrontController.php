@@ -217,7 +217,6 @@ class FrontController extends Controller
 
   }
   public function BuscaxUbicacion($Ubicacion){
-
     try {
       $empresas =DB::table('empresas')
       ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
@@ -231,7 +230,6 @@ class FrontController extends Controller
     }
 }
   public function Empresa($nombre){
-
       try {
         $empresa =DB::table('empresas')
         ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
