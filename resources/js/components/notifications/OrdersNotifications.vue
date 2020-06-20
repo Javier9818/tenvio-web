@@ -2,7 +2,7 @@
     <li class="dropdown dropdown-notification nav-item">
         <a class="nav-link nav-link-label" href="javascript:void(0)" data-toggle="dropdown">
             <i class="ficon ft-bell bell-shake" id="notification-navbar-link"></i>
-            <span class="badge badge-pill badge-sm badge-danger badge-up badge-glow">{{orders.length + 3}}</span>
+            <span class="badge badge-pill badge-sm badge-danger badge-up badge-glow">{{orders.length + countIntelligence}}</span>
         </a>
         <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
             <div class="arrow_box_right">
@@ -20,37 +20,38 @@
                         </div>
                     </div>
                 </a>
-                <a href="/intranet/pedidos">
+                <a href="/intranet/pedidos" v-if="pendientes > 0">
                     <div class="media">
-                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
+                        <div class="media-left align-self-center"><i class="ft-alert-circle font-medium-4 mt-2 warning"></i></div>
                         <div class="media-body">
                         <h6 class="media-heading secondary">{{pendientes}} pedidos pendientes</h6>
                         </div>
                     </div>
                 </a>
-                <a href="/intranet/pedidos">
+                <a href="/intranet/asignar-delivery" v-if="aceptadas > 0">
                     <div class="media">
-                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
+                        <div class="media-left align-self-center"><i class="ft-alert-circle font-medium-4 mt-2 warning"></i></div>
                         <div class="media-body">
                         <h6 class="media-heading secondary">{{aceptadas}} pedidos aceptados</h6>
                         </div>
                     </div>
                 </a>
-                <a href="/intranet/pedidos">
+                <a href="/intranet/transporte" v-if="enviadas > 0">
                     <div class="media">
-                        <div class="media-left align-self-center"><i class="ft-save font-medium-4 mt-2 warning"></i></div>
+                        <div class="media-left align-self-center"><i class="ft-alert-circle font-medium-4 mt-2 warning"></i></div>
                         <div class="media-body">
                         <h6 class="media-heading secondary">{{enviadas}} pedidos en transporte</h6>
                         </div>
                     </div>
                 </a>
-                <!-- <a href="javascript:void(0)" v-if="orders.length === 0">
+                <a href="javascript:void(0)" v-if="orders.length + countIntelligence === 0">
                     <div class="media">
+                        <div class="media-left align-self-center"><i class="ft-check font-medium-4 mt-2 success"></i></div>
                         <div class="media-body">
-                            <h6 class="media-heading info">No tiene nuevos pedidos</h6>
+                            <h6 class="media-heading ">No tiene nuevas notificaciones</h6>
                         </div>
                     </div>
-                </a> -->
+                </a>
 
                 <!--
                 <a href="javascript:void(0)">
@@ -90,7 +91,7 @@
                     </div>
                 </div> -->
             </li>
-            <li class="dropdown-menu-footer"><a class="dropdown-item info text-right pr-1" href="/intranet/pedidos">Ver todos</a></li>
+            <li class="dropdown-menu-footer"><a class="dropdown-item info text-right pr-1" href="/intranet/pedidos">Ver pedidos</a></li>
             </div>
         </ul>
     </li>
@@ -105,6 +106,7 @@
                     this.pendientes = data.ordenesPendientes;
                     this.aceptadas = data.ordenesAceptadas;
                     this.enviadas = data.ordenesEnviadas;
+                    this.countIntelligence = (data.ordenesPendientes > 0 ? 1:0) + (data.ordenesAceptadas > 0 ? 1:0) + (data.ordenesEnviadas > 0 ? 1:0);
 				})
 				.catch(()=>{
 					Swal.fire(
@@ -119,7 +121,8 @@
                 orders:[],
                 pendientes:0,
                 aceptadas:0,
-                enviadas:0
+                enviadas:0,
+                countIntelligence:0
             }
         },
         created(){

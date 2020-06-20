@@ -233,9 +233,8 @@ class FrontController extends Controller
   public function Empresa($nombre){
       try {
         $empresa =DB::table('empresas')
-        ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
         ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
-        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')
         // ->where('empresas.nombre','=',str_replace('-',' ',$nombre))
         ->where('empresas.nombre_unico','=', $nombre)
         ->get();

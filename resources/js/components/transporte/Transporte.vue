@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a href="javascript:void(0)" @click="modeMap = !modeMap" class="link_map"> <i class="fa fa-edit"></i> {{modeMap ? 'Modo lista': 'Modo mapa'}}</a>
+        <a href="javascript:void(0)" @click="modeMap = !modeMap" class=" btn btn-primary btn-sm mb-1"> <i class="ft-eye"></i> {{modeMap ? 'Ver en modo lista': 'Ver en modo mapa'}}</a>
         <div v-if="!modeMap">
             <b-table responsive striped hover :items="items" :fields="fields">
                 <template v-slot:cell(opciones)="row">
@@ -57,7 +57,6 @@
     import Swal from 'sweetalert2'
     export default {
         mounted() {
-            console.log('Component mounted.')
             this.items = pedidosAsignados;
         },
         data(){

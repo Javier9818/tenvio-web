@@ -44,11 +44,7 @@
                             @select="selectCategoria"
                         >
                         </multi-select>
-                        <!-- <b-form-select v-model="form.categorias" :options="optionsCategorias" text-field="descripcion" value-field="id" required>
-                            <template v-slot:first>
-                                <b-form-select-option :value="[]" disabled>-- Porfavor, elige una opción --</b-form-select-option>
-                            </template>
-                        </b-form-select> -->
+                        <p v-if="$v.form.categorias.$error" class="help text-danger">Debe de seleccionar un elemento</p>
                     </b-overlay>
                 </div>
 
@@ -209,6 +205,9 @@
                     required,
                     text,
                     maxLength:maxLength(150)
+                },
+                categorias:{
+                    required
                 }
             }
         },

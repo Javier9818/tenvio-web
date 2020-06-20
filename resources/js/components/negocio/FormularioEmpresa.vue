@@ -17,12 +17,31 @@
             <p v-if="$v.form.ruc.$error" class="help text-danger">Este campo es inválido</p>
         </div>
         <div class="col-md-6 mt-2">
-            <label>Categoría</label>
-            <b-form-select v-model="form.categoria" :options="optionsCategorias" required>
+             <label>Tipo de Negocio*</label>
+            <b-form-select v-model="form.tiponegocio" :options="optionsTipoNegocios" text-field="descripcion" value-field="id" @change="handleTipoNegocio" required>
                 <template v-slot:first>
                     <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
                 </template>
             </b-form-select>
+        </div>
+        <div class="col-md-12 mt-2">
+            <label>Categorias</label>
+            <b-overlay :show="loadCategorias" rounded spinner-small spinner-variant="primary">
+                <multi-select :options="optionsCategorias"
+                    :selected-options="form.categorias"
+                    option-value="value"
+                    option-text="text"
+                    placeholder="Seleccionar Categorias"
+                    @select="selectCategoria"
+                >
+                </multi-select>
+                <p v-if="$v.form.categorias.$error" class="help text-danger">Debe de seleccionar un elemento</p>
+                <!-- <b-form-select v-model="form.categorias" :options="optionsCategorias" text-field="descripcion" value-field="id" required>
+                    <template v-slot:first>
+                        <b-form-select-option :value="[]" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                    </template>
+                </b-form-select> -->
+            </b-overlay>
         </div>
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Descripción del negocio</label>
@@ -105,13 +124,14 @@
                 </b-form-select>
             </b-overlay>
         </div>
-        <div class="col-md-6 mt-2 ">
-            <button type="submit" class="btn btn-primary">{{edit}}</button>
+        <div class="col-md-6 mt-2">
+            <button type="submit" class="btn btn-primary btn-sm"> <i class="ft-save"></i> {{edit}}</button>
         </div>
     </form>
 </template>
 
 <script>
+    import { MultiSelect } from 'vue-search-select'
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
     const alpha = helpers.regex('alpha', /^[a-zA-Z0-9À-ÿ&#\u00f1\u00d1\s]*$/)
@@ -121,10 +141,7 @@
         props:['edit', 'form'],
         mixins: [validationMixin],
         mounted() {
-            console.log('Component mounted.')
-            console.log(empresa);
-            console.log(ciudades);
-            axios.get('/api/categorias').then(({data})=>{ this.optionsCategorias = data.categorias });
+            this.inicializa();
             axios.get('/json/departamentos.json').then(({data}) => {this.departamentos = data;});
             axios.get('/json/distritos.json').then(({data}) => {
                  data.forEach(distrito => {
@@ -152,7 +169,9 @@
         data(){
             return{
                 loadCiudades:false,
-                optionsCategorias:[],
+                loadCategorias:false,
+                optionsCategorias:categorias,
+                optionsTipoNegocios:tiponegocios,
                 provinciasGlobal:[],
                 distritosGlobal:[],
                 departamentos:[],
@@ -185,10 +204,34 @@
                 descripcion:{
                     text,
                     maxLength:maxLength(200)
+                },
+                categorias:{
+                    required
                 }
             }
         },
          methods: {
+            inicializa(){
+                const arrayCategorias =  empresa.categorias.split(',');
+                this.form.categorias = [];
+                categorias.forEach((v) => {
+                    if(arrayCategorias.includes((v.value).toString()))
+                    this.form.categorias.push(v);
+                });
+            },
+             selectCategoria(categorias, lastSelectItem){
+                this.form.categorias = categorias;
+                console.log(this.form.categorias);
+            },
+            handleTipoNegocio(){
+                this.loadCategorias = true;
+                axios.get(`/api/categorias/${this.form.tiponegocio}`).then(({data})=>{
+                    this.loadCategorias = false;
+                    this.form.categorias = [];
+                    this.optionsCategorias = data.categorias;
+                    console.log(data.categorias);
+                });
+            },
             update(){
                 this.$v.$touch()
                 console.log(this.$v.$invalid);
@@ -226,6 +269,10 @@
                     this.loadCiudades = false;
                 });
             },
-        }
+
+        },
+        components: {
+			MultiSelect
+		}
     }
 </script>

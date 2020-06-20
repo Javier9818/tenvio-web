@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\Contrato;
 use App\Empresa;
 use App\Ciudad;
+use App\TipoNegocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,10 +53,16 @@ class EmpresaController extends Controller
         $empresa->telefono = $request->telefono;
         $empresa->celular = $request->celular;
         $empresa->direccion = $request->direccion;
-        $empresa->categoria_id = $request->categoria;
         $empresa->ciudad_id = $request->ciudad_id;
 
-        $empresa->save();
+        DB::transaction(function () use ($empresa, $request){
+            $empresa->save();
+            DB::table('categoria_empresa')->where('empresa_id', $empresa->id)->delete();
+            foreach ($request->categorias as $key => $value) {
+                DB::insert('insert into categoria_empresa (empresa_id, categoria_id) values (?, ?)', [$empresa->id, $value['value']]);
+            }
+        });
+
         return response()->json(["message" => "Actualización exitosa"], 200);
     }
 
@@ -82,12 +90,24 @@ class EmpresaController extends Controller
         $idempresa = session('empresa');
         // $permisos = Auth::user()->permisoUser;
         // return dd($permisos[5]->descripcion);
-        $empresa = DB::select('select e.*, ci.nombre as ciudad, ci.distrito_id as distrito
+        $empresa = DB::select('select e.*, ci.nombre as ciudad, ci.distrito_id as distrito,
+                                GROUP_CONCAT(ce.categoria_id) as categorias,
+                                GROUP_CONCAT(ca.descripcion) as categoriasdes,
+                                tn.id as tiponegocio,
+                                tn.descripcion as tiponegociodes
                                 from empresas e
                                 inner join ciudad ci on ci.id = e.ciudad_id
-                                where e.id = ?', [$idempresa]);
+                                inner join categoria_empresa ce on ce.empresa_id = e.id
+                                inner join categorias ca on ca.id = ce.categoria_id
+                                inner join tipo_negocio tn on tn.id = ca.tipo_negocio_id
+                                where e.id = ?
+                                group by e.id', [$idempresa]);
         $ciudades = Ciudad::where('distrito_id', $empresa[0]->distrito)->get();
-        return view('admin.inicio', ["empresa" => $empresa[0], "ciudades" => $ciudades]);
+        $categorias = DB::table('categorias')->selectRaw('id as value, descripcion as text')
+                        ->where('tipo_negocio_id','=',$empresa[0]->tiponegocio)->get();
+        $tiponegocios = TipoNegocio::all();
+
+        return view('admin.inicio', ["empresa" => $empresa[0], "ciudades" => $ciudades, "tiponegocios" => $tiponegocios, "categorias" => $categorias]);
     }
 
     public function listarEmpresas(){
