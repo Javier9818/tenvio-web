@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Persona;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -20,12 +21,6 @@ class DatabaseSeeder extends Seeder
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [5, 'Repartidor delivery']);
         DB::insert('insert into permisos (id, descripcion) values (?, ?)', [6, 'Gestión de datos de negocio']);
 
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [1, 'POLLERIA']);
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [2, 'CHIFA']);
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [3, 'RESTAURANT']);
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [4, 'PIZZERIA']);
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [5, 'FUENTE DE SODA']);
-        DB::insert('insert into categorias (id, descripcion) values (?, ?)', [6, 'REPOSTERIA']);
 
         DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [1, 'DELIVERY']);
         DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [2, 'RECEPCIÓN EN LOCAL']);
@@ -74,7 +69,11 @@ class DatabaseSeeder extends Seeder
 				,$person2->id,
 				true
 			]
-		);
+        );
+
+        $this->call([
+            CategoriasSeeder::class,
+        ]);
 
     }
 }

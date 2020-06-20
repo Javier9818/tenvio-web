@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
 use App\Ciudad;
+use App\TipoNegocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,9 +32,16 @@ class GeneralController extends Controller
             return response()->json(["message" => false]);
     }
 
-    public function categoriasEmpresa(){
-        $categorias = DB::select('select id as value, descripcion as text from categorias');
+    public function categoriasEmpresa($tiponegocio){
+        $categorias = DB::table('categorias')
+        ->selectRaw('id as value, descripcion as text')
+        ->where('tipo_negocio_id', '=', $tiponegocio)->get();
         return response()->json(["categorias" => $categorias], 200);
+    }
+
+    public function tipoNegociosEmpresa(){
+        $tiponegocios = TipoNegocio::all();
+        return response()->json(["tiponegocios" => $tiponegocios]);
     }
 
     public function cargosEmpleado(){

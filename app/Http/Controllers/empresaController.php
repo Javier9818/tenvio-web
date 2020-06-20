@@ -14,29 +14,31 @@ class EmpresaController extends Controller
 {
 
     public function setEmpresa(Request $request){
+        DB::transaction(function () use ($request){
+            $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => $request->ciudadCreate, "distrito_id" => $request->distrito]))->id : $request->ciudad;
+            $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
 
-        $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => $request->ciudadCreate, "distrito_id" => $request->distrito]))->id : $request->ciudad;
-        $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
+            $empresa = Empresa::create([
+                "ruc" => $request->ruc,
+                "nombre" => $request->nombre,
+                "descripcion" => $request->descripcion,
+                "telefono" => $request->telefono,
+                "celular" => $request->celular,
+                "direccion" => $request->direccion,
+                "ciudad_id" => $ciudad,
+                "nombre_unico" => $usernameEmpresa
+            ]);
 
-        $empresa = Empresa::create([
-            "ruc" => $request->ruc,
-            "nombre" => $request->nombre,
-            "descripcion" => $request->descripcion,
-            "telefono" => $request->telefono,
-            "celular" => $request->celular,
-            "direccion" => $request->direccion,
-            "categoria_id" => $request->categoria,
-            "ciudad_id" => $ciudad,
-            "nombre_unico" => $usernameEmpresa
-        ]);
+            foreach ($request->categorias as $key => $value) {
+                DB::insert('insert into categoria_empresa (empresa_id, categoria_id) values (?, ?)', [$empresa->id, $value['value']]);
+            }
 
-        DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
-        DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
+            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
+            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
 
-        Contrato::create([
-            "empresa_id" => $empresa->id,
-            "estado" => 'PRUEBA'
-        ]);
+            Contrato::create(["empresa_id" => $empresa->id,"estado" => 'PRUEBA']);
+        });
+
 
         return response()->json(["message" => "Registro exitoso"], 200);
     }
@@ -80,9 +82,8 @@ class EmpresaController extends Controller
         $idempresa = session('empresa');
         // $permisos = Auth::user()->permisoUser;
         // return dd($permisos[5]->descripcion);
-        $empresa = DB::select('select e.*, c.descripcion as categoriaName, c.id as categoria, ci.nombre as ciudad, ci.distrito_id as distrito
+        $empresa = DB::select('select e.*, ci.nombre as ciudad, ci.distrito_id as distrito
                                 from empresas e
-                                inner join categorias c on e.categoria_id = c.id
                                 inner join ciudad ci on ci.id = e.ciudad_id
                                 where e.id = ?', [$idempresa]);
         $ciudades = Ciudad::where('distrito_id', $empresa[0]->distrito)->get();
