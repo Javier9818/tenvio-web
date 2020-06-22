@@ -1,15 +1,15 @@
 <template>
     <div style="padding: 2rem 3rem; text-align: left;" class="row">
-        <p class="text-center">Usuario</p>
+        <!-- <p class="text-center">Usuario</p> -->
         <div class="field col-12">
-            <label class="label">Nombres {{form.user}}</label>
+            <label class="label">Nombre de usuario</label>
             <div class="control">
-                <input :class="['input', ($v.form.user.$error) ? 'is-danger' : '']" v-model="form.user" type="text" placeholder="Ingrese nombres y apellidos de contacto">
+                <input :class="['input', ($v.form.user.$error) ? 'is-danger' : '']" v-model="form.user" type="text" placeholder="Ingrese un nombre de usuario">
             </div>
-            <p v-if="$v.form.user.$error" class="help is-danger">Este usuario ya existe o es invalido</p>
+            <p v-if="$v.form.user.$error" class="help is-danger">Este usuario ya existe o es inválido</p>
         </div>
         <div class="field col-12">
-            <label class="label">Contraseña {{form.password}}</label>
+            <label class="label">Contraseña</label>
             <div class="control">
                 <input :class="['input', ($v.form.password.$error) ? 'is-danger' : '']" v-model="form.password" type="text" placeholder="Ingrese apellidos paternos">
             </div>
@@ -62,7 +62,7 @@
             },
 
             clickedNext(val) {
-                console.log(val);
+                alert('siguiente');
                 if(val === true) {
                     this.$v.form.$touch();
                 }

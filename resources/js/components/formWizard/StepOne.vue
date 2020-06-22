@@ -1,34 +1,35 @@
 <template>
     <div style="padding: 2rem 3rem; text-align: left;" class="row">
         <div class="field col-12">
-            <label class="label" >Nombres {{form.names}}</label>
+            <label class="label" >Nombres</label>
             <div class="control">
                 <input type="text" v-model="form.names" :class="['input', ($v.form.names.$error) ? 'is-danger' : '']" placeholder="Ingrese  su nombre">
             </div>
         </div>
         <div class="field col-md-6">
-            <label class="label">Ap. Paterno  {{form.appaterno}}</label>
+            <label class="label">Ap. Paterno</label>
             <div class="control">
                 <input  type="text" v-model="form.appaterno" :class="['input', ($v.form.appaterno.$error) ? 'is-danger' : '']" placeholder="Ingrese su apellido paterno">
             </div>
         </div>
         <div class="field col-md-6">
-            <label class="label">Ap. Materno  {{form.apmaterno}}</label>
+            <label class="label">Ap. Materno</label>
             <div class="control">
                 <input  type="text" v-model="form.apmaterno" :class="['input', ($v.form.apmaterno.$error) ? 'is-danger' : '']" placeholder="Ingrese su apellido materno">
             </div>
         </div>
         <div class="field col-12">
-            <label class="label">Email {{form.correo}}</label>
+            <label class="label">Email</label>
             <div class="control">
                 <input type="email" v-model="form.correo" :class="['input', ($v.form.correo.$error) ? 'is-danger' : '']"  placeholder="Ingrese su correo electrónico" >
             </div>
         </div>
          <div class="field col-12">
-            <label class="label">Celular</label>
+            <label class="label">Celular * </label>
             <div class="control">
                 <input type="number" :class="['input', ($v.form.celular.$error) ? 'is-danger' : '']"  placeholder="Ingrese su número de celular" v-model="form.celular">
             </div>
+            <p class="ml-1">Su número de celular será utilizado como medio de contácto al realizar un pedido.</p>
             <p v-if="$v.form.celular.$error" class="help is-danger">Este campo es inválido</p>
         </div>
 
