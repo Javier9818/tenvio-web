@@ -47,6 +47,8 @@
     <script>
         let empresa = @json($empresa);
         let ciudades = @json($ciudades);
+        let tiponegocios = @json($tiponegocios);
+        let categorias = @json($categorias);
     </script>
 @endsection
 

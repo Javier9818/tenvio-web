@@ -24,8 +24,10 @@
     }"
     @change="onChange">
     </picture-input>
-    <button class="btn btn-primary mt-2" v-on:click="edit=!edit" v-if="!edit">Actualizar foto</button>
-    <button class="btn btn-primary mt-2" v-on:click="edit=!edit" v-else>Regresar</button>
+    <div class="row align-items-center justify-content-center" v-if="scope === 'true'">
+        <button class="btn btn-primary btn-sm mt-2" v-on:click="edit=!edit" v-if="!edit"><i class="ft-edit"></i> Actualizar foto</button>
+        <button class="btn btn-danger btn-sm mt-2" v-on:click="edit=!edit" v-else>Regresar</button>
+    </div>
    </div>
 </template>
 
@@ -33,10 +35,8 @@
     import PictureInput from 'vue-picture-input'
     import Swal from 'sweetalert2'
     export default {
-        props:['form'],
+        props:['form', 'scope'],
         mounted() {
-            console.log('Component mounted.')
-            console.log(empresa);
         },
         data(){
             return{

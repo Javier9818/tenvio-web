@@ -7,7 +7,11 @@
     <title>Perfil - </title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
+    {{-- <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script> --}}
+    {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <style>
         .card-body{
             padding: 0px !important;
@@ -146,13 +150,19 @@
                         <!-- Card content -->
                         <div class="card-body card-body-cascade text-center">
 
+
+
                           <!-- Title -->
-                          <h4 class="card-title"><strong>Javier Briceño</strong></h4>
+                        <h4 class="card-title"><strong>
+                            {{-- @foreach ($user as $item)
+                            {{$item->nombres. ' '.$item->appaterno.' '.$item->apmaterno}}
+                        @endforeach --}}
+                    </strong></h4>
                           <!-- Subtitle -->
-                          <h6 class="font-weight-bold indigo-text py-2">Usuario</h6>
+                          <h6 class="font-weight-bold indigo-text py-2 d-none">Usuario</h6>
                           <!-- Text -->
-                          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, ex, recusandae.
-                            Facere modi sunt, quod quibusdam.
+                          <p class="card-text">
+                              <clave-perfil></clave-perfil>
                           </p>
 
                           <!-- Facebook -->
@@ -166,7 +176,7 @@
 
                         <!-- Card footer -->
                         <div class="card-footer text-muted text-center">
-                          Actualizado hace 2 dias
+                            __
                         </div>
 
                       </div>
@@ -175,14 +185,14 @@
                 <div class="col-md-6">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                          <a class="nav-link active" id="home-tab"  data-toggle="tab" href="#home" role="tab" aria-controls="home"
                             aria-selected="true">Informacion</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" id="pedidos-tab" data-toggle="tab" href="#pedidos" role="tab" aria-controls="profile"
                             aria-selected="false">Pedidos</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-none">
                           <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
                             aria-selected="false">Otro</a>
                         </li>
@@ -191,7 +201,7 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <user-perfil></user-perfil>
                         </div>
-                        <div class="tab-pane fade" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade active" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
                             <front-pedidos-component></front-pedidos-component>
                         </div>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -203,17 +213,31 @@
                 </div> --}}
             </div>
 
+
+
         </form>
     </div>
     <script>
+
         let user = @json($user);
+
     </script>
-    <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
+
     {{-- <script src="{!! asset('assets/js/plugins.js') !!}"></script> --}}
     <!-- <script src="assets/js/wow.min.js"></script> -->
     <script src="{!! asset('assets/js/main.js') !!}"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script src="/js/app.js" type="text/javascript"></script>
+
+    <script>
+        $(function(){
+            $('#myTab').click(function (e) {
+                e.preventDefault()
+                $(this).tab('show');
+            });
+        });
+
+    </script>
 
 </body>
 </html>

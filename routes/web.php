@@ -28,6 +28,7 @@ Route::post('/intranet/ventas/{funcion}', 'ContabilidadController@fn')->middlewa
 Route::post('/intranet/pagos/{funcion}', 'ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
 
 Route::get('/intranet/asignar-delivery', 'PedidosController@fn3')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/estado-pedido', 'PedidosController@fn4')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos-cocina', 'PedidosController@fn2')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
 Route::post('/intranet/pedidos/{funcion}', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
@@ -64,7 +65,7 @@ Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbica
 Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('seguimiento');
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
-Route::get('/profile', 'UserController@getUser2')->middleware('auth');
+Route::get('/profile/my', 'UserController@getUser2')->middleware('auth');
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
 //Route::get('/list','EmpresaController@listarEmpresas');

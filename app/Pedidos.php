@@ -20,7 +20,8 @@ class Pedidos extends Model
 		'user_id',
 		'tipo_id',
 		'created_at',
-		'updated_at'
+		'updated_at',
+		'monto'
 	];
 	//update_at as fecha_entrega
 	protected $casts = [

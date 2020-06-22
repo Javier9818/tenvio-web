@@ -50,6 +50,7 @@
                     </td>
                   </template>
                 </tr>
+                <tr><td colspan="3"></td><td class=" text-center" style=" font-weight: bolder; font-size:1rem">S/. {{empresa.total}}</td></tr>
               </tbody>
             </table>
           </div><!-- /.cart-table -->
@@ -110,6 +111,7 @@ export default {
       funAdd: function (key,index) {
 
          this.producto=this.productos[index];
+         this.generaTotal(this.producto.empresa,this.productos);
         switch (key) {
           case '+':
             this.producto.cant++;
@@ -122,6 +124,13 @@ export default {
           default:
             break;
         }
+         
+        this.empresas.forEach(element => {
+          if(element.empresa=this.producto.empresa)
+          {
+            element.total=this.generaTotal(this.producto.empresa,this.productos);
+          }
+        });
          this.productos[index]=this.producto;
         let cockie=this.productos;
         this.$cookies.set('carrito',JSON.stringify(cockie))
@@ -200,10 +209,22 @@ export default {
               tipoEntrega:0,
               lat:0,
               lng:0,
-              direccion:''
+              direccion:'',
+              total:this.generaTotal(empresa, array)
             }
           }
         );
+      },
+      generaTotal: function (empresa,array) {
+        let total=0
+        array.forEach(element => {
+          if(element.empresa==empresa)
+          {
+            total+=element.precio*element.cant
+          }
+        });
+        console.log(total);
+        return total;
       },
       showModal() {
         this.$refs['my-modal'].show()
@@ -240,11 +261,11 @@ export default {
             }).then((result) => {
             if (!result.value)
                 return;
+                console.log(this.empresas[0].total);
             axios.post('/front/GeneraPedido', {
                 empresas: that.empresas,
                 productos: that.productos,
-                total: that.total
-                // ubicacion: that.ubicacion
+                
             })
             .then(function (response) {
             //	console.log(response.data);
@@ -298,7 +319,7 @@ export default {
         var item;
         this.productos.forEach(element => {
               this.total = this.total + (element.precio*element.cant);
-        });
+        });         
         return this.total;
       }
     },

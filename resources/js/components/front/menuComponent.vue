@@ -28,7 +28,7 @@
             <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
               <div class="product-item">
                 <div class="product__img align-items-center">
-                  <img :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
+                  <img style="width:300px; height:250px" :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
                   <div class="product__hover">
                     <div class="product__action">
                       <button type="button" class="btn__javier" @click="funSelecciona(item)">
