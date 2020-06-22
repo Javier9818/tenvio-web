@@ -3096,6 +3096,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    notifyPush: function notifyPush(message) {
+      Push.create("Nueva Notificacion", {
+        body: message,
+        icon: 'https://i.imgur.com/0LA2f7K.png',
+        timeout: 10000,
+        onClick: function onClick() {
+          this.close();
+        }
+      }); // function redirect(categoria){
+      // window.location.href = `/list/${categoria}`;
+      // }
+    },
     listPedidos: function listPedidos() {
       var that = this;
       axios.post('/front/ListPedido').then(function (response) {
@@ -3156,7 +3168,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.items.map(function (item) {
         if (item.pedido === data.pedido.idpedido) {
           item.state = data.state;
-          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : ''), "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
+          var messageNotify = "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : '');
+
+          _this.notifyPush(messageNotify);
+
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', messageNotify, "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
             location.href = '/pedidos';
           });
         }

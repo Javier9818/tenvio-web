@@ -35,10 +35,27 @@
         data(){
             return {
                 items: [
-                ]
+                ],
+
             }
         },
         methods:{
+
+            notifyPush: function(message){
+                Push.create("Nueva Notificacion",{
+                    body: message,
+                    icon: 'https://i.imgur.com/0LA2f7K.png',
+                    timeout: 10000,
+                    onClick: function(){
+                        this.close();
+                    }
+                });
+
+                // function redirect(categoria){
+                // window.location.href = `/list/${categoria}`;
+                // }
+            },
+
             listPedidos: function () {
                 var that = this;
                 axios.post('/front/ListPedido')
@@ -75,12 +92,19 @@
                     this.items.map( (item) => {
                         if(item.pedido === data.pedido.idpedido) {
                             item.state = data.state;
+
+
+                            var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
+                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
+
+                            this.notifyPush(messageNotify)
+
                             Swal.fire(
-                                'Cambio de estado',
-                                `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
-                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`,
+                               'Cambio de estado',
+                                messageNotify,
                                 `${data.state === 'CANCELADO' ? 'error' : 'success'}`
                             ).then((data) => {location.href = '/pedidos'});
+
 
                         }
                     });
