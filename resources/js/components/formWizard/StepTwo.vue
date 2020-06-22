@@ -11,7 +11,7 @@
         <div class="field col-12">
             <label class="label">Contraseña</label>
             <div class="control">
-                <input :class="['input', ($v.form.password.$error) ? 'is-danger' : '']" v-model="form.password" type="text" placeholder="Ingrese apellidos paternos">
+                <input :class="['input', ($v.form.password.$error) ? 'is-danger' : '']" v-model="form.password" type="password" placeholder="Ingrese apellidos paternos">
             </div>
             <p v-if="$v.form.password.$error" class="help is-danger">Este campo es inválido</p>
         </div>

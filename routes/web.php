@@ -29,6 +29,7 @@ Route::post('/intranet/pagos/{funcion}', 'ContabilidadController@fn')->middlewar
 
 Route::get('/intranet/asignar-delivery', 'PedidosController@fn3')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/estado-pedido', 'PedidosController@fn4')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/estado-pedido/{funcion}', 'PedidosController@DetalleAsignacion')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos-cocina', 'PedidosController@fn2')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
 Route::post('/intranet/pedidos/{funcion}', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
@@ -64,8 +65,12 @@ Route::get('/list/{Categoria}', 'FrontController@BuscaxCategoria')->name('Buscax
 Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('seguimiento');
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
+<<<<<<< HEAD
 Route::get('/profile', 'UserController@getUser2')->middleware('auth');
 Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbicacion');
+=======
+Route::get('/profile/my', 'UserController@getUser2')->middleware('auth');
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
 //Route::get('/list','EmpresaController@listarEmpresas');

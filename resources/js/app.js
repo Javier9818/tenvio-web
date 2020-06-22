@@ -59,6 +59,7 @@ Vue.component('pedido-component', require('./components/PedidoComponent.vue').de
 Vue.component('entrega-local-component', require('./components/EntregaLocalComponent.vue').default);
 Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);
 Vue.component('estado-pedido-component', require('./components/EstadoPedidoComponent.vue').default);
+Vue.component('detalle-asignacion-component', require('./components/DetalleAsignacionComponent.vue').default);
 Vue.component('form-empleado', require('./components/negocio/FormEmpleado.vue').default);
 Vue.component('table-empleados', require('./components/negocio/TableEmpleados.vue').default);
 Vue.component('info-empresa', require('./components/negocio/InformacionEmpresaComponent.vue').default);

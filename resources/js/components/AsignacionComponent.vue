@@ -76,18 +76,23 @@ export default {
 			})
 			.then(function (response) {
 				let datos = response.data;
-				/*
-				that.pedidos.splice(that.indexPedidoSeleccionado, 1);
-				that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
-				that.indexPedidoSeleccionado = -1;
-				*/
+				console.log(that.pedidos);
+				console.log(that.pedidoSeleccionado);
+				that.pedidoSeleccionado.forEach((item1, index1) => {
+					var bul = false;
+					that.pedidos.forEach((item2, index2) => {
+						if (item1.idpedido == item2.idpedido)
+							that.pedidos.splice(index2, 1);
+					});
+				});
 				Swal.fire(
 					'Éxito',
 					'Los cambios se realizaron correctamente',
 					'success'
 				)
 			})
-			.catch(()=>{
+			.catch((error)=>{
+				console.log(error);
 				Swal.fire(
 					'Error',
 					'Hubo un error inesperado, por favor contactese con el administrador del sistema',

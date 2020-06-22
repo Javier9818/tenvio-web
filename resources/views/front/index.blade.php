@@ -94,18 +94,5 @@
 @endsection
 
 @section('script')
-    <script>
-        Push.create("Hola mundo",{
-            body: "Este es el cuerpo",
-            icon: 'https://i.imgur.com/0LA2f7K.png',
-            timeout: 2000,
-            onClick: function(){
-                this.close();
-            }
-        });
 
-        function redirect(categoria){
-          window.location.href = `/list/${categoria}`;
-        }
-    </script>
 @endsection

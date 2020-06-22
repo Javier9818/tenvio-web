@@ -5,24 +5,28 @@
             <div class="control">
                 <input type="text" v-model="form.names" :class="['input', ($v.form.names.$error) ? 'is-danger' : '']" placeholder="Ingrese  su nombre">
             </div>
+            <p v-if="$v.form.names.$error" class="help is-danger">Este campo es inválido</p>
         </div>
         <div class="field col-md-6">
             <label class="label">Ap. Paterno</label>
             <div class="control">
                 <input  type="text" v-model="form.appaterno" :class="['input', ($v.form.appaterno.$error) ? 'is-danger' : '']" placeholder="Ingrese su apellido paterno">
             </div>
+            <p v-if="$v.form.appaterno.$error" class="help is-danger">Este campo es inválido</p>
         </div>
         <div class="field col-md-6">
             <label class="label">Ap. Materno</label>
             <div class="control">
                 <input  type="text" v-model="form.apmaterno" :class="['input', ($v.form.apmaterno.$error) ? 'is-danger' : '']" placeholder="Ingrese su apellido materno">
             </div>
+            <p v-if="$v.form.apmaterno.$error" class="help is-danger">Este campo es inválido</p>
         </div>
         <div class="field col-12">
             <label class="label">Email</label>
             <div class="control">
                 <input type="email" v-model="form.correo" :class="['input', ($v.form.correo.$error) ? 'is-danger' : '']"  placeholder="Ingrese su correo electrónico" >
             </div>
+            <p v-if="$v.form.correo.$error" class="help is-danger">Este campo es inválido</p>
         </div>
          <div class="field col-12">
             <label class="label">Celular * </label>

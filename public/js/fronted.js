@@ -2036,16 +2036,18 @@ var repoUrl = 'https://github.com/PygmySlowLoris/vue-stepper';
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                alert('up');
-                console.log(this.data);
+                //alert('up');
+                //console.log(this.data);
                 this.busy = true;
-                _context.next = 5;
+                _context.next = 3;
                 return axios.post('/api/usuarios', this.data).then(function (response) {
+                  _this.busy = false; // console.log(response.data.message);
+                })["catch"](function (e) {
                   _this.busy = false;
-                  console.log(response.data.message);
+                  alert('Usuario o Email incorrecto');
                 });
 
-              case 5:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2306,6 +2308,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+<<<<<<< HEAD
+=======
+//
+//
+//
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3091,6 +3099,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    notifyPush: function notifyPush(message) {
+      Push.create("Nueva Notificacion", {
+        body: message,
+        icon: 'https://i.imgur.com/0LA2f7K.png',
+        timeout: 10000,
+        onClick: function onClick() {
+          this.close();
+        }
+      }); // function redirect(categoria){
+      // window.location.href = `/list/${categoria}`;
+      // }
+    },
     listPedidos: function listPedidos() {
       var that = this;
       axios.post('/front/ListPedido').then(function (response) {
@@ -3151,7 +3171,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.items.map(function (item) {
         if (item.pedido === data.pedido.idpedido) {
           item.state = data.state;
-          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : ''), "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
+          var messageNotify = "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : '');
+
+          _this.notifyPush(messageNotify);
+
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', messageNotify, "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
             location.href = '/pedidos';
           });
         }
@@ -45040,7 +45064,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* fallback */\n@font-face {\r\n  font-family: \"Material Icons\";\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\r\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\r\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\r\n  font-family: \"Material Icons\";\r\n  font-weight: normal;\r\n  font-style: normal;\r\n  font-size: 24px;\r\n  line-height: 1;\r\n  letter-spacing: normal;\r\n  text-transform: none;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  word-wrap: normal;\r\n  direction: ltr;\r\n  -webkit-font-feature-settings: \"liga\";\r\n  -webkit-font-smoothing: antialiased;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* fallback */\n@font-face {\n  font-family: \"Material Icons\";\n  font-style: normal;\n  font-weight: 400;\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\n  font-family: \"Material Icons\";\n  font-weight: normal;\n  font-style: normal;\n  font-size: 24px;\n  line-height: 1;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-feature-settings: \"liga\";\n  -webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 // exports
 
@@ -45059,7 +45083,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -81222,11 +81246,21 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.names.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-md-6" }, [
+<<<<<<< HEAD
         _c("label", { staticClass: "label" }, [_vm._v("Ap. Paterno")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Paterno ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81250,11 +81284,21 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.appaterno.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-md-6" }, [
+<<<<<<< HEAD
         _c("label", { staticClass: "label" }, [_vm._v("Ap. Materno")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Materno ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81278,11 +81322,21 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.apmaterno.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
+<<<<<<< HEAD
         _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Email ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81309,7 +81363,13 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.correo.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
@@ -81609,8 +81669,15 @@ var render = function() {
       staticStyle: { padding: "2rem 3rem", "text-align": "left" }
     },
     [
+<<<<<<< HEAD
       _c("div", { staticClass: "field col-12" }, [
         _c("label", { staticClass: "label" }, [_vm._v("Nombre de usuario")]),
+=======
+      _c("p", { staticClass: "text-center" }, [_vm._v("-")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field col-12" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Usuario")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81647,7 +81714,11 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
+<<<<<<< HEAD
         _c("label", { staticClass: "label" }, [_vm._v("Contraseña")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Contraseña ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81660,7 +81731,10 @@ var render = function() {
               }
             ],
             class: ["input", _vm.$v.form.password.$error ? "is-danger" : ""],
-            attrs: { type: "text", placeholder: "Ingrese apellidos paternos" },
+            attrs: {
+              type: "password",
+              placeholder: "Ingrese apellidos paternos"
+            },
             domProps: { value: _vm.form.password },
             on: {
               input: function($event) {
@@ -82582,6 +82656,7 @@ var render = function() {
                         [
                           _c("img", {
                             staticClass: " img-fluid text-center",
+                            staticStyle: { width: "300px", height: "250px" },
                             attrs: {
                               src: "/storage/imgproductos/" + item.foto,
                               alt: "/storage/imgproductos/" + item.foto
@@ -98530,7 +98605,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
+module.exports = __webpack_require__(/*! C:\Users\RobertGutierrez\Desktop\Nortec\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
 
 
 /***/ })

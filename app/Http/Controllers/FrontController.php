@@ -176,29 +176,34 @@ class FrontController extends Controller
 
 
   public function ListEmpresas( Request $request){
+     
     try {
       $empresas =DB::table('empresas')
-      ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
-      // ->where('empresas.nombre','like','%'.$request->get('search').'%')
-      ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
+      ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
+      ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
+      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')     
+      ->where('empresas.nombre','like','%'.$request->get('search').'%')
+      // ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
+      ->groupBy('empresas.id')
       ->get();
-      if (count($empresas)>0) {
+      if (count($empresas)>0) {        
         return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search')]);
       }else{
+       
         $empresas =DB::table('empresas')
-        ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+        ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
+        ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$request->get('search').'%')
         ->get();
         if (count($empresas)>0) {
           return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search') ]);
         }
-        return view('front.listEmpresa', ["empresas" => null, 'search'=>$request->get('search')]);
+         return view('front.listEmpresa', ["empresas" => null, 'search'=>$request->get('search')]);
       }
 
     } catch (\Throwable $th) {
-
+       return view('front.listEmpresa', ["empresas" => null, 'search'=>$request->get('search')]);
     }
 
   }
@@ -206,7 +211,8 @@ class FrontController extends Controller
 
       try {
         $empresas =DB::table('empresas')
-        ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
+        ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
+        ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
         ->where('categorias.descripcion','like','%'.$Categoria.'%')
         ->get();
@@ -221,9 +227,11 @@ class FrontController extends Controller
     try {
       $empresas =DB::table('empresas')
       ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
-      ->join('categorias', 'categorias.id', '=', 'empresas.categoria_id')
-      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
+      ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
+      ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
+      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,categorias.descripcion as categoria')      
       ->where('ciudad.nombre','like','%'.$Ubicacion.'%')
+      ->groupBy('empresas.id')
       ->get();
       return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$Ubicacion]);
     } catch (\Throwable $th) {
