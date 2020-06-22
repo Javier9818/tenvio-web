@@ -29,6 +29,7 @@ Route::post('/intranet/pagos/{funcion}', 'ContabilidadController@fn')->middlewar
 
 Route::get('/intranet/asignar-delivery', 'PedidosController@fn3')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/estado-pedido', 'PedidosController@fn4')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/estado-pedido/{funcion}', 'PedidosController@DetalleAsignacion')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos-cocina', 'PedidosController@fn2')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/pedidos', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
 Route::post('/intranet/pedidos/{funcion}', 'PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');

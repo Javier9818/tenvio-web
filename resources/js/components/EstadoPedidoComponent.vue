@@ -3,8 +3,7 @@
 		<b-row>
 			<b-col cols="6">
 				<label for="example-datepicker">Elegir fecha</label>
-			 	<input type="date" v-model="date">
-				<p>Value: '{{ date }}'</p>
+			 	<input type="date" v-model="date">				 
 			</b-col>
 			<b-col cols="6">
 				<b-form-group label="Repartidor:" label-cols-md="4">
@@ -27,6 +26,11 @@
       :fields="fields" 
       responsive="sm"
     > 
+		 <template v-slot:cell(actions)="row">
+        <b-button size="sm" @click="details(row.item.IdAsignacion)" class="mr-2">
+         Ver Detalles
+        </b-button> 
+      </template>
     </b-table><br><br>
     <p>
        
@@ -46,7 +50,24 @@ export default {
 			pedidos: [],
 			pedidoSeleccionado: [],
 			indexPedidoSeleccionado: -1,
-			fields: [  'idpedido', {key:'nombres', label:'Cliente'}, 'descripcion', 'direccion'],
+			fields: [
+				{
+            key: 'IdAsignacion',
+            label: 'Asignación'
+        },
+				{
+            key: 'date',
+            label: 'Fecha'
+        },
+				{
+            key: 'mount',
+            label: 'Monto'
+        },
+				{
+            key: 'actions',
+            label: 'Acciones'
+        } 
+				],
 			repartidores:[],
 			items: [],
 			selectRepartidor: null,
@@ -55,16 +76,28 @@ export default {
 		}
 	},
 	methods: {
-	  
+	  montoPedido: function (params) {
+				var that = this; 			 
+			axios.post(this.ruta+'/MontoAsignacion', {idAsignacion:params.IdAsignacion})
+			.then(function (response) {	 
+				that.items.push(
+					{
+						IdAsignacion: params.IdAsignacion,						 
+						date:params.date,
+						mount:response.data[0].mount,						
+					}
+				);	 
+			});		 
+		},
 		cargarPedidos: function(){
-			var that = this;
-			console.log(this.selectRepartidor);
-			console.log(this.date);
-			axios.post(this.ruta+'/listaxRepartidor', {user:this.selectRepartidor,fecha:this.date})
-			.then(function (response) {			
-				console.log(response.data); 
-				that.items= response.data;
-				 
+			var that = this; 
+			that.items=[];
+			axios.post(this.ruta+'/ListaAsignaciones', {user:this.selectRepartidor,fecha:this.date})
+			.then(function (response) {		 
+				response.data.forEach(element => {
+					that.montoPedido(element);									
+				});
+			 
 			})
 			.catch(()=>{
 				Swal.fire(
@@ -93,6 +126,9 @@ export default {
 			})
 			.finally(()=>{
 			});
+		},
+		details: function (id) {
+			location.href="/intranet/estado-pedido/"+id;
 		}
 	},
 	mounted() {
