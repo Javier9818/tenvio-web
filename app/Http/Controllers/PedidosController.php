@@ -98,11 +98,8 @@ class PedidosController extends Controller
 		 foreach ($lista as $key => $value) {	 
 			$value->productos=	Producto::listarProductosDePedido2($value->idpedido);
 		 }
-		 return $lista;
-		//  return [
-		// 	 '0'=>$lista,
-		// 	 '1'=>$productos
-		//  ];
+	 
+		 return $lista;	 
     } catch (\Exception  $e) {
 			return [
 				'Message'=> $e->getMessage(),

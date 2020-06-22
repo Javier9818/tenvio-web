@@ -62,6 +62,7 @@ export default {
 				var that = this; 			 
 			axios.post(this.ruta+'/montoPedido', {idpedido:params.idpedido})
 			.then(function (response) {	 
+				console.log(params.productos);
 				that.pedidos.push(
 					{
 						idpedido: params.idpedido,			 

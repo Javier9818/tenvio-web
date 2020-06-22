@@ -33,8 +33,7 @@ class Producto extends Model
 		return Producto::where(['pe.id' => $pedido, 'productos.estado' => 1])
 			->select( 'productos.nombre','dp.cantidad','dp.precio_unit' ) 
 			->join('detalle_pedidos as dp', 'dp.producto_id', '=', 'productos.id')
-			->join('pedidos as pe', 'pe.id', '=', 'dp.pedido_id')
-			->distinct()
+			->join('pedidos as pe', 'pe.id', '=', 'dp.pedido_id')		 
 			->get();
 	}
 	public static function puedeEliminarse($id){
