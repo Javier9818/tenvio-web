@@ -11,7 +11,7 @@
 @section('header')
     <div class="content-header row">
         <div class="content-header-left col-md-4 col-12 mb-2">
-            <h3 class="content-header-title">Asignación de delivery</h3>
+            <h3 class="content-header-title">Estado del pedido</h3>
         </div>
         <div class="content-header-right col-md-8 col-12">
             <div class="breadcrumbs-top float-md-right">
@@ -19,7 +19,7 @@
                     <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/intranet">Inicio</a>
                     </li>
-                    <li class="breadcrumb-item active">Asignación de delivery
+                    <li class="breadcrumb-item active">Estado del pedido
                     </li>
                     </ol>
                 </div>

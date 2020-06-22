@@ -3,8 +3,7 @@
 		<b-row>
 			<b-col cols="6">
 				<label for="example-datepicker">Elegir fecha</label>
-			 	<input type="date" v-model="date">
-				<p>Value: '{{ date }}'</p>
+			 	<input type="date" v-model="date">				 
 			</b-col>
 			<b-col cols="6">
 				<b-form-group label="Repartidor:" label-cols-md="4">
@@ -46,7 +45,24 @@ export default {
 			pedidos: [],
 			pedidoSeleccionado: [],
 			indexPedidoSeleccionado: -1,
-			fields: [  'idpedido', {key:'nombres', label:'Cliente'}, 'descripcion', 'direccion'],
+			fields: [
+				{
+            key: 'Idpedido',
+            label: 'Pedido'
+        }, 
+				{
+            key: 'direccion',
+            label: 'Dirección'
+        },
+				{
+            key: 'date',
+            label: 'Fecha'
+        },
+				{
+            key: 'mount',
+            label: 'Monto'
+        }
+				],
 			repartidores:[],
 			items: [],
 			selectRepartidor: null,
@@ -55,16 +71,29 @@ export default {
 		}
 	},
 	methods: {
-	  
+	  montoPedido: function (params) {
+				var that = this; 			 
+			axios.post(this.ruta+'/montoPedido', {Idpedido:params.Idpedido})
+			.then(function (response) {	 
+				that.items.push(
+					{
+						Idpedido: params.Idpedido,
+						direccion:params.direccion,
+						date:params.date,
+						mount:response.data[0].mount
+					}
+				);	 
+			});		 
+		},
 		cargarPedidos: function(){
-			var that = this;
-			console.log(this.selectRepartidor);
-			console.log(this.date);
+			var that = this; 
+			that.items=[];
 			axios.post(this.ruta+'/listaxRepartidor', {user:this.selectRepartidor,fecha:this.date})
-			.then(function (response) {			
-				console.log(response.data); 
-				that.items= response.data;
-				 
+			.then(function (response) {		 
+				response.data.forEach(element => {
+					that.montoPedido(element);									
+				});
+			 
 			})
 			.catch(()=>{
 				Swal.fire(
