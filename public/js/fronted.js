@@ -2036,16 +2036,18 @@ var repoUrl = 'https://github.com/PygmySlowLoris/vue-stepper';
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                alert('up');
-                console.log(this.data);
+                //alert('up');
+                //console.log(this.data);
                 this.busy = true;
-                _context.next = 5;
+                _context.next = 3;
                 return axios.post('/api/usuarios', this.data).then(function (response) {
+                  _this.busy = false; // console.log(response.data.message);
+                })["catch"](function (e) {
                   _this.busy = false;
-                  console.log(response.data.message);
+                  alert('Usuario o Email incorrecto');
                 });
 
-              case 5:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2267,6 +2269,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
 //
 //
 //
@@ -81197,9 +81203,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Nombres " + _vm._s(_vm.form.names))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Nombres")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81223,13 +81227,17 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.names.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-md-6" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Ap. Paterno  " + _vm._s(_vm.form.appaterno))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Paterno ")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81253,13 +81261,17 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.appaterno.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-md-6" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Ap. Materno  " + _vm._s(_vm.form.apmaterno))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Materno ")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81283,13 +81295,17 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.apmaterno.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Email " + _vm._s(_vm.form.correo))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Email ")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81316,7 +81332,13 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.correo.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
@@ -81610,12 +81632,10 @@ var render = function() {
       staticStyle: { padding: "2rem 3rem", "text-align": "left" }
     },
     [
-      _c("p", { staticClass: "text-center" }, [_vm._v("Usuario")]),
+      _c("p", { staticClass: "text-center" }, [_vm._v("-")]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Nombres " + _vm._s(_vm.form.user))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Usuario")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81652,9 +81672,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Contraseña " + _vm._s(_vm.form.password))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Contraseña ")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81667,7 +81685,10 @@ var render = function() {
               }
             ],
             class: ["input", _vm.$v.form.password.$error ? "is-danger" : ""],
-            attrs: { type: "text", placeholder: "Ingrese apellidos paternos" },
+            attrs: {
+              type: "password",
+              placeholder: "Ingrese apellidos paternos"
+            },
             domProps: { value: _vm.form.password },
             on: {
               input: function($event) {

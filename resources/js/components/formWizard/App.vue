@@ -96,14 +96,18 @@
                 })
             },
             submit: async function (payload) {
-                alert('up');
-                console.log(this.data);
+                //alert('up');
+                //console.log(this.data);
                 this.busy = true;
                 await axios.post('/api/usuarios', this.data)
                 .then((response) => {
                     this.busy = false;
-                    console.log(response.data.message);
+                   // console.log(response.data.message);
+                }).catch(e => {
+                    this.busy = false;
+                    alert('Usuario o Email incorrecto')
                 });
+
             },
             handleData(payload){
                 this.data = {...this.data, ...payload}
