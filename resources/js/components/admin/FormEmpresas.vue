@@ -130,8 +130,8 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Cerrar</button>
-        <button type="submit" form="formEmpresa" class="btn btn-primary">Registrar</button>
+        <button type="button" class="btn btn-secondary" @click="close">Cerrar</button>
+        <button type="submit" form="formEmpresa" class="btn btn-primary">{{dataForm ? 'Activar' : 'Registrar'}}</button>
     </div>
 </div>
 </template>
@@ -145,11 +145,34 @@
     import Swal from 'sweetalert2'
     export default {
         mixins: [validationMixin],
+        props:['dataFields', 'dataForm'],
         mounted() {
-            axios.get('/json/departamentos.json').then(({data}) => { this.departamentos = data;});
-            axios.get('/json/provincias.json').then(({data}) => { this.provinciasGlobal = data });
-            axios.get('/json/distritos.json').then(({data}) => { this.distritosGlobal = data });
-            axios.get('/api/tipoNegocios').then(({data})=>{ this.optionsTipoNegocios = data.tiponegocios; });
+            if(this.dataFields){
+                this.departamentos = this.dataFields.departamentos
+                this.provinciasGlobal = this.dataFields.provinciasGlobal
+                this.distritosGlobal = this.dataFields.distritosGlobal
+            }else{
+                axios.get('/json/departamentos.json').then(({data}) => { this.departamentos = data;});
+                axios.get('/json/provincias.json').then(({data}) => { this.provinciasGlobal = data });
+                axios.get('/json/distritos.json').then(({data}) => { this.distritosGlobal = data });
+                // axios.get('/api/tipoNegocios').then(({data})=>{ this.optionsTipoNegocios = data.tiponegocios; });
+            }
+
+            if(this.dataForm){
+                console.log(this.dataForm)
+                this.form =
+                {
+                    ...this.form,
+                    ...this.dataForm,
+                    distrito: this.dataForm.ciudad_id,
+                    categorias: [],
+                    distritoName:'',
+                }
+                this.inicializa()
+                this.inicializaRegiones()
+                this.handleDistrito()
+
+            }
         },
         data() {
             return {
@@ -158,7 +181,7 @@
                 nuevaCiudad:false,
                 provinciasGlobal:[],
                 distritosGlobal:[],
-                optionsTipoNegocios: [],
+                optionsTipoNegocios: tiponegocios,
                 optionsCategorias:[],
                 departamentos:[],
                 provincias:[],
@@ -212,6 +235,39 @@
             }
         },
         methods:{
+            close(){
+                this.$emit('close');
+            },
+            inicializa(){
+                const arrayCategorias =  this.dataForm.categorias.split(',');
+                this.form.categorias = [];
+                categorias.forEach((v) => {
+                    if(arrayCategorias.includes((v.value).toString()))
+                        this.form.categorias.push(v);
+                    if(v.tiponegocio === this.dataForm.tiponegocio)
+                        this.optionsCategorias.push(v);
+                });
+            },
+            inicializaRegiones(){
+                this.distritosGlobal.forEach(distrito => {
+                    if( parseInt(distrito.id) === this.form.distrito){
+                        this.form.distritoName = distrito.name
+                        this.distritosGlobal.forEach( e => {
+                            if(parseInt(e.province_id) === parseInt(distrito.province_id)){
+                                this.distritos.push(e);
+                                this.form.provincia = e.province_id;
+                                this.form.departamento = e.department_id;
+                            }
+                        });
+                    }
+                });
+
+                this.provinciasGlobal.forEach( province => {
+                    if(province.department_id === this.form.departamento)
+                        this.provincias.push(province);
+                });
+
+            },
             selectCategoria(categorias, lastSelectItem){
                 this.form.categorias = categorias;
                 console.log(this.form.categorias);
@@ -228,17 +284,17 @@
             submit: async function(){
                 this.$v.$touch()
                 console.log(this.$v.$invalid);
-                if(!this.$v.$invalid){
-                    await axios.post('/api/empresa', this.form).then((data)=>{
-                        console.log(data);
-                        Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
-                            window.location.reload();
-                        });
-                    }).catch((error) => {
-                        console.log(error);
-                        Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
-                    });
-                }
+                // if(!this.$v.$invalid){
+                //     await axios.post('/api/empresa', this.form).then((data)=>{
+                //         console.log(data);
+                //         Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
+                //             window.location.reload();
+                //         });
+                //     }).catch((error) => {
+                //         console.log(error);
+                //         Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                //     });
+                // }
 
 
             },
