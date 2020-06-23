@@ -26,6 +26,11 @@
       :fields="fields" 
       responsive="sm"
     > 
+		 <template v-slot:cell(actions)="row">
+        <b-button size="sm" @click="details(row.item.IdAsignacion)" class="mr-2">
+         Ver Detalles
+        </b-button> 
+      </template>
     </b-table><br><br>
     <p>
        
@@ -47,12 +52,8 @@ export default {
 			indexPedidoSeleccionado: -1,
 			fields: [
 				{
-            key: 'Idpedido',
-            label: 'Pedido'
-        }, 
-				{
-            key: 'direccion',
-            label: 'Dirección'
+            key: 'IdAsignacion',
+            label: 'Asignación'
         },
 				{
             key: 'date',
@@ -61,7 +62,11 @@ export default {
 				{
             key: 'mount',
             label: 'Monto'
-        }
+        },
+				{
+            key: 'actions',
+            label: 'Acciones'
+        } 
 				],
 			repartidores:[],
 			items: [],
@@ -73,14 +78,13 @@ export default {
 	methods: {
 	  montoPedido: function (params) {
 				var that = this; 			 
-			axios.post(this.ruta+'/montoPedido', {Idpedido:params.Idpedido})
+			axios.post(this.ruta+'/MontoAsignacion', {idAsignacion:params.IdAsignacion})
 			.then(function (response) {	 
 				that.items.push(
 					{
-						Idpedido: params.Idpedido,
-						direccion:params.direccion,
+						IdAsignacion: params.IdAsignacion,						 
 						date:params.date,
-						mount:response.data[0].mount
+						mount:response.data[0].mount,						
 					}
 				);	 
 			});		 
@@ -88,7 +92,7 @@ export default {
 		cargarPedidos: function(){
 			var that = this; 
 			that.items=[];
-			axios.post(this.ruta+'/listaxRepartidor', {user:this.selectRepartidor,fecha:this.date})
+			axios.post(this.ruta+'/ListaAsignaciones', {user:this.selectRepartidor,fecha:this.date})
 			.then(function (response) {		 
 				response.data.forEach(element => {
 					that.montoPedido(element);									
@@ -122,6 +126,9 @@ export default {
 			})
 			.finally(()=>{
 			});
+		},
+		details: function (id) {
+			location.href="/intranet/estado-pedido/"+id;
 		}
 	},
 	mounted() {

@@ -26,6 +26,9 @@ class PedidosController extends Controller
 	public function fn4($funcion='', Request $request){
 		return $this->fn('4', $request);
 	}
+	public function fn5($funcion='', Request $request){
+		return $this->fn('5', $request);
+	}
     public function fn($funcion='', Request $request){
 		if ($funcion == 'listartodo') return $this->listartodo($request);
 		else if ($funcion == 'listarrecepcion') return $this->listarrecepcion($request);
@@ -36,38 +39,86 @@ class PedidosController extends Controller
 		else if ($funcion == 'entregar') return $this->entregar($request);
 		else if ($funcion == 'asignar') return $this->asignar($request);
 		else if ($funcion == 'cancelartodos') return $this->cancelartodos($request);
-		else if ($funcion == 'listaxRepartidor') return $this->listaxRepartidor($request);
+		else if ($funcion == 'ListaPedidos') return $this->ListaPedidos($request);
 		else if ($funcion == 'montoPedido') return $this->montoPedido($request);
+		else if ($funcion == 'MontoAsignacion') return $this->MontoAsignacion($request);
+		else if ($funcion == 'ListaAsignaciones') return $this->ListaAsignaciones($request);
 		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
 		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
 		else if ($funcion == '4') return view('admin.pedidos.estadoPedido', ["empresa" => session('empresa')]);
+ 
 		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
     }
-
+	
+	 
+	static function DetalleAsignacion($funcion)
+	{
+		return view('admin.pedidos.detalleAsignacion', 
+			[
+				"empresa" => session('empresa'),
+				"asignacion" => $funcion
+			]);
+	}
 	static function montoPedido(Request $request)
 	{
 		return  DB::table('Pedidos')
 		->join('detalle_pedidos', 'detalle_pedidos.pedido_id', '=', 'Pedidos.id')
 		->select(DB::raw('SUM(detalle_pedidos.cantidad*detalle_pedidos.precio_unit) as mount'))
-		->where('Pedidos.id','=',$request->get('Idpedido'))
+		->where('Pedidos.id','=',$request->get('idpedido'))
 		->get();	
 	}
-	static function listaxRepartidor(Request $request)
+	static function ListaPedidos(Request $request)
+	{
+		try { 			 
+			$lista= DB::table('asignacion')
+      ->join('users', 'users.id', '=', 'asignacion.user_id')
+			->join('pedidos_users', 'asignacion.id', '=', 'pedidos_users.asignacion_id')
+			->join('pedidos', 'pedidos.id', '=', 'pedidos_users.pedidos_id')		
+			->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
+			->join('users as u', 'u.id', '=', 'pedidos.user_id')
+			->join('personas as personas', 'personas.id', '=', 'u.persona_id')
+			->join('tipo_entregas as te', 'te.id', '=', 'pedidos.tipo_id')		 
+			->select( 
+				'pedidos.id as idpedido', 
+				'personas.id as idusuario',
+				DB::raw("CONCAT(personas.appaterno, ' ', personas.apmaterno, ', ', personas.nombres) as nombres"),
+				'personas.celular',
+				'personas.direccion',
+				'pedidos.estado as state',
+				'te.nombre as tipo_entrega'
+				)
+      ->where(
+				[					 
+					['asignacion.id','=',$request->get('id')]
+				]
+				)
+			->groupBy('pedidos.id')
+			->get();
+		
+		 foreach ($lista as $key => $value) {	 
+			$value->productos=	Producto::listarProductosDePedido2($value->idpedido);
+		 }
+	 
+		 return $lista;	 
+    } catch (\Exception  $e) {
+			return [
+				'Message'=> $e->getMessage(),
+				'success'=>false
+			];
+	 }
+	}
+	static function MontoAsignacion(Request $request)
 	{
 		try { 
 			return DB::table('asignacion')
       ->join('users', 'users.id', '=', 'asignacion.user_id')
 			->join('pedidos_users', 'asignacion.id', '=', 'pedidos_users.asignacion_id')
-			->join('pedidos', 'pedidos.id', '=', 'pedidos_users.pedidos_id')				 
-			->select(
-				'pedidos.id as Idpedido'
-				,'pedidos.direccion as direccion'
-				,'asignacion.created_at as date' 
-				)
+			->join('pedidos', 'pedidos.id', '=', 'pedidos_users.pedidos_id')			
+			->join('detalle_pedidos', 'detalle_pedidos.pedido_id', '=', 'Pedidos.id')
+			->select(DB::raw('SUM(detalle_pedidos.cantidad*detalle_pedidos.precio_unit) as mount')) 
       ->where(
-				[
-					['asignacion.created_at','like','%'.$request->get('fecha').'%'],
-					['asignacion.user_id','=',$request->get('user')]
+				[					 
+					['asignacion.id','=',$request->get('idAsignacion')]
 				]
 				)
 			->get();
@@ -79,6 +130,32 @@ class PedidosController extends Controller
 				'success'=>false
 			];
 	 }
+	}
+	static function ListaAsignaciones(Request $request)
+	{
+		try { 
+			return DB::table('asignacion')
+      ->join('users', 'users.id', '=', 'asignacion.user_id')
+			->join('pedidos_users', 'asignacion.id', '=', 'pedidos_users.asignacion_id') 
+			->select(
+				'asignacion.id as IdAsignacion'			 
+				,'asignacion.created_at as date' 
+				)
+      ->where(
+				[
+					['asignacion.created_at','like','%'.$request->get('fecha').'%'],
+					['asignacion.user_id','=',$request->get('user')]
+				]
+				)
+			->get();
+		  
+    } catch (\Exception  $e) {
+			return [
+				'Message'=> $e->getMessage(),
+				'success'=>false
+			];
+	 }
+		 
 	}
 	static function listartodo(Request $request){
 		return static::listarPedidos('Todo', 'Hoy', $request);

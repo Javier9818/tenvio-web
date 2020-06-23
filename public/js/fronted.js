@@ -2036,16 +2036,18 @@ var repoUrl = 'https://github.com/PygmySlowLoris/vue-stepper';
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                alert('up');
-                console.log(this.data);
+                //alert('up');
+                //console.log(this.data);
                 this.busy = true;
-                _context.next = 5;
+                _context.next = 3;
                 return axios.post('/api/usuarios', this.data).then(function (response) {
+                  _this.busy = false; // console.log(response.data.message);
+                })["catch"](function (e) {
                   _this.busy = false;
-                  console.log(response.data.message);
+                  alert('Usuario o Email incorrecto');
                 });
 
-              case 5:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2305,6 +2307,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+<<<<<<< HEAD
+=======
+//
+//
+//
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2670,7 +2679,7 @@ var alpha = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["helpers"].reg
       deep: true
     },
     clickedNext: function clickedNext(val) {
-      console.log(val);
+      alert('siguiente');
 
       if (val === true) {
         this.$v.form.$touch();
@@ -3090,6 +3099,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    notifyPush: function notifyPush(message) {
+      Push.create("Nueva Notificacion", {
+        body: message,
+        icon: 'https://i.imgur.com/0LA2f7K.png',
+        timeout: 10000,
+        onClick: function onClick() {
+          this.close();
+        }
+      }); // function redirect(categoria){
+      // window.location.href = `/list/${categoria}`;
+      // }
+    },
     listPedidos: function listPedidos() {
       var that = this;
       axios.post('/front/ListPedido').then(function (response) {
@@ -3150,7 +3171,11 @@ __webpack_require__.r(__webpack_exports__);
       _this.items.map(function (item) {
         if (item.pedido === data.pedido.idpedido) {
           item.state = data.state;
-          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : ''), "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
+          var messageNotify = "El pedido al negocio \"".concat(item.empresa, "\" con c\xF3digo ").concat(data.pedido.idpedido, " <br> ").concat(data.state == 'ENVIANDO' ? 'Se está ' : 'Ha sido ', " ").concat(data.state, "<br>\n                             ").concat(data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario : '');
+
+          _this.notifyPush(messageNotify);
+
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Cambio de estado', messageNotify, "".concat(data.state === 'CANCELADO' ? 'error' : 'success')).then(function (data) {
             location.href = '/pedidos';
           });
         }
@@ -45020,7 +45045,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nh1[data-v-5f1fe1cc]{\n    font-size: 1.2em;\n    font-family: Arial, Helvetica, sans-serif;\n    font-weight: bold;\n    padding: 10px;\n}\n.padre[data-v-5f1fe1cc]{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.card[data-v-5f1fe1cc]{\n    width: 100vw;\n    margin-top: 40px;\n}\n.section[data-v-5f1fe1cc]{\n    /* min-height: 100vh; */\n    /* background-image: url('/assets/images/backgrounds/LoginDelivery-02.png'); */\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-attachment: fixed;\n    background-size: cover;\n    background-color: rgba(255, 255, 255, 0);\n}\n#app[data-v-5f1fe1cc] {\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-align: center;\n    color: #2c3e50;\n}\n.pointer[data-v-5f1fe1cc] {\n    cursor: pointer;\n}\nh1[data-v-5f1fe1cc], h2[data-v-5f1fe1cc] {\n    font-weight: normal;\n}\nhr[data-v-5f1fe1cc] {\n    background-color: transparent;\n    border: none;\n    display: block;\n    height: inherit;\n    margin: 1.5rem 0;\n    border-top: dashed 1px;\n}\nli[data-v-5f1fe1cc] {\n    display: inline-block;\n    margin: 0 10px;\n}\na[data-v-5f1fe1cc] {\n    color: #0b99b9;\n    text-decoration: underline;\n}\n.text-medium-grey[data-v-5f1fe1cc] {\n    color: #333;\n}\n.text-light-grey[data-v-5f1fe1cc] {\n    color: #888;\n}\n.box.formated[data-v-5f1fe1cc] {\n    position: relative;\n    padding: 0;\n}\n.box.formated .heading[data-v-5f1fe1cc] {\n    font-size: 1rem;\n    text-transform: capitalize;\n    padding: .8rem 1.5rem;\n    background-color: #fafafa;\n}\n.box.formated .content[data-v-5f1fe1cc] {\n    padding: 1rem 2rem;\n}\ni.top-left[data-v-5f1fe1cc] {\n    position: absolute;\n    left: 1.5rem;\n    top: 0.8rem;\n}\n.vertical-separator[data-v-5f1fe1cc] {\n    display: flex;\n    justify-content: space-around;\n}\n.vertical-separator .line[data-v-5f1fe1cc] {\n    border-right: 1px solid #cccccc;\n}\n", ""]);
+exports.push([module.i, "\nhtml[data-v-5f1fe1cc]{\n    overflow-y: hidden !important;\n}\nh1[data-v-5f1fe1cc]{\n    font-size: 1.2em;\n    font-family: Arial, Helvetica, sans-serif;\n    font-weight: bold;\n    padding: 10px;\n}\n.padre[data-v-5f1fe1cc]{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n.card[data-v-5f1fe1cc]{\n    width: 100vw;\n    margin-top: 40px;\n}\n.section[data-v-5f1fe1cc]{\n    /* min-height: 100vh; */\n    padding-top: 2rem !important ;\n    background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');\n    background-position: center center;\n    background-repeat: no-repeat;\n    background-attachment: fixed;\n    background-size: cover;\n    background-color: rgba(255, 255, 255, 0);\n}\n#app[data-v-5f1fe1cc] {\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-align: center;\n    color: #2c3e50;\n}\n.pointer[data-v-5f1fe1cc] {\n    cursor: pointer;\n}\nh1[data-v-5f1fe1cc], h2[data-v-5f1fe1cc] {\n    font-weight: normal;\n}\nhr[data-v-5f1fe1cc] {\n    background-color: transparent;\n    border: none;\n    display: block;\n    height: inherit;\n    margin: 1.5rem 0;\n    border-top: dashed 1px;\n}\nli[data-v-5f1fe1cc] {\n    display: inline-block;\n    margin: 0 10px;\n}\na[data-v-5f1fe1cc] {\n    color: #0b99b9;\n    text-decoration: underline;\n}\n.text-medium-grey[data-v-5f1fe1cc] {\n    color: #333;\n}\n.text-light-grey[data-v-5f1fe1cc] {\n    color: #888;\n}\n.box.formated[data-v-5f1fe1cc] {\n    position: relative;\n    padding: 0;\n}\n.box.formated .heading[data-v-5f1fe1cc] {\n    font-size: 1rem;\n    text-transform: capitalize;\n    padding: .8rem 1.5rem;\n    background-color: #fafafa;\n}\n.box.formated .content[data-v-5f1fe1cc] {\n    padding: 1rem 2rem;\n}\ni.top-left[data-v-5f1fe1cc] {\n    position: absolute;\n    left: 1.5rem;\n    top: 0.8rem;\n}\n.vertical-separator[data-v-5f1fe1cc] {\n    display: flex;\n    justify-content: space-around;\n}\n.vertical-separator .line[data-v-5f1fe1cc] {\n    border-right: 1px solid #cccccc;\n}\n", ""]);
 
 // exports
 
@@ -81197,9 +81222,7 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Nombres " + _vm._s(_vm.form.names))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Nombres")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81223,13 +81246,21 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.names.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-md-6" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Ap. Paterno  " + _vm._s(_vm.form.appaterno))
-        ]),
+<<<<<<< HEAD
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Paterno")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Paterno ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81253,13 +81284,21 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.appaterno.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-md-6" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Ap. Materno  " + _vm._s(_vm.form.apmaterno))
-        ]),
+<<<<<<< HEAD
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Materno")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Ap. Materno ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81283,13 +81322,21 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.apmaterno.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Email " + _vm._s(_vm.form.correo))
-        ]),
+<<<<<<< HEAD
+        _c("label", { staticClass: "label" }, [_vm._v("Email")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Email ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81316,11 +81363,17 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.$v.form.correo.$error
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("Este campo es inválido")
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Celular")]),
+        _c("label", { staticClass: "label" }, [_vm._v("Celular * ")]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81347,6 +81400,12 @@ var render = function() {
               }
             }
           })
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "ml-1" }, [
+          _vm._v(
+            "Su número de celular será utilizado como medio de contácto al realizar un pedido."
+          )
         ]),
         _vm._v(" "),
         _vm.$v.form.celular.$error
@@ -81610,12 +81669,15 @@ var render = function() {
       staticStyle: { padding: "2rem 3rem", "text-align": "left" }
     },
     [
-      _c("p", { staticClass: "text-center" }, [_vm._v("Usuario")]),
+<<<<<<< HEAD
+      _c("div", { staticClass: "field col-12" }, [
+        _c("label", { staticClass: "label" }, [_vm._v("Nombre de usuario")]),
+=======
+      _c("p", { staticClass: "text-center" }, [_vm._v("-")]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Nombres " + _vm._s(_vm.form.user))
-        ]),
+        _c("label", { staticClass: "label" }, [_vm._v("Usuario")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81630,7 +81692,7 @@ var render = function() {
             class: ["input", _vm.$v.form.user.$error ? "is-danger" : ""],
             attrs: {
               type: "text",
-              placeholder: "Ingrese nombres y apellidos de contacto"
+              placeholder: "Ingrese un nombre de usuario"
             },
             domProps: { value: _vm.form.user },
             on: {
@@ -81646,15 +81708,17 @@ var render = function() {
         _vm._v(" "),
         _vm.$v.form.user.$error
           ? _c("p", { staticClass: "help is-danger" }, [
-              _vm._v("Este usuario ya existe o es invalido")
+              _vm._v("Este usuario ya existe o es inválido")
             ])
           : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v("Contraseña " + _vm._s(_vm.form.password))
-        ]),
+<<<<<<< HEAD
+        _c("label", { staticClass: "label" }, [_vm._v("Contraseña")]),
+=======
+        _c("label", { staticClass: "label" }, [_vm._v("Contraseña ")]),
+>>>>>>> 98109162c571114a65560edaaeabba5113525223
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -81667,7 +81731,10 @@ var render = function() {
               }
             ],
             class: ["input", _vm.$v.form.password.$error ? "is-danger" : ""],
-            attrs: { type: "text", placeholder: "Ingrese apellidos paternos" },
+            attrs: {
+              type: "password",
+              placeholder: "Ingrese apellidos paternos"
+            },
             domProps: { value: _vm.form.password },
             on: {
               input: function($event) {

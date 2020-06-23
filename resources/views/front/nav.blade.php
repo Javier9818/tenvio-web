@@ -24,6 +24,7 @@
                                 <li class="nav__item"><a href="/profile/my" class="nav__item-link">Perfil</a></li>
                             @endcan
                         @endcan
+                        <li class="nav__item"><a href="/profile/my" class="nav__item-link">Perfil</a></li>
                         <li class="nav__item"><a href="{{ route('logout') }}" class="nav__item-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Cerrar Sesion</a>
                         </li>
