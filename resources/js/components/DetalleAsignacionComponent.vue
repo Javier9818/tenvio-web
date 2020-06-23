@@ -28,15 +28,17 @@
 									<li>Nombres: {{item.nombres}}</li>
 									<li>Destino: {{item.direccion}}</li>
 								</ul>
-							</div>
+							</div>					
+							<div class="col-md-2">
+								<h4 style="display:inline;">Estado</h4>
+								<h3 style="display:inline;">{{item.state}}</h3>
+							</div>		
 							<div class="col-md-12">
 								<h4 style="display:inline;">Tipo de Pedido:</h4>
 								<h5 style="display:inline;">{{item.tipo_entrega}}</h5>
 							</div>
-							<div class="col-md-12">
-								<h4 style="display:inline;">Estado:</h4>
-								<h3 style="display:inline;">{{item.state}}</h3>
-							</div>
+						 
+						
 						</div>
 						<div class="text-center">
 						 	<h4 style="display:inline;">Monto:{{item.mount}}</h4>
