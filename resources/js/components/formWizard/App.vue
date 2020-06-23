@@ -96,14 +96,18 @@
                 })
             },
             submit: async function (payload) {
-                alert('up');
-                console.log(this.data);
+                //alert('up');
+                //console.log(this.data);
                 this.busy = true;
                 await axios.post('/api/usuarios', this.data)
                 .then((response) => {
                     this.busy = false;
-                    console.log(response.data.message);
+                   // console.log(response.data.message);
+                }).catch(e => {
+                    this.busy = false;
+                    alert('Usuario o Email incorrecto')
                 });
+
             },
             handleData(payload){
                 this.data = {...this.data, ...payload}
@@ -113,6 +117,9 @@
 </script>
 
 <style scoped>
+    html{
+        overflow-y: hidden !important;
+    }
     h1{
         font-size: 1.2em;
         font-family: Arial, Helvetica, sans-serif;
@@ -130,7 +137,8 @@
     }
     .section{
         /* min-height: 100vh; */
-        /* background-image: url('/assets/images/backgrounds/LoginDelivery-02.png'); */
+        padding-top: 2rem !important ;
+        background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');
         background-position: center center;
         background-repeat: no-repeat;
         background-attachment: fixed;
