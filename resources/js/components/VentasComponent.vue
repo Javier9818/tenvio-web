@@ -10,7 +10,19 @@
 			<div class="col-6"><h4>Número total de ventas: {{cantidad}}</h4></div>
 			<div class="col-6"><h4>Monto de ventas: {{monto}}</h4></div>
 		</div>
-		<b-table :bordered="true" :hover="true"  :headVariant="dark" :items="pedidos" :fields="fields"></b-table>
+		<b-row>
+			<b-col sm="6" md="6">
+				<b-form-group label="Registros por página">
+					<b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+				</b-form-group>
+			</b-col>
+			<b-col sm="6" md="6">
+				<b-form-group label="Página">
+					<b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" align="fill" size="sm" class="my-0"></b-pagination>
+				</b-form-group>
+			</b-col>
+		</b-row>
+		<b-table :bordered="true" :current-page="currentPage" :per-page="perPage" :hover="true"  :headVariant="dark" :items="pedidos" :fields="fields"></b-table>
 	</div>
 </template>
 
@@ -58,7 +70,11 @@ export default {
 			productos_pedido: [],
 			cantidad: 0,
 			monto: 0,
-			mostrarLoader: false
+			mostrarLoader: false,
+			perPage: 5,
+			pageOptions: [5, 10, 25, 50, 100],
+			totalRows: 1,
+			currentPage: 1,
 		}
 	},
 	methods:{
@@ -126,6 +142,9 @@ export default {
 					that.pedidosOriginal.push(itm);
 				});
 				that.refrescarProductoPedido();
+				//paginacion
+				that.totalRows = datos.pedidos.length;
+				that.currentPage = 1;
 			})
 			.catch((error)=>{
 				console.log(error);
