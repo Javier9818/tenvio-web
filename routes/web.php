@@ -43,6 +43,7 @@ Route::post('/intranet/productos/{funcion}', 'ProductosController@fn')->middlewa
 Route::any('/extras/{funcion}', 'ExtrasController@fn');
 
 Route::get('/admin/empresas', 'AdminController@listarEmpresas')->name('admin-total-inicio')->middleware('can:gestionar-panel-general');
+Route::get('/admin/solicitudes', 'AdminController@listarSolicitudes')->middleware('can:gestionar-panel-general');
 Route::get('/admin/empresa/{idEmpresa}', 'AdminController@verEmpresa')->middleware('can:gestionar-panel-general');
 
 Auth::routes();
@@ -66,7 +67,10 @@ Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('segui
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
 Route::get('/profile/my', 'UserController@getUser2')->middleware('auth');
+<<<<<<< HEAD
+=======
 Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbicacion');
+>>>>>>> 6587e8143e22305f97d76f829f189607854d4ba4
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
 //Route::get('/list','EmpresaController@listarEmpresas');

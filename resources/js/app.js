@@ -72,6 +72,7 @@ Vue.component('transporte-component', require('./components/transporte/Transport
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
 Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);
+Vue.component('table-solicitudes', require('./components/admin/TableSolicitudes.vue').default);
 
 
 

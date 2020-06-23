@@ -76,5 +76,6 @@
 @section('scripts')
     <script>
         let empresas = @json($empresas);
+        let tiponegocios = @json($tiponegocios);
     </script>
 @endsection
