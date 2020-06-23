@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <div class="modal-body">
-         <form v-on:submit.prevent="submit()" id="formEmpresa">
+         <form v-on:submit.prevent="submit()" id="formEmpresaA">
             <div class="row">
                 <div class="col-md-6 mt-2">
                     <label>RUC</label> <!--is-invalid-->
@@ -9,17 +9,17 @@
                     <p v-if="$v.form.ruc.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
-                    <label>Nombre*</label>
+                    <label>Nombre de la empresa*</label>
                     <input type="text" class="form-control" placeholder="Ingrese apellidos maternos" required v-model="form.nombre">
                     <p v-if="$v.form.nombre.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
-                    <label>Teléfono</label>
+                    <label>Teléfono de contácto</label>
                     <input type="number" class="form-control" placeholder="Ingrese nombres"  v-model="form.telefono">
                     <p v-if="$v.form.telefono.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
-                    <label>Celular*</label>
+                    <label>Celular de contácto*</label>
                     <input type="number" class="form-control" placeholder="Ingrese su número de celular" required v-model="form.celular">
                     <p v-if="$v.form.celular.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-md-6 mt-2">
-                    <label>categorias</label>
+                    <label>Categorias</label>
                     <b-overlay :show="loadCategorias" rounded spinner-small spinner-variant="primary">
                         <multi-select :options="optionsCategorias"
                             :selected-options="form.categorias"
@@ -131,7 +131,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" @click="close">Cerrar</button>
-        <button type="submit" form="formEmpresa" class="btn btn-primary">{{dataForm ? 'Activar' : 'Registrar'}}</button>
+        <button type="submit" form="formEmpresaA" class="btn btn-primary">{{dataForm ? 'Activar' : 'Registrar'}}</button>
     </div>
 </div>
 </template>
@@ -284,19 +284,17 @@
             submit: async function(){
                 this.$v.$touch()
                 console.log(this.$v.$invalid);
-                // if(!this.$v.$invalid){
-                //     await axios.post('/api/empresa', this.form).then((data)=>{
-                //         console.log(data);
-                //         Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
-                //             window.location.reload();
-                //         });
-                //     }).catch((error) => {
-                //         console.log(error);
-                //         Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
-                //     });
-                // }
-
-
+                if(!this.$v.$invalid){
+                    await axios.post('/api/empresa', this.form).then((data)=>{
+                        console.log(data);
+                        Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
+                            window.location.reload();
+                        });
+                    }).catch((error) => {
+                        console.log(error);
+                        Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                    });
+                }
             },
             handleDepartamento: async function(){
                 this.form.provincia = null;

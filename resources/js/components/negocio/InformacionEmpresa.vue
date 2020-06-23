@@ -1,5 +1,6 @@
 <template>
      <div class="row">
+        <div class="col-12 mt-2"> <h5 class="d-inline label cod">Código de la empresa: </h5><h5 class="d-inline cod_des">{{form.id}}</h5></div>
         <div class="col-6 mt-2"> <h5 class="d-inline label">Nombre de la empresa </h5><br><h5 class="d-inline">{{form.nombre}}</h5></div>
         <div class="col-6 mt-2"> <h5 class="d-inline label">RUC </h5><br><h5 class="d-inline">{{form.ruc}}</h5></div>
         <div class="col-6 mt-2"> <h5 class="d-inline label">Tipo de Negocio</h5><br><h5 class="d-inline">{{form.tiponegociodes}}</h5></div>
@@ -25,4 +26,13 @@
     .enlace{
         font-size:1.3em !important;
     }
+
+    .cod{
+        color: rgb(238, 15, 15) !important;
+    }
+    .cod_des{
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
 </style>
