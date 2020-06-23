@@ -254,29 +254,32 @@ class FrontController extends Controller
   }
   public function productos(Request $request)
   {
+    $where=[
+      ['empresas.id', '=', $request->get('id')],
+      ['productos.usuario_puede_ver', '=',1],
+      ['productos.estado', '=',1],
+    ];
+    if($request->get('search')!='')
+    {
+      $where[]=['productos.nombre', '=', $request->get('search')];
+    }
     try {
       if($request->get('tipo')=='all'){
         return DB::table('empresas')
         ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
         ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
-        ->where([
-          ['empresas.id', '=', $request->get('id')],
-          ['productos.usuario_puede_ver', '=',1],
-          ['productos.estado', '=',1],
-        ])
-        ->get();
-      }
+        ->where($where)
+        ->paginate(10,[],'',$request->get('page'));
+        // ->get();
+      } 
+      $where[]=['categorias_menus.id', '=', $request->get('tipo')];
       return DB::table('empresas')
       ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
       ->join('categorias_menus', 'categorias_menus.id', '=', 'productos.categorias_menu_id')
       ->select('productos.nombre', 'productos.descripcion','productos.precio','productos.foto', 'productos.id')
-      ->where([
-        ['categorias_menus.id', '=', $request->get('tipo')],
-        ['empresas.id', '=', $request->get('id')],
-        ['productos.usuario_puede_ver', '=',1],
-        ['productos.estado', '=',1],
-      ])
-      ->get();
+      ->where($where)
+      ->paginate(10,[],'',$request->get('page'));
+      // ->get();
 
     } catch (\Exception  $e) {
        return [
