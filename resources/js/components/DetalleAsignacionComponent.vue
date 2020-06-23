@@ -16,7 +16,7 @@
 									
 									<li v-for="itm in item.productos" :key="itm.nombre ">
 										 
-										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
+										{{itm.nombre}} ({{itm.cantidad}} unidad(es)) x {{itm.precio_unit}}
 									</li>
 									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->
 								</ul>
