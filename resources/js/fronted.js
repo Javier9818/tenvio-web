@@ -16,6 +16,7 @@ Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').de
 Vue.component('modal-pedidos', require('./components/front/ModalPedidos.vue').default)
 
 /*Front*/
+Vue.component('front-categories-component', require('./components/front/categoriesComponent.vue').default)
 Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
 Vue.component('front-cart-component', require('./components/front/cartComponent.vue').default)
 Vue.component('form-wizard-unt', require('./components/formWizard/App.vue').default);
