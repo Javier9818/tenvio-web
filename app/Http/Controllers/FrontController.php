@@ -37,6 +37,12 @@ class FrontController extends Controller
       case 'getPedido':
         return $this::getPedido($request);
         break;
+      case 'CategoriasxNegocio':
+        return $this::CategoriasxNegocio($request);
+        break;
+      case 'TipoNegocio':
+        return $this::TipoNegocio();
+        break;
       default:
         # code...
         break;
@@ -296,6 +302,42 @@ class FrontController extends Controller
         ->join('categorias_menus', 'categorias_menus.id', '=', 'productos.categorias_menu_id')
         ->selectRaw(' DISTINCT categorias_menus.descripcion as text, categorias_menus.id as value')
         ->where('empresas.id','=',$request->get('id'))
+        ->get();
+     }catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+   }
+  }
+  public function CategoriasxNegocio(Request $request)
+  {
+    
+     try {
+      if($request->get('id')==0)
+      {
+        return DB::table('categorias')
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
+        ->selectRaw('categorias.id,categorias.descripcion')
+        ->get();
+      }
+        return DB::table('categorias')
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
+        ->selectRaw('categorias.id,categorias.descripcion')        
+        ->where('tipo_negocio.id', '=',$request->get('id'))   
+        ->get();
+     }catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+   }
+  }
+  public function TipoNegocio()
+  {
+     try {
+      return DB::table('tipo_negocio')        
+        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')         
         ->get();
      }catch (\Exception  $e) {
       return [
