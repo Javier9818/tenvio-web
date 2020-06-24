@@ -34,14 +34,14 @@
 
 
 <section id="blogGrid" class="blog blog-grid pb-60">
-  <div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave.png') !!}"  alt="slide img"></div>
-  
-    <div class="container">    
+  <div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave2.svg') !!}"  alt="slide img"></div>
+
+    <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
           <div class="heading text-center mb-50">
             <span class="heading__subtitle">Restaurantes, Chifas, Pollerias ,etc</span>
-            <h2 class="heading__title">Resultados de {{$search}}</h2>
+            <h2 class="heading__title text-white">Resultados de {{$search}}</h2>
             <div class="heading__icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                 <path
@@ -51,16 +51,16 @@
             </div>
 
           </div><!-- /.heading -->
-          
+
         </div><!-- /.col-lg-6 -->
         <div class="col-sm-12 col-md-12 col-lg-12   text-center">
         <div class="row ">
           <!-- Post Item #1 -->
-          @if($empresas===null)      
+          @if($empresas===null)
             <div class="alert alert-primary text-center" role="alert">
               <h3  >No encontrado, click <a href="/" style=" border-bottom: solid blue 0.2px">aquí</a> para regresar a inicio </h3>
-            </div>        
-          @else      
+            </div>
+          @else
             @foreach ($empresas as $empresa)
             <div class="col-sm-12 col-md-6 col-lg-4">
               <div class="card  " style=" background-color: #fff;
@@ -72,7 +72,7 @@
                 border-radius: 10px;
                 transition: .5s;
                 box-shadow: 0 0 25px 5px rgba(0,0,0,.2);">
-                <div class="card-body">  
+                <div class="card-body">
                   <div class="post-item">
                     <div class="post__img">
                       <a href="#">
@@ -80,25 +80,25 @@
                       </a>
                     </div><!-- /.post__img -->
                     <div class="post__content">
-                      <div class="post__meta">                       
+                      <div class="post__meta">
                         <div class="post__meta-cat">
                           <a href="#">{{$empresa->categoria}}</a>
                         </div><!-- /.post-meta-cat -->
                       </div><!-- /.post-meta -->
                     </div>
-                  </div>               
+                  </div>
                   <h3 class="card-title">{{$empresa->nombre}}</h3>
                   <p class="card-text">{{$empresa->descripcion}}</p>
                   <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}" class="btn btn-primary   d-block " style=" font-size:large">Visitar</a>
                 </div>
               </div>
-            </div>            
-             
-            @endforeach 
-          @endif     
+            </div>
+
+            @endforeach
+          @endif
           </div><!-- /.row -->
         </div>
-    </div><!-- /.row -->  
+    </div><!-- /.row -->
   </div><!-- /.container -->
 </section><!-- /.blog Grid -->
 @endsection
