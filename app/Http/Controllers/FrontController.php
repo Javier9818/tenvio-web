@@ -43,10 +43,18 @@ class FrontController extends Controller
       case 'TipoNegocio':
         return $this::TipoNegocio();
         break;
+      case 'Valida':
+        return $this::Valida();
+        break;
       default:
         # code...
         break;
     }
+  }
+  public function Valida()
+  {    
+     
+    return (Auth::id()==null)? 0:1;
   }
   public function categoriasIndex()
   {
