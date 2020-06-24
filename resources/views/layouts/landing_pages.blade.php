@@ -5,6 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="TE ENVIO - NORTEC">
+    <link href="assets/images/favicon/favicon2.png"  rel="icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noarchive">
     <title> @yield('title')</title>
@@ -26,6 +28,7 @@
     <link rel="stylesheet" href="/assets/css/landing_pages/style.css">
     <!-- responsive -->
     <link rel="stylesheet" href="/assets/css/landing_pages/responsive.css">
+
     <!--Iconos-->
     {{-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/landing_pages/all.css"> --}}
 
@@ -33,8 +36,9 @@
 </head>
 
 <body>
-
-    @yield('content')
+    <div id="app">
+        @yield('content')
+    </div>
 
 <!-- footer area start -->
 <footer class="footer-area @yield('clasesfooter')">
@@ -44,7 +48,7 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget about_widget">
                         <a href="index.html" class="footer-logo"><img src="/assets/images/landing_pages/logo-white.png" alt=""></a>
-                        <p>Crea, Innova con nosotros ;) </p>
+                        <p>Crea, Innova ;) </p>
                         <ul class="social-icon">
                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter"></i></a></li>
@@ -57,30 +61,30 @@
                     <div class="footer-widget nav_menus_widget">
                         <h4 class="widget-title">Servicios</h4>
                         <ul>
-                            <li><a href="index.html"><i class="fas fa-chevron-right"></i> Te Envio</a></li>
+                            <li><a href="https://tenvioperu.com/"><i class="fas fa-chevron-right"></i> Te Envio</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget nav_menus_widget">
-                        <h4 class="widget-title">Need Help?</h4>
+                        <h4 class="widget-title">Necesitas Ayuda?</h4>
                         <ul>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Faqs</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Policy</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Support</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Temrs</a></li>
+                            {{-- <li><a href="#"><i class="fas fa-chevron-right"></i> Faqs</a></li> --}}
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Privacidad</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Polítcas</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Soporte</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Términos y condiciones</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget nav_menus_widget">
-                        <h4 class="widget-title">Contacto</h4>
+                        <h4 class="widget-title">Contácto</h4>
                         <ul>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Wsp</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> fb</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> twiter</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Instagran</a></li>
+                            {{-- <li><a href="#"><i class="fas fa-chevron-right"></i> Wsp</a></li> --}}
+                            <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i> Twiter</a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i> Instagran</a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,10 +97,10 @@
                 <div class="col-lg-12">
                     <div class="copyright-inner"><!-- copyright inner wrapper -->
                         <div class="left-content-area"><!-- left content area -->
-                            &copy; Copyrights 2020 NorTec All rights reserved.
+                            &copy; Copyrights 2020 NorTec Todos los derechos reservados.
                         </div><!-- //. left content aera -->
                         <div class="right-content-area"><!-- right content area -->
-                            Designed by <strong><em>NorTec</em></strong>
+                            Diseñado por <strong><em>NorTec</em></strong>
                         </div><!-- //. right content area -->
                     </div><!-- //.copyright inner wrapper -->
                 </div>
@@ -134,6 +138,8 @@
   </div>
   <!-- back to top area end -->
 
+
+    <script src="/js/fronted.js" type="text/javascript"></script>
     <!-- jquery -->
     <script src="/assets/js/landing_pages/jquery.js"></script>
     <!-- popper -->

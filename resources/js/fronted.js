@@ -23,6 +23,10 @@ Vue.component('form-wizard-unt', require('./components/formWizard/App.vue').defa
 Vue.component('front-pedidos-component', require('./components/front/pedidosComponent.vue').default);
 Vue.component('front-seguimiento-component', require('./components/front/seguimientoComponent.vue').default);
 
+
+Vue.component('tenvio-promo-component', require('./components/landing_pages/tenvio_promo.vue').default);
+Vue.component('tenvio-registro-component', require('./components/landing_pages/tenvio_registro.vue').default);
+Vue.component('tenvio-padre-component', require('./components/landing_pages/tenvio_padre.vue').default);
 // const EventBus = new Vue();
 const app = new Vue({
     el: '#app',
