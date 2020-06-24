@@ -70,8 +70,7 @@
         <div class="cart__total-amount">
             <h6>TOTAL:</h6>
             <ul class="list-unstyled mb-0">
-            <!-- <li><span>Subtotal :</span><span>S/ {{toFixed(calcularTotal-calcularTotal*0.18)}}</span></li>
-            <li><span>IGV :</span><span>S/ {{toFixed(calcularTotal*0.18)}}</span></li> -->
+             
             <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
             </ul>
             <br>
@@ -80,10 +79,39 @@
             </div>
         </div>
     </div>
-    <b-modal ref="my-modal" hide-footer title="Generar pedido">
-        <div class="d-block "></div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Cerrar</b-button>
-    </b-modal>
+    <!-- <b-modal ref="my-modal" hide-footer title="Iniciar Sesión">
+           <div class="col-12 accent-2 m-0 p-0">
+              <div class="card-header border-0">
+                  <div class="text-center mb-1">
+                    <img src="assets/images/logo/LogoDelivery.png" alt="AQUI VA EL LOGO" style="width: 50%;">
+                  </div>
+                  <div class="font-large-1  text-center">
+                      Acceso al sistema
+                  </div>
+              </div>
+              <div class="card-content">
+                  <div class="card-body">                      
+                    <fieldset class="form-group position-relative has-icon-left">
+                        <input type="text" class="form-control round" v-model="client.username"  placeholder="Usuario / Email" required="" aria-invalid="false">
+                    
+                    </fieldset>
+                    <fieldset class="form-group position-relative has-icon-left">
+                        <input type="password" class="form-control round"   v-model="client.password"  placeholder="Contraseña" required="" aria-invalid="false">
+                        
+                    </fieldset>
+                    <div class="form-group row">
+                      
+                     
+                    </div>
+                    <b-button class="mt-3" variant="success" block @click="hideModal">Login</b-button>                          
+                      
+                  </div>                        
+
+                  <p class="card-subtitle text-muted text-right font-small-3  "><span>No tienes una cuenta? <a href="/registro" class="card-link">Registrate</a></span></p>
+              </div>
+            </div>
+         
+    </b-modal> -->
     <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
    </form>
 </template>
@@ -92,6 +120,7 @@
 import EventBus from '../../event-bus';
 import Swal from 'sweetalert2'
 export default {
+    props:['user'],
     data(){
         return {
             productos: [],
@@ -104,7 +133,11 @@ export default {
             selected:'',
             marker:L.marker([0,0]),
             ubicacion:[],
-            direccion:''
+            direccion:'',
+            client:{
+              username:'',
+              password:''
+            }
         }
     },
     methods:{
@@ -230,10 +263,28 @@ export default {
         this.$refs['my-modal'].show()
       },
       hideModal() {
+        this.Logeate();
         this.$refs['my-modal'].hide()
       },
-      setPedido:function (params) {
-        this.marker=this.$refs.mapaComponent.marker;
+      Logeate: function () {
+          var that = this;
+        axios.post('/login',{username:this.client.username,password:this.client.password})
+        .then(function (response) {         
+             console.log(response.data)  
+        });
+      },
+      setPedido:function () { 
+             
+        if(this.user==0)
+        { 
+          location.href="/login"
+        }else{
+          this.generaPedido();
+        }          
+         
+      },
+      generaPedido: function () {
+         this.marker=this.$refs.mapaComponent.marker;
         if(this.$refs.mapaComponent.marker.getLatLng().lng === 0 && this.$refs.mapaComponent.marker.getLatLng().lat === 0){
             Swal.fire({
             icon: 'error',
@@ -243,8 +294,7 @@ export default {
             });
         }
         else{
-            console.log("Longitud: "+this.marker.getLatLng().lng);
-            console.log("Latitud: "+this.marker.getLatLng().lat);
+          
             this.empresas.forEach(element => {
             element.lat=this.marker.getLatLng().lat,
             element.lng=this.marker.getLatLng().lng,
@@ -261,14 +311,13 @@ export default {
             }).then((result) => {
             if (!result.value)
                 return;
-                console.log(this.empresas[0].total);
+               
             axios.post('/front/GeneraPedido', {
                 empresas: that.empresas,
                 productos: that.productos,
                 
             })
-            .then(function (response) {
-            //	console.log(response.data);
+            .then(function (response) { 
                 let messsage='';
                 let icon= '';
                 let	title= '';
@@ -310,7 +359,7 @@ export default {
             });
             });
         }
-        }
+      }
     },
     computed:{
       calcularTotal(){
@@ -325,8 +374,7 @@ export default {
     },
     mounted() {
         this.recarga();
-
-        console.log('ModalCarrito - Mounted')
+        console.log(this.user);
     },
     created: function () {
         EventBus.$on('EliminarenModal', function(boolean)  {

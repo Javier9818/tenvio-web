@@ -222,7 +222,7 @@ export default {
 
       switch (key) {
         case 'c':
-          if(this.producto.cant!=0)
+          if(this.producto.cant>0)
             this.funAddCarrito(this.producto);
           this.hideModal();
           break;
