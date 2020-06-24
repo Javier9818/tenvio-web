@@ -34,7 +34,7 @@
 
 
 <section id="blogGrid" class="blog blog-grid pb-60">
-  <div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave2.svg') !!}"  alt="slide img"></div>
+  <div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave.svg') !!}"  alt="slide img"></div>
 
     <div class="container">
       <div class="row">
@@ -87,7 +87,7 @@
                       </div><!-- /.post-meta -->
                     </div>
                   </div>
-                  <h3 class="card-title">{{$empresa->nombre}}</h3>
+                  <h3 class="card-title text-capitalize">{{strtolower($empresa->nombre)}}</h3>
                   <p class="card-text">{{$empresa->descripcion}}</p>
                   <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}" class="btn btn-primary   d-block " style=" font-size:large">Visitar</a>
                 </div>

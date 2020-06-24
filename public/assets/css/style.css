@@ -1202,10 +1202,11 @@ h4,
 h5,
 h6 {
   color: #282828;
-  font-family: 'Nunito', sans-serif;
+  /* font-family: 'Nunito', sans-serif; */
+  font-family: Montserrat,Helvetica,Arial,sans-serif;
   font-weight: 500;
   line-height: 1.1;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   margin-bottom: 20px;
 }
 
@@ -1224,7 +1225,7 @@ h2 {
 }
 
 h3 {
-  font-size: 38px;
+  font-size: 34px;
 }
 
 h4 {
