@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
+// ================== LANDING PAGES =================================================*/
+Route::get('/quienes-somos', function(){return view('landing_pages.tenvio_promocional');});
+
+
+// ================================== BLOQUE EMPRESA =================================================*/
 Route::get('/intranet', 'EmpresaController@verEmpresa')->middleware('can:visit-company');
 Route::get('/intranet/empleados', 'GeneralController@vistaEmpleados')->middleware('can:gestionar-personal, visit-company');
 Route::get('/intranet/nuevo-empleado', 'GeneralController@vistaNuevoEmpleado')->middleware('can:gestionar-personal, visit-company');
@@ -42,23 +47,25 @@ Route::post('/intranet/productos/{funcion}', 'ProductosController@fn')->middlewa
 
 Route::any('/extras/{funcion}', 'ExtrasController@fn');
 
+// ================================== BLOQUE SUPER ADMINISTRADOR =================================================*/
 Route::get('/admin/empresas', 'AdminController@listarEmpresas')->name('admin-total-inicio')->middleware('can:gestionar-panel-general');
 Route::get('/admin/solicitudes', 'AdminController@listarSolicitudes')->middleware('can:gestionar-panel-general');
 Route::get('/admin/empresa/{idEmpresa}', 'AdminController@verEmpresa')->middleware('can:gestionar-panel-general');
 
+
+// ================================== BLOQUE AUTENTICACIÓN =================================================*/
 Auth::routes();
 Route::get('/login', function(){return view('front.login');})->name('loginForm');
 Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
-Route::get('/registro', function(){
-    return view('front/regist');
-})->name('registro');
+Route::get('/registro', function(){return view('front/regist');})->name('registro');
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');
 
-/* CLIENTE **/
+
+// ================================== BLOQUE CLIENTE =================================================*/
 // Route::get('/', function(){return view('front.index');});
 Route::get('/', 'FrontController@categoriasIndex')->name('inicio');
 //Route::get('/lista', function(){return view('front.empresa');});
- Route::get('/empresa', function(){return view('front.empresa');});
+Route::get('/empresa', function(){return view('front.empresa');});
 Route::get('/micarrito', function(){return view('front.cart');});
 Route::get('/pedidos', function(){return view('front.pedidos');});
 Route::get('/list', 'FrontController@ListEmpresas')->name('list');
@@ -71,3 +78,6 @@ Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbica
 //Route::get('/list', function(){ return view('front.listEmpresa');});
 
 //Route::get('/list','EmpresaController@listarEmpresas');
+
+
+
