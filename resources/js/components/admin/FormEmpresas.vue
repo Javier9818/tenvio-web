@@ -285,16 +285,31 @@
                 this.$v.$touch()
                 console.log(this.$v.$invalid);
                 if(!this.$v.$invalid){
-                    await axios.post('/api/empresa', this.form).then((data)=>{
-                        console.log(data);
-                        Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
-                            window.location.reload();
-                        });
-                    }).catch((error) => {
-                        console.log(error);
-                        Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
-                    });
+                    if(this.dataForm) this.activarEmpresa();
+                    else this.crearEmpresa();
                 }
+            },
+            crearEmpresa: async function(){
+                await axios.post('/api/empresa', this.form).then((data)=>{
+                    console.log(data);
+                    Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
+                        window.location.reload();
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                });
+            },
+            activarEmpresa: async function(){
+                await axios.post('/api/activate/empresa', this.form).then((data)=>{
+                    console.log(data);
+                    Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
+                        window.location.reload();
+                    });
+                }).catch((error) => {
+                    console.log(error);
+                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                });
             },
             handleDepartamento: async function(){
                 this.form.provincia = null;

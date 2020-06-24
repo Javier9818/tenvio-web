@@ -2,7 +2,7 @@
     <div>
         <b-table :items="items" :fields="fields" responsive="sm">
             <template v-slot:cell(opciones)="row">
-                <button class="mr-2 btn btn-sm btn-success" title="Ver detale" @click="showModal(row.item)"><i class="ft-eye"></i>Detalle</button>
+                <button class="mr-2 btn btn-sm btn-success" title="Ver detale" @click="showModal(row.item)"><i class="ft-eye"></i> Detalle</button>
             </template>
         </b-table>
         <!-- <b-modal id="modalFormEmpresa" title="Solicitud de empresa" size="lg" scrollable hide-footer>

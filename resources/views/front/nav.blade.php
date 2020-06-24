@@ -18,13 +18,11 @@
                         @can('gestionar-panel-empresa')
                             @can('gestionar-panel-general')
                                 <li class="nav__item"><a href="/admin/empresas" class="nav__item-link">Panel de administración</a></li>
-                                <li class="nav__item"><a href="/profile/my" class="nav__item-link">Perfil</a></li>
-                                @else
+                            @else
                                 <li class="nav__item"><a href="/intranet" class="nav__item-link">Panel de administración</a></li>
-                                <li class="nav__item"><a href="/profile/my" class="nav__item-link">Perfil</a></li>
                             @endcan
                         @endcan
-                        <li class="nav__item"><a href="/profile/my" class="nav__item-link">Perfil</a></li>
+                        <li class="nav__item"><a href="/mi-perfil" class="nav__item-link">Perfil</a></li>
                         <li class="nav__item"><a href="{{ route('logout') }}" class="nav__item-link" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Cerrar Sesion</a>
                         </li>
