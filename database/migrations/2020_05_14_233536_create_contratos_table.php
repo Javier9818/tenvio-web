@@ -17,6 +17,10 @@ class CreateContratosTable extends Migration
             $table->id();
             $table->string('estado',20);
             $table->integer('empresa_id');
+            $table->integer('plan_id');
+            $table->float('plan_monto');
+            $table->dateTime('fecha_vencimiento');
+            $table->integer('pago_id')->nullable();
             $table->timestamps();
         });
     }

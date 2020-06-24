@@ -22,15 +22,23 @@
 
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="assets/styles_registro.css" rel="stylesheet" />
+        <style>
+            html{
+                overflow-y: hidden !important;
+            }
+        </style>
         @yield('styles')
     </head>
     <body>
 
-            <div class="d-flex align-items-center justify-content-center" style="overflow-x:hidden; overflow-y:hidden;height: 100vh;background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');background-size: cover; height: 100vh">
+        <div id="app">
+            <form-wizard-unt></form-wizard-unt>
+        </div>
+            {{-- <div class="d-flex align-items-center justify-content-center" style="height: 100vh;background-image: url('/assets/images/backgrounds/LoginDelivery-02.png');background-size: cover;">
                 <div class="content-wizard" id="app">
                     <form-wizard-unt></form-wizard-unt>
                 </div>
-            </div>
+            </div> --}}
                 <!-- Copyright Section-->
                 {{-- <section class="copyright py-4 text-center text-white">
                     <div class="container"><small>Copyright © Nortec © 2020 - Escuela de Ingeniería de Sistemas - UNT</small></div>

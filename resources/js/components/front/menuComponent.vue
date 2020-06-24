@@ -46,16 +46,22 @@
             </div><!-- /.col-lg-4 -->
             <!--For-->
           </div><!-- /.row -->
-          <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+          <div class="row">        
+            <div class="col-sm-12 col-md-12 col-lg-3 text-center align-items-center">
+            </div>    
+            <div class="col-sm-12 col-md-12 col-lg-6 text-center align-items-center">
               <nav class="pagination-area">
-                <ul class="pagination justify-content-center">
-                  <li><a class="current" href="#">1</a></li>
-                  <li><a href="#">2</a></li>
-                  <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                </ul>
+                <b-pagination size="lg" 
+                  v-model="currentPage"
+                  :total-rows="rows"
+                  :per-page="perPage"
+                   @change="funCambia"
+                ></b-pagination>
+                 
               </nav><!-- /.pagination-area -->
             </div><!-- /.col-lg-12 -->
+            <div class="col-sm-12 col-md-12 col-lg-3 text-center align-items-center">
+            </div>
           </div><!-- /.row -->
         </div><!-- /.col-lg-9 -->
         <div class="col-sm-12 col-md-12 col-lg-3">
@@ -64,8 +70,8 @@
               <h5 class="widget__title">Buscar</h5>
               <div class="widget__content">
                 <form class="widget__form-search">
-                  <input type="text" class="form-control" placeholder="escriba nombre del producto">
-                  <button class="btn" type="submit"><i class="fa fa-search"></i></button>
+                  <input type="text" v-model="buscar" class="form-control" placeholder="escriba nombre del producto">
+                  <button class="btn" type="button" @click="funBusqueda"><i class="fa fa-search"></i></button>
                 </form>
               </div><!-- /.widget-content -->
             </div><!-- /.widget-search -->
@@ -73,7 +79,7 @@
               <h5 class="widget__title">Categorias</h5>
               <div class="widget-content">
                 <ul class="list-unstyled mb-0">
-                  <li v-for="(item, key) in categorias" :key="key"><a href="#">{{item.text}} <span></span></a></li>
+                  <li v-for="(item, key) in categorias" :key="key"><a style=" cursor:pointer"  @click="funcionProductos(item.value)"> {{item.text}} <span></span></a></li>
                 </ul>
               </div><!-- /.widget-content -->
             </div><!-- /.widget-categories -->
@@ -124,7 +130,7 @@
                 </div>
                 <div class=" col-12  col-lg-12 col-sm-12 text-center align-items-center">
                   <button class="decrease-qty fas fa-minus-circle text-danger fa-2x" @click="funAdd('-')"></button>
-                  <input type="number"   class="qty-input" v-model="producto.cant">
+                  <input type="number" readonly  class="qty-input" v-model="producto.cant">
                   <button class="increase-qty fas fa-plus-circle text-success fa-2x" @click="funAdd('+')"></button>
                 </div>
                 <!-- <div class=" col-12  col-lg-6 col-sm-6 text-center">
@@ -135,12 +141,12 @@
           </div>
         </div>
       <div class="row">
-        <div class="col-12">
-          <b-button class="mt-3" variant="success" block @click="funCarrito('c')">Agregar</b-button>
-        </div>
         <div class="col-6">
-          <b-button class="mt-2" variant="warning" block @click="funCarrito('x')">Finalizar Pedido</b-button>
+          <b-button class="mt-2" variant="success" block @click="funCarrito('c')">Agregar</b-button>
         </div>
+        <!-- <div class="col-6">
+          <b-button class="mt-2" variant="warning" block @click="funCarrito('x')">Finalizar Pedido</b-button>
+        </div> -->
         <div class="col-6">
           <b-button class="mt-2" variant="primary" block @click="hideModal">Salir</b-button>
         </div>
@@ -157,12 +163,17 @@ export default {
   data()
   {
     return{
+      rows: 0,
+      perPage: 1,
+      currentPage: 0,
       categorias:[{ value: 'all', text: 'Todo' }],
       productos:[],
       carrito:[],
       categoria:'all',
       options: { value: 0, text: '' },
-      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:1, id:0, empresa:0, name_empresa:''}
+      producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:1, id:0, empresa:0, name_empresa:''},
+      bool:false,
+      buscar:''
     }
   },
   methods:{
@@ -186,6 +197,15 @@ export default {
           break;
       }
     },
+    funBusqueda: function (params) {
+      this.funcionProductos('all',this.currentPage);
+    },
+    funCambia: function () {
+      setTimeout(() => { 
+      this.funcionProductos('all',this.currentPage)
+      }, 250);
+     
+    },
     funSelecciona: function (item) {
       this.producto.descripcion=item.descripcion
       this.producto.foto=item.foto
@@ -197,9 +217,7 @@ export default {
       this.producto.cant=1;
       this.showModal();
     },
-    funAgregar: function () {
-      console.log(this.producto);
-    },
+    
     funCarrito: function (key) {
 
       switch (key) {
@@ -219,32 +237,37 @@ export default {
       EventBus.$emit('i-got-clicked', this.producto);
     },
     funcAcciona: function () {
-      this.funcionProductos(this.categoria);
+      this.funcionProductos(this.categoria,1);
     },
     funcionCategorias:function () {
       var that = this;
 			axios.post('/front/categorias',{id:that.id})
-			.then(function (response) {
-        console.log(response.data);
-        // that.categorias=[];
+			.then(function (response) { 
         response.data.forEach(element => {
           that.categorias.push(element);
         });
 			});
     },
-    funcionProductos:function (item) {
+    funcionProductos:function (item, index) {
       var that = this;
-			axios.post('/front/productos',{tipo:item, id:that.id})
+			axios.post('/front/productos',{tipo:item, id:that.id, page:index, search:that.buscar})
 			.then(function (response) {
-        console.log(response.data);
-        that.productos = response.data;
+        
+        that.productos = response.data.data;
+        if(that.bool==false)
+        {     
+          that.bool=true;     
+          that.rows= response.data.last_page
+        
+        }
+         console.log(response.data);
 			});
     }
   },
   mounted()
   {
     this.funcionCategorias();
-    this.funcionProductos('all');
+    this.funcionProductos('all',1);
   }
 }
 </script>

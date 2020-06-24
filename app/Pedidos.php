@@ -72,7 +72,7 @@ class Pedidos extends Model
 			$select[] = 'personas.id as idusuario';
 			$select[] = DB::raw("CONCAT(personas.appaterno, ' ', personas.apmaterno, ', ', personas.nombres) as nombres");
 			$select[] = 'personas.celular';
-			$select[] = 'personas.direccion';
+			$select[] = 'pedidos.direccion';
 			$select[] = 'te.nombre as tipo_entrega';
 		}
 		return Pedidos::whereRaw('pedidos.updated_at like ?', $fecha.'%')->where($where)

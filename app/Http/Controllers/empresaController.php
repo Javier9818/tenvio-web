@@ -7,6 +7,7 @@ use App\Contrato;
 use App\Empresa;
 use App\Ciudad;
 use App\TipoNegocio;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,25 @@ use Illuminate\Support\Facades\Session;
 class EmpresaController extends Controller
 {
 
+    public function activateEmpresa(Request $request){
+        DB::transaction(function () use ($request){
+            $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => ucwords(strtolower($request->ciudadCreate)), "distrito_id" => $request->distrito]))->id : $request->ciudad;
+            Contrato::create([
+                "empresa_id" => $request->id,
+                "estado" => 'ACTIVO',
+                "plan_id" => 1,
+                "plan_monto" => 0.0,
+                "fecha_vencimiento" => Carbon::now()->addDays(15)
+            ]);
+            Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad]);
+        });
+
+        return response()->json(["message" => "Actualización exitosa"]);
+    }
+
     public function setEmpresa(Request $request){
         DB::transaction(function () use ($request){
-            $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => $request->ciudadCreate, "distrito_id" => $request->distrito]))->id : $request->ciudad;
+            $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => ucwords(strtolower($request->ciudadCreate)), "distrito_id" => $request->distrito]))->id : $request->ciudad;
             $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
 
             $empresa = Empresa::create([
@@ -38,7 +55,7 @@ class EmpresaController extends Controller
             DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
             DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
 
-            Contrato::create(["empresa_id" => $empresa->id,"estado" => 'PRUEBA']);
+            // Contrato::create(["empresa_id" => $empresa->id,"estado" => 'PRUEBA']);
         });
 
 
