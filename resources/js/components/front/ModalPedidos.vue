@@ -51,15 +51,13 @@
                     }
                 });
 
-                // function redirect(categoria){
-                // window.location.href = `/list/${categoria}`;
-                // }
+                
             },
-
             listPedidos: function () {
                 var that = this;
                 axios.post('/front/ListPedido')
                 .then(function (response) {
+                    if (response.data!='Error')  
                     that.items= response.data;
                   
                 }).catch((error)=>{  });

@@ -88,6 +88,8 @@ class FrontController extends Controller
   }
   public function ListPedido()
   {
+    if(Auth::id()==null)
+      return 'Error';
     return DB::table('pedidos')
      ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
      ->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
