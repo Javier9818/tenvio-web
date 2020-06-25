@@ -260,7 +260,7 @@ export default {
           that.rows= response.data.last_page
         
         }
-         console.log(response.data);
+      
 			});
     }
   },

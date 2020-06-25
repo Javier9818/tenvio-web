@@ -67,7 +67,7 @@
         mounted() {
             this.recarga();
 
-            console.log('ModalCarrito - Mounted')
+           
         },
         created: function () {
             EventBus.$on('i-got-clicked', function(producto)  {

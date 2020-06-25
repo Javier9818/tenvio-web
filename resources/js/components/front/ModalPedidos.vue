@@ -61,8 +61,8 @@
                 axios.post('/front/ListPedido')
                 .then(function (response) {
                     that.items= response.data;
-                    console.log(response.data);
-                }).catch((error)=>{ console.log('Login please')});
+                  
+                }).catch((error)=>{  });
             },
             color: function (key) {
                 switch (key.toUpperCase()) {
@@ -83,12 +83,12 @@
         },
         mounted() {
             this.listPedidos();
-            console.log('ModalPedidos - Mountedww');
+ 
         },
         created(){
             Echo.channel(`ordersClient.${this.user}`)
                 .listen('ChangeStateOrderEvent', ({data}) => {
-                    console.log(data);
+                   
                     this.items.map( (item) => {
                         if(item.pedido === data.pedido.idpedido) {
                             item.state = data.state;

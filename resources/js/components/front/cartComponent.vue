@@ -215,7 +215,7 @@ export default {
             this.tipoPedidosTemp.push(element);
           }
           });
-          console.log(this.tipoPedidosTemp);
+        
           return  this.tipoPedidosTemp;
          }, 1500);
 
@@ -256,7 +256,7 @@ export default {
             total+=element.precio*element.cant
           }
         });
-        console.log(total);
+       
         return total;
       },
       showModal() {
@@ -270,7 +270,7 @@ export default {
           var that = this;
         axios.post('/login',{username:this.client.username,password:this.client.password})
         .then(function (response) {         
-             console.log(response.data)  
+             
         });
       },
       setPedido:function () { 
@@ -374,7 +374,7 @@ export default {
     },
     mounted() {
         this.recarga();
-        console.log(this.user);
+        
     },
     created: function () {
         EventBus.$on('EliminarenModal', function(boolean)  {
