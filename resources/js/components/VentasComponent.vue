@@ -79,7 +79,7 @@ export default {
 	},
 	methods:{
 		cambiafecha: function(){
-			console.log(this.date);
+
 			this.cargarPedidos();
 		},
 		ponerProductosDescripcion: function(){
@@ -90,7 +90,7 @@ export default {
 				this.cantidad++;
 				this.monto += parseFloat(itm.monto);
 				this.pedidos[index].monto = 'S/ ' + itm.monto;
-				console.log(itm.productos);
+
 				let prds = [];
 				itm.productos.forEach((itm2, index2)=>{
 					prds.push(itm2.nombre + " (" + itm2.cantidad + ")");
@@ -147,7 +147,7 @@ export default {
 				that.currentPage = 1;
 			})
 			.catch((error)=>{
-				console.log(error);
+
 				Swal.fire(
 					'Error',
 					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
@@ -164,7 +164,7 @@ export default {
 		const year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
 		const month = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
 		const day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
-		console.log(`${year}-${month}-${day}`);
+
 		this.date = `${year}-${month}-${day}`;
 		this.cargarPedidos();
 	},

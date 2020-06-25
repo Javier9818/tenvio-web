@@ -80,7 +80,7 @@
                 this.infoModal.data= data;
                 this.infoModal.loading = true;
                 axios.get(`/api/detallePedido/${data.id}`).then( ({data}) => {
-                    console.log(data);
+
                     this.infoModal.loading = false;
                     this.infoModal.detalle = data.detalle;
                 });

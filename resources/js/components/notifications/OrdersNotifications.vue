@@ -128,7 +128,7 @@
         created(){
             Echo.channel(`ordersCompany.${company || 0}`)
             .listen('NewOrderEvent', (e) => {
-                console.log(e);
+
                 if (e.order == null) return;
                 this.orders.push(e.order);
             });

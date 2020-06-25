@@ -40,6 +40,7 @@
 </section><!-- /.slider -->
 <section id="blogGrid" class="blog blog-grid  ">
 <h3 class=" text-center">Lo que necesitas, a tu alcance</h3>
+
 <front-categories-component></front-categories-component>
 </section><!-- /.blog Grid -->
 @endsection

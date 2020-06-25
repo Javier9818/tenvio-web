@@ -79,10 +79,10 @@
         props:['edit'],
         mixins: [validationMixin],
         mounted() {
-            console.log(this.edit);
+
             axios.get('/api/roles').then(({data})=>{ this.options = data.roles });
             axios.get('/api/cargos').then(({data})=>{ this.optionsCargos = data.cargos });
-            if(this.edit){ this.form = { ...empleado, roles }; console.log(empleado);};
+            if(this.edit){ this.form = { ...empleado, roles };};
         },
         data() {
             return {
@@ -190,7 +190,7 @@
             },
             submit: async function(){
                 this.$v.$touch()
-                console.log(this.$v.$invalid);
+
                 if(!this.edit){
                     this.errorUsername = null;
                     this.errorEmail = null;
@@ -217,7 +217,7 @@
                 }
             },
             cargoChange(){
-                console.log(this.form.cargo);
+
                switch (this.form.cargo) {
                    case 1:
                        this.form.roles = [1, 2, 3, 4, 5, 6];

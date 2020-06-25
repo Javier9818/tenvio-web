@@ -390,14 +390,14 @@
         created(){
              Echo.channel(`ordersCompany.${empresa}`)
                 .listen('NewOrderEvent', (e) => {
-                    console.log(e);
+
 					if (e.order == null)
 						return;
 					this.pedidos.push(e.order);
 					this.pedidosOriginal.push(e.order);
 					this.refrescarProductoPedido();
                 });
-            console.log(`ordersCompany.${empresa}`);
+            //console.log(`ordersCompany.${empresa}`);
         },
 		components: {
 			MultiSelect

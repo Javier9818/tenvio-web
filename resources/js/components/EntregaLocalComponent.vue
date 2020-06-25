@@ -106,7 +106,7 @@ export default {
 				cancelButtonText: 'No'
 			}).then((result) => {
 				if (result.value) {
-					console.log(that.selected);
+
 					//that.pedidoSeleccionado = item;
 					var thet = that;
 					that.selected.forEach((item, index) => {
@@ -151,7 +151,7 @@ export default {
 			axios.post(this.ruta+'/listarrecepcion')
 			.then(function (response) {
                 let datos = response.data;
-                console.log(response.data);
+
 				that.productos_pedido = datos.productos_pedido;
 				datos.pedidos.forEach((itm)=>{
 					that.pedidos.push(itm);

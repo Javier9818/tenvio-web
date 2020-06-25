@@ -221,7 +221,7 @@
             },
              selectCategoria(categorias, lastSelectItem){
                 this.form.categorias = categorias;
-                console.log(this.form.categorias);
+
             },
             handleTipoNegocio(){
                 this.loadCategorias = true;
@@ -229,15 +229,15 @@
                     this.loadCategorias = false;
                     this.form.categorias = [];
                     this.optionsCategorias = data.categorias;
-                    console.log(data.categorias);
+
                 });
             },
             update(){
                 this.$v.$touch()
-                console.log(this.$v.$invalid);
+
                 if(!this.$v.$invalid)
                     axios.put(`/api/empresa/${this.form.id}`, this.form).then( data => {
-                        console.log(data);
+
                         Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
 
                     }).catch(error => {

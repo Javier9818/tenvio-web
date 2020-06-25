@@ -17,7 +17,7 @@
     export default {
         props:['form'],
         mounted() {
-            console.log('Component mounted.')
+
         }
     }
 </script>

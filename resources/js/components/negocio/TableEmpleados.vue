@@ -28,7 +28,7 @@
 <script>
     export default {
         mounted() {
-            axios.get(`/api/empleados/${empresa}`).then(({data})=>{ this.empleados = data.empleados; console.log(data.empleados)});
+            axios.get(`/api/empleados/${empresa}`).then(({data})=>{ this.empleados = data.empleados;});
         },
         data() {
       return {

@@ -61,8 +61,8 @@
                 <div class="contact-box">
                   <h6 class="contact__box-title">Servicio las 24h</h6>
                   <ul class="contact__box-list list-unstyled">
-                    <li>Mon - Fri: 10 AM - 11 PM</li>
-                    <li>Sat - Sun: 9 AM - 1 PM</li>
+                    <li>Plataforma activa siempre para ti ;)</li>
+
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->
@@ -70,8 +70,8 @@
                 <div class="contact-box">
                   <h6 class="contact__box-title">Contactanos</h6>
                   <ul class="contact__box-list list-unstyled">
-                    <li><span>Main Email:</span><a href="mailto:Babette@7oroof.com">Babette@7oroof.com</a></li>
-                    <li><span>Phone:</span><a href="tel:020101236547">02 0101236547</a></li>
+                    <li><span> </span><a href="mailto:Babette@7oroof.com">contacto@tenvioperu.com</a></li>
+                    {{-- <li><span> </span><a href="tel:020101236547">98171187</a></li> --}}
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->
@@ -103,9 +103,9 @@
                   <a href="#" class="color-theme">Nortec</a>
                 </div>
                 <ul class="social__icons social__icons-white justify-content-center">
-                  <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                  <li><a href="https://www.facebook.com/teenvioperu"><i class="fab fa-facebook-f"></i></a></li>
+                  {{-- <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li> --}}
                 </ul><!-- /.social__icons -->
               </div>
             </div><!-- /.row -->

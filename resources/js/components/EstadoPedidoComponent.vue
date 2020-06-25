@@ -3,38 +3,38 @@
 		<b-row>
 			<b-col cols="6">
 				<label for="example-datepicker">Elegir fecha</label>
-			 	<input type="date" v-model="date">				 
+			 	<input type="date" v-model="date">
 			</b-col>
 			<b-col cols="6">
 				<b-form-group label="Repartidor:" label-cols-md="4">
      		 <!--<b-form-select v-model="selectRepartidor" :options="repartidores" class="mb-1"></b-form-select>-->
 				<model-list-select v-model="selectRepartidor" :list="repartidores" option-value="id" option-text="nombres" placeholder="Seleccione Repartidor"></model-list-select>
-				</b-form-group> 
+				</b-form-group>
 			</b-col>
 			<b-col cols="8">
 			</b-col>
 			<b-col cols="4" class=" text-right">
 				<button class="btn btn-success" @click="cargarPedidos">Cargar</button>
 			</b-col>
-		</b-row> 
-    
+		</b-row>
+
     <b-table
       ref="selectableTable"
       selectable
       select-mode="multi"
       :items="items"
-      :fields="fields" 
+      :fields="fields"
       responsive="sm"
-    > 
+    >
 		 <template v-slot:cell(actions)="row">
         <b-button size="sm" @click="details(row.item.IdAsignacion)" class="mr-2">
          Ver Detalles
-        </b-button> 
+        </b-button>
       </template>
     </b-table><br><br>
     <p>
-       
-      
+
+
     </p>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
 				{
             key: 'actions',
             label: 'Acciones'
-        } 
+        }
 				],
 			repartidores:[],
 			items: [],
@@ -77,27 +77,27 @@ export default {
 	},
 	methods: {
 	  montoPedido: function (params) {
-				var that = this; 			 
+				var that = this;
 			axios.post(this.ruta+'/MontoAsignacion', {idAsignacion:params.IdAsignacion})
-			.then(function (response) {	 
+			.then(function (response) {
 				that.items.push(
 					{
-						IdAsignacion: params.IdAsignacion,						 
+						IdAsignacion: params.IdAsignacion,
 						date:params.date,
-						mount:response.data[0].mount,						
+						mount:response.data[0].mount,
 					}
-				);	 
-			});		 
+				);
+			});
 		},
 		cargarPedidos: function(){
-			var that = this; 
+			var that = this;
 			that.items=[];
 			axios.post(this.ruta+'/ListaAsignaciones', {user:this.selectRepartidor,fecha:this.date})
-			.then(function (response) {		 
+			.then(function (response) {
 				response.data.forEach(element => {
-					that.montoPedido(element);									
+					that.montoPedido(element);
 				});
-			 
+
 			})
 			.catch(()=>{
 				Swal.fire(
@@ -115,7 +115,7 @@ export default {
 			.then(function (response) {
 				let datos = response.data;
 				that.repartidores = datos;
-				console.log(datos);
+
 			})
 			.catch(()=>{
 				Swal.fire(

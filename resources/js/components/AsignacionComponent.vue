@@ -76,8 +76,8 @@ export default {
 			})
 			.then(function (response) {
 				let datos = response.data;
-				console.log(that.pedidos);
-				console.log(that.pedidoSeleccionado);
+
+
 				that.pedidoSeleccionado.forEach((item1, index1) => {
 					var bul = false;
 					that.pedidos.forEach((item2, index2) => {
@@ -92,7 +92,7 @@ export default {
 				)
 			})
 			.catch((error)=>{
-				console.log(error);
+
 				Swal.fire(
 					'Error',
 					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
@@ -103,7 +103,7 @@ export default {
 			});
 		},
 		asignar: function(){
-			console.log(this.selectRepartidor);
+
 			var that = this;
 			Swal.fire({
 				title: '¿Estás seguro?',
@@ -116,7 +116,7 @@ export default {
 				cancelButtonText: 'No'
 			}).then((result) => {
 				if (result.value) {
-					console.log(that.selected);
+
 					//that.pedidoSeleccionado = item;
 					var thet = that;
 					that.pedidoSeleccionado = that.selected;
@@ -188,7 +188,7 @@ export default {
 			.then(function (response) {
 				let datos = response.data;
 				that.repartidores = datos;
-				console.log(datos);
+
 			})
 			.catch(()=>{
 				Swal.fire(

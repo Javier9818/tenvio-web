@@ -49,12 +49,12 @@
         },
         methods: {
             onChange (image) {
-                console.log('New picture selected!')
+
                 if (image) {
-                    console.log('Picture loaded.')
+
                     this.image = image
                     axios.put(`/api/fotoEmpresa/${this.form.id}`, {image:this.image}).then( ({data}) => {
-                        console.log(data);
+
                         this.form.foto = data.foto;
                         Swal.fire('Éxito', 'La foto se ha actualizado', 'success');
                     }).catch( error => Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error'));
