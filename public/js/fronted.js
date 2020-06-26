@@ -2260,7 +2260,8 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
     preRegistro: function preRegistro() {
       var _this5 = this;
 
-      axios.post('/api/pre-registro/empresa', this.form).then(function (data) {
+      axios.post('/api/pre-registro/empresa', this.form).then(function (_ref5) {
+        var data = _ref5.data;
         sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Éxito', 'El registro se completó satisfactoriamente', 'success').then(function (data) {
           _this5.$emit('complete');
         });
@@ -2306,10 +2307,11 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.post('/api/activate/empresa', this.form).then(function (data) {
-                  // console.log(data);
+                return axios.post('/api/activate/empresa', this.form).then(function (_ref6) {
+                  var data = _ref6.data;
+                  var empresa_id = data.empresa;
                   sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Éxito', 'Se han guardado los cambios', 'success').then(function (data) {
-                    window.location.reload();
+                    window.location.href = "/admin/empresa/".concat(empresa_id);
                   });
                 })["catch"](function (error) {
                   // console.log(error);
@@ -2400,8 +2402,8 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
                 this.ciudades = [];
                 this.loadCiudades = true;
                 _context6.next = 5;
-                return axios.get("/api/ciudades/".concat(this.form.distrito)).then(function (_ref5) {
-                  var data = _ref5.data;
+                return axios.get("/api/ciudades/".concat(this.form.distrito)).then(function (_ref7) {
+                  var data = _ref7.data;
                   _this8.ciudades = data.ciudades;
                   _this8.loadCiudades = false;
                 });
@@ -4196,7 +4198,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.funcionMerchantType();
-    this.funcionCategories(0);
+    this.funcionCategories(1);
   }
 });
 
@@ -74049,41 +74051,24 @@ var render = function() {
           _c(
             "nav",
             { staticClass: "nav nav-tabs justify-content-center" },
-            [
-              _c(
+            _vm._l(_vm.MerchantType, function(item, index) {
+              return _c(
                 "a",
                 {
-                  staticClass: "nav__link active",
+                  key: index,
+                  staticClass: "nav__link",
                   staticStyle: { "font-family": "'Nunito', sans-serif" },
-                  attrs: { "data-toggle": "tab", href: "#tab1" },
+                  attrs: { "data-toggle": "tab", href: "#tab" + (index + 2) },
                   on: {
                     click: function($event) {
-                      return _vm.funcionCategories(0)
+                      return _vm.funcionCategories(item.id)
                     }
                   }
                 },
-                [_vm._v("TODO")]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.MerchantType, function(item, index) {
-                return _c(
-                  "a",
-                  {
-                    key: index,
-                    staticClass: "nav__link",
-                    staticStyle: { "font-family": "'Nunito', sans-serif" },
-                    attrs: { "data-toggle": "tab", href: "#tab" + (index + 2) },
-                    on: {
-                      click: function($event) {
-                        return _vm.funcionCategories(item.id)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(item.descripcion))]
-                )
-              })
-            ],
-            2
+                [_vm._v(_vm._s(item.descripcion))]
+              )
+            }),
+            0
           )
         ])
       ])
@@ -74125,7 +74110,19 @@ var render = function() {
                 }
               },
               [
-                _vm._m(0, true),
+                _c(
+                  "h5",
+                  {
+                    staticClass: "card-title",
+                    staticStyle: {
+                      background: "linear-gradient(#fe4b7d, #ff8a4d)",
+                      "background-clip": "border-box",
+                      "-webkit-background-clip": "text",
+                      "-webkit-text-fill-color": "transparent"
+                    }
+                  },
+                  [_c("i", { class: "fas fa-" + item.icon + " fa-2x" })]
+                ),
                 _vm._v(" "),
                 _c(
                   "p",
@@ -74149,26 +74146,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "h5",
-      {
-        staticClass: "card-title",
-        staticStyle: {
-          background: "linear-gradient(#fe4b7d, #ff8a4d)",
-          "background-clip": "border-box",
-          "-webkit-background-clip": "text",
-          "-webkit-text-fill-color": "transparent"
-        }
-      },
-      [_c("i", { staticClass: "fas fa-utensils fa-2x" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

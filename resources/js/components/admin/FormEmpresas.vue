@@ -291,7 +291,7 @@
                 }
             },
             preRegistro: function(){
-                axios.post('/api/pre-registro/empresa', this.form).then((data)=>{
+                axios.post('/api/pre-registro/empresa', this.form).then(({data})=>{
                     Swal.fire('Éxito', 'El registro se completó satisfactoriamente', 'success').then( data => {
                         this.$emit('complete');
                     });
@@ -311,10 +311,10 @@
                 });
             },
             activarEmpresa: async function(){
-                await axios.post('/api/activate/empresa', this.form).then((data)=>{
-                    // console.log(data);
+                await axios.post('/api/activate/empresa', this.form).then(({data})=>{
+                    let empresa_id = data.empresa
                     Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
-                        window.location.reload();
+                        window.location.href=`/admin/empresa/${empresa_id}`;
                     });
                 }).catch((error) => {
                     // console.log(error);
