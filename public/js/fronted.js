@@ -3021,7 +3021,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.recarga();
-    console.log('ModalCarrito - Mounted');
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_0__["default"].$on('i-got-clicked', function (producto) {
@@ -3113,10 +3112,7 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       axios.post('/front/ListPedido').then(function (response) {
         that.items = response.data;
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log('Login please');
-      });
+      })["catch"](function (error) {});
     },
     color: function color(key) {
       switch (key.toUpperCase()) {
@@ -3157,14 +3153,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.listPedidos();
-    console.log('ModalPedidos - Mountedww');
   },
   created: function created() {
     var _this = this;
 
     Echo.channel("ordersClient.".concat(this.user)).listen('ChangeStateOrderEvent', function (_ref) {
       var data = _ref.data;
-      console.log(data);
 
       _this.items.map(function (item) {
         if (item.pedido === data.pedido.idpedido) {
@@ -3417,7 +3411,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
 
-        console.log(_this2.tipoPedidosTemp);
         return _this2.tipoPedidosTemp;
       }, 1500);
     },
@@ -3459,7 +3452,6 @@ __webpack_require__.r(__webpack_exports__);
           total += element.precio * element.cant;
         }
       });
-      console.log(total);
       return total;
     },
     showModal: function showModal() {
@@ -3474,9 +3466,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/login', {
         username: this.client.username,
         password: this.client.password
-      }).then(function (response) {
-        console.log(response.data);
-      });
+      }).then(function (response) {});
     },
     setPedido: function setPedido() {
       if (this.user == 0) {
@@ -3572,7 +3562,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.recarga();
-    console.log(this.user);
   },
   created: function created() {
     _event_bus__WEBPACK_IMPORTED_MODULE_0__["default"].$on('EliminarenModal', function (_boolean) {
@@ -3955,8 +3944,6 @@ __webpack_require__.r(__webpack_exports__);
           that.bool = true;
           that.rows = response.data.last_page;
         }
-
-        console.log(response.data);
       });
     }
   },
