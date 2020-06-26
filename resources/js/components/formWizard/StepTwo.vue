@@ -62,7 +62,7 @@
             },
 
             clickedNext(val) {
-                alert('siguiente');
+                
                 if(val === true) {
                     this.$v.form.$touch();
                 }

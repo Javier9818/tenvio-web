@@ -8,7 +8,7 @@ require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-
+ 
 
 
 

@@ -141,15 +141,16 @@
           </div>
         </div>
       <div class="row">
+          <div class="col-6">
+          <b-button class="mt-2" variant="primary" block @click="hideModal">Salir</b-button>
+        </div>
         <div class="col-6">
           <b-button class="mt-2" variant="success" block @click="funCarrito('c')">Agregar</b-button>
         </div>
         <!-- <div class="col-6">
           <b-button class="mt-2" variant="warning" block @click="funCarrito('x')">Finalizar Pedido</b-button>
         </div> -->
-        <div class="col-6">
-          <b-button class="mt-2" variant="primary" block @click="hideModal">Salir</b-button>
-        </div>
+      
       </div>
     </b-modal>
   </section>
