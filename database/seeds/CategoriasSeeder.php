@@ -21,25 +21,25 @@ class CategoriasSeeder extends Seeder
         TipoNegocio::create(["descripcion" => 'TIENDA DE ACCESORIOS']);
         TipoNegocio::create(["descripcion" => 'LIBRERIA']);
 
-        Categoria::create(["descripcion" => "POLLERIA", "tipo_negocio_id" => 1]);
-        Categoria::create(["descripcion" => "CHIFA", "tipo_negocio_id" => 1]);
-        Categoria::create(["descripcion" => "MENÚS EN GENERAL", "tipo_negocio_id" => 1]);
-        Categoria::create(["descripcion" => "FUENTE DE SODA", "tipo_negocio_id" => 1]);
+        Categoria::create(["descripcion" => "POLLERIA", "tipo_negocio_id" => 1,"icon"=>"drumstick-bite"]);
+        Categoria::create(["descripcion" => "CHIFA", "tipo_negocio_id" => 1,"icon"=>"salad"]);
+        Categoria::create(["descripcion" => "MENÚS EN GENERAL", "tipo_negocio_id" => 1,"icon"=>"utensils"]);
+        Categoria::create(["descripcion" => "FUENTE DE SODA", "tipo_negocio_id" => 1,"icon"=>"burger-soda"]);
 
-        Categoria::create(["descripcion" => "REPOSTERIA", "tipo_negocio_id" => 2]);
-        Categoria::create(["descripcion" => "BODEGA", "tipo_negocio_id" => 3]);
+        Categoria::create(["descripcion" => "REPOSTERIA", "tipo_negocio_id" => 2,"icon"=>"cookie-bite"]);
+        Categoria::create(["descripcion" => "BODEGA", "tipo_negocio_id" => 3,"icon"=>"store"]);
 
-        Categoria::create(["descripcion" => "ROPA HOMBRE", "tipo_negocio_id" => 4]);
-        Categoria::create(["descripcion" => "ROPA MUJER", "tipo_negocio_id" => 4]);
-        Categoria::create(["descripcion" => "ROPA NIÑOS", "tipo_negocio_id" => 4]);
+        Categoria::create(["descripcion" => "ROPA HOMBRE", "tipo_negocio_id" => 4,"icon"=>"tshirt"]);
+        Categoria::create(["descripcion" => "ROPA MUJER", "tipo_negocio_id" => 4,"icon"=>"venus"]);
+        Categoria::create(["descripcion" => "ROPA NIÑOS", "tipo_negocio_id" => 4,"icon"=>"socks"]);
 
-        Categoria::create(["descripcion" => "APARATOS ELECTRÓNICOS EN GENERAL", "tipo_negocio_id" => 5]);
+        Categoria::create(["descripcion" => "APARATOS ELECTRÓNICOS EN GENERAL", "tipo_negocio_id" => 5,"icon"=>"laptop"]);
 
-        Categoria::create(["descripcion" => "REGALOS", "tipo_negocio_id" => 6]);
-        Categoria::create(["descripcion" => "ACCESORIOS HOMBRE", "tipo_negocio_id" => 6]);
-        Categoria::create(["descripcion" => "ACCESORIOS MUJER", "tipo_negocio_id" => 6]);
-        Categoria::create(["descripcion" => "ACCESORIOS NIÑOS", "tipo_negocio_id" => 6]);
+        Categoria::create(["descripcion" => "REGALOS", "tipo_negocio_id" => 6,"icon"=>"gifts"]);
+        Categoria::create(["descripcion" => "ACCESORIOS HOMBRE", "tipo_negocio_id" => 6,"icon"=>"male"]);
+        Categoria::create(["descripcion" => "ACCESORIOS MUJER", "tipo_negocio_id" => 6,"icon"=>"female"]);
+        Categoria::create(["descripcion" => "ACCESORIOS NIÑOS", "tipo_negocio_id" => 6,"icon"=>"child"]);
 
-        Categoria::create(["descripcion" => "LIBRERIA", "tipo_negocio_id" => 7]);
+        Categoria::create(["descripcion" => "LIBRERIA", "tipo_negocio_id" => 7,"icon"=>"book"]);
     }
 }

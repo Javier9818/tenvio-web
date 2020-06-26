@@ -4,7 +4,7 @@
         <div class="col-sm-12 col-md-12 col-lg-12">
           <div class="menu-wrapper">
             <nav class="nav nav-tabs justify-content-center">
-              <a class="nav__link active" style="font-family: 'Nunito', sans-serif;" data-toggle="tab" href="#tab1" @click="funcionCategories(0)">TODO</a>
+              <!-- <a class="nav__link active" style="font-family: 'Nunito', sans-serif;" data-toggle="tab" href="#tab1" @click="funcionCategories(0)">TODO</a> -->
               <a class="nav__link" style="font-family: 'Nunito', sans-serif;" data-toggle="tab" :href="'#tab'+(index+2)"  v-for="(item, index) of MerchantType" :key="index" @click="funcionCategories(item.id)">{{item.descripcion}}</a>
             </nav>
           </div><!-- /.menu-wrapper  -->
@@ -26,7 +26,7 @@
             <h5 class="card-title" style="background: linear-gradient(#fe4b7d, #ff8a4d);
                 background-clip: border-box;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;"><i class="fas fa-utensils fa-2x"></i></h5>
+            -webkit-text-fill-color: transparent;"><i :class="'fas fa-'+item.icon+' fa-2x'"></i></h5>
             <p class="card-text text-center" style="font-family: 'Nunito', sans-serif;
             font-size: 24px;
             font-size: 1.2em;
@@ -68,7 +68,7 @@ export default {
   },
   mounted(){
     this.funcionMerchantType();
-    this.funcionCategories(0);
+    this.funcionCategories(1);
   }
 }
 </script>

@@ -325,12 +325,12 @@ class FrontController extends Controller
       {
         return DB::table('categorias')
         ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
-        ->selectRaw('categorias.id,categorias.descripcion')
+        ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')
         ->get();
       }
         return DB::table('categorias')
         ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
-        ->selectRaw('categorias.id,categorias.descripcion')        
+        ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')        
         ->where('tipo_negocio.id', '=',$request->get('id'))   
         ->get();
      }catch (\Exception  $e) {

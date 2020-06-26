@@ -15,7 +15,8 @@
   <!-- <link rel="stylesheet" href="assets/css/animate.css" /> -->
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
   <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
   {{-- <link rel="stylesheet" href= "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
   <!--NOTIFICACIONES PUSHER -->
