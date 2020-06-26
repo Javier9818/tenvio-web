@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wow">
         <nav class="navbar navbar-area navbar-expand-lg nav-absolute white nav-style-01 header-style-09">
             <div class="container nav-container">
                 <div class="responsive-mobile-menu">

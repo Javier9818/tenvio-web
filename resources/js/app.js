@@ -93,7 +93,7 @@ Vue.component('card-map', require('./components/maps/CardMapComponent.vue').defa
 Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
 Vue.component('modal-pedidos', require('./components/front/ModalPedidos.vue').default)
 
-/*Front*/
+/*FRONT*/
 Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
 Vue.component('front-cart-component', require('./components/front/cartComponent.vue').default)
 
@@ -103,7 +103,7 @@ Vue.component('front-seguimiento-component', require('./components/front/seguimi
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
- */
+*/
 
 const app = new Vue({
     el: '#app',

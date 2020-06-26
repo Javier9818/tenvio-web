@@ -778,6 +778,20 @@
     background-size: cover;
     background-position: center; }
 
+    .complete-bg {
+        background-image: url(/assets/images/landing_pages/bg/bg-register-complete-min.png);
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+    }
+
+    @media only screen and (max-width: 450px) {
+        .complete-bg {
+            background-image: url(/assets/images/landing_pages/bg/bg-register-complete-mobile.png);
+        }
+      }
+
+
 /*-------------------------
     Preloader Css
 ---------------------------*/

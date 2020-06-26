@@ -53,7 +53,7 @@ class EmpresaController extends Controller
             }
 
             DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
-            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
+            // DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
 
             // Contrato::create(["empresa_id" => $empresa->id,"estado" => 'PRUEBA']);
         });
@@ -61,6 +61,37 @@ class EmpresaController extends Controller
 
         return response()->json(["message" => "Registro exitoso"], 200);
     }
+
+    public function preRegisterEmpresa(Request $request){
+        DB::transaction(function () use ($request){
+            $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
+            $empresa = Empresa::create([
+                "ruc" => $request->ruc,
+                "nombre" => $request->nombre,
+                "descripcion" => $request->descripcion,
+                "telefono" => $request->telefono,
+                "celular" => $request->celular,
+                "direccion" => $request->direccion,
+                "ciudad_id" => $request->distrito,
+                "nombre_unico" => $usernameEmpresa,
+                "estado" => "SOLICITADO"
+            ]);
+
+            foreach ($request->categorias as $key => $value) {
+                DB::insert('insert into categoria_empresa (empresa_id, categoria_id) values (?, ?)', [$empresa->id, $value['value']]);
+            }
+
+            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
+            // DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
+
+            // Contrato::create(["empresa_id" => $empresa->id,"estado" => 'PRUEBA']);
+        });
+
+
+        return response()->json(["message" => "Registro exitoso"], 200);
+    }
+
+    /** ======== */
 
     public function updateEmpresa(Request $request, $empresa){
         $empresa = Empresa::find($empresa);
@@ -128,9 +159,7 @@ class EmpresaController extends Controller
     }
 
     public function listarEmpresas(){
-
         $empresas = Empresa::all();
-
         return view('front.listEmpresa',compact('empresas'));
     }
 
@@ -161,5 +190,7 @@ class EmpresaController extends Controller
         $empresas = DB::table('empresas')->where('nombre_unico','=',$request->nombreUnico)->get();
         return (count($empresas)>0) ? response()->json(["message" => true]) : response()->json(["message"=>false]);
     }
+
+
 
 }

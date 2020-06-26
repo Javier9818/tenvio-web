@@ -17,4 +17,11 @@
 @endsection
 
 
+@section('script')
+    <script>
+        let tiponegocios = @json($tiponegocios);
+    </script>
+@endsection
+
+
 
