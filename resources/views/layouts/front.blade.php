@@ -5,25 +5,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="description" content="Babette">
-  <link href="assets/images/favicon/favicon.png" rel="icon">
+  <meta name="description" content="TE ENVIO - NORTEC">
+  <link href="assets/images/favicon/favicon2.png"  rel="icon">
   <title>@yield('title')</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Rubik:400,500,700%7cShadows+Into+Light&display=swap">
-  <link rel="stylesheet" href="assets/css/libraries.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{!! asset('assets/css/libraries.css') !!}" />
   <!-- <link rel="stylesheet" href="assets/css/animate.css" /> -->
   <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
   <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
-  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   {{-- <link rel="stylesheet" href= "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
   <!--NOTIFICACIONES PUSHER -->
   <script src="{!! asset('notify/push.min.js') !!}"></script>
   @yield('styles')
-</head> 
+</head>
 
-<body>
+<body >
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
   <div class="wrapper" id="app">
     <!-- =========================
         Header
@@ -60,8 +61,8 @@
                 <div class="contact-box">
                   <h6 class="contact__box-title">Servicio las 24h</h6>
                   <ul class="contact__box-list list-unstyled">
-                    <li>Mon - Fri: 10 AM - 11 PM</li>
-                    <li>Sat - Sun: 9 AM - 1 PM</li>
+                    <li>Plataforma activa siempre para ti ;)</li>
+
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->
@@ -69,8 +70,8 @@
                 <div class="contact-box">
                   <h6 class="contact__box-title">Contactanos</h6>
                   <ul class="contact__box-list list-unstyled">
-                    <li><span>Main Email:</span><a href="mailto:Babette@7oroof.com">Babette@7oroof.com</a></li>
-                    <li><span>Phone:</span><a href="tel:020101236547">02 0101236547</a></li>
+                    <li><span> </span><a href="mailto:Babette@7oroof.com">contacto@tenvioperu.com</a></li>
+                    {{-- <li><span> </span><a href="tel:020101236547">98171187</a></li> --}}
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->
@@ -80,7 +81,7 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 position-static">
                 <div class="footer__logo-wrap text-center">
-                  <img src="assets/images/logo/footer-logo2.png" alt="logo" class="footer__logo">
+                <img src="{!! asset('assets/images/logo/footer-logo2.png') !!}" alt="logo" class="footer__logo">
                 </div>
               </div><!-- /.col-lg-12 -->
             </div><!-- /.row -->
@@ -102,9 +103,9 @@
                   <a href="#" class="color-theme">Nortec</a>
                 </div>
                 <ul class="social__icons social__icons-white justify-content-center">
-                  <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                  <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+                  <li><a href="https://www.facebook.com/teenvioperu"><i class="fab fa-facebook-f"></i></a></li>
+                  {{-- <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                  <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li> --}}
                 </ul><!-- /.social__icons -->
               </div>
             </div><!-- /.row -->
@@ -122,20 +123,25 @@
 
     <div class="search-popup">
       <i class="fa fa-times close-search"></i>
-      <form class="module__search-form">
-        <input type="text" class="search__input" placeholder="Escriba algo...">
-        <button class="module__search-btn"><i class="fa fa-search"></i></button>
+      <form class="module__search-form" action="{{ route('list') }}" method="get">
+        <input type="text" class="search__input" name="search" placeholder="Escriba algo...">
+        <!-- <input type="submit"  class="module__search-btn"> -->
+          <!-- <i class="fa fa-search"></i> -->
+
+        <!-- <button class="module__search-btn"><i class="fa fa-search"></i></button> -->
       </form>
     </div><!-- /.search-popup -->
 
   </div>
   <!-- /.wrapper -->
-
-  <script src="assets/js/jquery-3.3.1.min.js"></script>
-  <script src="assets/js/plugins.js"></script>
-  <!-- <script src="assets/js/wow.min.js"></script> -->
-  <script src="assets/js/main.js"></script>
   <script src="/js/fronted.js" type="text/javascript"></script>
+
+  <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
+  <script src="{!! asset('assets/js/plugins.js') !!}"></script>
+  <!-- <script src="assets/js/wow.min.js"></script> -->
+  <script src="{!! asset('assets/js/main.js') !!}"></script>
+
+  @yield('script')
 </body>
 
 </html>
