@@ -8,7 +8,7 @@
     @include('front.nav')
 @endsection
 
-@section('contenido')
+@section('contenido') 
 <section id="slider" class="slider slider-layout1">
     <div class="container slide-item align-v-h text-center">
         <div class="row">
