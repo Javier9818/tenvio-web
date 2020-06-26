@@ -7,6 +7,9 @@ use App\Pedidos;
 use App\Producto;
 use App\Http\Controllers\PedidosController;
 use App\Events\ChangeStateOrderEvent;
+use App\Contrato;
+//use App\Plan;
+//use App\Pagos;
 
 class ContabilidadController extends Controller
 {
@@ -17,10 +20,16 @@ class ContabilidadController extends Controller
 		return $this->fn('2', $request);
 	}
 	public function fn($funcion='', Request $request){
-		if ($funcion == 'listarentregados') return $this->listarentregados($request);
+		if ($funcion == 'listarentregados') return $this->listarentregados($request);//1
+		if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
 		else if ($funcion == '1') return view('admin.negocio.ventas'/*, ["empresa" => session('empresa')]*/);
 		else if ($funcion == '2') return view('admin.negocio.pagos'/*, ["empresa" => session('empresa')]*/);
 		else return '';
+	}
+
+	static function listacontratos(Request $request){
+        $empresa_id = session('empresa');
+		return Contrato::listacontratos($empresa_id);
 	}
 
 	static function listarentregados(Request $request){
