@@ -147,7 +147,6 @@ export default {
 				that.currentPage = 1;
 			})
 			.catch((error)=>{
-
 				Swal.fire(
 					'Error',
 					'Hubo un error inesperado, por favor contactese con el administrador del sistema',

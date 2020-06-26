@@ -62,8 +62,8 @@ Vue.use(Vuelidate)
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('orders-notifications', require('./components/notifications/OrdersNotifications.vue').default);
-Vue.component('ventas-component', require('./components/VentasComponent.vue').default);
-Vue.component('pagos-component', require('./components/PagosComponent.vue').default);
+Vue.component('ventas-component', require('./components/contabilidad/VentasComponent.vue').default);
+Vue.component('pagos-component', require('./components/contabilidad/PagosComponent.vue').default);
 Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);
 Vue.component('entrega-local-component', require('./components/EntregaLocalComponent.vue').default);
 Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);

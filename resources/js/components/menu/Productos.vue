@@ -138,7 +138,6 @@ export default {
 			console.log({valor, fileRecords});
 			this.producto.fotosubida = fileRecords;
 			this.deshabilitaboton = valor;
-
 		},
 		cargarCategorias: function(){
 			var that = this;
