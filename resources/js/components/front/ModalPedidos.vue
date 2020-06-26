@@ -51,15 +51,15 @@
                     }
                 });
 
-                
+
             },
             listPedidos: function () {
                 var that = this;
                 axios.post('/front/ListPedido')
                 .then(function (response) {
-                    if (response.data!='Error')  
+                    if (response.data!='Error')
                     that.items= response.data;
-                  
+
                 }).catch((error)=>{  });
             },
             color: function (key) {
@@ -81,33 +81,33 @@
         },
         mounted() {
             this.listPedidos();
- 
+
         },
         created(){
-            Echo.channel(`ordersClient.${this.user}`)
-                .listen('ChangeStateOrderEvent', ({data}) => {
-                   
-                    this.items.map( (item) => {
-                        if(item.pedido === data.pedido.idpedido) {
-                            item.state = data.state;
+            // Echo.channel(`ordersClient.${this.user}`)
+            //     .listen('ChangeStateOrderEvent', ({data}) => {
+
+            //         this.items.map( (item) => {
+            //             if(item.pedido === data.pedido.idpedido) {
+            //                 item.state = data.state;
 
 
-                            var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
-                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
+            //                 var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
+            //                      ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
 
-                            this.notifyPush(messageNotify)
+            //                 this.notifyPush(messageNotify)
 
-                            Swal.fire(
-                               'Cambio de estado',
-                                messageNotify,
-                                `${data.state === 'CANCELADO' ? 'error' : 'success'}`
-                            ).then((data) => {location.href = '/pedidos'});
+            //                 Swal.fire(
+            //                    'Cambio de estado',
+            //                     messageNotify,
+            //                     `${data.state === 'CANCELADO' ? 'error' : 'success'}`
+            //                 ).then((data) => {location.href = '/pedidos'});
 
 
-                        }
-                    });
+            //             }
+            //         });
 
-            });
+            // });
         }
     }
 </script>

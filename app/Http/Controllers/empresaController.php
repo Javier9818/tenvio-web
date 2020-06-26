@@ -24,7 +24,7 @@ class EmpresaController extends Controller
                 "estado" => 'ACTIVO',
                 "plan_id" => 1,
                 "plan_monto" => 0.0,
-                "fecha_vencimiento" => Carbon::now()->addDays(15)
+                "fecha_vencimiento" => Carbon::now()->addDays(30)
             ]);
             Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad]);
         });
