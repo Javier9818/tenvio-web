@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 */
 
 // ================== LANDING PAGES =================================================*/
-Route::get('/quienes-somos', function(){return view('landing_pages.tenvio_promocional');});
+Route::get('/quienes-somos', 'GeneralController@vistaPromocional');
 
 
 // ================================== BLOQUE EMPRESA =================================================*/
