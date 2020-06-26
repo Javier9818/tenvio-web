@@ -32,6 +32,7 @@ Route::get('/empleados/{empresa}', 'EmpleadoController@listByEmpresa');
 
 Route::post('/empresa', 'EmpresaController@setEmpresa');
 Route::post('/activate/empresa', 'EmpresaController@activateEmpresa');
+Route::post('/pre-registro/empresa', 'EmpresaController@preRegisterEmpresa');
 Route::put('/empresa/{empresa}', 'EmpresaController@updateEmpresa');
 Route::put('/fotoEmpresa/{empresa}', 'EmpresaController@updateFoto');
 

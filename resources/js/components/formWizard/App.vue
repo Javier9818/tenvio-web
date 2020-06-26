@@ -5,7 +5,7 @@
         <section class="section" style="padding-top: 0rem">
 
             <div class="container">
-                <div class="card" v-if="busy === false">
+                <div class="card" v-if="busy2 === false">
                     <div class="padre">
                        <h1>{{message}}</h1>
                     </div>
@@ -33,7 +33,7 @@
 
 <script>
     import HorizontalStepper from './src/HorizontalStepper.vue';
-
+    import Swal from 'sweetalert2'
     import StepOne from './StepOne.vue';
     import StepTwo from './StepTwo.vue';
     import StepThree from './StepThree.vue';
@@ -51,6 +51,7 @@
         data(){
             return {
                 busy:null,
+                busy2:null,
                 message:'Sus datos han sido registrados correctamente',
                 data:{},
                 repoUrl: repoUrl,
@@ -96,16 +97,23 @@
                 })
             },
             submit: async function (payload) {
-                //alert('up');
-                //console.log(this.data);
+               
                 this.busy = true;
                 await axios.post('/api/usuarios', this.data)
                 .then((response) => {
                     this.busy = false;
-                   // console.log(response.data.message);
+                    this.busy2 = false;
+                    setTimeout(() => {
+                        location.href="/"
+                    }, 2000);
+                   
                 }).catch(e => {
                     this.busy = false;
-                    alert('Usuario o Email incorrecto')
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'ERROR', 
+                        text: 'Nombre de usuario o correo ya existente, por favor intente otra vez.'
+                    });                     
                 });
 
             },

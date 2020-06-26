@@ -19,6 +19,12 @@
                     </button>
                 </div><!-- /.cart-item-content -->
                 </li>
+                <infinite-loading @infinite="listPedidos">
+                     <div slot="waveDots">Cargando </div>
+                    <div slot="no-more"> </div>
+                    <div slot="no-results"> </div>
+                      
+                </infinite-loading>
             </ul>
             <div class="cart-action text-center">
                 <a href="/pedidos" class="mt-2">Ver todos mis pedidos</a>
@@ -30,12 +36,18 @@
 <script>
     import EventBus from '../../event-bus';
     import Swal from 'sweetalert2'
+    import InfiniteLoading from 'vue-infinite-loading';
     export default {
+        components:
+        {
+            InfiniteLoading,
+        },
         props:['user'],
         data(){
             return {
                 items: [
                 ],
+                count:0
 
             }
         },
@@ -51,16 +63,28 @@
                     }
                 });
 
-                // function redirect(categoria){
-                // window.location.href = `/list/${categoria}`;
-                // }
-            },
 
-            listPedidos: function () {
+            },
+            listPedidos: function ($state) {
+                this.count++;
                 var that = this;
-                axios.post('/front/ListPedido')
+                axios.post('/front/ListPedido',{page:this.count})
                 .then(function (response) {
-                    that.items= response.data;
+                    let pedidos= response.data.data
+                    if (response.data=='Error')  
+                         $state.complete();
+
+                         
+                     if(pedidos.length)
+                     {
+                         setTimeout(() => {
+                             that.items=that.items.concat(pedidos);
+                               $state.loaded();
+                         }, 250);
+                     }
+                     else 
+                        $state.complete();
+
                   
                 }).catch((error)=>{  });
             },
@@ -83,33 +107,33 @@
         },
         mounted() {
             this.listPedidos();
- 
+
         },
         created(){
-            Echo.channel(`ordersClient.${this.user}`)
-                .listen('ChangeStateOrderEvent', ({data}) => {
-                   
-                    this.items.map( (item) => {
-                        if(item.pedido === data.pedido.idpedido) {
-                            item.state = data.state;
+            // Echo.channel(`ordersClient.${this.user}`)
+            //     .listen('ChangeStateOrderEvent', ({data}) => {
+
+            //         this.items.map( (item) => {
+            //             if(item.pedido === data.pedido.idpedido) {
+            //                 item.state = data.state;
 
 
-                            var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
-                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
+            //                 var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
+            //                      ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
 
-                            this.notifyPush(messageNotify)
+            //                 this.notifyPush(messageNotify)
 
-                            Swal.fire(
-                               'Cambio de estado',
-                                messageNotify,
-                                `${data.state === 'CANCELADO' ? 'error' : 'success'}`
-                            ).then((data) => {location.href = '/pedidos'});
+            //                 Swal.fire(
+            //                    'Cambio de estado',
+            //                     messageNotify,
+            //                     `${data.state === 'CANCELADO' ? 'error' : 'success'}`
+            //                 ).then((data) => {location.href = '/pedidos'});
 
 
-                        }
-                    });
+            //             }
+            //         });
 
-            });
+            // });
         }
     }
 </script>

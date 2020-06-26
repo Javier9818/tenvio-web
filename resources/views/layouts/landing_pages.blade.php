@@ -71,7 +71,7 @@
                         <ul>
                             {{-- <li><a href="#"><i class="fas fa-chevron-right"></i> Faqs</a></li> --}}
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Privacidad</a></li>
-                            <li><a href="#"><i class="fas fa-chevron-right"></i> Polítcas</a></li>
+                            <li><a href="#"><i class="fas fa-chevron-right"></i> Políticas</a></li>
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Soporte</a></li>
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Términos y condiciones</a></li>
                         </ul>
@@ -139,7 +139,6 @@
   <!-- back to top area end -->
 
 
-    <script src="/js/fronted.js" type="text/javascript"></script>
     <!-- jquery -->
     <script src="/assets/js/landing_pages/jquery.js"></script>
     <!-- popper -->
@@ -160,6 +159,8 @@
     <script src="/assets/js/landing_pages/jquery.counterup.min.js"></script>
     <!-- main -->
     <script src="/assets/js/landing_pages/main.js"></script>
+
+    <script src="/js/fronted.js" type="text/javascript"></script>
 
     @yield('script')
 </body>

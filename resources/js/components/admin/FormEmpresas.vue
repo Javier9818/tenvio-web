@@ -1,26 +1,26 @@
 <template>
 <div class="container">
     <div class="modal-body">
-         <form v-on:submit.prevent="submit()" id="formEmpresaA">
+        <form v-on:submit.prevent="submit()" id="formEmpresaA">
             <div class="row">
                 <div class="col-md-6 mt-2">
                     <label>RUC</label> <!--is-invalid-->
-                    <input type="number" class="form-control" placeholder="Ingrese apellidos paternos" v-model="form.ruc">
+                    <input type="number" class="form-control" placeholder="Ingrese el número de su RUC" v-model="form.ruc">
                     <p v-if="$v.form.ruc.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
-                    <label>Nombre de la empresa*</label>
-                    <input type="text" class="form-control" placeholder="Ingrese apellidos maternos" required v-model="form.nombre">
+                    <label>Nombre del negocio*</label>
+                    <input type="text" class="form-control" placeholder="Ingrese el nombre del negocio" required v-model="form.nombre">
                     <p v-if="$v.form.nombre.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
                     <label>Teléfono de contácto</label>
-                    <input type="number" class="form-control" placeholder="Ingrese nombres"  v-model="form.telefono">
+                    <input type="number" class="form-control" placeholder="Ingrese el teléfono de contácto"  v-model="form.telefono">
                     <p v-if="$v.form.telefono.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
                 <div class="col-md-6 mt-2">
                     <label>Celular de contácto*</label>
-                    <input type="number" class="form-control" placeholder="Ingrese su número de celular" required v-model="form.celular">
+                    <input type="number" class="form-control" placeholder="Ingrese el celular de contácto" required v-model="form.celular">
                     <p v-if="$v.form.celular.$error" class="help text-danger">Este campo es inválido</p>
                 </div>
 
@@ -102,26 +102,26 @@
                     </b-form-select>
                 </div>
 
-                    <div class="col-md-6 mt-2" v-if="nuevaCiudad === false">
-                        <label>Ciudad*</label>
-                        <b-overlay :show="loadCiudades" rounded spinner-small spinner-variant="primary">
-                            <b-form-select
-                                v-model="form.ciudad"
-                                :options="ciudades"
-                                value-field="id"
-                                text-field="nombre"
-                                required=""
-                            >
-                                <template v-slot:first>
-                                    <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
-                                </template>
-                            </b-form-select>
-                        </b-overlay>
-                        <a href="javascript:void(0)" v-on:click="() => {nuevaCiudad=true; form.ciudad=null;}">¿No encontraste la ciudad? Crear ciudad</a>
-                    </div>
+                <div class="col-md-6 mt-2" v-if="nuevaCiudad === false && promo === undefined">
+                    <label>Ciudad*</label>
+                    <b-overlay :show="loadCiudades" rounded spinner-small spinner-variant="primary">
+                        <b-form-select
+                            v-model="form.ciudad"
+                            :options="ciudades"
+                            value-field="id"
+                            text-field="nombre"
+                            required=""
+                        >
+                            <template v-slot:first>
+                                <b-form-select-option :value="null" disabled>-- Porfavor, elige una opción --</b-form-select-option>
+                            </template>
+                        </b-form-select>
+                    </b-overlay>
+                    <a href="javascript:void(0)" v-on:click="() => {nuevaCiudad=true; form.ciudad=null;}">¿No encontraste la ciudad? Crear ciudad</a>
+                </div>
 
 
-               <div class="col-md-6 mt-2" v-if="nuevaCiudad">
+               <div class="col-md-6 mt-2" v-if="nuevaCiudad && promo === undefined">
                     <label>Nueva ciudad</label>
                     <input type="text" class="form-control" placeholder="Ingrese el nombre de la ciudad" required v-model="form.ciudadCreate">
                     <a href="javascript:void(0)" v-on:click="() => {nuevaCiudad=false; form.ciudadCreate=null;}">Cancelar</a>
@@ -130,7 +130,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" @click="close">Cerrar</button>
+        <button type="button" class="btn btn-secondary" @click="close" v-if="promo === undefined">Cerrar</button>
         <button type="submit" form="formEmpresaA" class="btn btn-primary">{{dataForm ? 'Activar' : 'Registrar'}}</button>
     </div>
 </div>
@@ -145,7 +145,7 @@
     import Swal from 'sweetalert2'
     export default {
         mixins: [validationMixin],
-        props:['dataFields', 'dataForm'],
+        props:['dataFields', 'dataForm', 'promo'],
         mounted() {
             if(this.dataFields){
                 this.departamentos = this.dataFields.departamentos
@@ -159,7 +159,7 @@
             }
 
             if(this.dataForm){
-                console.log(this.dataForm)
+                // console.log(this.dataForm)
                 this.form =
                 {
                     ...this.form,
@@ -270,7 +270,7 @@
             },
             selectCategoria(categorias, lastSelectItem){
                 this.form.categorias = categorias;
-                console.log(this.form.categorias);
+                // console.log(this.form.categorias);
             },
             handleTipoNegocio(){
                 this.loadCategorias = true;
@@ -278,36 +278,46 @@
                     this.loadCategorias = false;
                     this.form.categorias = [];
                     this.optionsCategorias = data.categorias;
-                    console.log(data.categorias);
+                    // console.log(data.categorias);
                 });
             },
             submit: async function(){
                 this.$v.$touch()
-                console.log(this.$v.$invalid);
+                // console.log(this.$v.$invalid);
                 if(!this.$v.$invalid){
                     if(this.dataForm) this.activarEmpresa();
+                    else if(this.promo === "true") this.preRegistro();
                     else this.crearEmpresa();
                 }
             },
+            preRegistro: function(){
+                axios.post('/api/pre-registro/empresa', this.form).then((data)=>{
+                    Swal.fire('Éxito', 'El registro se completó satisfactoriamente', 'success').then( data => {
+                        this.$emit('complete');
+                    });
+                }).catch((error) => {
+                    Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                });
+            },
             crearEmpresa: async function(){
                 await axios.post('/api/empresa', this.form).then((data)=>{
-                    console.log(data);
+                    // console.log(data);
                     Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
                         window.location.reload();
                     });
                 }).catch((error) => {
-                    console.log(error);
+                    // console.log(error);
                     Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                 });
             },
             activarEmpresa: async function(){
                 await axios.post('/api/activate/empresa', this.form).then((data)=>{
-                    console.log(data);
+                    // console.log(data);
                     Swal.fire('Éxito', 'Se han guardado los cambios', 'success').then( data => {
                         window.location.reload();
                     });
                 }).catch((error) => {
-                    console.log(error);
+                    // console.log(error);
                     Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
                 });
             },

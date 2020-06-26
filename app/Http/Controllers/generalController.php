@@ -88,4 +88,9 @@ class GeneralController extends Controller
 
         return response()->json(["ordenesPendientes" => $ordenesPendientes, "ordenesAceptadas" => $ordenesAceptadas, "ordenesEnviadas" => $ordenesEnviadas], 200);
     }
+
+    public function vistaPromocional(){
+        $tiponegocios = TipoNegocio::all();
+        return view('landing_pages.tenvio_promocional', ["tiponegocios" => $tiponegocios]);
+    }
 }
