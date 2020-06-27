@@ -26,7 +26,10 @@
             <div class="control">
                 <input type="email" v-model="form.correo" :class="['input', ($v.form.correo.$error) ? 'is-danger' : '']"  placeholder="Ingrese su correo electrónico" >
             </div>
-            <p v-if="$v.form.correo.$error" class="help is-danger">Este campo es inválido</p>
+            <p v-if="!$v.form.correo.required" class="help is-danger">Este campo es requerido</p>
+            <p v-if="!$v.form.correo.email" class="help is-danger">Este campo es inválido</p>
+            <p v-if="$v.form.correo.required && $v.form.correo.email && !$v.form.correo.found" class="help is-danger">El correo electrónico ingresado está siendo utilizado.</p>
+
         </div>
          <div class="field col-12">
             <label class="label">Celular * </label>
@@ -81,7 +84,17 @@
                 },
                 correo:{
                     required,
-                    email
+                    email,
+                    async found(value) {
+                        try {
+                            if (/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(value)){
+                                let { data } = await axios.get(`/api/email/${value}`);
+                                return !data.message
+                            } else return false
+                        } catch(e) {
+                        return false;
+                        }
+                    }
                 }
             }
         },

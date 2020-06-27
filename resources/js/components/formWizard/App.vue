@@ -97,23 +97,23 @@
                 })
             },
             submit: async function (payload) {
-               
+
                 this.busy = true;
-                await axios.post('/api/usuarios', this.data)
-                .then((response) => {
+                await axios.post('/api/usuarios', this.data).then((response) => {
                     this.busy = false;
-                    this.busy2 = false;
-                    setTimeout(() => {
-                        location.href="/"
-                    }, 2000);
-                   
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'ÉXITO',
+                        text: 'Su registro se ha realizado satisfactoriamente, por favor inicie sesión'
+                    }).then(data => { window.location.href='/login' });
+
                 }).catch(e => {
                     this.busy = false;
                      Swal.fire({
                         icon: 'error',
-                        title: 'ERROR', 
-                        text: 'Nombre de usuario o correo ya existente, por favor intente otra vez.'
-                    });                     
+                        title: 'ERROR',
+                        text: 'Se ha producido un error.'
+                    });
                 });
 
             },

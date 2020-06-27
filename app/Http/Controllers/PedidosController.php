@@ -46,10 +46,8 @@ class PedidosController extends Controller
 		else if ($funcion == '2') return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
 		else if ($funcion == '3') return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
 		else if ($funcion == '4') return view('admin.pedidos.estadoPedido', ["empresa" => session('empresa')]);
-
 		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
-    }
-
+	}
 
 	static function DetalleAsignacion($funcion)
 	{

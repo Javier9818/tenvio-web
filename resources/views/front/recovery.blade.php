@@ -17,14 +17,14 @@
   </head>
   <body>
 
-    <section id="wrapper" class="login-register login-sidebar flexbox-container d-flex" style="background-image:url(assets/images/backgrounds/recovery2.png);background-size: cover; height: 100vh">
+    <section id="wrapper" class="login-register login-sidebar flexbox-container d-flex" style="background-image:url(/assets/images/backgrounds/recovery2.png);background-size: cover; height: 100vh">
         <div class="login-box col-12 d-flex align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
-            <div class="card-body m-0 p-0" style="height: 90vh">
+            <div class="card-body m-0 p-0" style="height: 90vh" id="app">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 m-0 p-0">
                     <div class="card-header border-0 bg-transparent">
                         <div class="text-center mb-1">
-                                <img src="assets/images/logo/logo2.png" alt="AQUI VA EL LOGO" style="width: 50%;">
-
+                            <img src="/assets/images/logo/logo2.png" alt="AQUI VA EL LOGO" style="width: 50%;">
+                            
                         </div>
                         <div class="font-large-1  text-center">
                             Recuperación de Contraseña
@@ -32,31 +32,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <fieldset class="form-group position-relative has-icon-left">
-                                    <input type="password" class="form-control round" id="newpassword" name="newpassword" placeholder="Nueva Contraseña" required="" aria-invalid="false" autocomplete="off">
-                                    <div class="form-control-position">
-                                        <i class="ft-lock"></i>
-                                    </div>
-                                </fieldset>
-                                <fieldset class="form-group position-relative has-icon-left">
-                                    <input type="password" class="form-control round" id="newpassword" name="newpassword" placeholder="Repita Contraseña" required="" aria-invalid="false" autocomplete="off">
-                                    <div class="form-control-position">
-                                        <i class="ft-lock"></i>
-                                    </div>
-                                </fieldset>
-                                {{-- <div class="form-group row">
-                                    <div class="col-md-6 col-12 text-center text-sm-left">
-
-                                    </div>
-                                    <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Olvidaste tu contraseña?</a></div>
-                                </div> --}}
-                                <div class="form-group text-center">
-                                    <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Guardar</button>
-                                </div>
-
-                            </form>
+                             <post-recover-component id="{{$data->id}}"></post-recover-component>
                         </div>
 
 
@@ -67,6 +43,7 @@
         </div>
     </section>
   </body>
+  <script src="/js/fronted.js" type="text/javascript"></script>
 </html>
 
 

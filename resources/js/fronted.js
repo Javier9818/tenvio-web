@@ -29,6 +29,7 @@ Vue.component('tenvio-registro-component', require('./components/landing_pages/t
 Vue.component('tenvio-padre-component', require('./components/landing_pages/tenvio_padre.vue').default);
 
 Vue.component('recover-component', require('./components/front/recoverComponent.vue').default);
+Vue.component('post-recover-component', require('./components/front/postRecoverComponent.vue').default);
 // const EventBus = new Vue();
 const app = new Vue({
     el: '#app',
