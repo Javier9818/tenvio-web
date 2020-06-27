@@ -46,10 +46,30 @@ class FrontController extends Controller
       case 'Valida':
         return $this::Valida();
         break;
+      case 'recupera':
+        return $this::recupera($request);
+        break;
       default:
         # code...
         break;
     }
+  }
+  public function recupera($request)
+  {
+     try {
+      return DB::table('users')
+      ->select('users.id')
+      ->where('users.username','=',$request->get('user'))
+      ->orWhere('users.email','=',$request->get('user'))
+      ->get(); 
+     } catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+    
+      
   }
   public function Valida()
   {    
