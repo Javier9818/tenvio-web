@@ -61,19 +61,19 @@ class FrontController extends Controller
       ->select('users.id')
       ->where('users.username','=',$request->get('user'))
       ->orWhere('users.email','=',$request->get('user'))
-      ->get(); 
+      ->get();
      } catch (\Exception  $e) {
       return [
         'Message'=> $e->getMessage(),
         'success'=>false
       ];
     }
-    
-      
+
+
   }
   public function Valida()
-  {    
-     
+  {
+
     return (Auth::id()==null)? 0:1;
   }
   public function categoriasIndex()
@@ -113,7 +113,7 @@ class FrontController extends Controller
     return DB::table('pedidos')
      ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
      ->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
-     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date'   
+     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date'
      )
      ->where('pedidos.user_id','=', Auth::user()->persona_id)
      ->orderBy('pedidos.created_at', 'desc')
@@ -209,20 +209,20 @@ class FrontController extends Controller
 
 
   public function ListEmpresas( Request $request){
-     
+
     try {
       $empresas =DB::table('empresas')
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
-      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')     
+      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
       ->where('empresas.nombre','like','%'.$request->get('search').'%')
       // ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
       ->groupBy('empresas.id')
       ->get();
-      if (count($empresas)>0) {        
+      if (count($empresas)>0) {
         return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search')]);
       }else{
-       
+
         $empresas =DB::table('empresas')
         ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
         ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
@@ -262,7 +262,7 @@ class FrontController extends Controller
       ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
-      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,categorias.descripcion as categoria')      
+      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,categorias.descripcion as categoria')
       ->where('ciudad.nombre','like','%'.$Ubicacion.'%')
       ->groupBy('empresas.id')
       ->get();
@@ -304,7 +304,7 @@ class FrontController extends Controller
         ->where($where)
         ->paginate(10,[],'',$request->get('page'));
         // ->get();
-      } 
+      }
       $where[]=['categorias_menus.id', '=', $request->get('tipo')];
       return DB::table('empresas')
       ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
@@ -339,19 +339,19 @@ class FrontController extends Controller
   }
   public function CategoriasxNegocio(Request $request)
   {
-    
+
      try {
       if($request->get('id')==0)
       {
         return DB::table('categorias')
-        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
         ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')
         ->get();
       }
         return DB::table('categorias')
-        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
-        ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')        
-        ->where('tipo_negocio.id', '=',$request->get('id'))   
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
+        ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')
+        ->where('tipo_negocio.id', '=',$request->get('id'))
         ->get();
      }catch (\Exception  $e) {
       return [
@@ -363,8 +363,8 @@ class FrontController extends Controller
   public function TipoNegocio()
   {
      try {
-      return DB::table('tipo_negocio')        
-        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')         
+      return DB::table('tipo_negocio')
+        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')
         ->get();
      }catch (\Exception  $e) {
       return [

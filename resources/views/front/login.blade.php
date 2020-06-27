@@ -51,7 +51,7 @@
 
                                     </div>
                                     <div class="col-md-6 col-12 float-sm-left text-center text-sm-right" >
-                                        <recover-component></recover-component>                                        
+                                        <recover-component></recover-component>
                                     </div>
                                 </div>
                                 <div class="form-group text-center">
@@ -73,6 +73,8 @@
             </div>
         </div>
     </section>
+
+
   </body>
   <script src="/js/fronted.js" type="text/javascript"></script>
 </html>
