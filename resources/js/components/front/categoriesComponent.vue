@@ -28,7 +28,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;"><i :class="'fas fa-'+item.icon+' fa-2x'"></i></h5>
             <p class="card-text text-center" style="font-family: 'Nunito', sans-serif;
-            font-size: 24px;
+            font-size: 24px; 
             font-size: 1.2em;
             color: #656064;
             font-weight: bold;">{{ item.descripcion}}</p>
@@ -37,7 +37,7 @@
     </div>
   </div><!-- /.container -->
 </template>
-
+ 
 <script>
 export default {
   data()

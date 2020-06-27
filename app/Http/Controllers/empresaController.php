@@ -29,7 +29,7 @@ class EmpresaController extends Controller
             Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad]);
         });
 
-        return response()->json(["message" => "Actualización exitosa"]);
+        return response()->json(["message" => "Actualización exitosa", "empresa" => $request->id]);
     }
 
     public function setEmpresa(Request $request){
@@ -66,7 +66,7 @@ class EmpresaController extends Controller
         DB::transaction(function () use ($request){
             $usernameEmpresa = Empresa::crearNombreUnico(str_replace(' ', '', strtolower($request->nombre)));
             $empresa = Empresa::create([
-                "ruc" => $request->ruc,
+                "ruc" => $request->ruc ?? null,
                 "nombre" => $request->nombre,
                 "descripcion" => $request->descripcion,
                 "telefono" => $request->telefono,
@@ -82,13 +82,12 @@ class EmpresaController extends Controller
             }
 
             DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
-            // DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 2]);
+            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id, estado) values (?, ?, ?)', [$empresa->id, 2, false]);
 
-            // Contrato::create(["empresa_id" => $empresa->id,"estado" => 'PRUEBA']);
         });
 
-
         return response()->json(["message" => "Registro exitoso"], 200);
+
     }
 
     /** ======== */

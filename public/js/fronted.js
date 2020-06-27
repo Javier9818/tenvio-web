@@ -2260,7 +2260,8 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
     preRegistro: function preRegistro() {
       var _this5 = this;
 
-      axios.post('/api/pre-registro/empresa', this.form).then(function (data) {
+      axios.post('/api/pre-registro/empresa', this.form).then(function (_ref5) {
+        var data = _ref5.data;
         sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Éxito', 'El registro se completó satisfactoriamente', 'success').then(function (data) {
           _this5.$emit('complete');
         });
@@ -2306,10 +2307,11 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.post('/api/activate/empresa', this.form).then(function (data) {
-                  // console.log(data);
+                return axios.post('/api/activate/empresa', this.form).then(function (_ref6) {
+                  var data = _ref6.data;
+                  var empresa_id = data.empresa;
                   sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.fire('Éxito', 'Se han guardado los cambios', 'success').then(function (data) {
-                    window.location.reload();
+                    window.location.href = "/admin/empresa/".concat(empresa_id);
                   });
                 })["catch"](function (error) {
                   // console.log(error);
@@ -2400,8 +2402,8 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
                 this.ciudades = [];
                 this.loadCiudades = true;
                 _context6.next = 5;
-                return axios.get("/api/ciudades/".concat(this.form.distrito)).then(function (_ref5) {
-                  var data = _ref5.data;
+                return axios.get("/api/ciudades/".concat(this.form.distrito)).then(function (_ref7) {
+                  var data = _ref7.data;
                   _this8.ciudades = data.ciudades;
                   _this8.loadCiudades = false;
                 });
