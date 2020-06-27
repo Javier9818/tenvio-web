@@ -20,7 +20,8 @@ class ProductosController extends Controller
 		$empresa_id = Session::get('empresa');////////////////////////////////////
 		$productos = [
 			'productos' => Producto::listar($empresa_id),
-			'rutaImagenes' => ExtrasController::$rutaFotosProductos];
+			'rutaImagenes' => ExtrasController::$rutaFotosProductos
+		];
 		return response()->json($productos, 200);
 	}
 
