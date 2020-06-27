@@ -16,8 +16,11 @@ class CreatePagosTable extends Migration
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
             $table->double('monto');
+            $table->string('urlfoto', 100)->nullable();
             $table->integer('empresa_id');
+            $table->integer('contratos_id');
             $table->string('estado', 20)->default('PENDIENTE');
+            $table->dateTime('fecha_pago')->nullable();
             $table->timestamps();
         });
     }

@@ -55,7 +55,7 @@ Route::get('/admin/empresa/{idEmpresa}', 'AdminController@verEmpresa')->middlewa
 
 // ================================== BLOQUE AUTENTICACIÓN =================================================*/
 Auth::routes();
-Route::get('/login', function(){return view('front.login');})->name('loginForm');
+Route::get('/login', function(){return view('front.login');})->name('loginForm')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
 Route::get('/registro', function(){return view('front/regist');})->name('registro');
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');

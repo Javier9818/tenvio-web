@@ -21,7 +21,6 @@ class CreateContratosTable extends Migration
             $table->float('plan_monto');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_vencimiento');
-            $table->integer('pago_id')->nullable();
             $table->timestamps();
         });
     }

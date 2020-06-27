@@ -9,7 +9,7 @@ use App\Http\Controllers\PedidosController;
 use App\Events\ChangeStateOrderEvent;
 use App\Contrato;
 //use App\Plan;
-//use App\Pagos;
+use App\Pagos;
 
 class ContabilidadController extends Controller
 {
@@ -22,14 +22,34 @@ class ContabilidadController extends Controller
 	public function fn($funcion='', Request $request){
 		if ($funcion == 'listarentregados') return $this->listarentregados($request);//1
 		if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
+		if ($funcion == 'registrarvoucher') return $this->registrarvoucher($request);//2
 		else if ($funcion == '1') return view('admin.negocio.ventas'/*, ["empresa" => session('empresa')]*/);
 		else if ($funcion == '2') return view('admin.negocio.pagos'/*, ["empresa" => session('empresa')]*/);
 		else return '';
 	}
 
+	static function registrarvoucher(Request $request){
+		$empresa_id = session('empresa');
+		$contrato = $request->get('contrato');
+		$contratos_id = $contrato['id'];
+		$urlFotoVoucher = $contrato['fotovouchersubir'][0]['upload']['data'];
+		$monto = $contrato['monto'];
+		Pagos::registrarPago($empresa_id, $contratos_id, $urlFotoVoucher, $monto);
+		ExtrasController::moverFotoVoucher($urlFotoVoucher);
+		//$contrato = Contrato::obtenerContrato($contratos_id);
+		//dd($urlFotoVoucher);
+		return [
+			'mensaje' => '',
+			'contrato' =>Contrato::obtenerContrato($contratos_id)
+		];
+	}
+
 	static function listacontratos(Request $request){
-        $empresa_id = session('empresa');
-		return Contrato::listacontratos($empresa_id);
+		$empresa_id = session('empresa');
+		return [
+			'lista' => Contrato::listaContratos($empresa_id),
+			'rutaImagenes' => ExtrasController::$rutaFotosVouchers
+		];
 	}
 
 	static function listarentregados(Request $request){
