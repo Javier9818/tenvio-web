@@ -45,31 +45,16 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         if (Auth::attempt(["email" => $request->username, "password" => $request->password]) || Auth::attempt(["username" => $request->username, "password" => $request->password])) {
-            // Authentication passed...
-            $user = DB::select('select id, isAdmin, isCustomer from users where username = ? or email = ?', [$request->username, $request->username]);
-            if($user[0]->isAdmin){
-               return redirect(route('admin-total-inicio'));}
-            else if($user[0]->isCustomer){
-                $empresa = DB::select('select * from users_empresas where user_id = ?', [$user[0]->id]);
-                session(['empresa' => $empresa[0]->empresa_id]);
-                // Session::put('empresa', $empresa[0]->empresa_id);
+            $user = Auth::user();
+            if($user->isAdmin) return redirect(route('admin-total-inicio'));
+            else if($user->isCustomer){
+                $empresa = DB::select('select * from users_empresas where user_id = ?', [$user->id])[0]->empresa_id;
+                session(['empresa' => $empresa]);
                 return redirect()->intended('/intranet');
             }
-            else
-            {
-                if(Session::has('url'))
-                    if (session('url')=='/micarrito'){
-                        session(['url'=>0]);
-                        return  redirect('/micarrito');
-                    }
-
-                return redirect()->intended();
-            }
-
-
-
+            else return redirect()->intended('/');
         }else
-            return redirect('/login')->with('message','Error logging in!');
-
+            return redirect('/login')->withErrors(['login-error' => 'Usuario o contraseña incorrectos']);
     }
+
 }

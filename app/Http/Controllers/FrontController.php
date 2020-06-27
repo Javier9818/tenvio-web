@@ -167,44 +167,36 @@ class FrontController extends Controller
   }
   public function GeneraPedido( Request $request)
   {
-    // return $request->get('total');
-    try {
-      foreach ($request->get('empresas') as $key => $empresa) {
-        $pedido = Pedidos::create([
-            'empresa_id' => $empresa['empresa'],
-            'latitud'=>$empresa['lat'],
-            'longitud'=>$empresa['lng'],
-            'user_id'=>Auth::id(),
-            'tipo_id'=>$empresa['tipoEntrega'],
-            'direccion'=>$empresa['direccion'],
-            'monto'=>$empresa['total']
-        ]);
 
-        //$details = array();
+    DB::transaction(function () use ($request){
+        foreach ($request->get('empresas') as $key => $empresa) {
+            $pedido = Pedidos::create([
+                'empresa_id' => $empresa['empresa'],
+                'latitud'=>$empresa['lat'],
+                'longitud'=>$empresa['lng'],
+                'user_id'=>Auth::id(),
+                'tipo_id'=>$empresa['tipoEntrega'],
+                'direccion'=>$empresa['direccion'],
+                'monto'=>$empresa['total']
+            ]);
 
-        foreach ($request->get('productos') as $key => $producto) {
-            if ($producto['empresa'] == $empresa['empresa']) {
-                //array_push($details, $producto);
-                DB::table('detalle_pedidos')->insert(
-                    [
-                    'producto_id'=>$producto['id'],
-                    'pedido_id'=>$pedido->id,
-                    'cantidad'=>$producto['cant'],
-                    'precio_unit'=>$producto['precio']
-                    ]
-                );
+            foreach ($request->get('productos') as $key => $producto) {
+                if ($producto['empresa'] == $empresa['empresa']) {
+                    DB::table('detalle_pedidos')->insert(
+                        [
+                        'producto_id'=>$producto['id'],
+                        'pedido_id'=>$pedido->id,
+                        'cantidad'=>$producto['cant'],
+                        'precio_unit'=>$producto['precio']
+                        ]
+                    );
+                }
             }
+            $dato_pedido = Pedidos::obtenerPedido($pedido->id);
+            try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
         }
-		$dato_pedido = Pedidos::obtenerPedido($pedido->id);
-        try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
-      }
-      return 1;
-    } catch (\Exception  $e) {
-      return [
-        'Message'=> $e->getMessage(),
-        'success'=>false
-      ];
-   }
+    });
+
   }
 
 

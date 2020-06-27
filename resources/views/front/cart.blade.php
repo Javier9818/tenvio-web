@@ -40,9 +40,6 @@
       =========================== -->
   <section id="ShoppinCcart" class="shop shopping-cart pb-50">
     <div class="container">
-     <?php
-      session(['url'=>(Auth::id()==null)? '/micarrito':0]); 
-     ?>
         <front-cart-component user="{{(Auth::id()==null)? 0:1}}"></front-cart-component>
       <!-- /.row -->
     </div><!-- /.container -->

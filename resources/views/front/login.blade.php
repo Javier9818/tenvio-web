@@ -34,8 +34,11 @@
                         <div class="card-body">
                             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                                 @csrf
+                                @error('login-error')
+                                    <p class="red ml-1"><i class="ft-alert-circle"></i> {{$message}}</p>
+                                @enderror
                                 <fieldset class="form-group position-relative has-icon-left">
-                                    <input type="text" class="form-control round" id="username" name="username" placeholder="Usuario / Email" required="" aria-invalid="false">
+                                    <input type="text" class="form-control round" id="username" name="username" placeholder="Usuario o Email" required="" aria-invalid="false">
                                     <div class="form-control-position">
                                         <i class="ft-user"></i>
                                     </div>
@@ -67,7 +70,7 @@
                             <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-instagram"><span class="ft-instagram"></span></a>
                         </div>
 
-                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>No tienes una cuenta? <a href="register.html" class="card-link">Registrate</a></span></p>
+                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>No tienes una cuenta? <a href="/registro" class="card-link">Registrate</a></span></p>
                     </div>
                 </div>
             </div>
