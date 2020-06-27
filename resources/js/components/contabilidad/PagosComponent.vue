@@ -122,7 +122,7 @@ export default {
 			if (this.contratos.length > 0){
 				this.contratos.forEach((item, index)=>{
 					this.contratos[index].periodo = item.fecha_inicio + ' ' + item.fecha_vencimiento;
-					this.contratos[index].monto_ = 'S/ ' + item.monto;
+					this.contratos[index].monto_ = item.monto === 0 ? 'Gratuito' : ('S/ ' + item.monto);
 				})
 			}
 		},
