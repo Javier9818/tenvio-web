@@ -60,6 +60,7 @@ Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
 Route::get('/registro', function(){return view('front/regist');})->name('registro');
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');
 
+Route::get('/recoverypassword', function(){return view('front.recovery');})->name('loginForm');
 
 // ================================== BLOQUE CLIENTE =================================================*/
 // Route::get('/', function(){return view('front.index');});

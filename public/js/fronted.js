@@ -4196,7 +4196,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.funcionMerchantType();
-    this.funcionCategories(0);
+    this.funcionCategories(1);
   }
 });
 
@@ -46208,7 +46208,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* fallback */\n@font-face {\r\n  font-family: \"Material Icons\";\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\r\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\r\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\r\n  font-family: \"Material Icons\";\r\n  font-weight: normal;\r\n  font-style: normal;\r\n  font-size: 24px;\r\n  line-height: 1;\r\n  letter-spacing: normal;\r\n  text-transform: none;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  word-wrap: normal;\r\n  direction: ltr;\r\n  -webkit-font-feature-settings: \"liga\";\r\n  -webkit-font-smoothing: antialiased;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* fallback */\n@font-face {\n  font-family: \"Material Icons\";\n  font-style: normal;\n  font-weight: 400;\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\n  font-family: \"Material Icons\";\n  font-weight: normal;\n  font-style: normal;\n  font-size: 24px;\n  line-height: 1;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-feature-settings: \"liga\";\n  -webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 // exports
 
@@ -46246,7 +46246,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -74049,41 +74049,24 @@ var render = function() {
           _c(
             "nav",
             { staticClass: "nav nav-tabs justify-content-center" },
-            [
-              _c(
+            _vm._l(_vm.MerchantType, function(item, index) {
+              return _c(
                 "a",
                 {
-                  staticClass: "nav__link active",
+                  key: index,
+                  staticClass: "nav__link",
                   staticStyle: { "font-family": "'Nunito', sans-serif" },
-                  attrs: { "data-toggle": "tab", href: "#tab1" },
+                  attrs: { "data-toggle": "tab", href: "#tab" + (index + 2) },
                   on: {
                     click: function($event) {
-                      return _vm.funcionCategories(0)
+                      return _vm.funcionCategories(item.id)
                     }
                   }
                 },
-                [_vm._v("TODO")]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.MerchantType, function(item, index) {
-                return _c(
-                  "a",
-                  {
-                    key: index,
-                    staticClass: "nav__link",
-                    staticStyle: { "font-family": "'Nunito', sans-serif" },
-                    attrs: { "data-toggle": "tab", href: "#tab" + (index + 2) },
-                    on: {
-                      click: function($event) {
-                        return _vm.funcionCategories(item.id)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(item.descripcion))]
-                )
-              })
-            ],
-            2
+                [_vm._v(_vm._s(item.descripcion))]
+              )
+            }),
+            0
           )
         ])
       ])
@@ -74125,7 +74108,19 @@ var render = function() {
                 }
               },
               [
-                _vm._m(0, true),
+                _c(
+                  "h5",
+                  {
+                    staticClass: "card-title",
+                    staticStyle: {
+                      background: "linear-gradient(#fe4b7d, #ff8a4d)",
+                      "background-clip": "border-box",
+                      "-webkit-background-clip": "text",
+                      "-webkit-text-fill-color": "transparent"
+                    }
+                  },
+                  [_c("i", { class: "fas fa-" + item.icon + " fa-2x" })]
+                ),
                 _vm._v(" "),
                 _c(
                   "p",
@@ -74149,26 +74144,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "h5",
-      {
-        staticClass: "card-title",
-        staticStyle: {
-          background: "linear-gradient(#fe4b7d, #ff8a4d)",
-          "background-clip": "border-box",
-          "-webkit-background-clip": "text",
-          "-webkit-text-fill-color": "transparent"
-        }
-      },
-      [_c("i", { staticClass: "fas fa-utensils fa-2x" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -96531,7 +96507,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
+module.exports = __webpack_require__(/*! C:\Users\RobertGutierrez\Desktop\Nortec\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
 
 
 /***/ })
