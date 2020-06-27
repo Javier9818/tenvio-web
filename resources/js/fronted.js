@@ -27,6 +27,8 @@ Vue.component('front-seguimiento-component', require('./components/front/seguimi
 Vue.component('tenvio-promo-component', require('./components/landing_pages/tenvio_promo.vue').default);
 Vue.component('tenvio-registro-component', require('./components/landing_pages/tenvio_registro.vue').default);
 Vue.component('tenvio-padre-component', require('./components/landing_pages/tenvio_padre.vue').default);
+
+Vue.component('recover-component', require('./components/front/recoverComponent.vue').default);
 // const EventBus = new Vue();
 const app = new Vue({
     el: '#app',

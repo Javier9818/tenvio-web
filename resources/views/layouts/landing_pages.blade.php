@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="TE ENVIO - NORTEC">
-    <link href="assets/images/favicon/favicon2.png"  rel="icon">
+    <link href="assets/images/favicon/favicon2.ico"  rel="icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noarchive">
     <title> @yield('title')</title>

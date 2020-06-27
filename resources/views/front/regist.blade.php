@@ -10,7 +10,7 @@
 
         <script src="{{ asset('js/fronted.js') }}" defer></script>
         <!-- Favicon-->
-        <link href="assets/images/favicon/favicon2.png"  rel="icon">
+        <link href="assets/images/favicon/favicon2.ico"  rel="icon">
         <!-- Font Awesome icons (free version)-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
         <script src="https://use.fontawesome.com/releases/v5.12.1/js/all.js" crossorigin="anonymous"></script>
