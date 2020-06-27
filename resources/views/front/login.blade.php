@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/app-lite.css">
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/core/colors/palette-gradient.css">
   </head>
-  <body>
+  <body >
 
     <section id="wrapper" class="login-register login-sidebar flexbox-container d-flex" style="background-image:url(assets/images/backgrounds/LoginDelivery-02.png);background-size: cover; height: 100vh">
         <div class="login-box col-12 d-flex align-items-center justify-content-center"> <!--class="login-box card shadow-none" -->
@@ -30,7 +30,7 @@
                             Acceso al sistema
                         </div>
                     </div>
-                    <div class="card-content">
+                    <div class="card-content" id="app">
                         <div class="card-body">
                             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                                 @csrf
@@ -50,7 +50,9 @@
                                     <div class="col-md-6 col-12 text-center text-sm-left">
 
                                     </div>
-                                    <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a href="recover-password.html" class="card-link">Olvidaste tu contraseña?</a></div>
+                                    <div class="col-md-6 col-12 float-sm-left text-center text-sm-right" >
+                                        <recover-component></recover-component>                                        
+                                    </div>
                                 </div>
                                 <div class="form-group text-center">
                                     <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
@@ -72,6 +74,7 @@
         </div>
     </section>
   </body>
+  <script src="/js/fronted.js" type="text/javascript"></script>
 </html>
 
 
