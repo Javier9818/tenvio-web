@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>@yield('title')</title>
     <link rel="apple-touch-icon" href="/theme-assets/images/ico/apple-icon-120.png">
-    <link href="assets/images/favicon/favicon2.png"  rel="icon">
+    <link href="assets/images/favicon/favicon2.ico"  rel="icon">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/vendors.css">
