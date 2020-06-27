@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendCargo;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Hash;
 class FrontController extends Controller
 {
   public function Funciones($opcion,Request $request)
@@ -51,12 +53,39 @@ class FrontController extends Controller
       case 'recupera':
         return $this::recupera($request);
         break;
+      case 'recuperaPost':
+        return $this::recuperaPost($request);
+        break;
       default:
         # code...
         break;
     }
   }
-  public function recupera($request)
+  public static function recuperaPost($request)
+  {
+    try {
+      return DB::table('users')
+        ->where('id', $request->get('user'))
+        ->update(['password' => Hash::make($request->get('pass'))]);
+    }  catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+  }
+  public  function Recover($cifrado)
+  {
+    try {
+      $decrypted = Crypt::decrypt($cifrado);
+      $decrypted = json_decode($decrypted);
+      return view('front.recovery', ["data"=>$decrypted]);
+    } catch ( DecryptException $e) {
+      return abort(404);
+    }
+
+  }
+  public static function recupera($request)
   {
      try {
       $id= DB::table('users')
@@ -68,7 +97,10 @@ class FrontController extends Controller
         if(count($id))
           return FrontController::EnviaEmail($id[0]);
         else 
-          return false;
+        return [
+          'Message'=> 'vacío',
+          'success'=>false
+        ];
      } catch (\Exception  $e) {
       return [
         'Message'=> $e->getMessage(),
@@ -85,7 +117,7 @@ class FrontController extends Controller
 		try { 
 			$cifrado = Crypt::encrypt(json_encode(["id" => $request->id]));
       $url = 'http://127.0.0.1:8000/recoverypassword/'.$cifrado;
-      $mensaje='Buen día, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
+      $mensaje='Hola, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
 			Mail::to($request->email)->send(new SendCargo($request->persona, $url, $request->email, $mensaje));
 			return true;
 		}  catch (\Exception  $e) {
@@ -95,12 +127,12 @@ class FrontController extends Controller
       ];
     }
 	}
-  public function Valida()
+  public static function Valida()
   {    
      
     return (Auth::id()==null)? 0:1;
   }
-  public function categoriasIndex()
+  public static function categoriasIndex()
   {
      try {
       return view(
@@ -116,11 +148,11 @@ class FrontController extends Controller
         ]);
    }
   }
-  public function encripta($request)
+  public static function encripta($request)
 	{
 		return "/seguimiento/".Crypt::encrypt(json_encode(["id" => $request->id]));
 	}
-  public function seguimiento($cifrado)
+  public static function seguimiento($cifrado)
 	{
 		try {
       $decrypted = Crypt::decrypt($cifrado);
@@ -130,7 +162,7 @@ class FrontController extends Controller
       return abort(404);
     }
   }
-  public function ListPedido($request)
+  public static function ListPedido($request)
   {
     if(Auth::id()==null)
       return 'Error';
@@ -144,7 +176,7 @@ class FrontController extends Controller
      ->groupBy('pedidos.id')
      ->paginate(5,[],'',$request->get('page'));
   }
-  public function getPedido($request)
+  public  static function getPedido($request)
   {
     try {
       return DB::table('pedidos')
@@ -166,7 +198,7 @@ class FrontController extends Controller
     }
 
   }
-  public function TipoPedido(Request $request)
+  public static function TipoPedido(Request $request)
   {
     try {
       $where="";
@@ -189,7 +221,7 @@ class FrontController extends Controller
       ];
     }
   }
-  public function GeneraPedido( Request $request)
+  public static function GeneraPedido( Request $request)
   {
     // return $request->get('total');
     try {
@@ -232,7 +264,7 @@ class FrontController extends Controller
   }
 
 
-  public function ListEmpresas( Request $request){
+  public static function ListEmpresas( Request $request){
      
     try {
       $empresas =DB::table('empresas')
@@ -264,7 +296,7 @@ class FrontController extends Controller
     }
 
   }
-  public function BuscaxCategoria(  $Categoria){
+  public static function BuscaxCategoria(  $Categoria){
 
       try {
         $empresas =DB::table('empresas')
@@ -280,7 +312,7 @@ class FrontController extends Controller
 
 
   }
-  public function BuscaxUbicacion($Ubicacion){
+  public static function BuscaxUbicacion($Ubicacion){
     try {
       $empresas =DB::table('empresas')
       ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
@@ -295,7 +327,7 @@ class FrontController extends Controller
       return view('front.listEmpresa', ["empresas" => null, 'search'=>$Ubicacion]);
     }
 }
-  public function Empresa($nombre){
+  public static function Empresa($nombre){
       try {
         $empresa =DB::table('empresas')
         ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
@@ -309,7 +341,7 @@ class FrontController extends Controller
      }
 
   }
-  public function productos(Request $request)
+  public static function productos(Request $request)
   {
     $where=[
       ['empresas.id', '=', $request->get('id')],
@@ -345,7 +377,7 @@ class FrontController extends Controller
        ];
     }
   }
-  public function categorias(Request $request)
+  public static function categorias(Request $request)
   {
      try {
       return DB::table('empresas')
@@ -361,7 +393,7 @@ class FrontController extends Controller
       ];
    }
   }
-  public function CategoriasxNegocio(Request $request)
+  public static function CategoriasxNegocio(Request $request)
   {
     
      try {
@@ -384,7 +416,7 @@ class FrontController extends Controller
       ];
    }
   }
-  public function TipoNegocio()
+  public static function TipoNegocio()
   {
      try {
       return DB::table('tipo_negocio')        

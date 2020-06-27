@@ -32,20 +32,21 @@ export default {
       this.$refs['my-modal'].hide()
     },
     enviar() {
+
       var that = this
       axios.post('/front/recupera',{user:this.username})
       .then(function (response) {
-          console.log(response.data);
-        if (!response.data.success)  
+        this.hideModal()
+        if (response.data.success==0)  
           Swal.fire('ERROR', 'Ha ocurrido un error', 'error')
         else{
-          if(response.data)
+          if(response.data==1)
             Swal.fire('Éxito', 'Se ha generado su solicitud, revise su correo por favor.', 'success')
           else
             Swal.fire('No encontrado', 'El usuario no existe', 'warning')
         } 
       })
-      this.hideModal()
+      
     } 
   }
 }
