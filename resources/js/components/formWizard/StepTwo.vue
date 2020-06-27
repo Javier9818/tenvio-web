@@ -6,7 +6,10 @@
             <div class="control">
                 <input :class="['input', ($v.form.user.$error) ? 'is-danger' : '']" v-model="form.user" type="text" placeholder="Ingrese un nombre de usuario">
             </div>
-            <p v-if="$v.form.user.$error" class="help is-danger">Este usuario ya existe o es inválido</p>
+            <p v-if="!$v.form.user.required" class="help is-danger">Este campo es requerido</p>
+            <p v-if="!$v.form.user.maxLength" class="help is-danger">El nombre de usuario no pueden superar los 20 caracteres</p>
+            <p v-if="$v.form.user.required && !$v.form.user.minLength" class="help is-danger">El nombre de usuario debe tener más de 6 caracteres</p>
+            <p v-if="$v.form.user.maxLength && $v.form.user.minLength && $v.form.user.required && !$v.form.user.found" class="help is-danger">El nombre de usuario ya está siendo utilizado.</p>
         </div>
         <div class="field col-12">
             <label class="label">Contraseña</label>
@@ -38,7 +41,18 @@
             form: {
                 user: {
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(20),
+                    minLength: minLength(6),
+                    async found(value) {
+                        try {
+                            if (value.length >= 6 && value.length <= 20){
+                                let { data } = await axios.get(`/api/username/${value}`);
+                                return !data.message
+                            } else return false
+                        } catch(e) {
+                        return false;
+                        }
+                    }
                 },
                 password: {
                     required,
@@ -62,7 +76,7 @@
             },
 
             clickedNext(val) {
-                
+
                 if(val === true) {
                     this.$v.form.$touch();
                 }
