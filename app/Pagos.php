@@ -11,14 +11,41 @@ class Pagos extends Model
 		'id',
 		'empresa_id',
 		'contratos_id',
+		'plan_id',
+		'precio',
+		'cantidad_pedidos',
 		'urlfoto',
-		'monto',
 		'estado',
-		'fecha_pago',
+		'observacion',
 		'created_at',
 		'updated_at'
 	];
 
+	public static function actualizarRechazado($pago){
+		return Pagos::where('id', $pago->id)
+			->update([
+				'estado' => 'Pago Actualizado'
+			]);
+	}
+
+	public static function getPago($pago_id){
+		return Pagos::find($pago_id);
+	}
+
+	public static function registrar($contrato, $voucher, $plan = ''){
+		return Pagos::create([
+			'empresa_id' => $contrato->empresa_id,
+			'contratos_id' => $contrato->id,
+			'plan_id' => ($plan=='')?$contrato->plan_id:$plan->id,
+			'precio' => ($plan=='')?$contrato->plan_precio:$plan->precio,
+			'cantidad_pedidos' => ($plan=='')?$contrato->pedidos_total:$plan->cantidad_pedidos,
+			'urlfoto' => $voucher,
+			'estado' => 'Pendiente a Aprobar',
+			'observacion' => null
+		]);
+	}
+
+	/*
 	public static function registrarPago($empresa_id, $contratos_id, $urlFotoVoucher, $monto){
 		return Pagos::create([
 			'empresa_id' => $empresa_id,
@@ -29,4 +56,5 @@ class Pagos extends Model
 			'fecha_pago' => Carbon::now()
 		]);
 	}
+	*/
 }

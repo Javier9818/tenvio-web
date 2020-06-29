@@ -15,10 +15,11 @@ class CreateContratosTable extends Migration
     {
         Schema::create('contratos', function (Blueprint $table) {
             $table->id();
-            $table->string('estado',20);
             $table->integer('empresa_id');
             $table->integer('plan_id');
-            $table->float('plan_monto');
+            $table->string('estado',20);
+            $table->float('plan_precio');
+            $table->integer('pedidos_total');
             $table->dateTime('fecha_inicio')->default(now());
             $table->dateTime('fecha_vencimiento');
             $table->timestamps();

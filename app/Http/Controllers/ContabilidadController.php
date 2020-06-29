@@ -8,7 +8,7 @@ use App\Producto;
 use App\Http\Controllers\PedidosController;
 use App\Events\ChangeStateOrderEvent;
 use App\Contrato;
-//use App\Plan;
+use App\Plan;
 use App\Pagos;
 
 class ContabilidadController extends Controller
@@ -21,13 +21,95 @@ class ContabilidadController extends Controller
 	}
 	public function fn($funcion='', Request $request){
 		if ($funcion == 'listarentregados') return $this->listarentregados($request);//1
+		if ($funcion == 'listaplanes') return $this->listaplanes($request);//2
+		if ($funcion == 'listaextensiones') return $this->listaextensiones($request);//2
+		if ($funcion == 'renovarcontrato') return $this->renovarcontrato($request);//2
 		if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
-		if ($funcion == 'registrarvoucher') return $this->registrarvoucher($request);//2
+		if ($funcion == 'actualizarvoucher') return $this->actualizarvoucher($request);//2
+		if ($funcion == 'extenderplan') return $this->extenderplan($request);//2
 		else if ($funcion == '1') return view('admin.negocio.ventas'/*, ["empresa" => session('empresa')]*/);
 		else if ($funcion == '2') return view('admin.negocio.pagos'/*, ["empresa" => session('empresa')]*/);
 		else return '';
 	}
 
+	static function extenderplan(Request $request){
+		$empresa_id = session('empresa');
+		$contrato_id = $request->get('contrato_id');
+		$plan_id = $request->get('plan_id');
+		$voucher = $request->get('voucher');
+		$voucher = $voucher[0]['upload']['data'];
+		DB::beginTransaction();
+		try {
+			$plan = Plan::getPlan($plan_id);
+			$contrato = Contrato::getContrato($contrato_id);
+			Pagos::registrar($contrato, $voucher, $plan);
+			ExtrasController::moverFotoVoucher($voucher);
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			return ['mensaje' => '.'];
+		}
+		return ['mensaje' => ''];
+	}
+
+	static function actualizarvoucher(Request $request){
+		$empresa_id = session('empresa');
+		$pago_id = $request->get('pago_id');
+		$voucher = $request->get('voucher');
+		$voucher = $voucher[0]['upload']['data'];
+		DB::beginTransaction();
+		try {
+			$pago = Pagos::getPago($pago_id);
+			$contrato = Contrato::getContrato($pago->contratos_id);
+			Pagos::registrar($contrato, $voucher);
+			Pagos::actualizarRechazado($pago);
+			ExtrasController::moverFotoVoucher($voucher);
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			dd($e);
+			return ['mensaje' => '.'];
+		}
+		return ['mensaje' => ''];
+	}
+
+	static function listacontratos(Request $request){
+		$empresa_id = session('empresa');
+		return [
+			'lista' => Contrato::listaContratos($empresa_id),
+			'rutaImagenes' => ExtrasController::$rutaFotosVouchers
+		];
+	}
+
+	static function renovarcontrato(Request $request){
+		$empresa_id = session('empresa');
+		$plan_id = $request->get('plan_id');
+		$voucher = $request->get('voucher');
+		$voucher = $voucher[0]['upload']['data'];
+		DB::beginTransaction();
+		try {
+			$plan = Plan::getPlan($plan_id);
+			$contrato = Contrato::renovar($empresa_id, $plan);
+			Pagos::registrar($contrato, $voucher);
+			ExtrasController::moverFotoVoucher($voucher);
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			//dd($e);
+			return ['mensaje' => '.'];
+		}
+		return ['mensaje' => ''];
+	}
+
+	static function listaextensiones(Request $request){
+		return Plan::listaExtensiones();
+	}
+
+	static function listaplanes(Request $request){
+		return Plan::listaPlanes();
+	}
+
+	/*
 	static function registrarvoucher(Request $request){
 		$empresa_id = session('empresa');
 		$contrato = $request->get('contrato');
@@ -43,7 +125,6 @@ class ContabilidadController extends Controller
 			'contrato' =>Contrato::obtenerContrato($contratos_id)
 		];
 	}
-
 	static function listacontratos(Request $request){
 		$empresa_id = session('empresa');
 		return [
@@ -51,6 +132,7 @@ class ContabilidadController extends Controller
 			'rutaImagenes' => ExtrasController::$rutaFotosVouchers
 		];
 	}
+	*/
 
 	static function listarentregados(Request $request){
 		$fecha = $request->fecha;
