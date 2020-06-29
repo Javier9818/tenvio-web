@@ -18,6 +18,8 @@ class CreatePlanTable extends Migration
             $table->string('nombre', 100);
             $table->string('descripcion');
             $table->float('precio');
+            $table->integer('cantidad_pedidos');
+            $table->string('tipo', 20);
             $table->timestamps();
         });
     }

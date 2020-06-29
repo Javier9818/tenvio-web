@@ -47,6 +47,7 @@ export default {
 			this.$emit('archivosubido', {valor: valor, fileRecords: this.fileRecords});
 		},
 		funccionn: function(that){
+			console.log(that.fileRecords);
 			//true=ya subió, false=todavía
 			var bul = true;
 			that.fileRecords.forEach((item)=>{
@@ -62,25 +63,26 @@ export default {
 			var that = this;
 			this.varRepeticiones = setInterval(this.funccionn, 500, that);
 		},
-		uploadFiles: function() {
-			this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForUpload);
-			this.fileRecordsForUpload = [];
-		},
-		deleteUploadedFile: function(fileRecord) {
-			this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileRecord);
-		},
 		filesSelected: function(fileRecordsNewlySelected) {
 			this.funcionnn();
 			var validFileRecords = fileRecordsNewlySelected.filter((fileRecord) => !fileRecord.error);
 			this.fileRecordsForUpload = this.fileRecordsForUpload.concat(validFileRecords);
 		},
 		fileDeleted: function(fileRecord) {
+			this.invocar(false);
 			var i = this.fileRecordsForUpload.indexOf(fileRecord);
 			if (i !== -1) {
 				this.fileRecordsForUpload.splice(i, 1);
 			} else {
 				this.deleteUploadedFile(fileRecord);
 			}
+		},
+		uploadFiles: function() {
+			this.$refs.vueFileAgent.upload(this.uploadUrl, this.uploadHeaders, this.fileRecordsForUpload);
+			this.fileRecordsForUpload = [];
+		},
+		deleteUploadedFile: function(fileRecord) {
+			this.$refs.vueFileAgent.deleteUpload(this.uploadUrl, this.uploadHeaders, fileRecord);
 		}
 	},
 	mounted() {
