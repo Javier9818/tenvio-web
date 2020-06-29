@@ -28,6 +28,7 @@ Route::get('/email/{email}', 'GeneralController@validateEmail');
 
 Route::post('/empleado', 'EmpleadoController@setEmpleado');
 Route::put('/empleado', 'EmpleadoController@updateEmpleado');
+Route::get('/empleados/{empresa}', 'EmpleadoController@listByEmpresa');
 
 Route::post('/empresa', 'EmpresaController@setEmpresa');
 Route::post('/activate/empresa', 'EmpresaController@activateEmpresa');
