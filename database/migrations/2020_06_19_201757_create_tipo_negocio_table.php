@@ -16,6 +16,7 @@ class CreateTipoNegocioTable extends Migration
         Schema::create('tipo_negocio', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
+            $table->integer('state');
             $table->timestamps();
         });
     }

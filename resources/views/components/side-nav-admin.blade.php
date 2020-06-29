@@ -21,7 +21,7 @@
         <li class="has-sub nav-item {{ $isTab('3') ? 'open' : '' }}">
             <a href="javascript::void(0)"><i class="ft-settings"></i><span class="menu-title" data-i18n="">Configuraciones</span></a>
             <ul class="menu-content">
-                <li class="{{ $isSelected('3', '1') ? 'active' : '' }}"><a class="menu-item" href="/admin/empresas">Tipos de negocio</a></li>
+                <li class="{{ $isSelected('3', '1') ? 'active' : '' }}"><a class="menu-item" href="/admin/tipoNegocio">Tipos de negocio</a></li>
                 <li class="{{ $isSelected('3', '2') ? 'active' : '' }}"><a class="menu-item" href="/admin/empresas">Categorías de negocio</a></li>
             </ul>
         </li>

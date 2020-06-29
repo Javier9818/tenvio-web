@@ -16,8 +16,9 @@ class CreateCategoriasTable extends Migration
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion', 50);
-            $table->integer('icon');//
+            $table->string('icon');//
             $table->integer('tipo_negocio_id');//
+            $table->integer('state');//
             $table->timestamps();
         });
     }

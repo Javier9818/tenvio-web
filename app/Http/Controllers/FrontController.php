@@ -303,7 +303,12 @@ class FrontController extends Controller
         ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
         ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
-        ->where('categorias.descripcion','like','%'.$Categoria.'%')
+        ->where(
+          [
+            ['categorias.state','=',1],
+            ['categorias.descripcion','like','%'.$Categoria.'%']
+          ]
+          )
         ->get();
         return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$Categoria]);
       } catch (\Throwable $th) {
@@ -319,7 +324,11 @@ class FrontController extends Controller
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
       ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,categorias.descripcion as categoria')      
-      ->where('ciudad.nombre','like','%'.$Ubicacion.'%')
+      ->where(
+        [
+          ['categorias.state','=',1],
+          ['ciudad.nombre','like','%'.$Ubicacion.'%']
+        ])
       ->groupBy('empresas.id')
       ->get();
       return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$Ubicacion]);
@@ -384,7 +393,10 @@ class FrontController extends Controller
         ->join('productos', 'productos.empresa_id', '=', 'empresas.id')
         ->join('categorias_menus', 'categorias_menus.id', '=', 'productos.categorias_menu_id')
         ->selectRaw(' DISTINCT categorias_menus.descripcion as text, categorias_menus.id as value')
-        ->where('empresas.id','=',$request->get('id'))
+        ->where(
+        [ 
+          ['empresas.id','=',$request->get('id')] 
+        ])
         ->get();
      }catch (\Exception  $e) {
       return [
@@ -402,12 +414,20 @@ class FrontController extends Controller
         return DB::table('categorias')
         ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
         ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')
+        ->where(
+          [ 
+            ['categorias.state','=',1]
+          ])   
         ->get();
       }
         return DB::table('categorias')
         ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
         ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')        
-        ->where('tipo_negocio.id', '=',$request->get('id'))   
+        ->where(
+          [
+            ['tipo_negocio.id', '=',$request->get('id')],
+            ['categorias.state','=',1]
+          ])   
         ->get();
      }catch (\Exception  $e) {
       return [
@@ -420,7 +440,8 @@ class FrontController extends Controller
   {
      try {
       return DB::table('tipo_negocio')        
-        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')         
+        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')      
+        ->where('tipo_negocio.state','=',1)   
         ->get();
      }catch (\Exception  $e) {
       return [

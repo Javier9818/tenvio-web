@@ -13,33 +13,33 @@ class CategoriasSeeder extends Seeder
      */
     public function run()
     {
-        TipoNegocio::create(["descripcion" => 'RESTAURANTE']);
-        TipoNegocio::create(["descripcion" => 'RESPOTERIA']);
-        TipoNegocio::create(["descripcion" => 'BODEGA']);
-        TipoNegocio::create(["descripcion" => 'TIENDA DE ROPA']);
-        TipoNegocio::create(["descripcion" => 'TIENDA DE ELECTRÓNICA']);
-        TipoNegocio::create(["descripcion" => 'TIENDA DE ACCESORIOS']);
-        TipoNegocio::create(["descripcion" => 'LIBRERIA']);
+        TipoNegocio::create(["descripcion" => 'RESTAURANTE','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'RESPOTERIA','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'BODEGA','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'TIENDA DE ROPA','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'TIENDA DE ELECTRÓNICA','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'TIENDA DE ACCESORIOS','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'LIBRERIA','state'=>1]);
 
-        Categoria::create(["descripcion" => "POLLERIA", "tipo_negocio_id" => 1,"icon"=>"drumstick-bite"]);
-        Categoria::create(["descripcion" => "CHIFA", "tipo_negocio_id" => 1,"icon"=>"salad"]);
-        Categoria::create(["descripcion" => "MENÚS EN GENERAL", "tipo_negocio_id" => 1,"icon"=>"utensils"]);
-        Categoria::create(["descripcion" => "FUENTE DE SODA", "tipo_negocio_id" => 1,"icon"=>"burger-soda"]);
+        Categoria::create(["descripcion" => "POLLERIA", "tipo_negocio_id" => 1,"icon"=>"drumstick-bite",'state'=>1]);
+        Categoria::create(["descripcion" => "CHIFA", "tipo_negocio_id" => 1,"icon"=>"salad",'state'=>1]);
+        Categoria::create(["descripcion" => "MENÚS EN GENERAL", "tipo_negocio_id" => 1,"icon"=>"utensils",'state'=>1]);
+        Categoria::create(["descripcion" => "FUENTE DE SODA", "tipo_negocio_id" => 1,"icon"=>"burger-soda",'state'=>1]);
 
-        Categoria::create(["descripcion" => "REPOSTERIA", "tipo_negocio_id" => 2,"icon"=>"cookie-bite"]);
-        Categoria::create(["descripcion" => "BODEGA", "tipo_negocio_id" => 3,"icon"=>"store"]);
+        Categoria::create(["descripcion" => "REPOSTERIA", "tipo_negocio_id" => 2,"icon"=>"cookie-bite",'state'=>1]);
+        Categoria::create(["descripcion" => "BODEGA", "tipo_negocio_id" => 3,"icon"=>"store",'state'=>1]);
 
-        Categoria::create(["descripcion" => "ROPA HOMBRE", "tipo_negocio_id" => 4,"icon"=>"tshirt"]);
-        Categoria::create(["descripcion" => "ROPA MUJER", "tipo_negocio_id" => 4,"icon"=>"venus"]);
-        Categoria::create(["descripcion" => "ROPA NIÑOS", "tipo_negocio_id" => 4,"icon"=>"socks"]);
+        Categoria::create(["descripcion" => "ROPA HOMBRE", "tipo_negocio_id" => 4,"icon"=>"tshirt",'state'=>1]);
+        Categoria::create(["descripcion" => "ROPA MUJER", "tipo_negocio_id" => 4,"icon"=>"venus",'state'=>1]);
+        Categoria::create(["descripcion" => "ROPA NIÑOS", "tipo_negocio_id" => 4,"icon"=>"socks",'state'=>1]);
 
-        Categoria::create(["descripcion" => "APARATOS ELECTRÓNICOS EN GENERAL", "tipo_negocio_id" => 5,"icon"=>"laptop"]);
+        Categoria::create(["descripcion" => "APARATOS ELECTRÓNICOS EN GENERAL", "tipo_negocio_id" => 5,"icon"=>"laptop",'state'=>1]);
 
-        Categoria::create(["descripcion" => "REGALOS", "tipo_negocio_id" => 6,"icon"=>"gifts"]);
-        Categoria::create(["descripcion" => "ACCESORIOS HOMBRE", "tipo_negocio_id" => 6,"icon"=>"male"]);
-        Categoria::create(["descripcion" => "ACCESORIOS MUJER", "tipo_negocio_id" => 6,"icon"=>"female"]);
-        Categoria::create(["descripcion" => "ACCESORIOS NIÑOS", "tipo_negocio_id" => 6,"icon"=>"child"]);
+        Categoria::create(["descripcion" => "REGALOS", "tipo_negocio_id" => 6,"icon"=>"gifts",'state'=>1]);
+        Categoria::create(["descripcion" => "ACCESORIOS HOMBRE", "tipo_negocio_id" => 6,"icon"=>"male",'state'=>1]);
+        Categoria::create(["descripcion" => "ACCESORIOS MUJER", "tipo_negocio_id" => 6,"icon"=>"female",'state'=>1]);
+        Categoria::create(["descripcion" => "ACCESORIOS NIÑOS", "tipo_negocio_id" => 6,"icon"=>"child",'state'=>1]);
 
-        Categoria::create(["descripcion" => "LIBRERIA", "tipo_negocio_id" => 7,"icon"=>"book"]);
+        Categoria::create(["descripcion" => "LIBRERIA", "tipo_negocio_id" => 7,"icon"=>"book",'state'=>1]);
     }
 }
