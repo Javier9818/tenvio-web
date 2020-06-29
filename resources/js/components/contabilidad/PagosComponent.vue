@@ -43,6 +43,7 @@
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="" variant="success" size="sm">Ver</b-button>
 				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Volver a Pagar</b-button>
+				<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan(row)" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>
 			</template>
 		</b-table>
 		<div class="text-center">
@@ -116,6 +117,65 @@
 			</div>
 			<br>
 		</b-modal>
+		<b-modal id="extender-plan" size="lg" scrollable centered hide-backdrop title="Extender mi Plan" hide-footer>
+			<b-col sm="12" md="12">
+				<b-form-group
+				label="Seleccione su plan"
+				label-cols-sm="5"
+				label-align-sm="left"
+				label-align="center"
+				class="mb-0 text-center"
+				style="position:relative; z-index:4;">
+					<b-form-select v-model="idExtensionSeleccionada" :options="listaExtensiones" @change="seleccionoExtension"></b-form-select>
+				</b-form-group>
+			</b-col>
+			<b-col sm="12" md="12" :hidden="idExtensionSeleccionada==-1">
+				<b-form-group
+				label="Descripcion"
+				label-cols-sm="5"
+				label-align-sm="left"
+				label-align="center"
+				class="mb-0 text-center">
+					{{extensionSeleccionada.descripcion}}
+				</b-form-group>
+			</b-col>
+			<b-col sm="12" md="12" :hidden="idExtensionSeleccionada==-1">
+				<b-form-group
+				label="Precio"
+				label-cols-sm="5"
+				label-align-sm="left"
+				label-align="center"
+				class="mb-0 text-center">
+					S/ {{extensionSeleccionada.precio}}
+				</b-form-group>
+			</b-col>
+			<b-col sm="12" md="12" :hidden="idExtensionSeleccionada==-1">
+				<b-form-group
+				label="Cantidad de Pedidos"
+				label-cols-sm="5"
+				label-align-sm="left"
+				label-align="center"
+				class="mb-0 text-center">
+					{{extensionSeleccionada.cantidad_pedidos}}
+				</b-form-group>
+			</b-col>
+			<b-col sm="12" md="12" :hidden="idExtensionSeleccionada==-1">
+				<b-form-group
+				label="Foto del Voucher"
+				label-cols-sm="5"
+				label-align-sm="left"
+				label-align="center"
+				class="mb-0"
+				style="position:relative; z-index:1;">
+					<sube-archivos @archivosubido="archivosubido"></sube-archivos>
+				</b-form-group>
+			</b-col>
+			<div class="text-center pt-1">
+				<b-button @click="cerrarModal" variant="danger" size="sm">Cerrar</b-button>
+				<b-button @click="enviarPagoExtension" variant="success" size="sm" :disabled="deshabilitaboton">Extender mi Plan</b-button>
+			</div>
+		</b-modal>
+
 	</div>
 </template>
 
@@ -150,10 +210,49 @@ export default {
 			rutaImagenes: '',
 			contratos: [],
 			contratoSeleccionado: {},
-			indexContratoSeleccionado: -1
+			indexContratoSeleccionado: -1,
+			listaExtensiones: [],
+			idExtensionSeleccionada: -1,
+			extensionSeleccionada: {},
 		}
 	},
 	methods:{
+		enviarPagoExtension: function(){
+			var that = this;
+			axios.post(this.ruta+'/extenderplan', {
+				voucher:this.fotovouchersubir,
+				contrato_id:this.contratoSeleccionado.id,
+				plan_id:this.idExtensionSeleccionada
+			})
+			.then(function (response) {
+					let datos = response.data;
+					if (datos.mensaje == ''){
+						Swal.fire(
+							'Éxito',
+							'Usted acaba de registrar su extensión de plan, por favor espere a que el voucher enviado sea aprobado por los administradores',
+							'success'
+						)
+						.then(()=>{
+							//location.reload();
+						});
+					}
+					else{
+						that.mensajeError(false);
+					}
+			})
+			.catch(()=>{
+				that.mensajeError(true);
+			})
+			.finally(()=>{});
+		},
+		cargarExtenderPlan: function(row){
+			this.contratoSeleccionado = row.item;
+			this.indexContratoSeleccionado = row.index;
+			this.fotovouchersubir = [];
+			this.idExtensionSeleccionada = -1;
+			if (this.listaExtensiones.length == 0)
+				this.cargarExtensiones();
+		},
 		actualizarVoucher: function(){
 			console.log(this.contratoSeleccionado.pago_id);
 			console.log(this.fotovouchersubir);
@@ -181,7 +280,7 @@ export default {
 				.finally(()=>{});
 		},
 		cargarActualizarVocher: function(row){
-			this.archivosubido = [];
+			this.fotovouchersubir = [];
 			this.contratoSeleccionado = row.item;
 			this.indexContratoSeleccionado = row.index;
 			console.log(this.contratoSeleccionado);
@@ -223,15 +322,43 @@ export default {
 			this.deshabilitaboton = valor;
 		},
 		cargarRenovarContrato: function(){
-			this.archivosubido = [];
+			this.fotovouchersubir = [];
 			this.idPlanSeleccionado = -1;
 			if (this.listaPlanes.length == 0)
 				this.cargarPlanes();
+		},
+		seleccionoExtension(item){
+			this.extensionSeleccionada = this.listaExtensiones.filter((itm) => itm.id == item);
+			this.extensionSeleccionada = this.extensionSeleccionada[0];
+			console.log(this.extensionSeleccionada);
 		},
 		seleccionoPlan(item){
 			this.planSeleccionado = this.listaPlanes.filter((itm) => itm.id == item);
 			this.planSeleccionado = this.planSeleccionado[0];
 			console.log(this.planSeleccionado);
+		},
+		cargarExtensiones: function(){
+			var that = this;
+			axios.post(this.ruta+'/listaextensiones')
+			.then(function (response) {
+				let datos = response.data;
+				that.listaExtensiones = datos;
+				that.listaExtensiones.forEach((item, i) => {
+					that.listaExtensiones[i].value = item.id;
+					that.listaExtensiones[i].text = item.nombre;
+					that.listaExtensiones[i].precio = item.precio.toFixed(2);
+				});
+				var nulo = [{
+					value: -1,
+					text: 'Por favor seleccione un Plan de Extensión',
+					disabled: true
+				}];
+				that.listaExtensiones = nulo.concat(that.listaExtensiones);
+			})
+			.catch(()=>{
+				that.mensajeError(true);
+			})
+			.finally(()=>{});
 		},
 		cargarPlanes: function(){
 			var that = this;
@@ -246,7 +373,7 @@ export default {
 				});
 				var nulo = [{
 					value: -1,
-					text: 'Por favor seleccione un plan',
+					text: 'Por favor seleccione un Plan',
 					disabled: true
 				}];
 				that.listaPlanes = nulo.concat(that.listaPlanes);

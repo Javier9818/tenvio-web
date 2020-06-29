@@ -22,12 +22,34 @@ class ContabilidadController extends Controller
 	public function fn($funcion='', Request $request){
 		if ($funcion == 'listarentregados') return $this->listarentregados($request);//1
 		if ($funcion == 'listaplanes') return $this->listaplanes($request);//2
+		if ($funcion == 'listaextensiones') return $this->listaextensiones($request);//2
 		if ($funcion == 'renovarcontrato') return $this->renovarcontrato($request);//2
 		if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
 		if ($funcion == 'actualizarvoucher') return $this->actualizarvoucher($request);//2
+		if ($funcion == 'extenderplan') return $this->extenderplan($request);//2
 		else if ($funcion == '1') return view('admin.negocio.ventas'/*, ["empresa" => session('empresa')]*/);
 		else if ($funcion == '2') return view('admin.negocio.pagos'/*, ["empresa" => session('empresa')]*/);
 		else return '';
+	}
+
+	static function extenderplan(Request $request){
+		$empresa_id = session('empresa');
+		$contrato_id = $request->get('contrato_id');
+		$plan_id = $request->get('plan_id');
+		$voucher = $request->get('voucher');
+		$voucher = $voucher[0]['upload']['data'];
+		DB::beginTransaction();
+		try {
+			$plan = Plan::getPlan($plan_id);
+			$contrato = Contrato::getContrato($contrato_id);
+			Pagos::registrar($contrato, $voucher, $plan);
+			ExtrasController::moverFotoVoucher($voucher);
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			return ['mensaje' => '.'];
+		}
+		return ['mensaje' => ''];
 	}
 
 	static function actualizarvoucher(Request $request){
@@ -41,7 +63,7 @@ class ContabilidadController extends Controller
 			$contrato = Contrato::getContrato($pago->contratos_id);
 			Pagos::registrar($contrato, $voucher);
 			Pagos::actualizarRechazado($pago);
-			//ExtrasController::moverFotoVoucher($voucher);
+			ExtrasController::moverFotoVoucher($voucher);
 			DB::commit();
 		} catch (\Exception $e) {
 			DB::rollback();
@@ -64,9 +86,9 @@ class ContabilidadController extends Controller
 		$plan_id = $request->get('plan_id');
 		$voucher = $request->get('voucher');
 		$voucher = $voucher[0]['upload']['data'];
-		$plan = Plan::getPlan($plan_id);
 		DB::beginTransaction();
 		try {
+			$plan = Plan::getPlan($plan_id);
 			$contrato = Contrato::renovar($empresa_id, $plan);
 			Pagos::registrar($contrato, $voucher);
 			ExtrasController::moverFotoVoucher($voucher);
@@ -77,6 +99,10 @@ class ContabilidadController extends Controller
 			return ['mensaje' => '.'];
 		}
 		return ['mensaje' => ''];
+	}
+
+	static function listaextensiones(Request $request){
+		return Plan::listaExtensiones();
 	}
 
 	static function listaplanes(Request $request){

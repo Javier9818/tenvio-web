@@ -45,7 +45,11 @@ class Contrato extends Model
 		return Contrato::where($where)
 			->select('contratos.id',
 				'contratos.pedidos_total',
-				DB::raw("case when pa.estado = 'Aprobado' then contratos.estado when contratos.estado = 'Válido' then pa.estado else contratos.estado end as estado"),
+				DB::raw("case
+					when pa.estado = 'Aprobado' then contratos.estado
+					when contratos.estado = 'Válido' then pa.estado
+					else contratos.estado end as estado"
+					),
 				'contratos.fecha_inicio',
 				'contratos.fecha_vencimiento',
 				'pl.id as plan_id',
@@ -53,7 +57,8 @@ class Contrato extends Model
 				'pa.id as pago_id',
 				'pa.precio',
 				'pa.urlfoto',
-				'pa.created_at as fecha_pago')
+				'pa.created_at as fecha_pago'
+				)
 			->join('plan as pl', 'pl.id', '=', 'contratos.plan_id')
 			->leftJoin('pagos as pa', 'pa.contratos_id', '=', 'contratos.id')
 			->orderByDesc('contratos.fecha_inicio')

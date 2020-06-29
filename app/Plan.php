@@ -17,6 +17,16 @@ class Plan extends Model
 		'updated_at'
 	];
 
+	public static function listaExtensiones(){
+		return Plan::where(['tipo' => 'EXTENSIÓN'])->whereRaw('precio != 0')
+			->select('id',
+				'nombre',
+				'descripcion',
+				'precio',
+				'cantidad_pedidos')
+			->get();
+	}
+
 	public static function listaPlanes(){
 		return Plan::where(['tipo' => 'PLAN'])->whereRaw('precio != 0')
 			->select('id',
