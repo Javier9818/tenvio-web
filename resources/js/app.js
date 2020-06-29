@@ -77,6 +77,7 @@ Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.v
 Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
 Vue.component('nombre-publico', require('./components/config/NombrePublico.vue').default);
+Vue.component('ubicacion-component', require('./components/config/Ubicacion.vue').default);
 Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
@@ -108,7 +109,7 @@ Vue.component('front-cart-component', require('./components/front/cartComponent.
 
 Vue.component('front-pedidos-component', require('./components/front/pedidosComponent.vue').default);
 Vue.component('front-seguimiento-component', require('./components/front/seguimientoComponent.vue').default);
- 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

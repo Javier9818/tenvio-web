@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\Ciudad;
+use App\Empresa;
 use App\TipoNegocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,11 @@ class GeneralController extends Controller
 
     public function vistaConfiguraciones(){
         return view('admin.config', ["empresa" => session('empresa')]);
+    }
+
+    public function vistaUbicacion(){
+        $empresa = Empresa::find(session('empresa'));
+        return view('admin.ubicacion', ["empresa" => $empresa]);
     }
 
     public function vistaTransporte(){

@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-center">
-                                    <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
+                                    <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Iniciar Sesion</button>
                                 </div>
 
                             </form>
@@ -70,7 +70,7 @@
                             <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-instagram"><span class="ft-instagram"></span></a>
                         </div>
 
-                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>No tienes una cuenta? <a href="/registro" class="card-link">Registrate</a></span></p>
+                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>¿No tienes una cuenta? <a href="/registro" class="card-link">Regístrate</a></span></p>
                     </div>
                 </div>
             </div>

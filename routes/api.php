@@ -28,7 +28,6 @@ Route::get('/email/{email}', 'GeneralController@validateEmail');
 
 Route::post('/empleado', 'EmpleadoController@setEmpleado');
 Route::put('/empleado', 'EmpleadoController@updateEmpleado');
-Route::get('/empleados/{empresa}', 'EmpleadoController@listByEmpresa');
 
 Route::post('/empresa', 'EmpresaController@setEmpresa');
 Route::post('/activate/empresa', 'EmpresaController@activateEmpresa');
@@ -44,12 +43,15 @@ Route::post('/nombre-unico', 'EmpresaController@validaNombreUnico');
 Route::put('/nombre-unico', 'EmpresaController@updateNombreUnico');
 
 
-Route::put('/fotoPerfil/{empresa}', 'UserController@updateFoto');
+Route::post('/geo-position/{empresa}', 'EmpresaController@geoPosition');
+
+Route::put('/fotoPerfil/{user}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');
 Route::put('/pass', 'UserController@updatePassword');
 Route::post('/usuarios', 'UserController@setUser');
 
 Route::get('/notifications/{empresa}', 'GeneralController@notification');
+
 Route::get('/detallePedido/{pedido}', 'PedidosController@show');
 Route::post('/entregaPedido', 'PedidosController@entregar');
 Route::post('/cancelaPedido', 'PedidosController@cancelaByRepartidor');

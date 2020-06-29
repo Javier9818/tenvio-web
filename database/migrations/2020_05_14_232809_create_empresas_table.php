@@ -25,7 +25,8 @@ class CreateEmpresasTable extends Migration
             $table->string('foto', 100)->nullable();
             $table->integer('ciudad_id');
             $table->string('estado', 20)->default('ACTIVO');
-            // $table->integer('categoria_id');
+            $table->string('latitud', 25)->nullable();
+            $table->string('longitud', 25)->nullable();
             $table->timestamps();
         });
     }

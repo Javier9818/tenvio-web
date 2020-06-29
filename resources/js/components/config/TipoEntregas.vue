@@ -18,7 +18,6 @@ import Swal from 'sweetalert2'
             }
         },
         mounted() {
-            console.log('Component mounted.')
             axios.get(`/api/tipo-entregas/${empresa}`).then( ({data}) => {
                 this.tipos = data.tipos;
                 this.valida(data.tipos);

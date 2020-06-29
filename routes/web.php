@@ -19,6 +19,7 @@ Route::get('/intranet/empleados', 'GeneralController@vistaEmpleados')->middlewar
 Route::get('/intranet/nuevo-empleado', 'GeneralController@vistaNuevoEmpleado')->middleware('can:gestionar-personal, visit-company');
 Route::get('/intranet/empleado/edit/{id}', 'EmpleadoController@edit')->middleware('can:gestionar-personal, visit-company');
 Route::get('/intranet/configuraciones', 'GeneralController@vistaConfiguraciones')->middleware('can:edit-company, visit-company');
+Route::get('/intranet/ubicacion', 'GeneralController@vistaUbicacion')->middleware('can:edit-company, visit-company');
 Route::get('/intranet/transporte', 'GeneralController@vistaTransporte')->middleware('can:gestionar-entregas, visit-company');
 
 Route::get('/intranet/ventas', 'ContabilidadController@fn1')->middleware('can:gestionar-contabilidad, visit-company');

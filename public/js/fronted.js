@@ -5279,39 +5279,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/MapaInteractivo.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/MapaInteractivo.vue?vue&type=script&lang=js& ***!
@@ -5321,19 +5288,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CardMapComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardMapComponent */ "./resources/js/components/maps/CardMapComponent.vue");
 //
 //
 //
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['height', 'width', 'layer', 'layers'],
+  props: ['height', 'width', 'layer', 'layers', 'geoDisabled', //true or false
+  'geoWatch', // true or false
+  'clickDisabled' //true or false
+  ],
   mounted: function mounted() {
-    this.initMap();
-    console.log(this.layers);
+    this.initMap(); // console.log(this.layers);
   },
   data: function data() {
     return {
@@ -5342,47 +5309,46 @@ __webpack_require__.r(__webpack_exports__);
       marker: L.marker([0, 0])
     };
   },
-  components: {
-    CardMap: _CardMapComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
   methods: {
     initMap: function initMap() {
       var _this = this;
 
-      this.map = L.map('map');
+      this.map = L.map('map', {
+        center: this.layer ? [this.layer.latitud, this.layer.longitud] : null,
+        zoom: 17
+      });
       this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
-      this.map.locate({
-        setView: true,
-        maxZoom: 17
-      });
-      this.map.on('locationfound', function (e) {
-        _this.createMarker(e.latlng);
-      });
+
+      if (!this.geoDisabled) {
+        this.map.locate({
+          setView: true,
+          maxZoom: 17,
+          watch: this.geoWatch === true ? true : false
+        });
+        this.map.on('locationfound', function (e) {
+          _this.createMarker(e.latlng, 'Está es mi ubicación');
+        });
+      }
+
       this.map.on('click', function (e) {
         _this.marker.removeFrom(_this.map);
 
-        _this.createMarker(e.latlng);
+        _this.createMarker(e.latlng, 'Está es mi ubicación');
       });
       if (this.layer) this.initLayer();
       if (this.layers) this.initLayers();
     },
-    createMarker: function createMarker(LatLng) {
+    createMarker: function createMarker(LatLng, popup, iconUrl) {
       var _this2 = this;
 
-      var deliveryIcon = L.icon({
-        iconUrl: '/img/deliv.png',
-        // shadowUrl: 'leaf-shadow.png',
+      var deliveryIcon = iconUrl ? L.icon({
+        iconUrl: iconUrl,
         iconSize: [50, 50],
-        // size of the icon
-        // shadowSize:   [50, 64], // size of the shadow
         iconAnchor: [50, 50],
-        // point of the icon which will correspond to marker's location
-        // shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-20, -50] // point from which the popup should open relative to the iconAnchor
-
-      });
+        popupAnchor: [-20, -50]
+      }) : null;
       this.marker = L.marker(LatLng, {
         draggable: 'true',
         title: 'Mi ubicación'
@@ -5392,34 +5358,38 @@ __webpack_require__.r(__webpack_exports__);
         marker.setLatLng(new L.LatLng(position.lat, position.lng), {
           draggable: 'true'
         });
-        marker.bindPopup("Esta es mi ubicación").openPopup();
+        marker.bindPopup(popup).openPopup();
 
         _this2.map.panTo(new L.LatLng(position.lat, position.lng));
 
         _this2.$emit('geoPosition', position);
       });
-      if (this.layer || this.layers) this.marker.setIcon(deliveryIcon);
+      if (iconUrl) this.marker.setIcon(deliveryIcon);
       this.marker.addTo(this.map);
-      this.marker.bindPopup("Esta es mi ubicación").openPopup();
-      this.$emit('geoPosition', this.marker.getLatLng()); // console.log("Longitud: "+this.marker.getLatLng().lng);
-      // console.log("Latitud: "+this.marker.getLatLng().lat);
+      this.marker.bindPopup(popup).openPopup();
+      this.$emit('geoPosition', this.marker.getLatLng());
     },
     initLayer: function initLayer() {
       var layer = this.layer;
-      var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {
-        title: layer.direccion
-      }).bindPopup("\n                <h3>Pedido Cod.".concat(layer.id, "</h3>\n                <b>").concat(layer.direccion, "</b>\n                <p><b>Cliente: </b>").concat(layer.cliente, "</p>\n                <p><b>Celular: <a href=\"https://api.whatsapp.com/send?phone=51").concat(layer.celular, "&text=\" target=\"_blank\">").concat(layer.celular, "</a></b></p>\n                ")).openPopup();
-      marker.bindTooltip(layer.direccion);
-      marker.addTo(this.map); // const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
-      // const polygonFeatures = layer.features.filter(feature => feature.type === 'polygon');
-      // markerFeatures.forEach((feature) => {
-      // feature.leafletObject = L.marker(new L.LatLng(position.lat, position.lng))
-      //     .bindPopup(feature.name);
-      // });
-      // polygonFeatures.forEach((feature) => {
-      // feature.leafletObject = L.polygon(feature.coords)
-      //     .bindPopup(feature.name);
-      // });
+      this.createMarker(new L.LatLng(layer.latitud, layer.longitud), layer.title); // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+      //     bindPopup(`
+      //     <h3>Pedido Cod.${layer.id}</h3>
+      //     <b>${layer.direccion}</b>
+      //     <p><b>Cliente: </b>${layer.cliente}</p>
+      //     <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
+      //     `).openPopup();
+      //     marker.bindTooltip(layer.direccion);
+      //     marker.addTo(this.map);
+      //================================================
+      // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.title ? layer.title:null})
+      // if(layer.popup){
+      //     marker.bindPopup(layer.popup).openPopup();
+      // }
+      // if(layer.tooltip){
+      //     marker.bindTooltip(layer.tooltip);
+      // }
+      // this.marker = marker;
+      // marker.addTo(this.map);
     },
     initLayers: function initLayers() {
       var _this3 = this;
@@ -76159,53 +76129,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e& ***!
-  \************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/MapaInteractivo.vue?vue&type=template&id=17e7f4da&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/MapaInteractivo.vue?vue&type=template&id=17e7f4da&scoped=true& ***!
@@ -96862,75 +96785,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tenvio_registro_vue_vue_type_template_id_fc6baa36_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tenvio_registro_vue_vue_type_template_id_fc6baa36_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/maps/CardMapComponent.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/maps/CardMapComponent.vue ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardMapComponent.vue?vue&type=template&id=0153890e& */ "./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&");
-/* harmony import */ var _CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CardMapComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/maps/CardMapComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CardMapComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e& ***!
-  \******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CardMapComponent.vue?vue&type=template&id=0153890e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
