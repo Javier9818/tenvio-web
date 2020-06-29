@@ -34,8 +34,11 @@
                         <div class="card-body">
                             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                                 @csrf
+                                @error('login-error')
+                                    <p class="red ml-1"><i class="ft-alert-circle"></i> {{$message}}</p>
+                                @enderror
                                 <fieldset class="form-group position-relative has-icon-left">
-                                    <input type="text" class="form-control round" id="username" name="username" placeholder="Usuario / Email" required="" aria-invalid="false">
+                                    <input type="text" class="form-control round" id="username" name="username" placeholder="Usuario o Email" required="" aria-invalid="false">
                                     <div class="form-control-position">
                                         <i class="ft-user"></i>
                                     </div>
@@ -51,11 +54,11 @@
 
                                     </div>
                                     <div class="col-md-6 col-12 float-sm-left text-center text-sm-right" >
-                                        <recover-component></recover-component>                                        
+                                        <recover-component></recover-component>
                                     </div>
                                 </div>
                                 <div class="form-group text-center">
-                                    <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Login</button>
+                                    <button type="submit" class="btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1">Iniciar Sesion</button>
                                 </div>
 
                             </form>
@@ -67,12 +70,14 @@
                             <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-instagram"><span class="ft-instagram"></span></a>
                         </div>
 
-                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>No tienes una cuenta? <a href="register.html" class="card-link">Registrate</a></span></p>
+                        <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>¿No tienes una cuenta? <a href="/registro" class="card-link">Regístrate</a></span></p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
   </body>
   <script src="/js/fronted.js" type="text/javascript"></script>
 </html>

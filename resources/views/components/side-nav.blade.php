@@ -60,7 +60,12 @@
         @endcan
 
         @can('edit-company')
-        <li class="nav-item {{ $isTab('7') ? 'open' : '' }}"><a href="/intranet/configuraciones"><i class="la la-cog"></i><span class="menu-title" data-i18n="">Configuraciones</span></a>
+        <li class="has-sub nav-item {{ $isTab('7') ? 'open' : '' }}">
+            <a href="javascript::void(0)"><i class="ft-settings"></i><span class="menu-title" data-i18n="">Configuraciones</span></a>
+            <ul class="menu-content">
+                <li class="{{ $isSelected('7', '1') ? 'active' : '' }}"><a class="menu-item" href="/intranet/configuraciones">Generalidades</a></li>
+                <li class="{{ $isSelected('7', '2') ? 'active' : '' }}"><a class="menu-item" href="/intranet/ubicacion">Ubicación del negocio</a></li>
+            </ul>
         </li>
         @endcan
 

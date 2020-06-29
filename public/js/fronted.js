@@ -3936,39 +3936,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4115,27 +4082,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       return total;
     },
-    showModal: function showModal() {
-      this.$refs['my-modal'].show();
-    },
-    hideModal: function hideModal() {
-      this.Logeate();
-      this.$refs['my-modal'].hide();
-    },
-    Logeate: function Logeate() {
-      var that = this;
-      axios.post('/login', {
-        username: this.client.username,
-        password: this.client.password
-      }).then(function (response) {});
-    },
-    setPedido: function setPedido() {
-      if (this.user == 0) {
-        location.href = "/login";
-      } else {
-        this.generaPedido();
-      }
-    },
     generaPedido: function generaPedido() {
       var _this4 = this;
 
@@ -4164,34 +4110,10 @@ __webpack_require__.r(__webpack_exports__);
             empresas: that.empresas,
             productos: that.productos
           }).then(function (response) {
-            var messsage = '';
-            var icon = '';
-            var title = '';
-
-            switch (response.data) {
-              case 1:
-                messsage = 'Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
-                icon = 'success';
-                title = 'Éxito';
-                break;
-
-              case 2:
-                messsage = 'Error, por favor recargue la página.';
-                icon = 'error';
-                title = 'ERROR';
-                break;
-
-              default:
-                messsage = response.data.Message;
-                icon = 'error';
-                title = 'ERROR';
-                break;
-            }
-
             sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
-              icon: icon,
-              title: title,
-              text: messsage
+              text: 'Su pedido se ha registrado satisfactoriamente.',
+              icon: 'success',
+              title: 'Éxito'
             }).then(function () {
               that.$cookies.set('carrito', JSON.stringify([]));
               location.href = "/";
@@ -4700,6 +4622,104 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/front/postRecoverComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/front/postRecoverComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [vuelidate__WEBPACK_IMPORTED_MODULE_1__["validationMixin"]],
+  props: ['id'],
+  data: function data() {
+    return {
+      view: false,
+      form: {
+        newpassword1: '',
+        newpassword: ''
+      }
+    };
+  },
+  methods: {
+    len: function len() {
+      this.$v.$touch();
+      if (this.$v.$invalid) console.log(this.$v.$invalid);else console.log('valido');
+    },
+    compara: function compara() {
+      if (this.form.newpassword1 != this.form.newpassword) this.view = true;else this.view = false;
+    },
+    enviar: function enviar() {
+      var that = this;
+      axios.post('/front/recuperaPost', {
+        pass: that.form.newpassword,
+        user: that.id
+      }).then(function (response) {
+        if (response.data.success == 0) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('ERROR', 'Ha ocurrido un error', 'error');else {
+          if (response.data == 1) {
+            sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Su cuenta ha sido actualizada', 'success');
+            location.href = "/";
+          }
+        }
+      });
+    }
+  },
+  validations: {
+    form: {
+      newpassword1: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minLength"])(7)
+      },
+      newpassword: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minLength"])(7)
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/front/recoverComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/front/recoverComponent.vue?vue&type=script&lang=js& ***!
@@ -4748,12 +4768,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/front/recupera', {
         user: this.username
       }).then(function (response) {
-        console.log(response.data);
-        if (!response.data.success) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('ERROR', 'Ha ocurrido un error', 'error');else {
-          if (response.data) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se ha generado su solicitud, revise su correo por favor.', 'success');else sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('No encontrado', 'El usuario no existe', 'warning');
+        this.hideModal();
+        if (response.data.success == 0) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('ERROR', 'Ha ocurrido un error', 'error');else {
+          if (response.data == 1) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se ha generado su solicitud, revise su correo por favor.', 'success');else sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('No encontrado', 'El usuario no existe', 'warning');
         }
       });
-      this.hideModal();
     }
   }
 });
@@ -5260,39 +5279,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/MapaInteractivo.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/MapaInteractivo.vue?vue&type=script&lang=js& ***!
@@ -5302,19 +5288,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CardMapComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardMapComponent */ "./resources/js/components/maps/CardMapComponent.vue");
 //
 //
 //
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['height', 'width', 'layer', 'layers'],
+  props: ['height', 'width', 'layer', 'layers', 'geoDisabled', //true or false
+  'geoWatch', // true or false
+  'clickDisabled' //true or false
+  ],
   mounted: function mounted() {
-    this.initMap();
-    console.log(this.layers);
+    this.initMap(); // console.log(this.layers);
   },
   data: function data() {
     return {
@@ -5323,47 +5309,46 @@ __webpack_require__.r(__webpack_exports__);
       marker: L.marker([0, 0])
     };
   },
-  components: {
-    CardMap: _CardMapComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
   methods: {
     initMap: function initMap() {
       var _this = this;
 
-      this.map = L.map('map');
+      this.map = L.map('map', {
+        center: this.layer ? [this.layer.latitud, this.layer.longitud] : null,
+        zoom: 17
+      });
       this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
-      this.map.locate({
-        setView: true,
-        maxZoom: 17
-      });
-      this.map.on('locationfound', function (e) {
-        _this.createMarker(e.latlng);
-      });
+
+      if (!this.geoDisabled) {
+        this.map.locate({
+          setView: true,
+          maxZoom: 17,
+          watch: this.geoWatch === true ? true : false
+        });
+        this.map.on('locationfound', function (e) {
+          _this.createMarker(e.latlng, 'Está es mi ubicación');
+        });
+      }
+
       this.map.on('click', function (e) {
         _this.marker.removeFrom(_this.map);
 
-        _this.createMarker(e.latlng);
+        _this.createMarker(e.latlng, 'Está es mi ubicación');
       });
       if (this.layer) this.initLayer();
       if (this.layers) this.initLayers();
     },
-    createMarker: function createMarker(LatLng) {
+    createMarker: function createMarker(LatLng, popup, iconUrl) {
       var _this2 = this;
 
-      var deliveryIcon = L.icon({
-        iconUrl: '/img/deliv.png',
-        // shadowUrl: 'leaf-shadow.png',
+      var deliveryIcon = iconUrl ? L.icon({
+        iconUrl: iconUrl,
         iconSize: [50, 50],
-        // size of the icon
-        // shadowSize:   [50, 64], // size of the shadow
         iconAnchor: [50, 50],
-        // point of the icon which will correspond to marker's location
-        // shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-20, -50] // point from which the popup should open relative to the iconAnchor
-
-      });
+        popupAnchor: [-20, -50]
+      }) : null;
       this.marker = L.marker(LatLng, {
         draggable: 'true',
         title: 'Mi ubicación'
@@ -5373,34 +5358,38 @@ __webpack_require__.r(__webpack_exports__);
         marker.setLatLng(new L.LatLng(position.lat, position.lng), {
           draggable: 'true'
         });
-        marker.bindPopup("Esta es mi ubicación").openPopup();
+        marker.bindPopup(popup).openPopup();
 
         _this2.map.panTo(new L.LatLng(position.lat, position.lng));
 
         _this2.$emit('geoPosition', position);
       });
-      if (this.layer || this.layers) this.marker.setIcon(deliveryIcon);
+      if (iconUrl) this.marker.setIcon(deliveryIcon);
       this.marker.addTo(this.map);
-      this.marker.bindPopup("Esta es mi ubicación").openPopup();
-      this.$emit('geoPosition', this.marker.getLatLng()); // console.log("Longitud: "+this.marker.getLatLng().lng);
-      // console.log("Latitud: "+this.marker.getLatLng().lat);
+      this.marker.bindPopup(popup).openPopup();
+      this.$emit('geoPosition', this.marker.getLatLng());
     },
     initLayer: function initLayer() {
       var layer = this.layer;
-      var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {
-        title: layer.direccion
-      }).bindPopup("\n                <h3>Pedido Cod.".concat(layer.id, "</h3>\n                <b>").concat(layer.direccion, "</b>\n                <p><b>Cliente: </b>").concat(layer.cliente, "</p>\n                <p><b>Celular: <a href=\"https://api.whatsapp.com/send?phone=51").concat(layer.celular, "&text=\" target=\"_blank\">").concat(layer.celular, "</a></b></p>\n                ")).openPopup();
-      marker.bindTooltip(layer.direccion);
-      marker.addTo(this.map); // const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
-      // const polygonFeatures = layer.features.filter(feature => feature.type === 'polygon');
-      // markerFeatures.forEach((feature) => {
-      // feature.leafletObject = L.marker(new L.LatLng(position.lat, position.lng))
-      //     .bindPopup(feature.name);
-      // });
-      // polygonFeatures.forEach((feature) => {
-      // feature.leafletObject = L.polygon(feature.coords)
-      //     .bindPopup(feature.name);
-      // });
+      this.createMarker(new L.LatLng(layer.latitud, layer.longitud), layer.title); // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+      //     bindPopup(`
+      //     <h3>Pedido Cod.${layer.id}</h3>
+      //     <b>${layer.direccion}</b>
+      //     <p><b>Cliente: </b>${layer.cliente}</p>
+      //     <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
+      //     `).openPopup();
+      //     marker.bindTooltip(layer.direccion);
+      //     marker.addTo(this.map);
+      //================================================
+      // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.title ? layer.title:null})
+      // if(layer.popup){
+      //     marker.bindPopup(layer.popup).openPopup();
+      // }
+      // if(layer.tooltip){
+      //     marker.bindTooltip(layer.tooltip);
+      // }
+      // this.marker = marker;
+      // marker.addTo(this.map);
     },
     initLayers: function initLayers() {
       var _this3 = this;
@@ -73919,7 +73908,7 @@ var render = function() {
       on: {
         submit: function($event) {
           $event.preventDefault()
-          return _vm.setPedido($event)
+          return _vm.generaPedido($event)
         }
       }
     },
@@ -74927,6 +74916,122 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/front/postRecoverComponent.vue?vue&type=template&id=286767ea&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/front/postRecoverComponent.vue?vue&type=template&id=286767ea& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "b-input-group",
+        { staticClass: "form-group position-relative has-icon-left" },
+        [
+          _c("b-input-group-prepend", { attrs: { "is-text": "" } }, [
+            _c("i", { staticClass: "ft-lock" })
+          ]),
+          _vm._v(" "),
+          _c("b-form-input", {
+            staticClass: "form-control round",
+            attrs: { type: "password", placeholder: "Nueva Contraseña" },
+            on: { keyup: _vm.len },
+            model: {
+              value: _vm.form.newpassword,
+              callback: function($$v) {
+                _vm.$set(_vm.form, "newpassword", $$v)
+              },
+              expression: "form.newpassword"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-input-group",
+        { staticClass: "form-group position-relative has-icon-left" },
+        [
+          _c("b-input-group-prepend", { attrs: { "is-text": "" } }, [
+            _c("i", { staticClass: "ft-lock" })
+          ]),
+          _vm._v(" "),
+          _c("b-form-input", {
+            staticClass: "form-control round",
+            attrs: {
+              type: "password",
+              placeholder: "Repita Contraseña",
+              required: "",
+              "aria-invalid": "false",
+              autocomplete: "off",
+              minlength: "7"
+            },
+            on: { keyup: _vm.compara },
+            model: {
+              value: _vm.form.newpassword1,
+              callback: function($$v) {
+                _vm.$set(_vm.form, "newpassword1", $$v)
+              },
+              expression: "form.newpassword1"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.view
+        ? _c("div", { staticClass: "form-group row" }, [_vm._m(0)])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group text-center" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn round btn-block btn-glow btn-bg-gradient-x-purple-blue col-12 mr-1 mb-1",
+            on: { click: _vm.enviar }
+          },
+          [_vm._v("Guardar")]
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 text-center" }, [
+      _c(
+        "div",
+        { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+        [
+          _vm._v(
+            "\r\n              Las contraseñas no son iguales\r\n          "
+          )
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -76015,53 +76120,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "entry-content wow fadeInDown" }, [
       _c("h4", { staticClass: "title" }, [_vm._v("Formulario de registro")])
-    ])
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e& ***!
-  \************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
     ])
   }
 ]
@@ -96300,6 +96358,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/front/postRecoverComponent.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/front/postRecoverComponent.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _postRecoverComponent_vue_vue_type_template_id_286767ea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./postRecoverComponent.vue?vue&type=template&id=286767ea& */ "./resources/js/components/front/postRecoverComponent.vue?vue&type=template&id=286767ea&");
+/* harmony import */ var _postRecoverComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./postRecoverComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/front/postRecoverComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _postRecoverComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _postRecoverComponent_vue_vue_type_template_id_286767ea___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _postRecoverComponent_vue_vue_type_template_id_286767ea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/front/postRecoverComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/front/postRecoverComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/front/postRecoverComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_postRecoverComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./postRecoverComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/front/postRecoverComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_postRecoverComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/front/postRecoverComponent.vue?vue&type=template&id=286767ea&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/front/postRecoverComponent.vue?vue&type=template&id=286767ea& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_postRecoverComponent_vue_vue_type_template_id_286767ea___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./postRecoverComponent.vue?vue&type=template&id=286767ea& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/front/postRecoverComponent.vue?vue&type=template&id=286767ea&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_postRecoverComponent_vue_vue_type_template_id_286767ea___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_postRecoverComponent_vue_vue_type_template_id_286767ea___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/front/recoverComponent.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/front/recoverComponent.vue ***!
@@ -96663,75 +96790,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/maps/CardMapComponent.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/maps/CardMapComponent.vue ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardMapComponent.vue?vue&type=template&id=0153890e& */ "./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&");
-/* harmony import */ var _CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CardMapComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/maps/CardMapComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CardMapComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e& ***!
-  \******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CardMapComponent.vue?vue&type=template&id=0153890e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/maps/CardMapComponent.vue?vue&type=template&id=0153890e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CardMapComponent_vue_vue_type_template_id_0153890e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/maps/MapaInteractivo.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/maps/MapaInteractivo.vue ***!
@@ -96873,7 +96931,8 @@ Vue.component('front-seguimiento-component', __webpack_require__(/*! ./component
 Vue.component('tenvio-promo-component', __webpack_require__(/*! ./components/landing_pages/tenvio_promo.vue */ "./resources/js/components/landing_pages/tenvio_promo.vue")["default"]);
 Vue.component('tenvio-registro-component', __webpack_require__(/*! ./components/landing_pages/tenvio_registro.vue */ "./resources/js/components/landing_pages/tenvio_registro.vue")["default"]);
 Vue.component('tenvio-padre-component', __webpack_require__(/*! ./components/landing_pages/tenvio_padre.vue */ "./resources/js/components/landing_pages/tenvio_padre.vue")["default"]);
-Vue.component('recover-component', __webpack_require__(/*! ./components/front/recoverComponent.vue */ "./resources/js/components/front/recoverComponent.vue")["default"]); // const EventBus = new Vue();
+Vue.component('recover-component', __webpack_require__(/*! ./components/front/recoverComponent.vue */ "./resources/js/components/front/recoverComponent.vue")["default"]);
+Vue.component('post-recover-component', __webpack_require__(/*! ./components/front/postRecoverComponent.vue */ "./resources/js/components/front/postRecoverComponent.vue")["default"]); // const EventBus = new Vue();
 
 var app = new Vue({
   el: '#app'

@@ -33,7 +33,6 @@ import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} fr
 const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ&\s]*$/)
     export default {
         mounted() {
-            console.log('Component mounted.')
             axios.get(`/api/nombre-unico/${empresa}`).then( ({data}) => {
                 this.nombreUnico = data.nombreUnico;
                 this.data = data;
@@ -73,7 +72,6 @@ const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ&\s]*$/)
             },
             submit: async function (){
                 this.$v.$touch()
-                console.log(this.$v.$invalid);
                 if(this.nombreUnico !== this.data.nombreUnico && !this.$v.$invalid){
                     this.busy = true;
                     var valida = await this.valida();

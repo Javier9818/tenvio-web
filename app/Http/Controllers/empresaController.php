@@ -190,6 +190,13 @@ class EmpresaController extends Controller
         return (count($empresas)>0) ? response()->json(["message" => true]) : response()->json(["message"=>false]);
     }
 
+    public function geoPosition(Request $request, $empresa){
+        $empresa = Empresa::find($empresa)->update([
+            "latitud" => $request->lat,
+            "longitud" => $request->lng
+        ]);
 
+        return response()->json(["message" => "Registro exitoso"]);
+    }
 
 }

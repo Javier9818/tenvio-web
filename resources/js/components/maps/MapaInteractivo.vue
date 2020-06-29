@@ -5,12 +5,19 @@
 </template>
 
 <script>
-    import CardMap from './CardMapComponent';
     export default {
-        props:['height', 'width', 'layer', 'layers'],
+        props:[
+            'height',
+            'width',
+            'layer',
+            'layers',
+            'geoDisabled', //true or false
+            'geoWatch', // true or false
+            'clickDisabled' //true or false
+        ],
         mounted() {
             this.initMap();
-            console.log(this.layers);
+            // console.log(this.layers);
         },
         data(){
             return{
@@ -19,73 +26,70 @@
                 marker: L.marker([0,0])
             }
         },
-        components:{
-            CardMap
-        },
         methods:{
             initMap() {
-                this.map = L.map('map');
+                this.map = L.map('map', {
+                    center: this.layer ? [this.layer.latitud, this.layer.longitud] : null,
+                    zoom: 17
+                });
+
                 this.tileLayer =L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(this.map);
-                this.map.locate({setView: true, maxZoom: 17});
-                this.map.on('locationfound', (e) => {this.createMarker(e.latlng);});
-                this.map.on('click', (e) => { this.marker.removeFrom(this.map); this.createMarker(e.latlng);});
+
+
+                if(!this.geoDisabled){
+                    this.map.locate({
+                        setView: true,
+                        maxZoom: 17,
+                        watch: this.geoWatch === true ? true: false
+                    });
+                    this.map.on('locationfound', (e) => {this.createMarker(e.latlng, 'Está es mi ubicación');});
+                }
+
+
+
+                this.map.on('click', (e) => { this.marker.removeFrom(this.map); this.createMarker(e.latlng, 'Está es mi ubicación');});
                 if(this.layer)this.initLayer();
                 if(this.layers)this.initLayers();
             },
-            createMarker: function(LatLng){
-                var deliveryIcon = L.icon({
-                    iconUrl: '/img/deliv.png',
-                    // shadowUrl: 'leaf-shadow.png',
-
-                    iconSize:     [50, 50], // size of the icon
-                    // shadowSize:   [50, 64], // size of the shadow
-                    iconAnchor:   [50, 50], // point of the icon which will correspond to marker's location
-                    // shadowAnchor: [4, 62],  // the same for the shadow
-                    popupAnchor:  [-20, -50] // point from which the popup should open relative to the iconAnchor
-                });
-
-
+            createMarker: function(LatLng, popup, iconUrl){
+                var deliveryIcon = iconUrl ? L.icon({ iconUrl, iconSize: [50, 50],iconAnchor: [50, 50],  popupAnchor: [-20, -50] }): null;
                 this.marker = L.marker(LatLng, {draggable:'true', title: 'Mi ubicación'}).on('dragend', (event) => {
                     var marker = event.target;
                     var position = marker.getLatLng();
                     marker.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true'});
-                    marker.bindPopup("Esta es mi ubicación").openPopup();
+                    marker.bindPopup(popup).openPopup();
                     this.map.panTo(new L.LatLng(position.lat, position.lng))
                     this.$emit('geoPosition', position);
                 });
-                if(this.layer || this.layers) this.marker.setIcon(deliveryIcon);
+                if(iconUrl) this.marker.setIcon(deliveryIcon);
                 this.marker.addTo(this.map);
-                this.marker.bindPopup("Esta es mi ubicación").openPopup();
+                this.marker.bindPopup(popup).openPopup();
                 this.$emit('geoPosition', this.marker.getLatLng());
-                // console.log("Longitud: "+this.marker.getLatLng().lng);
-                // console.log("Latitud: "+this.marker.getLatLng().lat);
             },
             initLayer() {
                 var layer = this.layer;
-                var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
-                    bindPopup(`
-                    <h3>Pedido Cod.${layer.id}</h3>
-                    <b>${layer.direccion}</b>
-                    <p><b>Cliente: </b>${layer.cliente}</p>
-                    <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
-                    `).openPopup();
-                    marker.bindTooltip(layer.direccion);
-                    marker.addTo(this.map);
-
-                    // const markerFeatures = layer.features.filter(feature => feature.type === 'marker');
-                    // const polygonFeatures = layer.features.filter(feature => feature.type === 'polygon');
-
-                    // markerFeatures.forEach((feature) => {
-                    // feature.leafletObject = L.marker(new L.LatLng(position.lat, position.lng))
-                    //     .bindPopup(feature.name);
-                    // });
-
-                    // polygonFeatures.forEach((feature) => {
-                    // feature.leafletObject = L.polygon(feature.coords)
-                    //     .bindPopup(feature.name);
-                    // });
+                this.createMarker(new L.LatLng(layer.latitud, layer.longitud), layer.title);
+                // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+                //     bindPopup(`
+                //     <h3>Pedido Cod.${layer.id}</h3>
+                //     <b>${layer.direccion}</b>
+                //     <p><b>Cliente: </b>${layer.cliente}</p>
+                //     <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
+                //     `).openPopup();
+                //     marker.bindTooltip(layer.direccion);
+                //     marker.addTo(this.map);
+                //================================================
+                // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.title ? layer.title:null})
+                // if(layer.popup){
+                //     marker.bindPopup(layer.popup).openPopup();
+                // }
+                // if(layer.tooltip){
+                //     marker.bindTooltip(layer.tooltip);
+                // }
+                // this.marker = marker;
+                // marker.addTo(this.map);
             },
             initLayers() {
                 this.layers.forEach((layer) => {

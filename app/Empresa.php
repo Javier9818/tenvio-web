@@ -10,7 +10,24 @@ use Intervention\Image\Facades\Image;
 
 class Empresa extends Model
 {
-    protected $fillable = ['id','estado','ruc', 'nombre', 'descripcion', 'telefono', 'celular', 'direccion', 'foto', 'nombre_unico','ciudad_id', 'categoria_id', 'created_at', 'updated_at'];
+    protected $fillable = [
+        'id',
+        'estado',
+        'ruc',
+        'nombre',
+        'descripcion',
+        'telefono',
+        'celular',
+        'direccion',
+        'foto',
+        'nombre_unico',
+        'ciudad_id',
+        'categoria_id',
+        'created_at',
+        'updated_at',
+        'latitud',
+        'longitud'
+    ];
 
     public static function setImagen($data, $actual = false){
         if($data){

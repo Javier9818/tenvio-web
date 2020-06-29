@@ -1,5 +1,5 @@
 <template>
-   <form class="row" @submit.prevent="setPedido">
+   <form class="row" @submit.prevent="generaPedido">
     <div class="col-sm-12 col-md-12 col-lg-12">
         <div v-for=" empresa in empresas" :key="empresa.id">
           <div class="col-8"> <h4> Empresa: {{empresa.name_empresa}}</h4> </div>
@@ -70,7 +70,7 @@
         <div class="cart__total-amount">
             <h6>TOTAL:</h6>
             <ul class="list-unstyled mb-0">
-             
+
             <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
             </ul>
             <br>
@@ -79,39 +79,6 @@
             </div>
         </div>
     </div>
-    <!-- <b-modal ref="my-modal" hide-footer title="Iniciar Sesión">
-           <div class="col-12 accent-2 m-0 p-0">
-              <div class="card-header border-0">
-                  <div class="text-center mb-1">
-                    <img src="assets/images/logo/LogoDelivery.png" alt="AQUI VA EL LOGO" style="width: 50%;">
-                  </div>
-                  <div class="font-large-1  text-center">
-                      Acceso al sistema
-                  </div>
-              </div>
-              <div class="card-content">
-                  <div class="card-body">                      
-                    <fieldset class="form-group position-relative has-icon-left">
-                        <input type="text" class="form-control round" v-model="client.username"  placeholder="Usuario / Email" required="" aria-invalid="false">
-                    
-                    </fieldset>
-                    <fieldset class="form-group position-relative has-icon-left">
-                        <input type="password" class="form-control round"   v-model="client.password"  placeholder="Contraseña" required="" aria-invalid="false">
-                        
-                    </fieldset>
-                    <div class="form-group row">
-                      
-                     
-                    </div>
-                    <b-button class="mt-3" variant="success" block @click="hideModal">Login</b-button>                          
-                      
-                  </div>                        
-
-                  <p class="card-subtitle text-muted text-right font-small-3  "><span>No tienes una cuenta? <a href="/registro" class="card-link">Registrate</a></span></p>
-              </div>
-            </div>
-         
-    </b-modal> -->
     <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
    </form>
 </template>
@@ -157,7 +124,7 @@ export default {
           default:
             break;
         }
-         
+
         this.empresas.forEach(element => {
           if(element.empresa=this.producto.empresa)
           {
@@ -215,7 +182,7 @@ export default {
             this.tipoPedidosTemp.push(element);
           }
           });
-        
+
           return  this.tipoPedidosTemp;
          }, 1500);
 
@@ -256,32 +223,8 @@ export default {
             total+=element.precio*element.cant
           }
         });
-       
+
         return total;
-      },
-      showModal() {
-        this.$refs['my-modal'].show()
-      },
-      hideModal() {
-        this.Logeate();
-        this.$refs['my-modal'].hide()
-      },
-      Logeate: function () {
-          var that = this;
-        axios.post('/login',{username:this.client.username,password:this.client.password})
-        .then(function (response) {         
-             
-        });
-      },
-      setPedido:function () { 
-             
-        if(this.user==0)
-        { 
-          location.href="/login"
-        }else{
-          this.generaPedido();
-        }          
-         
       },
       generaPedido: function () {
          this.marker=this.$refs.mapaComponent.marker;
@@ -294,11 +237,11 @@ export default {
             });
         }
         else{
-          
+
             this.empresas.forEach(element => {
-            element.lat=this.marker.getLatLng().lat,
-            element.lng=this.marker.getLatLng().lng,
-            element.direccion= this.direccion
+                element.lat=this.marker.getLatLng().lat,
+                element.lng=this.marker.getLatLng().lng,
+                element.direccion= this.direccion
             });
 
 
@@ -311,52 +254,27 @@ export default {
             }).then((result) => {
             if (!result.value)
                 return;
-               
+
             axios.post('/front/GeneraPedido', {
                 empresas: that.empresas,
                 productos: that.productos,
-                
-            })
-            .then(function (response) { 
-                let messsage='';
-                let icon= '';
-                let	title= '';
-                switch (response.data) {
-                case 1:
-                    messsage='Su pedido se ha generado, por favor click aquí para realizar su seguimiento.';
-                    icon= 'success';
-                    title= 'Éxito';
-                    break;
-                case 2:
-                    messsage='Error, por favor recargue la página.';
-                    icon= 'error';
-                    title= 'ERROR';
-                    break;
-                default:
-                    messsage=response.data.Message;
-                    icon= 'error';
-                    title= 'ERROR';
-                    break;
-                }
-                Swal.fire({
-                icon: icon,
-                title: title,
-                text: messsage
-                }).then(() => {
-                    that.$cookies.set('carrito',JSON.stringify([]))
-                    location.href="/";
-                });
+            }).then(function (response) {
+                    Swal.fire({
+                        text:'Su pedido se ha registrado satisfactoriamente.',
+                        icon: 'success',
+                        title: 'Éxito',
+                    }).then(() => {
+                        that.$cookies.set('carrito',JSON.stringify([]))
+                        location.href="/";
+                    });
 
-            })
-            .catch(function (response){
-                Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
-                }).then(() => {
-                    location.reload();
+                }).catch(function (response){
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'ERROR',
+                    text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
+                    }).then(() => {location.reload();});
                 });
-            });
             });
         }
       }
@@ -368,13 +286,13 @@ export default {
         var item;
         this.productos.forEach(element => {
               this.total = this.total + (element.precio*element.cant);
-        });         
+        });
         return this.total;
       }
     },
     mounted() {
         this.recarga();
-        
+
     },
     created: function () {
         EventBus.$on('EliminarenModal', function(boolean)  {
