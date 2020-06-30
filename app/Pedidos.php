@@ -42,8 +42,8 @@ class Pedidos extends Model
 			$where['pedidos.estado'] = 'Aceptado';
 			$where['pedidos.tipo_id'] = 1;
 		}
-		if ($tipo == 'listarPedidos'){
-			$where['pedidos.estado'] = 'ENTREGADO';
+		if ($tipo == 'Entregado'){
+			$where['pedidos.estado'] = 'Entregado';
 		}
 		$bul = false;
 		if ($fecha != 'Hoy'){

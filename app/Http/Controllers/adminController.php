@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Categoria;
 use App\TipoNegocio;
+use App\Pagos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -59,7 +59,7 @@ class AdminController extends Controller
                 break;
             case 'TP_DELETE':
                 return TipoNegocio::_Delete($request);
-                break; 
+                break;
             case 'CT_Save':
                 return Categoria::_Save($request);
                 break;
@@ -68,10 +68,10 @@ class AdminController extends Controller
                 break;
             case 'CT_DELETE':
                 return Categoria::_Delete($request);
-                break; 
+                break;
             case 'CT_CATEGORIES':
                 return Categoria::_GET($request);
-                break; 
+                break;
             default:
                 # code...
                 break;
@@ -79,7 +79,7 @@ class AdminController extends Controller
     }
 
     public  function TP_Save($request)
-    {       
+    {
         return TipoNegocio::_Save($request);
     }
     public  function TP_UDP($request)
@@ -90,4 +90,31 @@ class AdminController extends Controller
     {
         return TipoNegocio::_Delete($request);
     }
+
+
+	public function vistaCobros(Request $request){
+		return $this->fn('.', $request);
+	}
+	public function fn($funcion='', Request $request){
+		if ($funcion == 'listarpagos') return $this->listarpagos($request);
+		else if ($funcion == 'respuestavoucher') return $this->respuestavoucher($request);
+		else if ($funcion == '.') return view('superadmin.empresas.cobros');
+		else return '';
+	}
+	public function respuestavoucher(Request $request){
+		$estado = $request->get('estado');
+		$observacion = $request->get('observacion')??'';
+		$pago_id = $request->get('pago_id');
+		if($estado)
+			Pagos::aprobar($pago_id);
+		else
+			Pagos::rechazar($pago_id, $observacion);
+		return ['mensaje' => ''];
+	}
+	public function listarpagos(Request $request){
+		return [
+			'lista' => Pagos::listarPagos(),
+			'rutaImagenes' => ExtrasController::$rutaFotosVouchers
+		];
+	}
 }

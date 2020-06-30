@@ -5367,6 +5367,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['height', 'width', 'layer', 'layers', 'geoDisabled', //true or false
+  'clickDisabled', //true or false
   'geoWatch', // true or false
   'clickDisabled' //true or false
   ],
@@ -5377,7 +5378,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       map: null,
       tileLayer: null,
-      marker: L.marker([0, 0])
+      marker: L.marker([0, 0]),
+      polyline: null
     };
   },
   methods: {
@@ -5403,7 +5405,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
 
-      this.map.on('click', function (e) {
+      if (!this.clickDisabled) this.map.on('click', function (e) {
         _this.marker.removeFrom(_this.map);
 
         _this.createMarker(e.latlng, 'Está es mi ubicación');
@@ -5434,11 +5436,14 @@ __webpack_require__.r(__webpack_exports__);
         _this2.map.panTo(new L.LatLng(position.lat, position.lng));
 
         _this2.$emit('geoPosition', position);
+
+        if (_this2.layers.length === 1) _this2.dibujaLinea(_this2.layers[0]); //Dibujar linea para layers[0]
       });
       if (iconUrl) this.marker.setIcon(deliveryIcon);
       this.marker.addTo(this.map);
       this.marker.bindPopup(popup).openPopup();
       this.$emit('geoPosition', this.marker.getLatLng());
+      if (this.layers.length === 1) this.dibujaLinea(this.layers[0]); //Dibujar linea para layers[0]
     },
     initLayer: function initLayer() {
       var layer = this.layer;
@@ -5483,6 +5488,17 @@ __webpack_require__.r(__webpack_exports__);
       layer.features.forEach(function (feature) {
         if (active) feature.leafletObject.addTo(_this4.map);else feature.leafletObject.removeFrom(_this4.map);
       });
+    },
+    dibujaLinea: function dibujaLinea(layer) {
+      if (this.polyline !== null) this.polyline.removeFrom(this.map);
+      var u = this.marker.getLatLng();
+      var latlngs = [[u.lat, u.lng], [layer.latitud, layer.longitud]];
+      this.polyline = L.polyline(latlngs, {
+        color: 'red'
+      });
+      this.polyline.addTo(this.map); // zoom the map to the polyline
+
+      this.map.fitBounds(this.polyline.getBounds());
     }
   }
 });

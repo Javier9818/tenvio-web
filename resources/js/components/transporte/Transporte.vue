@@ -38,11 +38,11 @@
                             Entregar
                             </b-button>
                             <b-button  class="btn-danger" @click="cancelaPedido(infoModal.data.id)">
-                                Cancelar
+                            Cancelar
                             </b-button>
                         </div>
                     </div>
-                    <mapa-interactivo height='75vh' width='100%' @geoPosition='geoPosition' :layer='infoModal.data'></mapa-interactivo>
+                    <mapa-interactivo :clickDisabled ='true' height='75vh' width='100%' @geoPosition='geoPosition' :layers='[infoModal.data]' ></mapa-interactivo>
                 </div>
             </b-modal>
         </div>
@@ -77,10 +77,10 @@
                 this.location = data;
             },
             verDetalle(data){
-                this.infoModal.data= data;
+                console.log(data)
+                this.infoModal.data = data;
                 this.infoModal.loading = true;
                 axios.get(`/api/detallePedido/${data.id}`).then( ({data}) => {
-
                     this.infoModal.loading = false;
                     this.infoModal.detalle = data.detalle;
                 });

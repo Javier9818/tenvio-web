@@ -7,9 +7,9 @@
     <meta name="description" content="TE ENVIO - NORTEC">
     <link href="assets/images/favicon/favicon2.ico"  rel="icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Chameleon Admin is a modern Bootstrap 4 webapp &amp; admin dashboard html template with a large number of components, elegant design, clean and organized code.">
-    <meta name="keywords" content="admin template, Chameleon admin template, dashboard template, gradient admin template, responsive admin template, webapp, eCommerce dashboard, analytic dashboard">
-    <meta name="author" content="ThemeSelect">
+    <meta name="description" content="TenvioPeru, plataforma de administración digital de negocios.">
+    <meta name="keywords" content="teenvio, tenvioperu, delivery, gradient admin template, responsive admin template, webapp, eCommerce dashboard, analytic dashboard">
+    <meta name="author" content="nortec">
     <title>@yield('title')</title>
     <link rel="apple-touch-icon" href="/theme-assets/images/ico/apple-icon-120.png">
     <link rel="apple-touch-icon" href="/theme-assets/css/plugins/forms/switch.css">

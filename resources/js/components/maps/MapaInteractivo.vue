@@ -12,6 +12,7 @@
             'layer',
             'layers',
             'geoDisabled', //true or false
+            'clickDisabled', //true or false
             'geoWatch', // true or false
             'clickDisabled' //true or false
         ],
@@ -23,7 +24,8 @@
             return{
                 map: null,
                 tileLayer: null,
-                marker: L.marker([0,0])
+                marker: L.marker([0,0]),
+                polyline: null
             }
         },
         methods:{
@@ -37,7 +39,6 @@
                  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(this.map);
 
-
                 if(!this.geoDisabled){
                     this.map.locate({
                         setView: true,
@@ -46,11 +47,12 @@
                     });
                     this.map.on('locationfound', (e) => {this.createMarker(e.latlng, 'Está es mi ubicación');});
                 }
-
-
-
-                this.map.on('click', (e) => { this.marker.removeFrom(this.map); this.createMarker(e.latlng, 'Está es mi ubicación');});
+                
+                if(!this.clickDisabled)
+                    this.map.on('click', (e) => { this.marker.removeFrom(this.map); this.createMarker(e.latlng, 'Está es mi ubicación');});
+                
                 if(this.layer)this.initLayer();
+               
                 if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng, popup, iconUrl){
@@ -62,11 +64,14 @@
                     marker.bindPopup(popup).openPopup();
                     this.map.panTo(new L.LatLng(position.lat, position.lng))
                     this.$emit('geoPosition', position);
+                    if((this.layers).length === 1) this.dibujaLinea(this.layers[0]); //Dibujar linea para layers[0]
                 });
                 if(iconUrl) this.marker.setIcon(deliveryIcon);
                 this.marker.addTo(this.map);
                 this.marker.bindPopup(popup).openPopup();
                 this.$emit('geoPosition', this.marker.getLatLng());
+
+                if((this.layers).length === 1) this.dibujaLinea(this.layers[0]); //Dibujar linea para layers[0]
             },
             initLayer() {
                 var layer = this.layer;
@@ -112,6 +117,18 @@
                     else feature.leafletObject.removeFrom(this.map);
                 });
             },
+            dibujaLinea(layer){
+                if(this.polyline !== null) this.polyline.removeFrom(this.map);
+                var u = this.marker.getLatLng();
+                var latlngs = [
+                    [u.lat, u.lng],
+                    [layer.latitud, layer.longitud]
+                ];
+                this.polyline = L.polyline(latlngs, {color: 'red'});
+                this.polyline.addTo(this.map);
+                // zoom the map to the polyline
+                this.map.fitBounds(this.polyline.getBounds());
+            }
         }
 
 

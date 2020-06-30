@@ -48,6 +48,14 @@ class EmpresaController extends Controller
                 "nombre_unico" => $usernameEmpresa
             ]);
 
+            Contrato::create([
+                "empresa_id" => $empresa->id,
+                "estado" => 'ACTIVO',
+                "plan_id" => 1,
+                "plan_monto" => 0.0,
+                "fecha_vencimiento" => Carbon::now()->addDays(30)
+            ]);
+
             foreach ($request->categorias as $key => $value) {
                 DB::insert('insert into categoria_empresa (empresa_id, categoria_id) values (?, ?)', [$empresa->id, $value['value']]);
             }

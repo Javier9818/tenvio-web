@@ -5,7 +5,7 @@
 @endsection
 
 @section('sideNav')
-    <x-side-nav-admin tab="1" selected='1'/>
+    <x-side-nav-admin tab="3" selected='1'/>
 @endsection
 
 @section('header')
@@ -46,7 +46,6 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table-tiponegocio></table-tiponegocio>
-                             
                         </div>
                     </div>
                 </div>
