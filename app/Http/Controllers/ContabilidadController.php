@@ -21,12 +21,12 @@ class ContabilidadController extends Controller
 	}
 	public function fn($funcion='', Request $request){
 		if ($funcion == 'listarentregados') return $this->listarentregados($request);//1
-		if ($funcion == 'listaplanes') return $this->listaplanes($request);//2
-		if ($funcion == 'listaextensiones') return $this->listaextensiones($request);//2
-		if ($funcion == 'renovarcontrato') return $this->renovarcontrato($request);//2
-		if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
-		if ($funcion == 'actualizarvoucher') return $this->actualizarvoucher($request);//2
-		if ($funcion == 'extenderplan') return $this->extenderplan($request);//2
+		else if ($funcion == 'listaplanes') return $this->listaplanes($request);//2
+		else if ($funcion == 'listaextensiones') return $this->listaextensiones($request);//2
+		else if ($funcion == 'renovarcontrato') return $this->renovarcontrato($request);//2
+		else if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
+		else if ($funcion == 'actualizarvoucher') return $this->actualizarvoucher($request);//2
+		else if ($funcion == 'extenderplan') return $this->extenderplan($request);//2
 		else if ($funcion == '1') return view('admin.negocio.ventas'/*, ["empresa" => session('empresa')]*/);
 		else if ($funcion == '2') return view('admin.negocio.pagos'/*, ["empresa" => session('empresa')]*/);
 		else return '';

@@ -39,16 +39,17 @@
 			<br>
 		</b-modal>
 		-->
-		<b-table :bordered="true" :hover="true"  headVariant="dark" :items="contratos" :fields="fields">
+		<div class="text-center">
+			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
+		</div>
+		<br>
+		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields">
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="" variant="success" size="sm">Ver</b-button>
 				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Volver a Pagar</b-button>
 				<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan(row)" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>
 			</template>
 		</b-table>
-		<div class="text-center">
-			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
-		</div>
 		<b-modal id="actualizar-plan" size="lg" scrollable centered hide-backdrop title="Renovar Contrato" hide-footer>
 			<b-col sm="12" md="12">
 				<b-form-group
@@ -175,7 +176,6 @@
 				<b-button @click="enviarPagoExtension" variant="success" size="sm" :disabled="deshabilitaboton">Extender mi Plan</b-button>
 			</div>
 		</b-modal>
-
 	</div>
 </template>
 
@@ -189,19 +189,11 @@ export default {
 			fields: [
 				{ key: 'plan_nombre', label:'Plan', sortable: true },
 				{ key: 'periodo', label:'Periodo del Contrato', sortable: true },
-				//{ key: 'pedidos', label:'Pedidos', sortable: false },
 				{ key: 'precio_', label: 'Precio', sortable: true },
-				{ key: 'pedidos_total', label: 'Total de Pedidos', sortable: true },
+				{ key: 'pedidos_total', label: 'Cantidad de Pedidos', sortable: true },
 				{ key: 'estado', label: 'Estado', sortable: true },
 				{ key: 'opciones', label: 'Opciones', sortable: true }
 			],
-
-			//todavía no uso
-			//contrato: {},//contratoSeleccionado
-			//indexcontrato: -1,//indexContratoSeleccionado
-			texto: '',
-
-			//si uso
 			listaPlanes: [],
 			idPlanSeleccionado: -1,
 			planSeleccionado: {},
@@ -287,8 +279,9 @@ export default {
 			console.log(this.indexContratoSeleccionado);
 		},
 		cerrarModal: function(){
-			this.$bvModal.hide('modal-pago');
+			this.$bvModal.hide('actualizar-plan');
 			this.$bvModal.hide('actualizar-voucher');
+			this.$bvModal.hide('extender-plan');
 		},
 		enviarPagoContrato: function(){
 			//console.log(this.fotovouchersubir);

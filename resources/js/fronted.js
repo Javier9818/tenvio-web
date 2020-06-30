@@ -30,6 +30,9 @@ Vue.component('tenvio-padre-component', require('./components/landing_pages/tenv
 
 Vue.component('recover-component', require('./components/front/recoverComponent.vue').default);
 Vue.component('post-recover-component', require('./components/front/postRecoverComponent.vue').default);
+
+Vue.component('list-map', require('./components/front/inList_Map.vue').default);
+
 // const EventBus = new Vue();
 const app = new Vue({
     el: '#app',

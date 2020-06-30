@@ -72,5 +72,7 @@ Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
 Route::get('/mi-perfil', 'UserController@getUser2')->middleware('auth');
 Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbicacion');
 
+Route::get('/InListMap/my', function(){return view('front.businesinListMap');})->name('VistaEmpresas');
+
 
 

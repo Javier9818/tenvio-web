@@ -66,7 +66,6 @@ class Contrato extends Model
 			->get();
 	}
 
-
 	public static function renovar($empresa_id, $plan){
 		return Contrato::create([
 			'empresa_id' => $empresa_id,
