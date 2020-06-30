@@ -5301,12 +5301,11 @@ __webpack_require__.r(__webpack_exports__);
   'clickDisabled' //true or false
   ],
   mounted: function mounted() {
-    this.initMap(); // console.log(this.layers);
+    this.initMap();
   },
   data: function data() {
     return {
       map: null,
-      tileLayer: null,
       marker: L.marker([0, 0]),
       polyline: null
     };
@@ -5319,7 +5318,7 @@ __webpack_require__.r(__webpack_exports__);
         center: this.layer ? [this.layer.latitud, this.layer.longitud] : null,
         zoom: 17
       });
-      this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
 
@@ -5330,31 +5329,37 @@ __webpack_require__.r(__webpack_exports__);
           watch: this.geoWatch === true ? true : false
         });
         this.map.on('locationfound', function (e) {
-          _this.createMarker(e.latlng, 'Está es mi ubicación');
+          _this.createMarker(e.latlng, 'Esta es mi ubicación', 'Esta es mi ubicación', false, true, true);
         });
-      }
+      } else if (this.layer) this.initLayer();
 
       if (!this.clickDisabled) this.map.on('click', function (e) {
         _this.marker.removeFrom(_this.map);
 
-        _this.createMarker(e.latlng, 'Está es mi ubicación');
+        _this.createMarker(e.latlng, 'Esta es mi ubicación', 'Esta es mi ubicación', false, true, true);
       });
-      if (this.layer) this.initLayer();
       if (this.layers) this.initLayers();
     },
-    createMarker: function createMarker(LatLng, popup, iconUrl) {
+    createMarker: function createMarker(LatLng, title, popup, iconUrl, draggable, first) {
       var _this2 = this;
 
+      var markerX = L.marker(LatLng, {
+        draggable: draggable,
+        title: title
+      });
       var deliveryIcon = iconUrl ? L.icon({
         iconUrl: iconUrl,
         iconSize: [50, 50],
         iconAnchor: [50, 50],
         popupAnchor: [-20, -50]
       }) : null;
-      this.marker = L.marker(LatLng, {
-        draggable: 'true',
-        title: 'Mi ubicación'
-      }).on('dragend', function (event) {
+      if (iconUrl) markerX.setIcon(deliveryIcon);
+      markerX.addTo(this.map);
+      markerX.bindPopup(popup).openPopup();
+      if (first) this.$emit('geoPosition', markerX.getLatLng());
+      if (first && (this.layers || []).length === 1) this.dibujaLinea(markerX, this.layers[0]); //Dibujar linea para layers[0]
+
+      if (draggable) markerX.on('dragend', function (event) {
         var marker = event.target;
         var position = marker.getLatLng();
         marker.setLatLng(new L.LatLng(position.lat, position.lng), {
@@ -5364,63 +5369,29 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.map.panTo(new L.LatLng(position.lat, position.lng));
 
-        _this2.$emit('geoPosition', position);
-
-        if (_this2.layers.length === 1) _this2.dibujaLinea(_this2.layers[0]); //Dibujar linea para layers[0]
+        if (first) _this2.$emit('geoPosition', position);
+        if (first && (_this2.layers || []).length === 1) _this2.dibujaLinea(marker, _this2.layers[0]); //Dibujar linea para layers[0]
       });
-      if (iconUrl) this.marker.setIcon(deliveryIcon);
-      this.marker.addTo(this.map);
-      this.marker.bindPopup(popup).openPopup();
-      this.$emit('geoPosition', this.marker.getLatLng());
-      if (this.layers.length === 1) this.dibujaLinea(this.layers[0]); //Dibujar linea para layers[0]
+      if (first) this.marker = markerX;
     },
     initLayer: function initLayer() {
       var layer = this.layer;
-      this.createMarker(new L.LatLng(layer.latitud, layer.longitud), layer.title); // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
-      //     bindPopup(`
-      //     <h3>Pedido Cod.${layer.id}</h3>
-      //     <b>${layer.direccion}</b>
-      //     <p><b>Cliente: </b>${layer.cliente}</p>
-      //     <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${layer.celular}&text=" target="_blank">${layer.celular}</a></b></p>
-      //     `).openPopup();
-      //     marker.bindTooltip(layer.direccion);
-      //     marker.addTo(this.map);
-      //================================================
-      // var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.title ? layer.title:null})
-      // if(layer.popup){
-      //     marker.bindPopup(layer.popup).openPopup();
-      // }
-      // if(layer.tooltip){
-      //     marker.bindTooltip(layer.tooltip);
-      // }
-      // this.marker = marker;
-      // marker.addTo(this.map);
+      this.createMarker(new L.LatLng(layer.latitud, layer.longitud), layer.title, layer.title, false, true, true);
     },
     initLayers: function initLayers() {
       var _this3 = this;
 
       this.layers.forEach(function (layer) {
-        console.log(layer);
         var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {
           title: layer.direccion
-        }).bindPopup("\n                <h3>Pedido Cod.".concat(layer.id, "</h3>\n                <b>").concat(layer.direccion, "</b>\n                <p><b>Cliente: </b>").concat(layer.cliente, "</p>\n                <p><b>Celular: <a href=\"https://api.whatsapp.com/send?phone=51").concat(layer.celular, "&text=\" target=\"_blank\">").concat(layer.celular, "</a></b></p>\n                "));
+        }).bindPopup(layer.popup);
         marker.bindTooltip(layer.direccion).openTooltip();
         marker.addTo(_this3.map);
       });
     },
-    layerChanged: function layerChanged(layerId, active) {
-      var _this4 = this;
-
-      var layer = this.layers.find(function (layer) {
-        return layer.id === layerId;
-      });
-      layer.features.forEach(function (feature) {
-        if (active) feature.leafletObject.addTo(_this4.map);else feature.leafletObject.removeFrom(_this4.map);
-      });
-    },
-    dibujaLinea: function dibujaLinea(layer) {
+    dibujaLinea: function dibujaLinea(marker, layer) {
       if (this.polyline !== null) this.polyline.removeFrom(this.map);
-      var u = this.marker.getLatLng();
+      var u = marker.getLatLng();
       var latlngs = [[u.lat, u.lng], [layer.latitud, layer.longitud]];
       this.polyline = L.polyline(latlngs, {
         color: 'red'
@@ -46425,7 +46396,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -96963,7 +96934,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\_DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
+module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
 
 
 /***/ })
