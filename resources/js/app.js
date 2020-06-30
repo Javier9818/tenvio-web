@@ -84,7 +84,7 @@ Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.
 Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);
 Vue.component('table-tiponegocio', require('./components/admin/TableTipoNegocios.vue').default);
 Vue.component('table-solicitudes', require('./components/admin/TableSolicitudes.vue').default);
-
+Vue.component('cobros-component', require('./components/admin/CobrosComponent.vue').default);
 
 
 Vue.component('loader', require('./components/extras/Loader.vue').default)

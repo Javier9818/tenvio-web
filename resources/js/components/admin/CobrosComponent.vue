@@ -1,44 +1,32 @@
 <template>
 	<div class="container">
-		<!--
-		<div class="row my-1">
-			<div class="col-4"><h4>Número total de ventas: 56</h4></div>
-			<div class="col-4"><h4>Monto total de ventas: $/.5600</h4></div>
-			<div class="col-4"><h4>Monto de deuda: S/.560</h4></div>
-		</div>
-		-->
-		<!--
-		<b-table :bordered="true" :hover="true"  headVariant="dark" :items="contratos" :fields="fields">
+		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="pagos" :fields="fields">
 			<template v-slot:cell(opciones)="row">
-				<b-button v-if="row.item.pagos_id==null || row.item.estado=='ANULADO'" v-b-modal.modal-pago variant="success" size="sm" @click="pagar(row.item, row.index)">Pagar</b-button>
-				<b-button v-else v-b-modal.modal-pago variant="info" size="sm" @click="verpago(row.item, row.index)">Ver Pago</b-button>
+				<b-button @click="verPago(row)" v-b-modal.cargar-voucher variant="info" size="sm">Ver</b-button>
+				<b-button @click="rechazar(row)" v-if="row.item.estado=='Pendiente a Aprobar'" variant="danger" size="sm">Rechazar Pago</b-button>
+				<b-button @click="aprobar(row)" v-if="row.item.estado=='Pendiente a Aprobar'" variant="success" size="sm">Aprobar Pago</b-button>
+				<!--
+				<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan(row)" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>
+				-->
 			</template>
 		</b-table>
-
-		<b-modal id="modal-pago" size="lg" scrollable centered hide-backdrop :title="texto+' Voucher de pago'" hide-footer>
+		<b-modal id="cargar-voucher" size="lg" scrollable centered hide-backdrop title="Ver Pago" hide-footer>
 			<b-col sm="12" md="12">
 				<b-form-group
-				label="Foto del Voucher"
-				label-cols-sm="12"
-				label-align-sm="left"
-				label-align="center"
-				label-size="sm"
-				class="mb-0"
-				:hidden="texto=='Modificar'">
-					<div class="text-center">
-						<b-img v-if="texto=='Ver'" :src="'/'+rutaImagenes+contrato.urlfoto" :hidden="contrato.urlfoto==''" class="img-fluid"></b-img>
-					</div>
-					<sube-archivos v-if="texto=='Registrar'" @archivosubido="archivosubido"></sube-archivos>
+				label="Foto del Voucher" label-align="center" class="text-center">
+					<b-img :src="'/'+rutaImagenes+rowPagoSelccionado.item.urlfoto" class="img-fluid"></b-img>
 				</b-form-group>
 			</b-col>
-			<div class="text-center">
-				<br>
-				<b-button variant="danger" size="sm" @click="cerrarModal">Cerrar</b-button>
-				<b-button v-if="texto=='Registrar'" @click="guardarVoucher" variant="success" size="sm" :disabled="deshabilitaboton">Guardar</b-button>
-			</div>
+			<b-col sm="12" md="12">
+				<b-form-group label="Acciones" label-align="center" class="text-center">
+					<b-button @click="rechazar(rowPagoSelccionado)" v-if="rowPagoSelccionado.item.estado=='Pendiente a Aprobar'" variant="danger" size="sm">Rechazar Pago</b-button>
+					<b-button @click="cerrarModal" variant="info" size="sm">Cerrar</b-button>
+					<b-button @click="aprobar(rowPagoSelccionado)" v-if="rowPagoSelccionado.item.estado=='Pendiente a Aprobar'" variant="success" size="sm">Aprobar Pago</b-button>
+				</b-form-group>
+			</b-col>
 			<br>
 		</b-modal>
-		-->
+		<!--
 		<div class="text-center">
 			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
 		</div>
@@ -176,6 +164,7 @@
 				<b-button @click="enviarPagoExtension" variant="success" size="sm" :disabled="deshabilitaboton">Extender mi Plan</b-button>
 			</div>
 		</b-modal>
+		-->
 	</div>
 </template>
 
@@ -185,30 +174,152 @@ import Swal from 'sweetalert2'
 export default {
 	data() {
 		return {
-			ruta: '/intranet/pagos',
+			ruta: '/admin/cobros',
 			fields: [
+				{ key: 'id', label:'Id', sortable: true },
 				{ key: 'plan_nombre', label:'Plan', sortable: true },
-				{ key: 'periodo', label:'Periodo del Contrato', sortable: true },
 				{ key: 'precio_', label: 'Precio', sortable: true },
-				{ key: 'pedidos_total', label: 'Cantidad de Pedidos', sortable: true },
+				{ key: 'cantidad_pedidos', label: 'Cantidad de Pedidos', sortable: true },
+				{ key: 'fecha_pago', label:'Fecha de Pago', sortable: true },
 				{ key: 'estado', label: 'Estado', sortable: true },
 				{ key: 'opciones', label: 'Opciones', sortable: true }
 			],
+			rutaImagenes: '',
+			pagos: [],
+			rowPagoSelccionado: {
+				item: { urlfoto:'' }
+			},
+			/*
 			listaPlanes: [],
 			idPlanSeleccionado: -1,
 			planSeleccionado: {},
 			fotovouchersubir: [],
 			deshabilitaboton: true,
-			rutaImagenes: '',
 			contratos: [],
 			contratoSeleccionado: {},
 			indexContratoSeleccionado: -1,
 			listaExtensiones: [],
 			idExtensionSeleccionada: -1,
 			extensionSeleccionada: {},
+			*/
 		}
 	},
 	methods:{
+		cerrarModal: function(){
+			this.$bvModal.hide('cargar-voucher');
+		},
+		verPago: function(row){
+			this.rowPagoSelccionado = row;
+		},
+		aprobar: function(row){
+			this.rowPagoSelccionado = row;
+			this.cambiarEstado(true, 'aprobar', 'aprobando')
+		},
+		rechazar: function(row){
+			this.rowPagoSelccionado = row;
+			this.cambiarEstado(false, 'rechazar', 'rechazando')
+		},
+		enviarCambioEstado: function(bul, txt=''){
+			var pago_id = this.rowPagoSelccionado.item.id;
+			axios.post(this.ruta+'/respuestavoucher', {estado:bul, observacion:txt, pago_id:pago_id})
+			.then(function (response) {
+				let datos = response.data;
+				if (datos.mensaje == ''){
+					Swal.fire(
+						'Éxito',
+						'El pago ha sido '+((bul)?'Aprobado':'Rechazado')+' con éxito',
+						'success'
+					)
+					.then(()=>{
+						//location.reload();
+					});
+				}
+				else
+					that.mensajeError(false);
+
+			})
+			.catch(()=>{
+				that.mensajeError(true);
+			})
+			.finally(()=>{});
+		},
+		cambiarEstado: function(bul, t1, t2){
+			var that = this;
+			Swal.fire({
+				title: '¿Estás seguro?',
+				text: '¿Está seguro que desea '+t1+' este pedido?',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Si',
+				cancelButtonText: 'No'
+			}).then((result) => {
+				if (result.value) {
+					var thet = that;
+					if (!bul){
+						Swal.fire({
+							title: 'Ingrese el motivo por el cual está rechazando el voucher',
+							input: 'textarea',
+							inputValue: '',
+							confirmButtonText: 'Confirmar',
+							showCancelButton: true,
+							cancelButtonText: 'Cancelar',
+							inputValidator: (value) => {
+								if (!value) {
+									return 'Por favor, ingrese el motivo'
+								}
+								else if (value.length > 100){
+									return 'El texto ingresado no debe tener más de 100 caracteres'
+								}
+							}
+						})
+						.then((text)=>{
+							if (text.value != null){
+								thet.enviarCambioEstado(false, text.value);
+							}
+						});
+					}
+					else{
+						thet.enviarCambioEstado(true);
+					}
+				}
+			})
+		},
+		cargarPagos: function(){
+			var that = this;
+			axios.post(this.ruta+'/listarpagos')
+			.then(function (response) {
+				let datos = response.data;
+				that.pagos = datos.lista;
+				that.rutaImagenes = datos.rutaImagenes;
+				that.formatearContratos();
+			})
+			.catch(()=>{
+				that.mensajeError(true);
+			})
+			.finally(()=>{});
+		},
+		formatearContratos: function(){
+			if (this.pagos.length > 0){
+				this.pagos.forEach((item, index)=>{
+					this.pagos[index].precio_ = item.precio === 0 ? 'Gratuito' : ('S/ ' + item.precio);
+				})
+			}
+		},
+		mensajeError: function(bul){
+			var mensaje = '';
+			if (bul)
+				mensaje = 'Hubo un error inesperado, por favor contactese con el administrador del sistema';
+			else
+				mensaje = 'Hubo un error al realizar la opracion, intente nuevamente';
+			return Swal.fire(
+				'Error',
+				mensaje,
+				'error'
+			)
+		},
+		/*
 		enviarPagoExtension: function(){
 			var that = this;
 			axios.post(this.ruta+'/extenderplan', {
@@ -279,9 +390,8 @@ export default {
 			console.log(this.indexContratoSeleccionado);
 		},
 		cerrarModal: function(){
-			this.$bvModal.hide('actualizar-plan');
+			this.$bvModal.hide('modal-pago');
 			this.$bvModal.hide('actualizar-voucher');
-			this.$bvModal.hide('extender-plan');
 		},
 		enviarPagoContrato: function(){
 			//console.log(this.fotovouchersubir);
@@ -410,90 +520,10 @@ export default {
 				'error'
 			)
 		},
-		/*
-		pagar: function(item, index){
-			this.contrato = item;
-			this.indexcontrato = index;
-			this.texto = 'Registrar';
-		},
-		verpago: function(item, index){
-			this.contrato = item;
-			this.indexcontrato = index;
-			this.texto = 'Ver';
-		},
-		guardarVoucher: function(){
-			var that = this;
-			axios.post(this.ruta+'/registrarvoucher', {contrato: this.contrato})
-			.then(function (response) {
-				let datos = response.data;
-				if (datos.mensaje == ''){
-					Swal.fire(
-						'Éxito',
-						'El registro del pago se realizó correctamente, por favor espere a que sea validado por los administradores del sistema',
-						'success'
-					)
-					.then(()=>{
-						location.reload();
-					});
-				}
-				else{
-					Swal.fire(
-						'Error',
-						'Hubo un error registrando su voucher, intente nuevamente',
-						'error'
-					)
-				}
-			})
-			.catch((error)=>{
-				Swal.fire(
-					'Error',
-					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
-					'error'
-				)
-			})
-			.finally(()=>{});
-		},
-		cerrarModal: function(){
-			this.$bvModal.hide('modal-pago');
-		},
-		archivosubido: function({valor, fileRecords}){
-			//console.log({valor, fileRecords});
-			if (fileRecords.length == 1)
-				fileRecords[0].urlResized = '.';
-			//console.log({valor, fileRecords});
-			this.contrato.fotovouchersubir = fileRecords;
-			this.deshabilitaboton = valor;
-		},
-		formatearContratos: function(){
-			if (this.contratos.length > 0){
-				this.contratos.forEach((item, index)=>{
-					this.contratos[index].periodo = item.fecha_inicio + ' ' + item.fecha_vencimiento;
-					this.contratos[index].monto_ = item.monto === 0 ? 'Gratuito' : ('S/ ' + item.monto);
-				})
-			}
-		},
-		cargarContratos: function(){
-			var that = this;
-			axios.post(this.ruta+'/listacontratos')
-			.then(function (response) {
-				let datos = response.data;
-				that.contratos = datos.lista;
-				that.rutaImagenes = datos.rutaImagenes;
-				that.formatearContratos();
-			})
-			.catch((error)=>{
-				Swal.fire(
-					'Error',
-					'Hubo un error inesperado, por favor contactese con el administrador del sistema',
-					'error'
-				)
-			})
-			.finally(()=>{});
-		},
 		*/
 	},
 	mounted() {
-		this.cargarContratos();
+		this.cargarPagos();
 	},
 	components: {
 		ModelListSelect
