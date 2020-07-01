@@ -25,12 +25,14 @@ class Pagos extends Model
 	];
 
 	//negocio
+	/*
 	public static function actualizarRechazado($pago){
 		return Pagos::where('id', $pago->id)
 			->update([
 				'estado' => 'Pago Actualizado'
 			]);
 	}
+	*/
 	public static function getPago($pago_id){
 		return Pagos::find($pago_id);
 	}
@@ -67,17 +69,23 @@ class Pagos extends Model
 			->get();
 	}
 	public static function rechazar($pago_id, $observacion){
-		return Pagos::where('id', $pago_id)
+		Pagos::where('id', $pago_id)
 			->update([
 				'estado' => 'Rechazado',
 				'observacion' => $observacion
 			]);
 	}
 	public static function aprobar($pago_id){
-		return Pagos::where('id', $pago_id)
+		Pagos::where('id', $pago_id)
 			->update([
 				'estado' => 'Aprobado'
 			]);
+	}
+	public static function getPagoPlan($pago_id){
+		return Pagos::where(['pagos.id' => $pago_id])
+			->select('pagos.empresa_id', 'pagos.cantidad_pedidos','pl.tipo')
+			->join('plan as pl', 'pl.id', '=', 'pagos.plan_id')
+			->first();
 	}
 
 

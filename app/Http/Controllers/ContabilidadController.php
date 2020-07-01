@@ -61,13 +61,13 @@ class ContabilidadController extends Controller
 		try {
 			$pago = Pagos::getPago($pago_id);
 			$contrato = Contrato::getContrato($pago->contratos_id);
-			Pagos::registrar($contrato, $voucher);
-			Pagos::actualizarRechazado($pago);
+			$contratonuevo = Contrato::duplicar($contrato, true);
+			Pagos::registrar($contratonuevo, $voucher);
 			ExtrasController::moverFotoVoucher($voucher);
 			DB::commit();
 		} catch (\Exception $e) {
 			DB::rollback();
-			dd($e);
+			//dd($e);
 			return ['mensaje' => '.'];
 		}
 		return ['mensaje' => ''];

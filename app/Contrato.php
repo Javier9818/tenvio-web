@@ -33,6 +33,18 @@ class Contrato extends Model
 	];
 	*/
 
+	public static function agregarExtension($empresa_id, $cantidad_pedidos){
+		return Contrato::where(['empresa_id' => $empresa_id])
+			->increment('pedidos_total', $cantidad_pedidos);
+	}
+
+	public static function seHaPagado($empresa_id, $estado){
+		Contrato::where(['empresa_id' => $empresa_id, 'estado' => 'En espera a validar'])
+			->update([
+				'estado' => ($estado)?'Vigente':'Rechazado'
+			]);
+	}
+
 	public static function getContrato($contratos_id){
 		return Contrato::find($contratos_id);
 	}
@@ -41,6 +53,26 @@ class Contrato extends Model
 		return static::consultaContratos(['contratos.empresa_id' => $empresa_id]);
 	}
 
+	public static function consultaContratos($where){
+		return Contrato::whereRaw('pl.id = contratos.plan_id AND contratos.plan_id = pa.plan_id')
+			->where($where)
+			->select('contratos.id',
+				'contratos.pedidos_total',
+				'contratos.fecha_inicio',
+				'contratos.fecha_vencimiento',
+				'contratos.estado',
+				'pl.id as plan_id',
+				'pl.nombre as plan_nombre',
+				'pa.id as pago_id',
+				'pa.precio'
+				)
+			->join('plan as pl', 'pl.id', '=', 'contratos.plan_id')
+			->join('pagos as pa', 'pa.contratos_id', '=', 'contratos.id')
+			->orderByDesc('contratos.fecha_inicio')
+			->orderByDesc('contratos.id')
+			->get();
+	}
+	/*
 	public static function consultaContratos($where){
 		return Contrato::where($where)
 			->select('contratos.id',
@@ -65,16 +97,40 @@ class Contrato extends Model
 			->orderByDesc('pa.created_at')
 			->get();
 	}
-
+	*/
+	public static function duplicar($contrato, $anularElAnterior){
+		if ($anularElAnterior){
+			$contrato->estado = 'Reenviado';
+			$contrato->save();
+		}
+		return Contrato::create([
+			'empresa_id' => $contrato->empresa_id,
+			'plan_id' => $contrato->plan_id,
+			'estado' => 'En espera a validar',
+			'plan_precio' => $contrato->plan_precio,
+			'pedidos_total' => $contrato->pedidos_total,
+			'fecha_inicio' => $contrato->fecha_inicio,
+			'fecha_vencimiento' =>$contrato->fecha_vencimiento
+		]);
+	}
 	public static function renovar($empresa_id, $plan){
+		$ultimoContrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => 'Vigente'])
+			->select('id', 'fecha_inicio', 'fecha_vencimiento')
+			->orderByDesc('fecha_vencimiento')
+			->first();
+		if ($ultimoContrato == null)
+			$fechaInicio = Carbon::now();
+		else
+			$fechaInicio = $ultimoContrato->fecha_vencimiento;
+		$fechaVencimiento = (clone $fechaInicio)->addDays(30);
 		return Contrato::create([
 			'empresa_id' => $empresa_id,
 			'plan_id' => $plan->id,
-			'estado' => 'Válido',
+			'estado' => 'En espera a validar',
 			'plan_precio' => $plan->precio,
 			'pedidos_total' => $plan->cantidad_pedidos,
-			'fecha_inicio' => Carbon::now(),
-			'fecha_vencimiento' => Carbon::now()->addDays(30)
+			'fecha_inicio' => $fechaInicio,
+			'fecha_vencimiento' => $fechaVencimiento
 		]);
 	}
 

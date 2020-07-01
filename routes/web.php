@@ -48,7 +48,8 @@ Route::get('/admin/solicitudes', 'AdminController@listarSolicitudes')->middlewar
 Route::get('/admin/tipoNegocio', 'AdminController@tipoNegocio')->middleware('can:gestionar-panel-general');
 Route::get('/admin/empresa/{idEmpresa}', 'AdminController@verEmpresa')->middleware('can:gestionar-panel-general');
 Route::post('/admin/empresa/{tipo}', 'AdminController@funciones')->middleware('can:gestionar-panel-general');
-
+Route::get('/admin/cobros', 'AdminController@vistaCobros')->middleware('can:gestionar-panel-general');
+Route::post('/admin/cobros/{tipo}', 'AdminController@fn')->middleware('can:gestionar-panel-general');
 
 // ======================================== BLOQUE AUTENTICACIÓN ====================================================*/
 Route::get('/login', function(){return view('front.login');})->name('loginForm')->middleware('guest');
@@ -73,6 +74,3 @@ Route::get('/mi-perfil', 'UserController@getUser2')->middleware('auth');
 Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbicacion');
 
 Route::get('/InListMap/my', function(){return view('front.businesinListMap');})->name('VistaEmpresas');
-
-
-

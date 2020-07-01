@@ -45,11 +45,17 @@
 		<br>
 		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields">
 			<template v-slot:cell(opciones)="row">
-				<b-button @click="" variant="success" size="sm">Ver</b-button>
+				<b-button @click="cargarVer(row)" v-b-modal.ver-contrato variant="success" size="sm">Ver</b-button>
 				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Volver a Pagar</b-button>
-				<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan(row)" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>
+				<!--<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>-->
 			</template>
 		</b-table>
+		<b-modal id="ver-contrato" size="lg" scrollable centered hide-backdrop title="Ver Contrato" hide-footer>
+			<div class="text-center pt-1">
+				<b-button @click="cerrarModal" variant="danger" size="sm">Cerrar</b-button>
+				<b-button v-if="contratoSeleccionado.estado=='Vigente'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="success" size="sm">Extender mi Plan</b-button>
+			</div>
+		</b-modal>
 		<b-modal id="actualizar-plan" size="lg" scrollable centered hide-backdrop title="Renovar Contrato" hide-footer>
 			<b-col sm="12" md="12">
 				<b-form-group
@@ -209,6 +215,10 @@ export default {
 		}
 	},
 	methods:{
+		cargarVer: function(row){
+			this.contratoSeleccionado = row.item;
+			this.indexContratoSeleccionado = row.index;
+		},
 		enviarPagoExtension: function(){
 			var that = this;
 			axios.post(this.ruta+'/extenderplan', {
@@ -238,8 +248,8 @@ export default {
 			.finally(()=>{});
 		},
 		cargarExtenderPlan: function(row){
-			this.contratoSeleccionado = row.item;
-			this.indexContratoSeleccionado = row.index;
+			//this.contratoSeleccionado = row.item;
+			//this.indexContratoSeleccionado = row.index;
 			this.fotovouchersubir = [];
 			this.idExtensionSeleccionada = -1;
 			if (this.listaExtensiones.length == 0)
@@ -279,6 +289,7 @@ export default {
 			console.log(this.indexContratoSeleccionado);
 		},
 		cerrarModal: function(){
+			this.$bvModal.hide('ver-contrato');
 			this.$bvModal.hide('actualizar-plan');
 			this.$bvModal.hide('actualizar-voucher');
 			this.$bvModal.hide('extender-plan');

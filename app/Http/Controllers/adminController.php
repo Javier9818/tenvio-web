@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Categoria;
 use App\TipoNegocio;
 use App\Pagos;
+use App\Contrato;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -105,10 +106,25 @@ class AdminController extends Controller
 		$estado = $request->get('estado');
 		$observacion = $request->get('observacion')??'';
 		$pago_id = $request->get('pago_id');
-		if($estado)
-			Pagos::aprobar($pago_id);
-		else
-			Pagos::rechazar($pago_id, $observacion);
+		DB::beginTransaction();
+		try {
+			if($estado){
+				Pagos::aprobar($pago_id);
+			}
+			else{
+				Pagos::rechazar($pago_id, $observacion);
+			}
+			$pagoPlan = Pagos::getPagoPlan($pago_id);
+			if ($pagoPlan->tipo == 'PLAN')
+				Contrato::seHaPagado($pagoPlan->empresa_id, $estado);
+			else if ($pagoPlan->tipo == 'EXTENSIÓN' && $estado)
+				Contrato::agregarExtension($pagoPlan->empresa_id, $pagoPlan->cantidad_pedidos);
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			dd($e);
+			return ['mensaje' => '.'];
+		}
 		return ['mensaje' => ''];
 	}
 	public function listarpagos(Request $request){
