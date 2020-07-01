@@ -3,8 +3,10 @@
 		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="pagos" :fields="fields">
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="verPago(row)" v-b-modal.cargar-voucher variant="info" size="sm">Ver</b-button>
+				<!--
 				<b-button @click="rechazar(row)" v-if="row.item.estado=='Pendiente a Aprobar'" variant="danger" size="sm">Rechazar Pago</b-button>
 				<b-button @click="aprobar(row)" v-if="row.item.estado=='Pendiente a Aprobar'" variant="success" size="sm">Aprobar Pago</b-button>
+				-->
 				<!--
 				<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan(row)" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>
 				-->

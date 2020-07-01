@@ -46,7 +46,7 @@
 		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields">
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="cargarVer(row)" v-b-modal.ver-contrato variant="success" size="sm">Ver</b-button>
-				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Volver a Pagar</b-button>
+				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Reintentar Pago</b-button>
 				<!--<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>-->
 			</template>
 		</b-table>
@@ -265,7 +265,8 @@ export default {
 						if (datos.mensaje == ''){
 							Swal.fire(
 								'Éxito',
-								'Usted acaba de actualizar su volver voucher de pago, espere nuevamente a la revisión de los administradores',
+								//'Usted acaba de actualizar su voucher de pago, por favor espere nuevamente a la revisión de los administradores',
+								'Usted acaba de actualizar su voucher de pago, su pago está siendo procesado',
 								'success'
 							)
 							.then(()=>{
