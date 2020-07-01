@@ -216,6 +216,7 @@ export default {
 			this.cambiarEstado(true, 'aprobar', 'aprobando')
 		},
 		rechazar: function(row){
+			this.cerrarModal();
 			this.rowPagoSelccionado = row;
 			this.cambiarEstado(false, 'rechazar', 'rechazando')
 		},
