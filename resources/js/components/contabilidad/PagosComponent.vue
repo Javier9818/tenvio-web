@@ -43,7 +43,7 @@
 			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
 		</div>
 		<br>
-		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields">
+		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields" :tbody-tr-class="rowClass">
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="cargarVer(row)" v-b-modal.ver-contrato variant="success" size="sm">Ver</b-button>
 				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Reintentar Pago</b-button>
@@ -196,7 +196,8 @@ export default {
 				{ key: 'plan_nombre', label:'Plan', sortable: true },
 				{ key: 'periodo', label:'Periodo del Contrato', sortable: true },
 				{ key: 'precio_', label: 'Precio', sortable: true },
-				{ key: 'pedidos_total', label: 'Cantidad de Pedidos', sortable: true },
+				{ key: 'pedidos_contador', label: 'Pedidos Hechos', sortable: true },
+				{ key: 'pedidos_total_', label: 'Total de Pedidos', sortable: true },
 				{ key: 'estado', label: 'Estado', sortable: true },
 				{ key: 'opciones', label: 'Opciones', sortable: true }
 			],
@@ -388,11 +389,28 @@ export default {
 			})
 			.finally(()=>{});
 		},
+		rowClass(item, type) {
+			if (!item || type !== 'row')
+				return;
+			if (item.estado === 'Vigente'){
+				if ((1.0 * item.pedidos_contador) / item.pedidos_total >= 0.7)
+					return 'table-danger';
+				else
+					return 'table-success';
+			}
+			else if (item.estado === 'Rechazado')
+				return 'table-warning';
+			else if (item.estado === 'En espera a validar')
+				return 'table-info';
+			else
+				return 'table-secondary';
+		},
 		formatearContratos: function(){
 			if (this.contratos.length > 0){
 				this.contratos.forEach((item, index)=>{
 					this.contratos[index].periodo = item.fecha_inicio + ' ' + item.fecha_vencimiento;
 					this.contratos[index].precio_ = item.precio === 0 ? 'Gratuito' : ('S/ ' + item.precio);
+					this.contratos[index].pedidos_total_ = item.pedidos_total_.split(',').join(' + ');
 				})
 			}
 		},

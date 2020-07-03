@@ -24,6 +24,10 @@ class Pagos extends Model
 		'fecha_pago' => 'datetime:d/m/Y h:i a'
 	];
 
+	public static $PAGO_PENDIENTE = 'Pendiente a Aprobar';
+	public static $PAGO_RECHAZADO = 'Rechazado';
+	public static $PAGO_APROBADO = 'Aprobado';
+
 	//negocio
 	/*
 	public static function actualizarRechazado($pago){
@@ -44,7 +48,7 @@ class Pagos extends Model
 			'precio' => ($plan=='')?$contrato->plan_precio:$plan->precio,
 			'cantidad_pedidos' => ($plan=='')?$contrato->pedidos_total:$plan->cantidad_pedidos,
 			'urlfoto' => $voucher,
-			'estado' => 'Pendiente a Aprobar',
+			'estado' => static::$PAGO_PENDIENTE,
 			'observacion' => null
 		]);
 	}
@@ -71,14 +75,14 @@ class Pagos extends Model
 	public static function rechazar($pago_id, $observacion){
 		Pagos::where('id', $pago_id)
 			->update([
-				'estado' => 'Rechazado',
+				'estado' => static::$PAGO_RECHAZADO,
 				'observacion' => $observacion
 			]);
 	}
 	public static function aprobar($pago_id){
 		Pagos::where('id', $pago_id)
 			->update([
-				'estado' => 'Aprobado'
+				'estado' => static::$PAGO_APROBADO
 			]);
 	}
 	public static function getPagoPlan($pago_id){
