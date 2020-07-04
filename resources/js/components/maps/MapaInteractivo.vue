@@ -14,7 +14,8 @@
             'geoDisabled', //true or false
             'clickDisabled', //true or false
             'geoWatch', // true or false
-            'clickDisabled' //true or false
+            'dragableDisabled' ,//true or false
+            'minZoom'
         ],
         mounted() {
             this.initMap();
@@ -26,11 +27,17 @@
                 polyline: null
             }
         },
+        watch:{
+            layers: function(newValue, oldValue) {
+              this.initLayers()
+            }
+        },
         methods:{
             initMap() {
                 this.map = L.map('map', {
                     center: this.layer ? [this.layer.latitud, this.layer.longitud] : null,
-                    zoom: 17
+                    zoom: 17,
+                    minZoom:this.minZoom || null
                 });
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -59,7 +66,7 @@
                 if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng, title, popup, iconUrl, draggable, first){
-                var markerX = L.marker(LatLng, {draggable, title})
+                var markerX = L.marker(LatLng, {draggable: !this.dragableDisabled, title})
                 var deliveryIcon = iconUrl ? L.icon({ iconUrl, iconSize: [50, 50],iconAnchor: [50, 50], popupAnchor: [-20, -50] }): null;
                 if(iconUrl) markerX.setIcon(deliveryIcon);
                 markerX.addTo(this.map);
@@ -67,7 +74,7 @@
                 if(first) this.$emit('geoPosition', markerX.getLatLng());
                 if(first && ((this.layers || []).length === 1)) this.dibujaLinea(markerX, this.layers[0]); //Dibujar linea para layers[0]
 
-                if(draggable) 
+                if(draggable && !this.dragableDisabled) 
                     markerX.on('dragend', (event) => {
                         var marker = event.target;
                         var position = marker.getLatLng();
@@ -86,9 +93,9 @@
             },
             initLayers() {
                 this.layers.forEach((layer) => {
-                    var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion}).
+                    var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion || 'Default'}).
                     bindPopup(layer.popup);
-                    marker.bindTooltip(layer.direccion).openTooltip();
+                    marker.bindTooltip(layer.direccion || 'Default').openTooltip();
                     marker.addTo(this.map);
                 });
             },

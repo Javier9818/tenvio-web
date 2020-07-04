@@ -15,7 +15,7 @@
             <ul class="menu-content">
                 <li class="{{ $isSelected('1', '1') ? 'active' : '' }}"><a class="menu-item" href="/admin/empresas">Mis empresas</a></li>
                 <li class="{{ $isSelected('1', '2') ? 'active' : '' }}"><a class="menu-item" href="/admin/solicitudes">Solicitudes</a></li>
-				<li class="{{ $isSelected('1', '2') ? 'active' : '' }}"><a class="menu-item" href="/admin/cobros">Cobros</a></li>
+				        <li class="{{ $isSelected('1', '3') ? 'active' : '' }}"><a class="menu-item" href="/admin/cobros">Cobros</a></li>
             </ul>
         </li>
 

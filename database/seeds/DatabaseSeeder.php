@@ -74,6 +74,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategoriasSeeder::class,
             PlanesSeeder::class,
+            FunctionsSeeder::class,
         ]);
 
     }

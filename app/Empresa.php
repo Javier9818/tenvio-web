@@ -63,4 +63,12 @@ class Empresa extends Model
             return $nombre;
         }
     }
+
+    public static function listNearCompanies($latitud, $longitud, $maxRadio){
+        $lat = floatval($latitud);
+        $lon = floatval($longitud);
+        return DB::table('empresas')
+                ->whereRaw('f_distance(empresas.latitud, empresas.longitud,?,?) < ?', [$lat,$lon,$maxRadio])
+                ->get();
+    }
 }

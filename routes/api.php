@@ -56,3 +56,6 @@ Route::get('/notifications/{empresa}', 'GeneralController@notification');
 Route::get('/detallePedido/{pedido}', 'PedidosController@show');
 Route::post('/entregaPedido', 'PedidosController@entregar');
 Route::post('/cancelaPedido', 'PedidosController@cancelaByRepartidor');
+
+
+Route::get('/bussiness-near/{lat}/{lng}', 'GeneralController@bussinessNear');

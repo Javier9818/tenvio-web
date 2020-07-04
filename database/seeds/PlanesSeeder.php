@@ -3,6 +3,7 @@
 use App\Plan;
 use Illuminate\Database\Seeder;
 
+
 class PlanesSeeder extends Seeder
 {
     /**
@@ -91,5 +92,6 @@ class PlanesSeeder extends Seeder
 			"cantidad_pedidos" => 500,
 			"tipo" => "EXTENSIÓN"
         ]);
+        
     }
 }

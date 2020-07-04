@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\DB;
 
 class GeneralController extends Controller
 {
+
+    public function bussinessNear($lat, $lng){
+        $empresas = Empresa::listNearCompanies($lat, $lng, 20);
+        return response()->json(["empresas" => $empresas], 200);
+    }
+
     public function roles(){
         $roles = DB::select('select id as value, descripcion as text from permisos where descripcion != "User"');
         return response()->json(["roles" => $roles], 200);

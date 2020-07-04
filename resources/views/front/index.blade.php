@@ -20,7 +20,7 @@
                     <p class="slide__desc"></p>
                     <form action="{{ route('list') }}" method="get">
                     <input type="text"  name="search" class="input__search" placeholder="Busca tu ciudad o restaurant favorito">
-                    <button type="submit" class="btn btn__primary my-5"><i class="fa fa-map-marker-alt fa-2x" aria-hidden="true"></i>Buscar restaurantes o negocios cercanos</button>
+                    <a href="/negocios-cercanos" class="btn btn__primary my-5"><i class="fa fa-map-marker-alt fa-2x" aria-hidden="true"></i>Buscar restaurantes o negocios cercanos</a>
                     </form>
                 </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->
