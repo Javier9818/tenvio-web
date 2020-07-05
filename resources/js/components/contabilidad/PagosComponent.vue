@@ -226,7 +226,9 @@
 				<b-button @click="enviarPagoExtension" variant="success" size="sm" :disabled="deshabilitaboton">Extender mi Plan</b-button>
 			</div>
 		</b-modal>
-		{{aaaaaa}}
+		<div hidden>
+			{{aaaaaa}}
+		</div>
 	</div>
 </template>
 
