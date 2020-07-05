@@ -3852,6 +3852,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -3894,11 +3912,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['tiponegocios', 'categorias'],
   mounted: function mounted() {},
   data: function data() {
     return {
-      companies: []
+      categorias_items: [],
+      tiponegocios_items: [],
+      repetidos_categorias: {},
+      categorias_selected: [],
+      tiponegocios_selected: [],
+      tiponegocios_local: JSON.parse(this.tiponegocios),
+      categorias_local: JSON.parse(this.categorias),
+      companies: [],
+      companies_global: [],
+      categorias_unique: [],
+      categorias_extend: []
     };
   },
   methods: {
@@ -3912,17 +3964,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 lat = _ref.lat, lng = _ref.lng;
-                axios.get("/api/bussiness-near/".concat(lat, "/").concat(lng)).then(function (_ref2) {
+                _context.next = 3;
+                return axios.get("/api/bussiness-near/".concat(lat, "/").concat(lng)).then(function (_ref2) {
                   var data = _ref2.data;
-                  _this.companies = data.empresas;
+                  // console.log(data.empresas);
+                  data.empresas.forEach(function (e) {
+                    _this.companies.push(_objectSpread(_objectSpread({}, e), {}, {
+                      popup: "<h4 class=\"title-popup\"><i class=\"fas fa-store mr-2\"></i>".concat(e.nombre, "<h4>\n                        <hr class=\"hr-popup\">\n                        <div class=\"content-popup\">\n                            <div class=\"row mx-1\">\n                                <div class=\"subtitle-popup\">Direcci\xF3n: </div>").concat(e.direccion, "\n                            </div>\n                            <div class=\"row mx-1 mt-2\">\n                                <div class=\"subtitle-popup\">Celular: </div> ").concat(e.celular, "\n                            </div>\n                            <div class=\"row mx-1 mt-2\">\n                                <div class=\"subtitle-popup\">Sitio web - delivery: </div>\n                                <a href=\"/empresa/").concat(e.nombre_unico, "\" class=\"link-popup\" target=\"_blank\">").concat('www.tenvioperu.com/empresa/' + e.nombre_unico, "</a>\n                            </div>\n                            <hr class=\"hr-popup\">\n                            <div class=\"row mx-1 justify-content-around\">\n                                <a href=\"https://api.whatsapp.com/send?phone=51").concat(e.celular, "&text=\" target=\"_blank\" title=\"Enviar mensaje\" class=\"link-whatsapp\"><i class=\"fab fa-whatsapp fa-2x col-2\"></i></a>\n                                <a href=\"tel:+").concat(e.celular, "\" title=\"Llamar\" class=\"link-phone\"><i class=\"fas fa-phone fa-2x col-2\"></i></a>\n                            </div>\n                        </div>")
+                    }));
+                  });
+                  _this.companies_global = _this.companies.slice();
                 });
 
-              case 2:
+              case 3:
+                this.filterDataApi();
+
+              case 4:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, this);
       }));
 
       function loadNearBussiness(_x) {
@@ -3930,7 +3992,62 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return loadNearBussiness;
-    }()
+    }(),
+    filterDataApi: function filterDataApi() {
+      var cadena_categorias = '';
+      this.companies.forEach(function (e) {
+        cadena_categorias += "".concat(e.categorias, ",");
+      });
+      this.categorias_extend = cadena_categorias.split(',');
+      this.categorias_unique = _toConsumableArray(new Set(this.categorias_extend));
+      var repetidos = {};
+      this.categorias_extend.forEach(function (numero) {
+        repetidos[parseInt(numero)] = (repetidos[numero] || 0) + 1;
+      });
+      this.repetidos_categorias = repetidos; //Objeto { 1:5 } 1 se repiten 5
+
+      this.builFilters();
+    },
+    builFilters: function builFilters() {
+      var _this2 = this;
+
+      this.categorias_local.forEach(function (e) {
+        if (_this2.categorias_unique.includes(e.id + '')) _this2.categorias_items.push(e);
+      });
+      this.tiponegocios_local.forEach(function (e) {
+        if (_this2.categorias_items.find(function (c) {
+          return c.tipo_negocio_id === e.id;
+        })) {
+          _this2.tiponegocios_items.push(e);
+        }
+      }); // this.categorias_items.forEach( e => {
+      //     var tipo_negocio = this.tiponegocios_local.find( c => c.id === e.tipo_negocio_id );
+      //     if(tipo_negocio){
+      //         tipo_negocio['cant'] = (tipo_negocio['cant'] || 0)  + 1;
+      //         this.tiponegocios_items.push(tipo_negocio);
+      //     }     
+      // });
+      // console.log(this.categorias_items);
+      // console.log(this.tiponegocios_items);
+    },
+    countTipoNegocios: function countTipoNegocios(id) {
+      var count = 0;
+      this.companies.forEach(function (e) {
+        var array = e.tipos_negocio.split(',');
+        if (parseInt(array[0]) === id) count += 1;
+      });
+      return count;
+    }
+  },
+  watch: {
+    tiponegocios_selected: function tiponegocios_selected(newValue, oldValue) {
+      var layers = [];
+      this.companies_global.forEach(function (e) {
+        var array = e.tipos_negocio.split(',');
+        if (parseInt(array[0]) === newValue) layers.push(e);
+      });
+      this.companies = layers;
+    }
   }
 });
 
@@ -5475,11 +5592,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       map: null,
       marker: L.marker([0, 0]),
-      polyline: null
+      polyline: null,
+      marker_layers: []
     };
   },
   watch: {
     layers: function layers(newValue, oldValue) {
+      this.cleanLayers();
       this.initLayers();
     }
   },
@@ -5492,8 +5611,12 @@ __webpack_require__.r(__webpack_exports__);
         zoom: 17,
         minZoom: this.minZoom || null
       });
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/streets-v11',
+        accessToken: 'pk.eyJ1IjoiamF2aWVyOTgiLCJhIjoiY2tjOHJvNDlhMWVlejJ5bXI5anNqNDd5eiJ9.fRqLhVZmbzJMi9MF-cbMKg',
+        tileSize: 512,
+        zoomOffset: -1
       }).addTo(this.map);
 
       if (!this.geoDisabled) {
@@ -5503,14 +5626,17 @@ __webpack_require__.r(__webpack_exports__);
           watch: this.geoWatch === true ? true : false
         });
         this.map.on('locationfound', function (e) {
-          _this.createMarker(e.latlng, 'Esta es mi ubicación', 'Esta es mi ubicación', false, true, true);
+          _this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true); // var radius = e.accuracy;
+
+
+          L.circle(e.latlng, 50).addTo(_this.map);
         });
       } else if (this.layer) this.initLayer();
 
       if (!this.clickDisabled) this.map.on('click', function (e) {
         _this.marker.removeFrom(_this.map);
 
-        _this.createMarker(e.latlng, 'Esta es mi ubicación', 'Esta es mi ubicación', false, true, true);
+        _this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true);
       });
       if (this.layers) this.initLayers();
     },
@@ -5559,9 +5685,21 @@ __webpack_require__.r(__webpack_exports__);
         var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {
           title: layer.direccion || 'Default'
         }).bindPopup(layer.popup);
+        marker.getPopup().options['maxWidth'] = 8000; // console.log(marker.getPopup());
+
         marker.bindTooltip(layer.direccion || 'Default').openTooltip();
         marker.addTo(_this3.map);
+
+        _this3.marker_layers.push(marker);
       });
+    },
+    cleanLayers: function cleanLayers() {
+      var _this4 = this;
+
+      this.marker_layers.forEach(function (layer) {
+        layer.removeFrom(_this4.map);
+      });
+      this.marker_layers = [];
     },
     dibujaLinea: function dibujaLinea(marker, layer) {
       if (this.polyline !== null) this.polyline.removeFrom(this.map);
@@ -74079,7 +74217,106 @@ var render = function() {
         on: { geoPosition: _vm.loadNearBussiness }
       }),
       _vm._v(" "),
-      _vm._m(1)
+      _c(
+        "div",
+        {
+          staticClass: "modal left fade",
+          attrs: {
+            id: "myModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "myModalLabel"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "form",
+                    { attrs: { action: "" } },
+                    [
+                      _c(
+                        "b-form-group",
+                        { attrs: { label: "Tipo de Negocio" } },
+                        _vm._l(_vm.tiponegocios_items, function(option) {
+                          return _c(
+                            "b-form-radio",
+                            {
+                              key: option.id,
+                              attrs: { name: "tipo_negocio", value: option.id },
+                              model: {
+                                value: _vm.tiponegocios_selected,
+                                callback: function($$v) {
+                                  _vm.tiponegocios_selected = $$v
+                                },
+                                expression: "tiponegocios_selected"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                 " +
+                                  _vm._s(
+                                    option.descripcion +
+                                      " ...... (" +
+                                      _vm.countTipoNegocios(option.id) +
+                                      ")"
+                                  ) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        }),
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-form-group",
+                        { attrs: { label: "SubCategorias" } },
+                        _vm._l(_vm.categorias_items, function(option) {
+                          return _c(
+                            "b-form-checkbox",
+                            {
+                              key: option.id,
+                              attrs: { value: option.id, name: "flavour-3a" },
+                              model: {
+                                value: _vm.categorias_selected,
+                                callback: function($$v) {
+                                  _vm.categorias_selected = $$v
+                                },
+                                expression: "categorias_selected"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    option.descripcion +
+                                      " ...... (" +
+                                      _vm.repetidos_categorias[option.id] +
+                                      ")"
+                                  ) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        }),
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
     ],
     1
   )
@@ -74117,60 +74354,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal left fade",
-        attrs: {
-          id: "myModal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "myModalLabel"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h4",
-                  { staticClass: "modal-title", attrs: { id: "myModalLabel" } },
-                  [_vm._v("Filtrar búsqueda")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("p", [
-                  _vm._v(
-                    "Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.\n                    "
-                  )
-                ])
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title", attrs: { id: "myModalLabel" } }, [
+        _vm._v("Filtrar búsqueda")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true

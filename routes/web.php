@@ -71,7 +71,7 @@ Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('segui
 Route::get('/empresa/{nombre}', 'FrontController@Empresa')->name('empresa');
 Route::post('/front/{opcion}', 'FrontController@Funciones')->name('Front');
 Route::get('/mi-perfil', 'UserController@getUser2')->middleware('auth');
-Route::get('/negocios-cercanos', function(){return view('front.components.nav_alternativo');})->name('VistaEmpresas');
+Route::get('/negocios-cercanos', 'GeneralController@viewBussinessNear');
 
 Route::get('/{Ubicacion}', 'FrontController@BuscaxUbicacion')->name('BuscaxUbicacion');//RUTA DE BUSQUEDA SIEMPRE AL FINAL
 

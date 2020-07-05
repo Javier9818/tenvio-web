@@ -24,11 +24,13 @@
             return{
                 map: null,
                 marker: L.marker([0,0]),
-                polyline: null
+                polyline: null,
+                marker_layers:[]
             }
         },
         watch:{
             layers: function(newValue, oldValue) {
+              this.cleanLayers()
               this.initLayers()
             }
         },
@@ -40,8 +42,12 @@
                     minZoom:this.minZoom || null
                 });
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                 id: 'mapbox/streets-v11',
+                 accessToken: 'pk.eyJ1IjoiamF2aWVyOTgiLCJhIjoiY2tjOHJvNDlhMWVlejJ5bXI5anNqNDd5eiJ9.fRqLhVZmbzJMi9MF-cbMKg',
+                 tileSize: 512,
+                 zoomOffset: -1,
                 }).addTo(this.map);
 
                 if(!this.geoDisabled){
@@ -51,7 +57,9 @@
                         watch: this.geoWatch === true ? true: false
                     });
                     this.map.on('locationfound', (e) => {
-                        this.createMarker(e.latlng, 'Esta es mi ubicación', 'Esta es mi ubicación', false, true, true);
+                        this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true);
+                        // var radius = e.accuracy;
+                        L.circle(e.latlng, 50).addTo(this.map);
                     });
                 }else
                     if(this.layer)this.initLayer();
@@ -60,12 +68,13 @@
                 if(!this.clickDisabled)
                     this.map.on('click', (e) => { 
                         this.marker.removeFrom(this.map); 
-                        this.createMarker(e.latlng, 'Esta es mi ubicación', 'Esta es mi ubicación', false, true, true);
+                        this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true);
                 });
                 
                 if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng, title, popup, iconUrl, draggable, first){
+
                 var markerX = L.marker(LatLng, {draggable: !this.dragableDisabled, title})
                 var deliveryIcon = iconUrl ? L.icon({ iconUrl, iconSize: [50, 50],iconAnchor: [50, 50], popupAnchor: [-20, -50] }): null;
                 if(iconUrl) markerX.setIcon(deliveryIcon);
@@ -95,9 +104,16 @@
                 this.layers.forEach((layer) => {
                     var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion || 'Default'}).
                     bindPopup(layer.popup);
+                    marker.getPopup().options['maxWidth'] = 8000
+                    // console.log(marker.getPopup());
                     marker.bindTooltip(layer.direccion || 'Default').openTooltip();
                     marker.addTo(this.map);
+                    this.marker_layers.push(marker);
                 });
+            },
+            cleanLayers(){
+                this.marker_layers.forEach( (layer) => { layer.removeFrom(this.map); });
+                this.marker_layers = [];
             },
             dibujaLinea(marker, layer){
                 if(this.polyline !== null) this.polyline.removeFrom(this.map);

@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\DB;
 
 class GeneralController extends Controller
 {
+    public function viewBussinessNear(){
+        
+        $tiponegocios = TipoNegocio::all();
+        $categorias = Categoria::all();
+        return view('front.components.nav_alternativo', ["tiponegocios" => $tiponegocios, "categorias" => $categorias]);
+    }
 
     public function bussinessNear($lat, $lng){
         $empresas = Empresa::listNearCompanies($lat, $lng, 20);

@@ -68,7 +68,12 @@ class Empresa extends Model
         $lat = floatval($latitud);
         $lon = floatval($longitud);
         return DB::table('empresas')
+                ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
+                ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
+                ->selectRaw('empresas.*, GROUP_CONCAT(categoria_empresa.categoria_id) as categorias,
+                 GROUP_CONCAT(categorias.tipo_negocio_id) as tipos_negocio')
                 ->whereRaw('f_distance(empresas.latitud, empresas.longitud,?,?) < ?', [$lat,$lon,$maxRadio])
+                ->groupBy('empresas.id')
                 ->get();
     }
 }
