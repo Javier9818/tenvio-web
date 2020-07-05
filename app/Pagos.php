@@ -25,9 +25,9 @@ class Pagos extends Model
 		'fecha_aprob_rech' => 'datetime:d/m/Y h:i a',
 	];
 
-	public static $PAGO_PENDIENTE = 'Pendiente a Aprobar';
-	public static $PAGO_RECHAZADO = 'Rechazado';
-	public static $PAGO_APROBADO = 'Aprobado';
+	public static $PAGO_PENDIENTE = 'PENDIENTE A APROBAR';
+	public static $PAGO_RECHAZADO = 'RECHAZADO';
+	public static $PAGO_APROBADO = 'APROBADO';
 
 	//negocio
 	/*

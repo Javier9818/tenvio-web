@@ -36,10 +36,12 @@ class Contrato extends Model
 		'fecha_confirmacionpago' => 'datetime:d/m/Y h:i a'
 	];
 	*/
-	public static $CONTRATO_VIGENTE = 'Vigente';
-	public static $CONTRATO_RECHAZADO = 'Rechazado';
-	public static $CONTRATO_REINTENTADO = 'Reintentado';
-	public static $CONTRATO_ENESPERA = 'En espera a validar';
+	public static $CONTRATO_VENCIDO = 'VENCIDO';
+	public static $CONTRATO_VIGENTE = 'VIGENTE';
+	public static $CONTRATO_RECHAZADO = 'RECHAZADO';
+	public static $CONTRATO_REINTENTADO = 'REINTENTADO';
+	public static $CONTRATO_ENESPERA = 'EN ESPERA A VALIDAR';
+
 
 	//static::$CONTRATO_ENESPERA
 
