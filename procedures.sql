@@ -3,5 +3,7 @@ USE delivery;
 -- SHOW PROCESSLIST;
 DROP EVENT IF EXISTS verifica_vigencia_contrato;
 CREATE EVENT verifica_vigencia_contrato
-ON SCHEDULE EVERY 1 SECOND STARTS NOW()
+ON SCHEDULE EVERY 1 HOUR STARTS NOW()
 DO UPDATE CONTRATOS SET ESTADO = 'Vencido' WHERE estado = 'Vigente' and fecha_vencimiento < NOW();
+
+-- los contratos acaban en un día en específico
