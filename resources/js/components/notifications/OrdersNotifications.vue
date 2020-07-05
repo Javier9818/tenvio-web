@@ -125,12 +125,31 @@
                 countIntelligence:0
             }
         },
+        methods: {
+            notifyPush: function(message){
+                Push.create("Nueva Notificacion",{
+                    body: message,
+                    icon: 'https://i.imgur.com/0LA2f7K.png',
+                    timeout: 10000,
+                    onClick: function(){
+                        this.close();
+                    }
+                });
+
+
+            },
+        },
         created(){
             Echo.channel(`ordersCompany.${company || 0}`)
             .listen('NewOrderEvent', (e) => {
 
                 if (e.order == null) return;
-                this.orders.push(e.order);
+                else{
+                    this.orders.push(e.order);
+                    var messageNotify = `Tienes nueo pedido, revisa tus notificaciones`
+                    this.notifyPush(messageNotify)
+                }
+
             });
         }
     }
