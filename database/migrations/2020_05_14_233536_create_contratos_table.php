@@ -20,6 +20,7 @@ class CreateContratosTable extends Migration
             $table->string('estado',20);
             $table->float('plan_precio');
             $table->integer('pedidos_total');
+            $table->integer('pedidos_contador');
             $table->dateTime('fecha_inicio')->default(now());
             $table->dateTime('fecha_vencimiento');
             $table->timestamps();

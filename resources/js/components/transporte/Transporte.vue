@@ -24,7 +24,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <p><b>Cliente: </b>{{infoModal.data.cliente}}</p>
-                            <p><b>Celular: <a :href="'https://api.whatsapp.com/send?phone=51'+infoModal.data.celular+'&text='" target="_blank">{{infoModal.data.celular}}</a></b></p>
+                            <p><b>Celular:</b></p>
+                            <p class="ml-1"><a :href="'https://api.whatsapp.com/send?phone=51'+infoModal.data.celular+'&text='" target="_blank" title="Hablar por Whatsapp"><i class="fab fa-whatsapp"></i> {{infoModal.data.celular}}</a></p>
+                            <p class="ml-1"><a :href="'tel:+'+infoModal.data.celular" title="Llamar a cliente"><i class="ft-phone blue"></i> {{infoModal.data.celular}}</a></p>
                             <p><b>Dirección: </b>{{infoModal.data.direccion}}</p>
                             <p><b>Monto: </b>S/.{{infoModal.data.monto}}</p>
                             <ul>
@@ -34,12 +36,15 @@
                             </ul>
                         </div>
                         <div class="mb-1 col-md-6">
-                            <b-button  class="btn-primary" @click="entregaPedido(infoModal.data.id)">
-                            Entregar
-                            </b-button>
-                            <b-button  class="btn-danger" @click="cancelaPedido(infoModal.data.id)">
-                            Cancelar
-                            </b-button>
+                            <div class="row ">
+                                <b-button  class="btn-primary mr-2" @click="entregaPedido(infoModal.data.id)">
+                                    Entregar
+                                </b-button>
+                                <b-button  class="btn-danger" @click="cancelaPedido(infoModal.data.id)">
+                                     Cancelar
+                                </b-button>
+                            </div>
+                            
                         </div>
                     </div>
                     <mapa-interactivo :clickDisabled ='true' height='75vh' width='100%' @geoPosition='geoPosition' :layers='[infoModal.data]' ></mapa-interactivo>
@@ -57,7 +62,7 @@
     import Swal from 'sweetalert2'
     export default {
         mounted() {
-            this.items = pedidosAsignados;
+            this.items = this.formatLayer();
         },
         data(){
             return{
@@ -68,11 +73,37 @@
                     data:'',
                     detalle:[]
                 },
-                fields: ['cliente', {key:'id', label:'Pedido'},{key:'direccion', label:'Dirección'}, 'monto', 'opciones'],
+                fields: [
+                    'cliente', 
+                    {key:'id', label:'Pedido'},
+                    {key:'direccion', label:'Dirección'}, 
+                    {
+                        key:'monto', 
+                        label:'Monto', 
+                        formatter: (value, key, item) => {
+                            return `S/.${value}`
+                        },
+                    }, 
+                    'opciones'
+                ],
                 items: []
             }
         },
         methods:{
+            formatLayer(){
+                var data = []
+                pedidosAsignados.forEach(item => {
+                    data.push({
+                        ...item,
+                        popup:`
+                        <h3>Pedido Cod.${item.id}</h3>
+                        <b>${item.direccion}</b>
+                        <p><b>Cliente: </b>${item.cliente}</p>
+                        <p><b>Celular: <a href="https://api.whatsapp.com/send?phone=51${item.celular}&text=" target="_blank">${item.celular}</a></b></p>`
+                    });
+                });
+                return data
+            },
             geoPosition(data){
                 this.location = data;
             },
