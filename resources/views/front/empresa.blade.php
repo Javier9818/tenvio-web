@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('title')
-    Nombre Restaurant
+{{$data[0]->nombre}}
 @endsection
 @section('nav')
     @include('front.nav')

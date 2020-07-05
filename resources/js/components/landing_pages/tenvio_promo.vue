@@ -1,6 +1,6 @@
 <template>
     <div class="wow">
-        <nav class="navbar navbar-area navbar-expand-lg nav-absolute white nav-style-01 header-style-09">
+        <nav class="navbar navbar-area navbar-expand-lg nav-absolute1 white nav-style-01 header-style-09">
             <div class="container nav-container">
                 <div class="responsive-mobile-menu">
                     <div class="logo-wrapper">

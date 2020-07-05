@@ -207,7 +207,11 @@ class FrontController extends Controller
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
       ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
-      ->where('empresas.nombre','like','%'.$request->get('search').'%')
+      ->where(
+        [
+          ['empresas.nombre','like','%'.$request->get('search').'%'],
+          ['empresas.estado', '!=', 'VENCIDO']
+        ])
       // ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
       ->groupBy('empresas.id')
       ->get();
@@ -219,7 +223,11 @@ class FrontController extends Controller
         ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
         ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
-        ->where('categorias.descripcion','like','%'.$request->get('search').'%')
+        ->where(
+          [
+            ['categorias.descripcion','like','%'.$request->get('search').'%'],
+            ['empresas.estado', '!=', 'VENCIDO']
+          ])
         ->get();
         if (count($empresas)>0) {
           return view('front.listEmpresa', ["empresas" => $empresas, 'search'=>$request->get('search') ]);
@@ -242,7 +250,8 @@ class FrontController extends Controller
         ->where(
           [
             ['categorias.state','=',1],
-            ['categorias.descripcion','like','%'.$Categoria.'%']
+            ['categorias.descripcion','like','%'.$Categoria.'%'],
+            ['empresas.estado', '!=', 'VENCIDO']
           ]
           )
         ->get();
@@ -263,7 +272,8 @@ class FrontController extends Controller
       ->where(
         [
           ['categorias.state','=',1],
-          ['ciudad.nombre','like','%'.$Ubicacion.'%']
+          ['ciudad.nombre','like','%'.$Ubicacion.'%'],
+          ['empresas.estado', '!=', 'VENCIDO']
         ])
       ->groupBy('empresas.id')
       ->get();
@@ -278,7 +288,11 @@ class FrontController extends Controller
         ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
         ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')
         // ->where('empresas.nombre','=',str_replace('-',' ',$nombre))
-        ->where('empresas.nombre_unico','=', $nombre)
+        ->where(
+          [
+            ['empresas.nombre_unico','=', $nombre],
+            ['empresas.estado', '!=', 'VENCIDO']
+          ])
         ->get();
         return view('front.empresa')->with("data",$empresa);
       }catch (\Exception  $e) {
@@ -287,9 +301,19 @@ class FrontController extends Controller
 
   }
   public static function productos(Request $request)
-  {
+  { 
+    // $state=DB::table('empresa')
+    // ->select('empresa.estado')
+    // ->where('empresas.id', '=', $request->get('id'))
+    // ->get();
+    // if($state[0]=='VENCIDO')
+    //   return [
+    //     'Message'=> 'error',
+    //     'success'=>false
+    //   ];
     $where=[
       ['empresas.id', '=', $request->get('id')],
+      ['empresas.estado', '!=', 'VENCIDO'],
       ['productos.usuario_puede_ver', '=',1],
       ['productos.estado', '=',1],
     ];
@@ -331,7 +355,8 @@ class FrontController extends Controller
         ->selectRaw(' DISTINCT categorias_menus.descripcion as text, categorias_menus.id as value')
         ->where(
         [ 
-          ['empresas.id','=',$request->get('id')] 
+          ['empresas.id','=',$request->get('id')],
+          ['empresas.estado', '!=', 'VENCIDO']
         ])
         ->get();
      }catch (\Exception  $e) {
