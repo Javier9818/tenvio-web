@@ -207,4 +207,17 @@ class EmpresaController extends Controller
         return response()->json(["message" => "Registro exitoso"]);
     }
 
+    public function search(Request $request)
+    {
+        return DB::table('empresas')
+        ->select('empresas.nombre','empresas.ruc','empresas.celular','empresas.id' )
+        ->where(
+            [
+                [$request->get('column'),'=',$request->get('text_search')]
+            ]
+        )
+        ->get();
+        
+    }
+
 }
