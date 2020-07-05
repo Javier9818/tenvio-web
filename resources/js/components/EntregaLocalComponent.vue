@@ -41,12 +41,7 @@ export default {
 			pedidoSeleccionado: [],
 			indexPedidoSeleccionado: -1,
 			fields: ['selected', 'idpedido', 'nombres', 'descripcion', 'direccion'],
-			items: [
-				{  pedido: 1, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo(1)', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 2, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo(1)', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 3, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo(1)', direccion:'Urb.Las Gardenias MazF.Lte23' },
-				{  pedido: 4, cliente: 'Briceño Montaño Javier', descripcion: '1/4 de Pollo(2) 1/4 de Pollo(1)', direccion:'Urb.Las Gardenias MazF.Lte23' }
-			],
+			items: [],
 			selected: [],
 		}
 	},

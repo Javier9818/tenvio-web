@@ -243,7 +243,8 @@ export default {
 				{ key: 'plan_nombre', label:'Plan', sortable: true },
 				{ key: 'periodo', label:'Periodo del Contrato', sortable: true },
 				//{ key: 'precio_', label: 'Precio', sortable: true },
-				{ key: 'pedidos_contador', label: 'Pedidos Hechos', sortable: true },
+				{ key: 'pedidos_contador_', label: 'Pedidos Hechos', sortable: true },
+				//{ key: 'pedidos_contador', label: 'Pedidos Hechos', sortable: true },
 				{ key: 'pedidos_total_', label: 'Total de Pedidos', sortable: true },
 				{ key: 'estado', label: 'Estado', sortable: true },
 				{ key: 'opciones', label: 'Opciones', sortable: true }
@@ -476,6 +477,8 @@ export default {
 				this.contratos.forEach((item, index)=>{
 					this.contratos[index].periodo = item.fecha_inicio + ' ' + item.fecha_vencimiento;
 					this.contratos[index].precio_ = item.precio === 0 ? 'Gratuito' : ('S/ ' + item.precio);
+					var prctnj = (parseFloat(item.pedidos_contador)/item.pedidos_total*100).toFixed(2);
+					this.contratos[index].pedidos_contador_ = item.pedidos_contador + ' (' + String(prctnj) + '%)';
 					if (item.pedidos_total_ != null)
 						this.contratos[index].pedidos_total_ = item.pedidos_total_.split(',').join(' + ');
 					else
