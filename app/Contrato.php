@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Carbon\Carbon;
 
+use App\Pagos;
+
 class Contrato extends Model
 {
 	protected $table = 'contratos';
@@ -23,7 +25,8 @@ class Contrato extends Model
 	];
 	protected $casts = [
 		'fecha_inicio' => 'datetime:d/m/Y h:i a',
-		'fecha_vencimiento' => 'datetime:d/m/Y h:i a'
+		'fecha_vencimiento' => 'datetime:d/m/Y h:i a',
+		'fecha_aprob_rech' => 'datetime:d/m/Y h:i a'
 	];
 	/*
 	protected $casts = [
@@ -40,8 +43,8 @@ class Contrato extends Model
 
 	//static::$CONTRATO_ENESPERA
 
-	public static function agregarExtension($empresa_id, $cantidad_pedidos){
-		return Contrato::where(['empresa_id' => $empresa_id])
+	public static function agregarExtension($contratos_id, $cantidad_pedidos){
+		return Contrato::where(['id' => $contratos_id])
 			->increment('pedidos_total', $cantidad_pedidos);
 	}
 
@@ -67,11 +70,13 @@ class Contrato extends Model
 				'contratos.pedidos_contador',
 				'contratos.pedidos_total',
 				DB::raw('(
-					SELECT GROUP_CONCAT(pagos.cantidad_pedidos) FROM pagos WHERE pagos.contratos_id = contratos.id)
+					SELECT GROUP_CONCAT(pagos.cantidad_pedidos) FROM pagos
+					WHERE pagos.contratos_id = contratos.id and pagos.estado = "'.Pagos::$PAGO_APROBADO.'")
 					AS pedidos_total_'
 				),
 				'contratos.fecha_inicio',
 				'contratos.fecha_vencimiento',
+				'contratos.updated_at as fecha_aprob_rech',
 				'contratos.estado',
 				'pl.id as plan_id',
 				'pl.nombre as plan_nombre',

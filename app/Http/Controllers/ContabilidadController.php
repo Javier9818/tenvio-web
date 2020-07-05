@@ -27,9 +27,16 @@ class ContabilidadController extends Controller
 		else if ($funcion == 'listacontratos') return $this->listacontratos($request);//2
 		else if ($funcion == 'actualizarvoucher') return $this->actualizarvoucher($request);//2
 		else if ($funcion == 'extenderplan') return $this->extenderplan($request);//2
+		else if ($funcion == 'pagosporcontrato') return $this->pagosporcontrato($request);//2
 		else if ($funcion == '1') return view('admin.negocio.ventas'/*, ["empresa" => session('empresa')]*/);
 		else if ($funcion == '2') return view('admin.negocio.pagos'/*, ["empresa" => session('empresa')]*/);
 		else return '';
+	}
+
+	static function pagosporcontrato(Request $request){
+		$empresa_id = session('empresa');
+		$contrato_id = $request->get('contrato_id');
+		return Pagos::pagosporcontrato($empresa_id, $contrato_id);
 	}
 
 	static function extenderplan(Request $request){

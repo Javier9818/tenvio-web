@@ -119,7 +119,7 @@ class AdminController extends Controller
 			if ($pagoPlan->tipo == Plan::$PLAN_PLAN)
 				Contrato::seHaPagado($pagoPlan->empresa_id, $estado);
 			else if ($pagoPlan->tipo == Plan::$PLAN_EXTENSION && $estado)
-				Contrato::agregarExtension($pagoPlan->empresa_id, $pagoPlan->cantidad_pedidos);
+				Contrato::agregarExtension($pagoPlan->contratos_id, $pagoPlan->cantidad_pedidos);
 			DB::commit();
 		} catch (\Exception $e) {
 			DB::rollback();

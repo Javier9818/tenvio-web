@@ -21,7 +21,8 @@ class Pagos extends Model
 		'updated_at'
 	];
 	protected $casts = [
-		'fecha_pago' => 'datetime:d/m/Y h:i a'
+		'fecha_pago' => 'datetime:d/m/Y h:i a',
+		'fecha_aprob_rech' => 'datetime:d/m/Y h:i a',
 	];
 
 	public static $PAGO_PENDIENTE = 'Pendiente a Aprobar';
@@ -51,6 +52,25 @@ class Pagos extends Model
 			'estado' => static::$PAGO_PENDIENTE,
 			'observacion' => null
 		]);
+	}
+	public static function pagosporcontrato($empresa_id, $contrato_id){
+		return Pagos::where(['pagos.empresa_id' => $empresa_id, 'pagos.contratos_id' => $contrato_id])
+			->select(
+				//'id',
+				'pagos.precio',
+				'pagos.cantidad_pedidos',
+				'pagos.urlfoto',
+				'pagos.created_at as fecha_pago',
+				'pagos.updated_at as fecha_aprob_rech',
+				'pagos.estado',
+				'pagos.observacion',
+				//'pl.id as plan_id',
+				'pl.nombre as plan_nombre',
+				'pl.tipo'
+				)
+			->join('plan as pl', 'pl.id', '=', 'pagos.plan_id')
+			//->orderByDesc('pagos.created_at')
+			->get();
 	}
 	//admin
 	public static function listarPagos(){
@@ -87,7 +107,7 @@ class Pagos extends Model
 	}
 	public static function getPagoPlan($pago_id){
 		return Pagos::where(['pagos.id' => $pago_id])
-			->select('pagos.empresa_id', 'pagos.cantidad_pedidos','pl.tipo')
+			->select('pagos.contratos_id', 'pagos.empresa_id', 'pagos.cantidad_pedidos','pl.tipo')
 			->join('plan as pl', 'pl.id', '=', 'pagos.plan_id')
 			->first();
 	}
