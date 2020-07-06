@@ -53,6 +53,13 @@
                         </form>
                     </div>
 
+                    <!-- <div class="modal-footer">
+                        <div class="row justify-content-center align-items-center mt-4" v-if="message_state">
+                            <img src="/assets/images/check.png" alt="Image" width="25%">
+                           
+                        </div>
+                    </div> -->
+
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div>
@@ -82,17 +89,56 @@
                 categorias_local: JSON.parse(this.categorias),
                 companies: [],
                 companies_global:[],
+                companies_temp:[],
                 categorias_unique: [],
-                categorias_extend:[]
+                categorias_extend:[],
+                message_state:false
             }
         },
         methods:{
+            // messageSuccess: function(){
+            //     this.message_state = true;
+            //     setTimeout(() => { this.message_state = false;},2000);
+            // },
+            icon: function(e){
+                const array = e.tipos_negocio.split(',');
+                let icon = null;
+                switch (array[0]) {
+                    case '1':
+                        icon = '/assets/images/icons/m_restaurant.ico';
+                        break;
+                    case '2':
+                        icon = '/assets/images/icons/m_reposteria.ico';
+                        break;
+                    case '3':
+                        icon = '/assets/images/icons/m_bodega.ico';
+                        break;
+                    case '4':
+                        icon = '/assets/images/icons/m_tiendaropa.ico';
+                        break;
+                    case '5':
+                        icon = '/assets/images/icons/m_tiendaElec.ico';
+                        break;
+                     case '6':
+                        // icon = '/assets/images/icons/m_tiendaAccesorios';
+                        break;
+                    case '7':
+                        icon = '/assets/images/icons/m_libreria.ico';
+                        break;
+                    default:
+                        icon = null;
+                        break;
+                }
+
+                return icon;
+            },
             loadNearBussiness: async function({lat, lng}){
                 await axios.get(`/api/bussiness-near/${lat}/${lng}`).then( ({data}) => {
                     // console.log(data.empresas);
                     data.empresas.forEach(e => {
                         this.companies.push({
                             ...e,
+                            icon: this.icon(e),
                             popup:`<h4 class="title-popup"><i class="fas fa-store mr-2"></i>${e.nombre}<h4>
                             <hr class="hr-popup">
                             <div class="content-popup">
@@ -148,21 +194,10 @@
                         this.tiponegocios_items.push(e);
                     }     
                 });
-
-                // this.categorias_items.forEach( e => {
-                //     var tipo_negocio = this.tiponegocios_local.find( c => c.id === e.tipo_negocio_id );
-                //     if(tipo_negocio){
-                //         tipo_negocio['cant'] = (tipo_negocio['cant'] || 0)  + 1;
-                //         this.tiponegocios_items.push(tipo_negocio);
-                //     }     
-                // });
-
-                // console.log(this.categorias_items);
-                // console.log(this.tiponegocios_items);
             },
             countTipoNegocios: function(id){
                 var count = 0;
-                this.companies.forEach( e => {
+                this.companies_global.forEach( e => {
                     const array = e.tipos_negocio.split(',');
                     if(parseInt(array[0]) === id) count += 1;
                 })
@@ -173,17 +208,37 @@
         watch:{
             tiponegocios_selected: function(newValue, oldValue) {
                 var layers = []
+                this.categorias_selected = []
                 this.companies_global.forEach( e => {
                     const array = e.tipos_negocio.split(',');
                     if(parseInt(array[0]) === newValue) layers.push(e);
                 })
                 this.companies = layers;
+                // this.messageSuccess();
 
+                this.companies_temp = layers;
                 var categories = []
                 this.categorias_items_extend.forEach( e => {
                    if(e.tipo_negocio_id === newValue) categories.push(e);
                 });
                 this.categorias_items = categories;
+            },
+            categorias_selected: function(categories_selected, oldValue){
+               if(categories_selected.length > 0){
+                    var layers = []
+                    this.companies_global.forEach( e => {
+                        const array = e.categorias.split(',');
+                        var BreakException = {};
+                        try {
+                            categories_selected.forEach( v => {
+                                if(array.includes(v+'')) {layers.push(e); throw BreakException;}
+                            });
+                        } catch (e) {}
+                    });
+                    this.companies = layers;
+               }else{
+                   this.companies = this.companies_temp;
+               }
             }
         },
     }

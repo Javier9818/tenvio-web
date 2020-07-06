@@ -106,6 +106,14 @@
                     marker.getPopup().options['maxWidth'] = 8000
                     // console.log(marker.getPopup());
                     marker.bindTooltip(layer.direccion || 'Default').openTooltip();
+
+                   
+                      let urlIcon = layer.icon || null;
+                      if(urlIcon){
+                          var icon =  L.icon({ iconUrl: urlIcon, iconSize: [35, 50],iconAnchor: [17, 50], popupAnchor: [2, -50] })
+                          marker.setIcon(icon);
+                      }
+
                     marker.addTo(this.map);
                     this.marker_layers.push(marker);
                 });

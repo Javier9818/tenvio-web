@@ -3935,6 +3935,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tiponegocios', 'categorias'],
   mounted: function mounted() {},
@@ -3950,11 +3957,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       categorias_local: JSON.parse(this.categorias),
       companies: [],
       companies_global: [],
+      companies_temp: [],
       categorias_unique: [],
-      categorias_extend: []
+      categorias_extend: [],
+      message_state: false
     };
   },
   methods: {
+    // messageSuccess: function(){
+    //     this.message_state = true;
+    //     setTimeout(() => { this.message_state = false;},2000);
+    // },
+    icon: function icon(e) {
+      var array = e.tipos_negocio.split(',');
+      var icon = null;
+
+      switch (array[0]) {
+        case '1':
+          icon = '/assets/images/icons/m_restaurant.ico';
+          break;
+
+        case '2':
+          icon = '/assets/images/icons/m_reposteria.ico';
+          break;
+
+        case '3':
+          icon = '/assets/images/icons/m_bodega.ico';
+          break;
+
+        case '4':
+          icon = '/assets/images/icons/m_tiendaropa.ico';
+          break;
+
+        case '5':
+          icon = '/assets/images/icons/m_tiendaElec.ico';
+          break;
+
+        case '6':
+          // icon = '/assets/images/icons/m_tiendaAccesorios';
+          break;
+
+        case '7':
+          icon = '/assets/images/icons/m_libreria.ico';
+          break;
+
+        default:
+          icon = null;
+          break;
+      }
+
+      return icon;
+    },
     loadNearBussiness: function () {
       var _loadNearBussiness = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
         var _this = this;
@@ -3971,6 +4024,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   // console.log(data.empresas);
                   data.empresas.forEach(function (e) {
                     _this.companies.push(_objectSpread(_objectSpread({}, e), {}, {
+                      icon: _this.icon(e),
                       popup: "<h4 class=\"title-popup\"><i class=\"fas fa-store mr-2\"></i>".concat(e.nombre, "<h4>\n                        <hr class=\"hr-popup\">\n                        <div class=\"content-popup\">\n                            <div class=\"row mx-1\">\n                                <div class=\"subtitle-popup\">Direcci\xF3n: </div>").concat(e.direccion, "\n                            </div>\n                            <div class=\"row mx-1 mt-2\">\n                                <div class=\"subtitle-popup\">Celular: </div> ").concat(e.celular, "\n                            </div>\n                            <div class=\"row mx-1 mt-2\">\n                                <div class=\"subtitle-popup\">Sitio web - delivery: </div>\n                                <a href=\"/empresa/").concat(e.nombre_unico, "\" class=\"link-popup\" target=\"_blank\">").concat('www.tenvioperu.com/empresa/' + e.nombre_unico, "</a>\n                            </div>\n                            <hr class=\"hr-popup\">\n                            <div class=\"row mx-1 justify-content-around\">\n                                <a href=\"https://api.whatsapp.com/send?phone=51").concat(e.celular, "&text=\" target=\"_blank\" title=\"Enviar mensaje\" class=\"link-whatsapp\"><i class=\"fab fa-whatsapp fa-2x col-2\"></i></a>\n                                <a href=\"tel:+").concat(e.celular, "\" title=\"Llamar\" class=\"link-phone\"><i class=\"fas fa-phone fa-2x col-2\"></i></a>\n                            </div>\n                        </div>")
                     }));
                   });
@@ -4021,19 +4075,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         })) {
           _this2.tiponegocios_items.push(e);
         }
-      }); // this.categorias_items.forEach( e => {
-      //     var tipo_negocio = this.tiponegocios_local.find( c => c.id === e.tipo_negocio_id );
-      //     if(tipo_negocio){
-      //         tipo_negocio['cant'] = (tipo_negocio['cant'] || 0)  + 1;
-      //         this.tiponegocios_items.push(tipo_negocio);
-      //     }     
-      // });
-      // console.log(this.categorias_items);
-      // console.log(this.tiponegocios_items);
+      });
     },
     countTipoNegocios: function countTipoNegocios(id) {
       var count = 0;
-      this.companies.forEach(function (e) {
+      this.companies_global.forEach(function (e) {
         var array = e.tipos_negocio.split(',');
         if (parseInt(array[0]) === id) count += 1;
       });
@@ -4043,16 +4089,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     tiponegocios_selected: function tiponegocios_selected(newValue, oldValue) {
       var layers = [];
+      this.categorias_selected = [];
       this.companies_global.forEach(function (e) {
         var array = e.tipos_negocio.split(',');
         if (parseInt(array[0]) === newValue) layers.push(e);
       });
-      this.companies = layers;
+      this.companies = layers; // this.messageSuccess();
+
+      this.companies_temp = layers;
       var categories = [];
       this.categorias_items_extend.forEach(function (e) {
         if (e.tipo_negocio_id === newValue) categories.push(e);
       });
       this.categorias_items = categories;
+    },
+    categorias_selected: function categorias_selected(categories_selected, oldValue) {
+      if (categories_selected.length > 0) {
+        var layers = [];
+        this.companies_global.forEach(function (e) {
+          var array = e.categorias.split(',');
+          var BreakException = {};
+
+          try {
+            categories_selected.forEach(function (v) {
+              if (array.includes(v + '')) {
+                layers.push(e);
+                throw BreakException;
+              }
+            });
+          } catch (e) {}
+        });
+        this.companies = layers;
+      } else {
+        this.companies = this.companies_temp;
+      }
     }
   }
 });
@@ -5694,6 +5764,18 @@ __webpack_require__.r(__webpack_exports__);
         marker.getPopup().options['maxWidth'] = 8000; // console.log(marker.getPopup());
 
         marker.bindTooltip(layer.direccion || 'Default').openTooltip();
+        var urlIcon = layer.icon || null;
+
+        if (urlIcon) {
+          var icon = L.icon({
+            iconUrl: urlIcon,
+            iconSize: [35, 50],
+            iconAnchor: [17, 50],
+            popupAnchor: [2, -50]
+          });
+          marker.setIcon(icon);
+        }
+
         marker.addTo(_this3.map);
 
         _this3.marker_layers.push(marker);
@@ -46714,7 +46796,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
 
 // exports
 
