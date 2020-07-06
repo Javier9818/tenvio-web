@@ -5,13 +5,13 @@
           <div class="menu-wrapper">
             <nav class="nav nav-tabs justify-content-center">
               <!-- <a class="nav__link active" style="font-family: 'Nunito', sans-serif;" data-toggle="tab" href="#tab1" @click="funcionCategories(0)">TODO</a> -->
-              <a class="nav__link" style="font-family: 'Nunito', sans-serif;" data-toggle="tab" :href="'#tab'+(index+2)"  v-for="(item, index) of MerchantType" :key="index" @click="funcionCategories(item.id)">{{item.descripcion}}</a>
+              <a :class="(index==0)?'nav__link  active':'nav__link ' " style="font-family: 'Nunito', sans-serif; margin-bottom: 2%" data-toggle="tab" :href="'#tab'+(index+2)"  v-for="(item, index) of MerchantType" :key="index" @click="funcionCategories(item.id)">{{item.descripcion}}</a>
             </nav>
           </div><!-- /.menu-wrapper  -->
         </div><!-- /.col-lg-12 -->
       </div><!-- /.row -->
     <div class="row ">
-      <div class="col-md-4 d-flex justify-content-around" v-for="(item, index) of Categories" :key="index" style="cursor: pointer" @click="redirect(item.descripcion)">
+      <div class="col-lg-3 col-md-4  col-6 d-flex justify-content-around" v-for="(item, index) of Categories" :key="index" style="cursor: pointer" @click="redirect(item.descripcion)">
         <div class="card d-flex align-items-center p-5 my-3" style="width: 18rem; width: 250px;
             height: 250px;
             background-color: #fff;

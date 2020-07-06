@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 use Carbon\Carbon;
 
+use App\Pagos;
+
 class Contrato extends Model
 {
 	protected $table = 'contratos';
@@ -15,6 +17,7 @@ class Contrato extends Model
 		'estado',
 		'plan_precio',
 		'pedidos_total',
+		'pedidos_contador',
 		'fecha_inicio',
 		'fecha_vencimiento',
 		'created_at',
@@ -22,7 +25,8 @@ class Contrato extends Model
 	];
 	protected $casts = [
 		'fecha_inicio' => 'datetime:d/m/Y h:i a',
-		'fecha_vencimiento' => 'datetime:d/m/Y h:i a'
+		'fecha_vencimiento' => 'datetime:d/m/Y h:i a',
+		'fecha_aprob_rech' => 'datetime:d/m/Y h:i a'
 	];
 	/*
 	protected $casts = [
@@ -32,16 +36,28 @@ class Contrato extends Model
 		'fecha_confirmacionpago' => 'datetime:d/m/Y h:i a'
 	];
 	*/
+	public static $CONTRATO_VENCIDO = 'VENCIDO';
+	public static $CONTRATO_VIGENTE = 'VIGENTE';
+	public static $CONTRATO_RECHAZADO = 'RECHAZADO';
+	public static $CONTRATO_REINTENTADO = 'REINTENTADO';
+	public static $CONTRATO_ENESPERA = 'EN ESPERA A VALIDAR';
 
-	public static function agregarExtension($empresa_id, $cantidad_pedidos){
-		return Contrato::where(['empresa_id' => $empresa_id])
+	public static function sumarPedidoEntregado($empresa_id){
+		$contrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => static::$CONTRATO_VIGENTE])
+			->select('id', 'fecha_inicio')->orderBy('fecha_inicio', 'asc')->first();
+		return Contrato::where(['id' => $contrato->id])
+			->increment('pedidos_contador', 1);
+	}
+
+	public static function agregarExtension($contratos_id, $cantidad_pedidos){
+		return Contrato::where(['id' => $contratos_id])
 			->increment('pedidos_total', $cantidad_pedidos);
 	}
 
 	public static function seHaPagado($empresa_id, $estado){
-		Contrato::where(['empresa_id' => $empresa_id, 'estado' => 'En espera a validar'])
+		Contrato::where(['empresa_id' => $empresa_id, 'estado' => static::$CONTRATO_ENESPERA])
 			->update([
-				'estado' => ($estado)?'Vigente':'Rechazado'
+				'estado' => ($estado)?(static::$CONTRATO_VIGENTE):(static::$CONTRATO_RECHAZADO)
 			]);
 	}
 
@@ -57,9 +73,16 @@ class Contrato extends Model
 		return Contrato::whereRaw('pl.id = contratos.plan_id AND contratos.plan_id = pa.plan_id')
 			->where($where)
 			->select('contratos.id',
+				'contratos.pedidos_contador',
 				'contratos.pedidos_total',
+				DB::raw('(
+					SELECT GROUP_CONCAT(pagos.cantidad_pedidos) FROM pagos
+					WHERE pagos.contratos_id = contratos.id and pagos.estado = "'.Pagos::$PAGO_APROBADO.'")
+					AS pedidos_total_'
+				),
 				'contratos.fecha_inicio',
 				'contratos.fecha_vencimiento',
+				'contratos.updated_at as fecha_aprob_rech',
 				'contratos.estado',
 				'pl.id as plan_id',
 				'pl.nombre as plan_nombre',
@@ -70,6 +93,7 @@ class Contrato extends Model
 			->join('pagos as pa', 'pa.contratos_id', '=', 'contratos.id')
 			->orderByDesc('contratos.fecha_inicio')
 			->orderByDesc('contratos.id')
+			//->toSql();
 			->get();
 	}
 	/*
@@ -100,13 +124,13 @@ class Contrato extends Model
 	*/
 	public static function duplicar($contrato, $anularElAnterior){
 		if ($anularElAnterior){
-			$contrato->estado = 'Reenviado';
+			$contrato->estado = static::$CONTRATO_REINTENTADO;
 			$contrato->save();
 		}
 		return Contrato::create([
 			'empresa_id' => $contrato->empresa_id,
 			'plan_id' => $contrato->plan_id,
-			'estado' => 'En espera a validar',
+			'estado' => static::$CONTRATO_ENESPERA,
 			'plan_precio' => $contrato->plan_precio,
 			'pedidos_total' => $contrato->pedidos_total,
 			'fecha_inicio' => $contrato->fecha_inicio,
@@ -114,7 +138,7 @@ class Contrato extends Model
 		]);
 	}
 	public static function renovar($empresa_id, $plan){
-		$ultimoContrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => 'Vigente'])
+		$ultimoContrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => static::$CONTRATO_VIGENTE])
 			->select('id', 'fecha_inicio', 'fecha_vencimiento')
 			->orderByDesc('fecha_vencimiento')
 			->first();
@@ -126,7 +150,7 @@ class Contrato extends Model
 		return Contrato::create([
 			'empresa_id' => $empresa_id,
 			'plan_id' => $plan->id,
-			'estado' => 'En espera a validar',
+			'estado' => static::$CONTRATO_ENESPERA,
 			'plan_precio' => $plan->precio,
 			'pedidos_total' => $plan->cantidad_pedidos,
 			'fecha_inicio' => $fechaInicio,

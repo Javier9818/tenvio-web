@@ -10,15 +10,15 @@ class Categoria extends Model
     protected $table = 'categorias';
 
     public static  function _GET($request)
-    {        
+    {
         return Categoria::where('tipo_negocio_id', $request->get('id'))
             ->select('id', 'descripcion','state','created_at')
             ->get();
     }
     public static function _Save($request)
-    {   
+    {
         return Categoria::create(
-            [ 
+            [
                 'descripcion'=>$request->get('descripcion'),
                 'state'=>1,
                 'icon'=>$request->get('icon'),
@@ -37,7 +37,7 @@ class Categoria extends Model
         );
     }
     public static  function _Delete($request)
-    {        
+    {
         return Categoria::where('id', $request->get('id'))
 			->update([
 				'state' => $request->get('state')

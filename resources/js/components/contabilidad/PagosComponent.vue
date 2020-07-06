@@ -43,7 +43,7 @@
 			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
 		</div>
 		<br>
-		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields">
+		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields" :tbody-tr-class="rowClass">
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="cargarVer(row)" v-b-modal.ver-contrato variant="success" size="sm">Ver</b-button>
 				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Reintentar Pago</b-button>
@@ -51,6 +51,50 @@
 			</template>
 		</b-table>
 		<b-modal id="ver-contrato" size="lg" scrollable centered hide-backdrop title="Ver Contrato" hide-footer>
+			<b-form-group label="Estado" label-cols-sm="5" class="mb-0">
+				{{contratoSeleccionado.estado}} desde el {{contratoSeleccionado.fecha_aprob_rech}}
+			</b-form-group>
+			<b-form-group label="Fecha de Inicio" label-cols-sm="5" class="mb-0">
+				{{contratoSeleccionado.fecha_inicio}}
+			</b-form-group>
+			<b-form-group label="Fecha de Vencimiento" label-cols-sm="5" class="mb-0">
+				{{contratoSeleccionado.fecha_vencimiento}}
+			</b-form-group>
+			<b-form-group label="Precio del Plan" label-cols-sm="5" class="mb-0">
+				{{contratoSeleccionado.precio_}}
+			</b-form-group>
+			<b-form-group label="Pedidos Realizados" label-cols-sm="5" class="mb-0">
+				{{contratoSeleccionado.pedidos_contador}}
+			</b-form-group>
+			<b-form-group label="Total de Pedidos" label-cols-sm="5" class="mb-0">
+				{{contratoSeleccionado.pedidos_total}}
+			</b-form-group>
+			<div class="row">
+				<div v-for="(lista_pagos, i) in contratoSeleccionado.listapagos" class="col-6">
+					<div class="text-center">
+						<h4>Pago {{(i+1)}}: {{lista_pagos.tipo}} {{lista_pagos.plan_nombre}}</h4>
+					</div>
+					<b-form-group label="Fecha de Pago" label-cols-sm="5" class="mb-0">
+						{{lista_pagos.fecha_pago}}
+					</b-form-group>
+					<b-form-group label="Fecha de Revisión" label-cols-sm="5" class="mb-0">
+						{{lista_pagos.fecha_aprob_rech}}
+					</b-form-group>
+					<b-form-group label="Estado" label-cols-sm="5" class="mb-0">
+						{{lista_pagos.estado}}
+					</b-form-group>
+					<b-form-group label="Observacion" label-cols-sm="5" class="mb-0" v-if="lista_pagos.observacion!=null">
+						{{lista_pagos.observacion}}
+					</b-form-group>
+					<b-form-group label="Precio" label-cols-sm="5" class="mb-0">
+						{{lista_pagos.precio}}
+					</b-form-group>
+					<b-form-group label="Cantidad de Pedidos" label-cols-sm="5" class="mb-0">
+						{{lista_pagos.cantidad_pedidos}}
+					</b-form-group>
+					<br>
+				</div>
+			</div>
 			<div class="text-center pt-1">
 				<b-button @click="cerrarModal" variant="danger" size="sm">Cerrar</b-button>
 				<b-button v-if="contratoSeleccionado.estado=='Vigente'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="success" size="sm">Extender mi Plan</b-button>
@@ -182,6 +226,9 @@
 				<b-button @click="enviarPagoExtension" variant="success" size="sm" :disabled="deshabilitaboton">Extender mi Plan</b-button>
 			</div>
 		</b-modal>
+		<div hidden>
+			{{aaaaaa}}
+		</div>
 	</div>
 </template>
 
@@ -195,8 +242,10 @@ export default {
 			fields: [
 				{ key: 'plan_nombre', label:'Plan', sortable: true },
 				{ key: 'periodo', label:'Periodo del Contrato', sortable: true },
-				{ key: 'precio_', label: 'Precio', sortable: true },
-				{ key: 'pedidos_total', label: 'Cantidad de Pedidos', sortable: true },
+				//{ key: 'precio_', label: 'Precio', sortable: true },
+				{ key: 'pedidos_contador_', label: 'Pedidos Hechos', sortable: true },
+				//{ key: 'pedidos_contador', label: 'Pedidos Hechos', sortable: true },
+				{ key: 'pedidos_total_', label: 'Total de Pedidos', sortable: true },
 				{ key: 'estado', label: 'Estado', sortable: true },
 				{ key: 'opciones', label: 'Opciones', sortable: true }
 			],
@@ -212,12 +261,31 @@ export default {
 			listaExtensiones: [],
 			idExtensionSeleccionada: -1,
 			extensionSeleccionada: {},
+			aaaaaa: false
 		}
 	},
 	methods:{
+		cargarPagosPorContrato: function(){
+			var that = this;
+			this.aaaaaa = false;
+			axios.post(this.ruta+'/pagosporcontrato', {contrato_id: this.contratoSeleccionado.id})
+			.then(function (response) {
+				let datos = response.data;
+				that.contratoSeleccionado.listapagos = datos;
+				that.aaaaaa=true;
+				console.log(datos);
+			})
+			.catch(()=>{
+				that.mensajeError(true);
+			})
+			.finally(()=>{});
+		},
 		cargarVer: function(row){
 			this.contratoSeleccionado = row.item;
 			this.indexContratoSeleccionado = row.index;
+			if(this.contratoSeleccionado.listapagos == null)
+				this.cargarPagosPorContrato();
+			console.log(row);
 		},
 		enviarPagoExtension: function(){
 			var that = this;
@@ -388,11 +456,33 @@ export default {
 			})
 			.finally(()=>{});
 		},
+		rowClass(item, type) {
+			if (!item || type !== 'row')
+				return;
+			if (item.estado === 'Vigente'){
+				if ((1.0 * item.pedidos_contador) / item.pedidos_total >= 0.7)
+					return 'table-danger';
+				else
+					return 'table-success';
+			}
+			else if (item.estado === 'Rechazado')
+				return 'table-warning';
+			else if (item.estado === 'En espera a validar')
+				return 'table-info';
+			else
+				return 'table-secondary';
+		},
 		formatearContratos: function(){
 			if (this.contratos.length > 0){
 				this.contratos.forEach((item, index)=>{
 					this.contratos[index].periodo = item.fecha_inicio + ' ' + item.fecha_vencimiento;
 					this.contratos[index].precio_ = item.precio === 0 ? 'Gratuito' : ('S/ ' + item.precio);
+					var prctnj = (parseFloat(item.pedidos_contador)/item.pedidos_total*100).toFixed(2);
+					this.contratos[index].pedidos_contador_ = item.pedidos_contador + ' (' + String(prctnj) + '%)';
+					if (item.pedidos_total_ != null)
+						this.contratos[index].pedidos_total_ = item.pedidos_total_.split(',').join(' + ');
+					else
+						this.contratos[index].pedidos_total_ = '-';
 				})
 			}
 		},
@@ -405,7 +495,8 @@ export default {
 				that.rutaImagenes = datos.rutaImagenes;
 				that.formatearContratos();
 			})
-			.catch(()=>{
+			.catch((error)=>{
+				console.log(error);
 				that.mensajeError(true);
 			})
 			.finally(()=>{});

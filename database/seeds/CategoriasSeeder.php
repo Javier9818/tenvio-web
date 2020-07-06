@@ -24,7 +24,7 @@ class CategoriasSeeder extends Seeder
         Categoria::create(["descripcion" => "POLLERIA", "tipo_negocio_id" => 1,"icon"=>"drumstick-bite",'state'=>1]);
         Categoria::create(["descripcion" => "CHIFA", "tipo_negocio_id" => 1,"icon"=>"salad",'state'=>1]);
         Categoria::create(["descripcion" => "MENÚS EN GENERAL", "tipo_negocio_id" => 1,"icon"=>"utensils",'state'=>1]);
-        Categoria::create(["descripcion" => "FUENTE DE SODA", "tipo_negocio_id" => 1,"icon"=>"burger-soda",'state'=>1]);
+        Categoria::create(["descripcion" => "FUENTE DE SODA", "tipo_negocio_id" => 1,"icon"=>"hamburger",'state'=>1]);
 
         Categoria::create(["descripcion" => "REPOSTERIA", "tipo_negocio_id" => 2,"icon"=>"cookie-bite",'state'=>1]);
         Categoria::create(["descripcion" => "BODEGA", "tipo_negocio_id" => 3,"icon"=>"store",'state'=>1]);

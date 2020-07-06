@@ -1119,8 +1119,18 @@ ul {
     position: absolute;
     left: 0;
     width: 100%;
-    top: 0px;
-    z-index: 1; }
+    top: 0px; 
+    z-index: 1; 
+  }
+  .navbar-area.nav-absolute1 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0px; 
+    z-index: 1000;
+    position: fixed;
+    background-color: saddlebrown;
+  }
   .navbar-area.header-style-09 .nav-container .nav-right-content ul li .boxed-btn {
     border-radius: 5px;
     background-color: #fff;

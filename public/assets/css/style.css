@@ -67,10 +67,12 @@
     color: #656064 !important;
     font-weight: 1px !important;
     padding: 2px;
-    font-size:1.8em;
+    font-size:1.65em;
     width: 450px;
-    border-radius: 7px;
-    border: solid 0.2px gray;
+    border-radius: 10px;
+    border: solid 0.2px rgb(182, 176, 176);
+    padding: 2%;
+
 }
 
 .product__title__javier{
@@ -3883,6 +3885,7 @@ color: #f38e35;
 
 .footer .contact-box .contact__box-title {
   color: #ffffff;
+  
 }
 
 .footer__logo-wrap {
@@ -3917,7 +3920,11 @@ color: #f38e35;
 .footer-top {
   padding-top: 90px;
 }
-
+.footer-back
+{
+  background-color:#2e9ecb;
+  border-top: 1px solid #e5edef;
+}
 .footer-middle {
   position: relative;
   padding-bottom: 90px;
@@ -5963,11 +5970,20 @@ color: #f38e35;
   font-size: 16px;
 }
 
-.contact .contact-box .contact__box-list li {
+.contact .contact-box .contact__box-list  li {
   font-size: 13px;
   line-height: 23px;
+  
 }
 
+.newColor  li , p
+{
+  color:rgba(255, 255, 255, 0.8);
+}
+.newColor    p
+{
+  color:rgba(255, 255, 255, 0.8);
+}
 .contact .social__icons li {
   margin-right: 10px;
 }

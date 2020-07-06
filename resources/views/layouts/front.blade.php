@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta name="description" content="TE ENVIO - NORTEC">
-  <link href="assets/images/favicon/favicon2.ico"  rel="icon">
+  <link href="/assets/images/favicon/favicon2.ico"  rel="icon">
   <title>@yield('title')</title>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Rubik:400,500,700%7cShadows+Into+Light&display=swap">
@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
   <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
+  
   {{-- <link rel="stylesheet" href= "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -42,7 +43,7 @@
     @yield('contenido')
 
 
-    <footer id="footer" class="footer footer-layout1 text-center bg-dark">
+    <footer id="footer" class="footer footer-layout1 text-center footer-back"  >
       <div class="footer-inner">
         <div class="container">
           <div class="footer-top">
@@ -58,15 +59,15 @@
               <div class="col-sm-12 col-md-12 col-lg-4">
                 <div class="contact-box">
                   <h6 class="contact__box-title">Nosotros</h6>
-                  <ul class="contact__box-list list-unstyled">
-                    <li>TE ENVIO tu mejor aliado, te brindamos las herramientas que necesitas para incrementar tus ventas y gestiones mejor tu negocio.</li>
+                  <ul class="contact__box-list newColor ">
+                    <li class="" >TE ENVIO tu mejor aliado, te brindamos las herramientas que necesitas para incrementar tus ventas y gestiones mejor tu negocio.</li>
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->
               <div class="col-sm-12 col-md-12 col-lg-4">
                 <div class="contact-box">
                   <h6 class="contact__box-title">Servicio las 24h</h6>
-                  <ul class="contact__box-list list-unstyled">
+                  <ul class="contact__box-list newColor ">
                     <li>Plataforma activa siempre para ti ;)</li>
 
                   </ul>
@@ -75,7 +76,7 @@
               <div class="col-sm-12 col-md-12 col-lg-4">
                 <div class="contact-box">
                   <h6 class="contact__box-title">Contactanos</h6>
-                  <ul class="contact__box-list list-unstyled">
+                  <ul class="contact__box-list newColor">
                     <li><span> </span><a href="mailto:Babette@7oroof.com">contacto@tenvioperu.com</a></li>
                     {{-- <li><span> </span><a href="tel:020101236547">98171187</a></li> --}}
                   </ul>
@@ -87,12 +88,12 @@
             <div class="row">
               <div class="col-sm-12 col-md-12 col-lg-12 position-static">
                 <div class="footer__logo-wrap text-center">
-                <img src="{!! asset('assets/images/logo/footer-logo2.png') !!}" alt="logo" class="footer__logo">
+                <img src="{!! asset('/assets/images/logo/LogoWhite_TeEnvio.png') !!}" width="25%" alt="logo" class="footer__logo">
                 </div>
               </div><!-- /.col-lg-12 -->
             </div><!-- /.row -->
             <div class="row">
-              <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
+              <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3 newColor">
                 <p class="mb-20">NORTEC es un grupo tecnológico, cuya actividad principal es el desarrollo y gestión de una plataforma tecnológica mediante la que a través de una página web o aplicación móvil permite a determinados restaurantes de La Libertad publicitar sus productos a través del aplicativo
                 </p>
 
@@ -106,7 +107,7 @@
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="footer__copyright mb-30">
                   <span>&copy; Plataforma Virtual creada por </span>
-                  <a href="#" class="color-theme">Nortec</a>
+                  <a href="/quienes-somos" target="blank" class="color-theme"> <img src="assets/images/landing_pages/logo-white.png" width="10%" style=" margin-top:-1%" alt="logo"></a>
                 </div>
                 <ul class="social__icons social__icons-white justify-content-center">
                   <li><a href="https://www.facebook.com/teenvioperu"><i class="fab fa-facebook-f"></i></a></li>
