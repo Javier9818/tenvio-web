@@ -74,7 +74,6 @@
                 if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng, title, popup, iconUrl, draggable, first){
-
                 var markerX = L.marker(LatLng, {draggable: !this.dragableDisabled, title})
                 var deliveryIcon = iconUrl ? L.icon({ iconUrl, iconSize: [50, 50],iconAnchor: [50, 50], popupAnchor: [-20, -50] }): null;
                 if(iconUrl) markerX.setIcon(deliveryIcon);

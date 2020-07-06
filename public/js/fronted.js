@@ -3941,9 +3941,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       categorias_items: [],
-      tiponegocios_items: [],
+      categorias_items_extend: [],
       repetidos_categorias: {},
       categorias_selected: [],
+      tiponegocios_items: [],
       tiponegocios_selected: [],
       tiponegocios_local: JSON.parse(this.tiponegocios),
       categorias_local: JSON.parse(this.categorias),
@@ -4012,10 +4013,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       this.categorias_local.forEach(function (e) {
-        if (_this2.categorias_unique.includes(e.id + '')) _this2.categorias_items.push(e);
+        if (_this2.categorias_unique.includes(e.id + '')) _this2.categorias_items_extend.push(e);
       });
       this.tiponegocios_local.forEach(function (e) {
-        if (_this2.categorias_items.find(function (c) {
+        if (_this2.categorias_items_extend.find(function (c) {
           return c.tipo_negocio_id === e.id;
         })) {
           _this2.tiponegocios_items.push(e);
@@ -4047,6 +4048,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         if (parseInt(array[0]) === newValue) layers.push(e);
       });
       this.companies = layers;
+      var categories = [];
+      this.categorias_items_extend.forEach(function (e) {
+        if (e.tipo_negocio_id === newValue) categories.push(e);
+      });
+      this.categorias_items = categories;
     }
   }
 });
