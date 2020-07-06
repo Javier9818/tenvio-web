@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendCargo;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Hash;
 
 class FrontController extends Controller
 {
@@ -52,6 +54,9 @@ class FrontController extends Controller
       case 'recupera':
         return FrontController::recupera($request);
         break;
+      case 'recuperaPost':
+        return FrontController::recuperaPost($request);
+        break;
       default:
         # code...
         break;
@@ -85,7 +90,7 @@ class FrontController extends Controller
 		try { 
 			$cifrado = Crypt::encrypt(json_encode(["id" => $request->id]));
       $url = 'http://127.0.0.1:8000/recoverypassword/'.$cifrado;
-      $mensaje='Buen día, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
+      $mensaje='Hola, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
 			Mail::to($request->email)->send(new SendCargo($request->persona, $url, $request->email, $mensaje));
 			return true;
 		}  catch (\Exception  $e) {
@@ -94,7 +99,31 @@ class FrontController extends Controller
         'success'=>false
       ];
     }
-	}
+  }
+  public static function recuperaPost($request)
+  {
+    try {
+      return DB::table('users')
+        ->where('id', $request->get('user'))
+        ->update(['password' => Hash::make($request->get('pass'))]);
+    }  catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+  }
+  public  function Recover($cifrado)
+  {
+    try {
+      $decrypted = Crypt::decrypt($cifrado);
+      $decrypted = json_decode($decrypted);
+      return view('front.recovery', ["data"=>$decrypted]);
+    } catch ( DecryptException $e) {
+      return abort(404);
+    }
+
+  }
   public static function Valida()
   {
 
