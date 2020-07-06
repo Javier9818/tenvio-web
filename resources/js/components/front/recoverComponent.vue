@@ -36,11 +36,11 @@ export default {
       var that = this
       axios.post('/front/recupera',{user:this.username})
       .then(function (response) {
-        this.hideModal()
+        that.hideModal()
         if (response.data.success==0)  
           Swal.fire('ERROR', 'Ha ocurrido un error', 'error')
         else{
-          if(response.data==1)
+          if(response.data)
             Swal.fire('Éxito', 'Se ha generado su solicitud, revise su correo por favor.', 'success')
           else
             Swal.fire('No encontrado', 'El usuario no existe', 'warning')

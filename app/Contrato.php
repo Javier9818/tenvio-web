@@ -42,8 +42,12 @@ class Contrato extends Model
 	public static $CONTRATO_REINTENTADO = 'REINTENTADO';
 	public static $CONTRATO_ENESPERA = 'EN ESPERA A VALIDAR';
 
-
-	//static::$CONTRATO_ENESPERA
+	public static function sumarPedidoEntregado($empresa_id){
+		$contrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => static::$CONTRATO_VIGENTE])
+			->select('id', 'fecha_inicio')->orderBy('fecha_inicio', 'asc')->first();
+		return Contrato::where(['id' => $contrato->id])
+			->increment('pedidos_contador', 1);
+	}
 
 	public static function agregarExtension($contratos_id, $cantidad_pedidos){
 		return Contrato::where(['id' => $contratos_id])

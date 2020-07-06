@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendCargo;
+
 class FrontController extends Controller
 {
   public static function Funciones($opcion,Request $request)
@@ -57,11 +60,16 @@ class FrontController extends Controller
   public static function recupera($request)
   {
      try {
-      return DB::table('users')
-      ->select('users.id')
+      $id= DB::table('users')
+      ->join('personas','personas.id','=','users.id')
+      ->selectRaw('users.id, users.email, concat(personas.nombres," ",personas.appaterno," ",personas.apmaterno) as persona')
       ->where('users.username','=',$request->get('user'))
       ->orWhere('users.email','=',$request->get('user'))
-      ->get();
+      ->get(); 
+        if(count($id))
+          return FrontController::EnviaEmail($id[0]);
+        else 
+          return false;
      } catch (\Exception  $e) {
       return [
         'Message'=> $e->getMessage(),
@@ -71,6 +79,22 @@ class FrontController extends Controller
 
 
   }
+  public static function EnviaEmail($request)
+	{
+    
+		try { 
+			$cifrado = Crypt::encrypt(json_encode(["id" => $request->id]));
+      $url = 'http://127.0.0.1:8000/recoverypassword/'.$cifrado;
+      $mensaje='Buen día, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
+			Mail::to($request->email)->send(new SendCargo($request->persona, $url, $request->email, $mensaje));
+			return true;
+		}  catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
+    }
+	}
   public static function Valida()
   {
 

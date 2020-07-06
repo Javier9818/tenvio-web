@@ -3,6 +3,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\PedidosUsers;
+use App\Contrato;
 
 class Pedidos extends Model
 {
@@ -84,11 +85,20 @@ class Pedidos extends Model
 			->groupBy('pedidos.id')
 			->get();
 	}
-	public static function entregar($idpedido){
-		return Pedidos::where('id', $idpedido)
-			->update([
-				'estado' => 'ENTREGADO'
-			]);
+	public static function entregar($idpedido, $empresa_id){
+		DB::beginTransaction();
+		try {
+			$pedidos = Pedidos::where('id', $idpedido)
+				->update([
+					'estado' => 'ENTREGADO'
+				]);
+			Contrato::sumarPedidoEntregado($empresa_id);
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			return false;
+		}
+		return $pedidos;
 	}
 	public static function aceptar($idpedido){
 		return Pedidos::where('id', $idpedido)
