@@ -17,7 +17,10 @@
                 <input :class="['input', ($v.form.password.$error) ? 'is-danger' : '']" v-model="form.password" type="password" placeholder="Ingrese apellidos paternos">
             </div>
             <p v-if="$v.form.password.$error" class="help is-danger">Este campo es inválido</p>
-        </div>
+             <p v-if="!$v.form.password.maxLength" class="help is-danger">La contraseña no pueden superar los 18 caracteres</p>
+            <p v-if="$v.form.user.required && !$v.form.user.minLength" class="help is-danger">La contraseña debe tener más de 7 caracteres</p>
+            
+        </div> 
     </div>
 </template>
 
@@ -36,7 +39,7 @@
                     password:''
                 }
             }
-        },
+        },        
         validations: {
             form: {
                 user: {
@@ -52,11 +55,16 @@
                         } catch(e) {
                         return false;
                         }
+                    }, 
+                    async isUnique(value) 
+                    { 
+                        if ((/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/.test(value)) || (/^[0-9]+$/.test(value))) return true 
                     }
                 },
                 password: {
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(18),
+                    minLength: minLength(7)
                 }
             }
         },
