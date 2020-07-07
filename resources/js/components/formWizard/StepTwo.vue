@@ -18,7 +18,7 @@
             </div>
             <p v-if="$v.form.password.$error" class="help is-danger">Este campo es inválido</p>
              <p v-if="!$v.form.password.maxLength" class="help is-danger">La contraseña no pueden superar los 18 caracteres</p>
-            <p v-if="$v.form.user.required && !$v.form.user.minLength" class="help is-danger">La contraseña debe tener más de 7 caracteres</p>
+            <p v-if="$v.form.password.required && !$v.form.password.minLength" class="help is-danger">La contraseña debe tener más de 7 caracteres</p>
             
         </div> 
     </div>

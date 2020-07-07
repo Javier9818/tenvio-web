@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
       <div class="row justify-content-center align-items-center">
-          <div style="font-size:1em;"><i class="ft-lock"></i> Seguridad de la cuenta</div>
+          <div style="font-size:1em;" class="seguridad"><i class="ft-lock"></i> Seguridad de la cuenta</div>
           <a v-if="editar===null" href="javascript:void(0)" v-on:click="editar=true" class="ml-1">Cambiar contraseña</a>
           <a v-if="editar" href="javascript:void(0)" v-on:click="editar=null" class="ml-1">Cancelar</a>
       </div>

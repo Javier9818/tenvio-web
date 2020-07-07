@@ -142,7 +142,7 @@
   </div>
   <!-- /.wrapper -->
   <script src="/js/fronted.js" type="text/javascript"></script>
-
+  <script src="/js/app.js" type="text/javascript"></script>                 
   <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
   <script src="{!! asset('assets/js/plugins.js') !!}"></script>
   <!-- <script src="assets/js/wow.min.js"></script> -->

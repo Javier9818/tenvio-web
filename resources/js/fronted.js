@@ -35,6 +35,9 @@ Vue.component('list-map', require('./components/front/inList_Map.vue').default);
 
 Vue.component('search-bussiness-near', require('./components/front/bussiness_near/searchBussinessNearComponent.vue').default);
 
+
+
+
 // const EventBus = new Vue();
 const app = new Vue({
     el: '#app',
