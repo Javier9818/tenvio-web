@@ -4,10 +4,10 @@
             <div class="container nav-container">
                 <div class="responsive-mobile-menu">
                     <div class="logo-wrapper">
-                        <a href="index.html" class="logo">
+                        <a href="/quienes-somos" class="logo">
                             <img src="assets/images/landing_pages/logo-white.png" alt="logo">
                         </a>
-                    </div>
+                    </div> 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#appside_main_menu"
                         aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -45,7 +45,7 @@
                                 <a href="https://www.youtube.com/watch?v=Q86XXD3pnnw" class=" play-video-btn boxed-btn-02 mfp-iframe my-1"><i class="fa fa-play"></i> ¿Cómo funciona?</a>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-lg-5">
                         <div class="right-img">
                             <div class="img-wrapper">
@@ -301,6 +301,7 @@ import Swal from 'sweetalert2'
             },
             enviar()
             {
+                 
                 var that = this;
                 this.enviando='Enviando'
                 axios.post('/front/email_contactanos',{data:this.email_service})

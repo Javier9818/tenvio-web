@@ -47,7 +47,7 @@
     color: #fd4873 !important;
 }
 .containLine {
-    width: 400px;
+    
     display: flex;
     justify-content: flex-start;
     margin-left: 25px;
@@ -68,7 +68,7 @@
     font-weight: 1px !important;
     padding: 2px;
     font-size:1.65em;
-    width: 450px;
+    /* width: 450px; */
     border-radius: 10px;
     border: solid 1.2px rgb(182, 176, 176);
     padding: 2%;
