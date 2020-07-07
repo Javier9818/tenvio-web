@@ -3942,9 +3942,44 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['tiponegocios', 'categorias'],
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    var _this = this;
+
+    this.autocomplete = new google.maps.places.Autocomplete(this.$refs.autocomplete, {
+      types: ['geocode']
+    });
+    this.autocomplete.setComponentRestrictions({
+      'country': ['pe']
+    });
+    this.autocomplete.addListener('place_changed', function () {
+      var place = _this.autocomplete.getPlace();
+
+      var ac = place.address_components;
+      var lat = place.geometry.location.lat();
+      var lng = place.geometry.location.lng();
+      var city = ac[0]["short_name"];
+
+      _this.loadNearBussiness({
+        lat: lat,
+        lng: lng
+      });
+
+      _this.geoCoords = {
+        lat: lat,
+        lng: lng,
+        city: city
+      }; //console.log(`The user picked ${city} with the coordinates ${lat}, ${lng}`);
+    });
+  },
   data: function data() {
     return {
       categorias_items: [],
@@ -3960,7 +3995,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       companies_temp: [],
       categorias_unique: [],
       categorias_extend: [],
-      message_state: false
+      message_state: false,
+      geoCoords: null,
+      geoUpdate: false
     };
   },
   methods: {
@@ -4010,31 +4047,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     loadNearBussiness: function () {
       var _loadNearBussiness = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
-        var _this = this;
+        var _this2 = this;
 
-        var lat, lng;
+        var lat, lng, array_empresas;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 lat = _ref.lat, lng = _ref.lng;
-                _context.next = 3;
+                array_empresas = [];
+                _context.next = 4;
                 return axios.get("/api/bussiness-near/".concat(lat, "/").concat(lng)).then(function (_ref2) {
                   var data = _ref2.data;
                   // console.log(data.empresas);
                   data.empresas.forEach(function (e) {
-                    _this.companies.push(_objectSpread(_objectSpread({}, e), {}, {
-                      icon: _this.icon(e),
+                    array_empresas.push(_objectSpread(_objectSpread({}, e), {}, {
+                      icon: _this2.icon(e),
                       popup: "<h4 class=\"title-popup\"><i class=\"fas fa-store mr-2\"></i>".concat(e.nombre, "<h4>\n                        <hr class=\"hr-popup\">\n                        <div class=\"content-popup\">\n                            <div class=\"row mx-1\">\n                                <div class=\"subtitle-popup\">Direcci\xF3n: </div>").concat(e.direccion, "\n                            </div>\n                            <div class=\"row mx-1 mt-2\">\n                                <div class=\"subtitle-popup\">Celular: </div> ").concat(e.celular, "\n                            </div>\n                            <div class=\"row mx-1 mt-2\">\n                                <div class=\"subtitle-popup\">Sitio web - delivery: </div>\n                                <a href=\"/empresa/").concat(e.nombre_unico, "\" class=\"link-popup\" target=\"_blank\">").concat('www.tenvioperu.com/empresa/' + e.nombre_unico, "</a>\n                            </div>\n                            <hr class=\"hr-popup\">\n                            <div class=\"row mx-1 justify-content-around\">\n                                <a href=\"https://api.whatsapp.com/send?phone=51").concat(e.celular, "&text=\" target=\"_blank\" title=\"Enviar mensaje\" class=\"link-whatsapp\"><i class=\"fab fa-whatsapp fa-2x col-2\"></i></a>\n                                <a href=\"tel:+").concat(e.celular, "\" title=\"Llamar\" class=\"link-phone\"><i class=\"fas fa-phone fa-2x col-2\"></i></a>\n                            </div>\n                        </div>")
                     }));
                   });
-                  _this.companies_global = _this.companies.slice();
+                  _this2.companies = array_empresas;
+                  _this2.companies_global = array_empresas.slice();
                 });
 
-              case 3:
+              case 4:
                 this.filterDataApi();
 
-              case 4:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -4064,18 +4103,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.builFilters();
     },
     builFilters: function builFilters() {
-      var _this2 = this;
+      var _this3 = this;
 
+      this.categorias_items = [];
+      var categorias_items_extend = [],
+          tiponegocios_items = [];
       this.categorias_local.forEach(function (e) {
-        if (_this2.categorias_unique.includes(e.id + '')) _this2.categorias_items_extend.push(e);
+        if (_this3.categorias_unique.includes(e.id + '')) categorias_items_extend.push(e);
       });
+      this.categorias_items_extend = categorias_items_extend;
       this.tiponegocios_local.forEach(function (e) {
-        if (_this2.categorias_items_extend.find(function (c) {
+        if (categorias_items_extend.find(function (c) {
           return c.tipo_negocio_id === e.id;
         })) {
-          _this2.tiponegocios_items.push(e);
+          tiponegocios_items.push(e);
         }
       });
+      this.tiponegocios_items = tiponegocios_items;
     },
     countTipoNegocios: function countTipoNegocios(id) {
       var count = 0;
@@ -5661,14 +5705,14 @@ __webpack_require__.r(__webpack_exports__);
   'clickDisabled', //true or false
   'geoWatch', // true or false
   'dragableDisabled', //true or false
-  'minZoom'],
+  'minZoom', 'center', 'geoUpdate'],
   mounted: function mounted() {
     this.initMap();
   },
   data: function data() {
     return {
       map: null,
-      marker: L.marker([0, 0]),
+      marker: null,
       polyline: null,
       marker_layers: []
     };
@@ -5677,6 +5721,20 @@ __webpack_require__.r(__webpack_exports__);
     layers: function layers(newValue, oldValue) {
       this.cleanLayers();
       this.initLayers();
+    },
+    center: function center(_center, oldValue) {
+      if (this.marker !== null) this.marker.removeFrom(this.map);
+      var LatLng = L.latLng(_center.lat, _center.lng);
+      this.map.setView(LatLng, 15);
+      this.createMarker(LatLng, 'Mi ubicación', _center.city, null, false, false);
+    },
+    geoUpdate: function geoUpdate() {
+      this.layers = [];
+      if (this.marker !== null) this.marker.removeFrom(this.map);
+      this.map.locate({
+        setView: true,
+        maxZoom: 17
+      });
     }
   },
   methods: {
@@ -46760,7 +46818,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* fallback */\n@font-face {\n  font-family: \"Material Icons\";\n  font-style: normal;\n  font-weight: 400;\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\n  font-family: \"Material Icons\";\n  font-weight: normal;\n  font-style: normal;\n  font-size: 24px;\n  line-height: 1;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-feature-settings: \"liga\";\n  -webkit-font-smoothing: antialiased;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* fallback */\n@font-face {\r\n  font-family: \"Material Icons\";\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\r\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\r\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\r\n  font-family: \"Material Icons\";\r\n  font-weight: normal;\r\n  font-style: normal;\r\n  font-size: 24px;\r\n  line-height: 1;\r\n  letter-spacing: normal;\r\n  text-transform: none;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  word-wrap: normal;\r\n  direction: ltr;\r\n  -webkit-font-feature-settings: \"liga\";\r\n  -webkit-font-smoothing: antialiased;\n}\r\n", ""]);
 
 // exports
 
@@ -74293,7 +74351,19 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._m(0),
+      _c("div", { staticClass: "row justify-content-center row-search" }, [
+        _c("input", {
+          ref: "autocomplete",
+          staticClass: "form-control offset-2 offset-md-0 col-6 col-md-9",
+          attrs: {
+            type: "search",
+            placeholder: "Buscar lugar",
+            "aria-label": "Search"
+          }
+        }),
+        _vm._v(" "),
+        _vm._m(0)
+      ]),
       _vm._v(" "),
       _c("mapa-interactivo", {
         attrs: {
@@ -74302,10 +74372,28 @@ var render = function() {
           clickDisabled: true,
           dragableDisabled: true,
           minZoom: 15,
-          layers: _vm.companies
+          layers: _vm.companies,
+          center: _vm.geoCoords,
+          geoUpdate: _vm.geoUpdate
         },
         on: { geoPosition: _vm.loadNearBussiness }
       }),
+      _vm._v(" "),
+      _c("div", { staticClass: "contenedor" }, [
+        _c(
+          "button",
+          {
+            staticClass: "botonF1",
+            attrs: { title: "Mi ubicación" },
+            on: {
+              click: function($event) {
+                _vm.geoUpdate = !_vm.geoUpdate
+              }
+            }
+          },
+          [_c("i", { staticClass: "fas fa-map-marked-alt" })]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -74416,29 +74504,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center row-search" }, [
-      _c("input", {
-        staticClass: "form-control offset-2 offset-md-0 col-6 col-md-9",
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-filter ml-2 col-3 col-md-1",
         attrs: {
-          type: "search",
-          placeholder: "Buscar lugar",
-          "aria-label": "Search"
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#myModal"
         }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-filter ml-2 col-3 col-md-1",
-          attrs: {
-            type: "button",
-            "data-toggle": "modal",
-            "data-target": "#myModal"
-          }
-        },
-        [_c("i", { staticClass: "fas fa-sliders-h" }), _vm._v(" Filtros")]
-      )
-    ])
+      },
+      [_c("i", { staticClass: "fas fa-sliders-h" }), _vm._v(" Filtros")]
+    )
   },
   function() {
     var _vm = this
@@ -97857,7 +97934,11 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
+module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
+=======
 module.exports = __webpack_require__(/*! C:\Users\RobertGutierrez\Desktop\Nortec\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
+>>>>>>> e82e01887d2887df858f77898cae02eea6d53259
 
 
 /***/ })

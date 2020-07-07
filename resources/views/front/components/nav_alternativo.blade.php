@@ -10,8 +10,36 @@
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAeTM7b0MYnEP8-Ax6GmvD6jV3xgpMac60"></script>
     <title>Tenvio - Negocios cercanos</title>
     <style>
+      .contenedor {
+        width: 90px;
+        height: 240px;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+      }
+
+      .botonF1 {
+        z-index:1000;
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        background: #F44336;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        border: none;
+        outline: none;
+        color: #FFF;
+        font-size: 36px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        transition: 0.3s;
+      }
       .filter-text{
         color: grey;
       }
