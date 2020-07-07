@@ -43,12 +43,16 @@
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
           <div class="heading text-center mb-50">
-            <span class="heading__subtitle">Restaurantes, Reposteria, Bodegas y más</span>
-            <h2 class="heading__title text-white">Resultados de {{$search}}</h2>
+          @if($empresas!==null)
+          <span class="heading__subtitle">Restaurantes, Reposteria, Bodegas y más</span>
+          <h2 class="heading__title text-white">Resultados de {{$search}}</h2>
             <div class="heading__icon">
                 <img style="width:40px" src="{!! asset('assets/images/logo/heading_icon.svg') !!}">
 
             </div>
+          @endif
+           
+            
 
           </div><!-- /.heading -->
 
