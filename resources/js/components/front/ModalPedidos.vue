@@ -14,7 +14,7 @@
                     <button
                         :class="color(item.state).color + ' btn-sm btn-block mt-2'"
                         :title="color(item.state).title"
-                        style="color:white;"> {{(item.state).toUpperCase()}}
+                        style="color:white; cursor:default"> {{(item.state).toUpperCase()}}
 
                     </button>
                 </div><!-- /.cart-item-content -->

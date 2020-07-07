@@ -107,7 +107,7 @@
               <div class="col-sm-12 col-md-12 col-lg-12">
                 <div class="footer__copyright mb-30">
                   <span>&copy; Plataforma Virtual creada por </span>
-                  <a href="/quienes-somos" target="blank" class="color-theme"> <img src="assets/images/landing_pages/logo-white.png" width="10%" style=" margin-top:-1%" alt="logo"></a>
+                  <a href="/quienes-somos" target="blank" class="color-theme"> <img src="/assets/images/landing_pages/logo-white.png" width="10%" style=" margin-top:-1%" alt="logo"></a>
                 </div>
                 <ul class="social__icons social__icons-white justify-content-center">
                   <li><a href="https://www.facebook.com/teenvioperu"><i class="fab fa-facebook-f"></i></a></li>
