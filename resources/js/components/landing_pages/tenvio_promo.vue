@@ -261,7 +261,7 @@
                                         <div class="form-group textarea">
                                             <textarea   v-model="email_service.message" class="form-control" cols="30" rows="10" placeholder="Mensaje"></textarea>
                                         </div>
-                                        <button class="submit-btn  btn-rounded gd-bg-1" @click="enviar">Enviar</button>
+                                        <button class="submit-btn  btn-rounded gd-bg-1" @click="enviar">{{enviando}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -288,7 +288,8 @@ import Swal from 'sweetalert2'
                     name:'',
                     message:'',
                     email:''
-                }
+                },
+                enviando:'Enviar'
             }
         },
         mounted() {
@@ -301,6 +302,7 @@ import Swal from 'sweetalert2'
             enviar()
             {
                 var that = this;
+                this.enviando='Enviando'
                 axios.post('/front/email_contactanos',{data:this.email_service})
                 .then(function (response) {
                     if (response.data.success==0)  
@@ -308,8 +310,9 @@ import Swal from 'sweetalert2'
                     else{
                         if(response.data)
                         {
+                            that.enviando='Enviar'
                              Swal.fire('Éxito', 'Se ha enviado su consulta, nos comunicaremos contigo en unos minutos', 'success')
-                             location.reload="/"
+                             location.reload()
                         }
                            
                         else

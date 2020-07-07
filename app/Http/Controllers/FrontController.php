@@ -72,11 +72,11 @@ class FrontController extends Controller
 		try { 
 		  
       $mensaje='
-      Hola, acaba de llegar la siguiente consulta:'
-      .'De: '.$data['name']
-      .'Mensaje: '.$data['message']
-      .'email: '.$data['email']
-      .'Porfa, respondela pe kgda :3';
+      Hola, acaba de llegar la siguiente consulta de '
+      .$data['name']
+      .' Mensaje: '.$data['message']
+      .' email: '.$data['email']
+      .' Porfa, respondela pe kgda :3';
 			Mail::to(Controller::emails)->send(new SendCargo('CONTÁCTA CON NOSOTROS', '', '', $mensaje));
 			return true;
 		}  catch (\Exception  $e) {
