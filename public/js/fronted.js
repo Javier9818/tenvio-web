@@ -2155,7 +2155,7 @@ var nombreText = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"
   validations: {
     form: {
       ruc: {
-        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minLength"])(3),
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minLength"])(11),
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(11)
       },
       nombre: {
@@ -2900,7 +2900,28 @@ var nombreText = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"
       celular: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(10),
-        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minLength"])(6)
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minLength"])(6),
+        isUnique: function isUnique(value) {
+          return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    if (!/^[0-9]+$/.test(value)) {
+                      _context.next = 2;
+                      break;
+                    }
+
+                    return _context.abrupt("return", true);
+
+                  case 2:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee);
+          }))();
+        }
       },
       correo: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
@@ -2908,48 +2929,48 @@ var nombreText = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"
         found: function found(value) {
           var _this = this;
 
-          return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
             var _yield$axios$get, data;
 
-            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
               while (1) {
-                switch (_context.prev = _context.next) {
+                switch (_context2.prev = _context2.next) {
                   case 0:
-                    _context.prev = 0;
+                    _context2.prev = 0;
 
                     if (!/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(value)) {
-                      _context.next = 11;
+                      _context2.next = 11;
                       break;
                     }
 
                     _this.valida = true;
-                    _context.next = 5;
+                    _context2.next = 5;
                     return axios.get("/api/email/".concat(value));
 
                   case 5:
-                    _yield$axios$get = _context.sent;
+                    _yield$axios$get = _context2.sent;
                     data = _yield$axios$get.data;
                     _this.valida = false;
-                    return _context.abrupt("return", !data.message);
+                    return _context2.abrupt("return", !data.message);
 
                   case 11:
-                    return _context.abrupt("return", false);
+                    return _context2.abrupt("return", false);
 
                   case 12:
-                    _context.next = 17;
+                    _context2.next = 17;
                     break;
 
                   case 14:
-                    _context.prev = 14;
-                    _context.t0 = _context["catch"](0);
-                    return _context.abrupt("return", false);
+                    _context2.prev = 14;
+                    _context2.t0 = _context2["catch"](0);
+                    return _context2.abrupt("return", false);
 
                   case 17:
                   case "end":
-                    return _context.stop();
+                    return _context2.stop();
                 }
               }
-            }, _callee, null, [[0, 14]]);
+            }, _callee2, null, [[0, 14]]);
           }))();
         }
       }
@@ -3904,6 +3925,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -5772,7 +5796,8 @@ __webpack_require__.r(__webpack_exports__);
       map: null,
       marker: null,
       polyline: null,
-      marker_layers: []
+      marker_layers: [],
+      circle: null
     };
   },
   watch: {
@@ -5788,7 +5813,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     geoUpdate: function geoUpdate() {
       this.layers = [];
-      if (this.marker !== null) this.marker.removeFrom(this.map);
+
+      if (this.marker !== null) {
+        this.marker.removeFrom(this.map);
+        this.circle.removeFrom(this.map);
+      }
+
       this.map.locate({
         setView: true,
         maxZoom: 17
@@ -5823,7 +5853,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true); // var radius = e.accuracy;
 
 
-          L.circle(e.latlng, 50).addTo(_this.map);
+          _this.circle = L.circle(e.latlng, 50);
+
+          _this.circle.addTo(_this.map);
         });
       } else if (this.layer) this.initLayer();
 
@@ -72568,7 +72600,7 @@ var render = function() {
         [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-6 mt-2" }, [
-              _c("label", [_vm._v("RUC")]),
+              _c("label", [_vm._v("RUC (opcional)")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -72603,7 +72635,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6 mt-2" }, [
-              _c("label", [_vm._v("Nombre del negocio*")]),
+              _c("label", [_vm._v("Nombre del negocio (*)")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -72639,7 +72671,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6 mt-2" }, [
-              _c("label", [_vm._v("Teléfono de contácto")]),
+              _c("label", [_vm._v("Teléfono de contácto (opcional)")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -72674,7 +72706,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6 mt-2" }, [
-              _c("label", [_vm._v("Celular de contácto*")]),
+              _c("label", [_vm._v("Celular de contácto (*)")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -72713,7 +72745,7 @@ var render = function() {
               "div",
               { staticClass: "col-md-6 mt-2" },
               [
-                _c("label", [_vm._v("Tipo de Negocio*")]),
+                _c("label", [_vm._v("Tipo de Negocio (*)")]),
                 _vm._v(" "),
                 _c("b-form-select", {
                   attrs: {
@@ -72754,7 +72786,7 @@ var render = function() {
               "div",
               { staticClass: "col-md-6 mt-2" },
               [
-                _c("label", [_vm._v("Categorias")]),
+                _c("label", [_vm._v("Categorias (*)")]),
                 _vm._v(" "),
                 _c(
                   "b-overlay",
@@ -72791,7 +72823,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-12 mt-2" }, [
-              _c("label", [_vm._v("Dirección*")]),
+              _c("label", [_vm._v("Dirección (*)")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -72830,7 +72862,7 @@ var render = function() {
               "div",
               { staticClass: "col-md-6 mt-2" },
               [
-                _c("label", [_vm._v("Departamento*")]),
+                _c("label", [_vm._v("Departamento (*)")]),
                 _vm._v(" "),
                 _c("b-form-select", {
                   attrs: {
@@ -72875,7 +72907,7 @@ var render = function() {
               "div",
               { staticClass: "col-md-6 mt-2" },
               [
-                _c("label", [_vm._v("Provincia*")]),
+                _c("label", [_vm._v("Provincia (*)")]),
                 _vm._v(" "),
                 _c("b-form-select", {
                   attrs: {
@@ -72920,7 +72952,7 @@ var render = function() {
               "div",
               { staticClass: "col-md-6 mt-2" },
               [
-                _c("label", [_vm._v("Distrito*")]),
+                _c("label", [_vm._v("Distrito (*)")]),
                 _vm._v(" "),
                 _c("b-form-select", {
                   attrs: {
@@ -72966,7 +72998,7 @@ var render = function() {
                   "div",
                   { staticClass: "col-md-6 mt-2" },
                   [
-                    _c("label", [_vm._v("Ciudad*")]),
+                    _c("label", [_vm._v("Ciudad (*)")]),
                     _vm._v(" "),
                     _c(
                       "b-overlay",
@@ -73535,7 +73567,9 @@ var render = function() {
             class: ["input", _vm.$v.form.celular.$error ? "is-danger" : ""],
             attrs: {
               type: "number",
-              placeholder: "Ingrese su número de celular"
+              placeholder: "Ingrese su número de celular",
+              maxlength: "9",
+              minlength: "6"
             },
             domProps: { value: _vm.form.celular },
             on: {
@@ -74431,7 +74465,7 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center row-search" }, [
         _c("input", {
           ref: "autocomplete",
-          staticClass: "form-control offset-2 offset-md-0 col-6 col-md-9",
+          staticClass: "form-control offset-2 offset-md-0 col-9 col-md-9",
           attrs: {
             type: "search",
             placeholder: "Buscar lugar",
@@ -74457,6 +74491,8 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { staticClass: "contenedor" }, [
+        _vm._m(1),
+        _vm._v(" "),
         _c(
           "button",
           {
@@ -74489,7 +74525,7 @@ var render = function() {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(1),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c(
@@ -74584,7 +74620,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-filter ml-2 col-3 col-md-1",
+        staticClass: "btn btn-filter ml-2 col-3 col-md-1 d-none d-md-block",
         attrs: {
           type: "button",
           "data-toggle": "modal",
@@ -74592,6 +74628,23 @@ var staticRenderFns = [
         }
       },
       [_c("i", { staticClass: "fas fa-sliders-h" }), _vm._v(" Filtros")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "botonF2 d-block d-md-none",
+        attrs: {
+          "data-toggle": "modal",
+          "data-target": "#myModal",
+          title: "Filtros"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-sliders-h" })]
     )
   },
   function() {

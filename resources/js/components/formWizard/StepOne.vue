@@ -36,7 +36,7 @@
          <div class="field col-12">
             <label class="label">Celular * </label>
             <div class="control">
-                <input type="number" :class="['input', ($v.form.celular.$error) ? 'is-danger' : '']"  placeholder="Ingrese su número de celular" v-model="form.celular">
+                <input type="number" :class="['input', ($v.form.celular.$error) ? 'is-danger' : '']"  placeholder="Ingrese su número de celular" v-model="form.celular" maxlength="9" minlength="6">
             </div>
             <p class="ml-1">Su número de celular será utilizado como medio de contácto al realizar un pedido.</p>
             <p v-if="$v.form.celular.$error" class="help is-danger">Este campo es inválido</p>
@@ -85,7 +85,11 @@
                 celular:{
                     required,
                     maxLength: maxLength(10),
-                    minLength: minLength(6)
+                    minLength: minLength(6),
+                    async isUnique(value) 
+                    { 
+                        if ((/^[0-9]+$/.test(value))) return true 
+                    }
                 },
                 correo:{
                     required,

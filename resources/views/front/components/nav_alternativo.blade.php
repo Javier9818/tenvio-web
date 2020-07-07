@@ -13,12 +13,35 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAeTM7b0MYnEP8-Ax6GmvD6jV3xgpMac60"></script>
     <title>Tenvio - Negocios cercanos</title>
     <style>
+    .link__back{
+      color: white !important;
+    }
       .contenedor {
         width: 90px;
         height: 240px;
         position: absolute;
         right: 0px;
         bottom: 0px;
+      }
+
+      .botonF2 {
+        z-index:1000;
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        background: #f79723;
+        right: 0;
+        bottom: 80px;
+        position: absolute;
+        margin-right: 16px;
+        margin-bottom: 16px;
+        border: none;
+        outline: none;
+        color: #FFF;
+        font-size: 36px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+        transition: 0.3s;
       }
 
       .botonF1 {
@@ -170,8 +193,9 @@
    crossorigin=""></script>
 <div id="app" class="">
   <nav class="navbar navbar-ligth bg-ligth">
+    <a href='/' class="navbar-brand link__back"> <i class="fas fa-arrow-left"></i> Volver</a>
     <img class="navbar-brand" src="/assets/images/logo/logo-white.png" alt="logo" width="100px">
-    <!-- <a class="navbar-brand">Navbar</a> -->
+    
   </nav>
   
   <search-bussiness-near tiponegocios="{{$tiponegocios}}" categorias="{{$categorias}}"></search-bussiness-near>

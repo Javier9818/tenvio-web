@@ -45,7 +45,7 @@
                     password:''
                 }
             }
-        },
+        },        
         validations: {
             form: {
                 user: {
