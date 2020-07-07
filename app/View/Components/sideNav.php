@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class sideNav extends Component
+class SideNav extends Component
 {
     public $tab;
     public $selected;

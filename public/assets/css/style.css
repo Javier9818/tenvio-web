@@ -204,7 +204,7 @@ button:focus,
 .form-control,
 .form-control:focus {
   outline: none;
-  background-color: transparent;
+  /* background-color: transparent; */
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   -ms-box-shadow: none;

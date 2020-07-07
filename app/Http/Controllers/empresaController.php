@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 
 class EmpresaController extends Controller
 {
@@ -93,7 +94,7 @@ class EmpresaController extends Controller
             DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id, estado) values (?, ?, ?)', [$empresa->id, 2, false]);
 
         });
-
+        // Mail::to($request->email)->send(new SendCargo($request->persona, $url, $request->email, $mensaje));
         return response()->json(["message" => "Registro exitoso"], 200);
 
     }

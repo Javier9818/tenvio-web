@@ -53,6 +53,7 @@ import Swal from 'sweetalert2'
 import {validationMixin} from 'vuelidate'
 import {required, numeric, minValue, maxValue, maxLength, minLength, alphaNum, helpers} from 'vuelidate/lib/validators'
 const text = helpers.regex('custom', /^[a-zA-Z0-9À-ÿ#.\u00f1\u00d1\s]*$/)
+const nombreText = helpers.regex('alpha', /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*$/)
 const alpha = helpers.regex('custom', /^[a-zA-ZÀ-ÿ]*$/)
     export default {
         mixins: [validationMixin],
@@ -81,7 +82,7 @@ const alpha = helpers.regex('custom', /^[a-zA-ZÀ-ÿ]*$/)
             form:{
                 nombres:{
                     required,
-                    text,
+                    nombreText,
                     maxLength: maxLength(50)
                 },
                 appaterno:{
@@ -122,6 +123,8 @@ const alpha = helpers.regex('custom', /^[a-zA-ZÀ-ÿ]*$/)
         },
         methods:{
             validateUsername: async function(){
+                this.$v.$touch()
+                console.log(this.$v.form.username.$error)
                 const {data} = await axios.get(`/api/username/${this.form.username}`);
                 if(data.message){
                     this.errorUsername = true;

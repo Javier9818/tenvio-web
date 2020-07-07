@@ -27,7 +27,8 @@
                 map: null,
                 marker: null,
                 polyline: null,
-                marker_layers:[]
+                marker_layers:[],
+                circle: null
             }
         },
         watch:{
@@ -43,7 +44,10 @@
             },
             geoUpdate: function(){
                 this.layers = [];
-                if(this.marker !== null) this.marker.removeFrom(this.map); 
+                if(this.marker !== null) {
+                     this.marker.removeFrom(this.map); 
+                     this.circle.removeFrom(this.map);
+                }
                 this.map.locate({
                     setView: true,
                     maxZoom: 17
@@ -77,7 +81,8 @@
                     this.map.on('locationfound', (e) => {
                         this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true);
                         // var radius = e.accuracy;
-                        L.circle(e.latlng, 50).addTo(this.map);
+                        this.circle = L.circle(e.latlng, 50)
+                        this.circle.addTo(this.map);
                     });
                 }else
                     if(this.layer)this.initLayer();

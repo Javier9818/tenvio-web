@@ -35,6 +35,11 @@ Vue.component('list-map', require('./components/front/inList_Map.vue').default);
 
 Vue.component('search-bussiness-near', require('./components/front/bussiness_near/searchBussinessNearComponent.vue').default);
 
+Vue.component('foto-perfil', require('./components/auth/fotoPerfil.vue').default);
+Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
+Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default);
+
+
 // const EventBus = new Vue();
 const app = new Vue({
     el: '#app',
