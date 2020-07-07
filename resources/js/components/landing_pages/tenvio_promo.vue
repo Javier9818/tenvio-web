@@ -4,7 +4,7 @@
             <div class="container nav-container">
                 <div class="responsive-mobile-menu">
                     <div class="logo-wrapper">
-                        <a href="index.html" class="logo">
+                        <a href="/quienes-somos" class="logo">
                             <img src="assets/images/landing_pages/logo-white.png" alt="logo">
                         </a>
                     </div>
