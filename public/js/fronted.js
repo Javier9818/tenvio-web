@@ -98015,11 +98015,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
-=======
-module.exports = __webpack_require__(/*! D:\empresa\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
->>>>>>> b349511b51bf6d08c830b71d4bea9277e93a81f7
 
 
 /***/ })
