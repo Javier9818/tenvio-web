@@ -34,13 +34,16 @@
 
 
 <section id="blogGrid" class="blog blog-grid pb-60">
-  <div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave.svg') !!}"  alt="slide img"></div>
+@if($empresas!==null)
+<div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave.svg') !!}"  alt="slide img"></div>
+@endif
+  
 
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 offset-lg-3">
           <div class="heading text-center mb-50">
-            <span class="heading__subtitle">Restaurantes, Chifas, Pollerias ,etc</span>
+            <span class="heading__subtitle">Restaurantes, Reposteria, Bodegas y más</span>
             <h2 class="heading__title text-white">Resultados de {{$search}}</h2>
             <div class="heading__icon">
                 <img style="width:40px" src="{!! asset('assets/images/logo/heading_icon.svg') !!}">
@@ -51,14 +54,15 @@
 
         </div><!-- /.col-lg-6 -->
         <div class="col-sm-12 col-md-12 col-lg-12   text-center">
-        <div class="row ">
-          <!-- Post Item #1 -->
-          @if($empresas===null)
+         @if($empresas===null)
             <!-- <div class="alert alert-primary text-center" role="alert">
               <h3  >No encontrado, click <a href="/" style=" border-bottom: solid blue 0.2px">aquí</a> para regresar a inicio </h3>
             </div> -->
-            <img src="" alt="" class=" img-fluid text-center">
-          @else
+            <img src="{!! asset('assets/images/backgrounds/result_no_encontrado.png') !!}" alt="" class=" img-fluid text-center">
+          @else 
+          <div class="row ">
+          <!-- Post Item #1 -->
+          
             @foreach ($empresas as $empresa)
             <div class="col-sm-12 col-md-6 col-lg-4">
               <div class="card  " style=" background-color: #fff;
@@ -93,8 +97,9 @@
             </div>
 
             @endforeach
-          @endif
+          
           </div><!-- /.row -->
+          @endif
         </div>
     </div><!-- /.row -->
   </div><!-- /.container -->
