@@ -2084,6 +2084,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].regex('alpha', /^[a-zA-Z0-9&À-ÿ#.\u00f1\u00d1\s]*$/);
+var nombreText = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].regex('alpha', /^[a-zA-Z0-9&À-ÿ#\u00f1\u00d1\s]*$/);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [vuelidate__WEBPACK_IMPORTED_MODULE_2__["validationMixin"]],
@@ -2154,11 +2155,12 @@ var text = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["helpers"].rege
   validations: {
     form: {
       ruc: {
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["minLength"])(3),
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(11)
       },
       nombre: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["required"],
-        text: text,
+        nombreText: nombreText,
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_3__["maxLength"])(50)
       },
       telefono: {
@@ -2858,14 +2860,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
+var nombreText = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"].regex('alpha', /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*$/);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['clickedNext', 'currentStep'],
   mixins: [vuelidate__WEBPACK_IMPORTED_MODULE_1__["validationMixin"]],
   data: function data() {
     return {
-      //nameComplete : ``,
+      valida: false,
       form: {
         names: '',
         appaterno: '',
@@ -2879,15 +2884,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     form: {
       names: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
-        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50)
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50),
+        nombreText: nombreText
       },
       appaterno: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
-        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50)
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50),
+        nombreText: nombreText
       },
       apmaterno: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
-        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50)
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50),
+        nombreText: nombreText
       },
       celular: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
@@ -2898,6 +2906,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
         email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["email"],
         found: function found(value) {
+          var _this = this;
+
           return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
             var _yield$axios$get, data;
 
@@ -2908,36 +2918,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _context.prev = 0;
 
                     if (!/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(value)) {
-                      _context.next = 9;
+                      _context.next = 11;
                       break;
                     }
 
-                    _context.next = 4;
+                    _this.valida = true;
+                    _context.next = 5;
                     return axios.get("/api/email/".concat(value));
 
-                  case 4:
+                  case 5:
                     _yield$axios$get = _context.sent;
                     data = _yield$axios$get.data;
+                    _this.valida = false;
                     return _context.abrupt("return", !data.message);
 
-                  case 9:
+                  case 11:
                     return _context.abrupt("return", false);
 
-                  case 10:
-                    _context.next = 15;
+                  case 12:
+                    _context.next = 17;
                     break;
 
-                  case 12:
-                    _context.prev = 12;
+                  case 14:
+                    _context.prev = 14;
                     _context.t0 = _context["catch"](0);
                     return _context.abrupt("return", false);
 
-                  case 15:
+                  case 17:
                   case "end":
                     return _context.stop();
                 }
               }
-            }, _callee, null, [[0, 12]]);
+            }, _callee, null, [[0, 14]]);
           }))();
         }
       }
@@ -2946,7 +2958,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     $v: {
       handler: function handler(val) {
-        var _this = this;
+        var _this2 = this;
 
         if (!val.$invalid) {
           this.$emit('can-continue', {
@@ -2958,7 +2970,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             value: false
           });
           setTimeout(function () {
-            _this.$emit('change-next', {
+            _this2.$emit('change-next', {
               nextBtnValue: false
             });
           }, 3000);
@@ -2967,8 +2979,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       deep: true
     },
     clickedNext: function clickedNext(val) {
-      console.log(val);
-
+      // console.log(val);
       if (val === true) {
         this.$v.form.$touch();
       }
@@ -3227,14 +3238,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
-var alpha = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"].regex('alpha', /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*$/);
+var alpha = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"].regex('alpha', /^[a-zA-ZÀ-ÿ0-9\u00f1\u00d1]*$/);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['clickedNext', 'currentStep', 'names', 'appaterno', 'apmaterno', 'correo', 'celular'],
   mixins: [vuelidate__WEBPACK_IMPORTED_MODULE_1__["validationMixin"]],
   data: function data() {
     return {
+      valida: false,
       form: {
         user: '',
         password: ''
@@ -3245,54 +3265,64 @@ var alpha = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"].reg
     form: {
       user: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
+        alpha: alpha,
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(20),
         minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minLength"])(6),
         found: function found(value) {
-          return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-            var _yield$axios$get, data;
+          var _this = this;
 
+          return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+            var alpha, res;
             return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    _context.prev = 0;
+                    alpha = _this.$v.form.user.alpha;
+                    _context.prev = 1;
 
-                    if (!(value.length >= 6 && value.length <= 20)) {
-                      _context.next = 9;
+                    if (!(value.length >= 6 && value.length <= 20 && alpha)) {
+                      _context.next = 10;
                       break;
                     }
 
-                    _context.next = 4;
-                    return axios.get("/api/username/".concat(value));
+                    _this.valida = true;
+                    res = false;
+                    _context.next = 7;
+                    return axios.get("/api/username/".concat(value)).then(function (_ref) {
+                      var data = _ref.data;
+                      res = !data.message;
+                    })["finally"](function () {
+                      _this.valida = false;
+                    });
 
-                  case 4:
-                    _yield$axios$get = _context.sent;
-                    data = _yield$axios$get.data;
-                    return _context.abrupt("return", !data.message);
-
-                  case 9:
-                    return _context.abrupt("return", false);
+                  case 7:
+                    return _context.abrupt("return", res);
 
                   case 10:
-                    _context.next = 15;
-                    break;
-
-                  case 12:
-                    _context.prev = 12;
-                    _context.t0 = _context["catch"](0);
                     return _context.abrupt("return", false);
 
-                  case 15:
+                  case 11:
+                    _context.next = 16;
+                    break;
+
+                  case 13:
+                    _context.prev = 13;
+                    _context.t0 = _context["catch"](1);
+                    return _context.abrupt("return", false);
+
+                  case 16:
                   case "end":
                     return _context.stop();
                 }
               }
-            }, _callee, null, [[0, 12]]);
+            }, _callee, null, [[1, 13]]);
           }))();
         }
       },
       password: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"],
+        alpha: alpha,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["minLength"])(6),
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["maxLength"])(50)
       }
     }
@@ -3300,7 +3330,7 @@ var alpha = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"].reg
   watch: {
     $v: {
       handler: function handler(val) {
-        var _this = this;
+        var _this2 = this;
 
         if (!val.$invalid) {
           this.$emit('can-continue', {
@@ -3312,7 +3342,7 @@ var alpha = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["helpers"].reg
             value: false
           });
           setTimeout(function () {
-            _this.$emit('change-next', {
+            _this2.$emit('change-next', {
               nextBtnValue: false
             });
           }, 3000);
@@ -73474,21 +73504,19 @@ var render = function() {
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("Este campo es requerido")
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.$v.form.correo.email
+          : !_vm.$v.form.correo.email
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("Este campo es inválido")
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.$v.form.correo.required &&
-        _vm.$v.form.correo.email &&
-        !_vm.$v.form.correo.found
+          : _vm.valida
+          ? _c("p", { staticClass: "help text-green green-text" }, [
+              _vm._v("Validando...")
+            ])
+          : !_vm.$v.form.correo.found
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("El correo electrónico ingresado está siendo utilizado.")
             ])
-          : _vm._e()
+          : _c("p", { staticClass: "help" }, [_vm._v("Correcto ✓")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
@@ -73801,7 +73829,10 @@ var render = function() {
                 expression: "form.user"
               }
             ],
-            class: ["input", _vm.$v.form.user.$error ? "is-danger" : ""],
+            class: [
+              "input",
+              _vm.$v.form.user.$error ? "is-danger" : "is-valid"
+            ],
             attrs: {
               type: "text",
               placeholder: "Ingrese un nombre de usuario"
@@ -73822,28 +73853,29 @@ var render = function() {
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("Este campo es requerido")
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.$v.form.user.maxLength
+          : !_vm.$v.form.user.alpha
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v(
+                "Este campo no acepta caracteres especiales '*\"%$... o espacios en blanco"
+              )
+            ])
+          : !_vm.$v.form.user.maxLength
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("El nombre de usuario no pueden superar los 20 caracteres")
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.$v.form.user.required && !_vm.$v.form.user.minLength
+          : !_vm.$v.form.user.minLength
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("El nombre de usuario debe tener más de 6 caracteres")
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.$v.form.user.maxLength &&
-        _vm.$v.form.user.minLength &&
-        _vm.$v.form.user.required &&
-        !_vm.$v.form.user.found
+          : _vm.valida
+          ? _c("p", { staticClass: "help text-green green-text" }, [
+              _vm._v("Validando...")
+            ])
+          : !_vm.$v.form.user.found
           ? _c("p", { staticClass: "help is-danger" }, [
               _vm._v("El nombre de usuario ya está siendo utilizado.")
             ])
-          : _vm._e()
+          : _c("p", { staticClass: "help" }, [_vm._v("Correcto ✓")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field col-12" }, [
@@ -73859,7 +73891,10 @@ var render = function() {
                 expression: "form.password"
               }
             ],
-            class: ["input", _vm.$v.form.password.$error ? "is-danger" : ""],
+            class: [
+              "input",
+              _vm.$v.form.password.$error ? "is-danger" : "is-valid"
+            ],
             attrs: {
               type: "password",
               placeholder: "Ingrese apellidos paternos"
@@ -73876,11 +73911,25 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm.$v.form.password.$error
+        !_vm.$v.form.password.required
           ? _c("p", { staticClass: "help is-danger" }, [
-              _vm._v("Este campo es inválido")
+              _vm._v("Este campo es requerido")
             ])
-          : _vm._e()
+          : !_vm.$v.form.password.alpha
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v(
+                "no acepta caracteres especiales '*\"%$... o espacios en blanco"
+              )
+            ])
+          : !_vm.$v.form.password.minLength
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("La contraseña debe tener más de 6 caracteres")
+            ])
+          : !_vm.$v.form.password.maxLength
+          ? _c("p", { staticClass: "help is-danger" }, [
+              _vm._v("La contraseña no debe tener más de 50 caracteres")
+            ])
+          : _c("p", { staticClass: "help" }, [_vm._v("Correcto ✓")])
       ])
     ]
   )
@@ -76257,10 +76306,15 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c(
-                    "div",
+                    "form",
                     {
                       staticClass: "contact-form sec-margin",
-                      attrs: { id: "contact_form_submit" }
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.enviar()
+                        }
+                      }
                     },
                     [
                       _c("div", { staticClass: "row" }, [
@@ -76276,7 +76330,11 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { type: "text", placeholder: "Nombre" },
+                              attrs: {
+                                type: "text",
+                                required: "",
+                                placeholder: "Nombre"
+                              },
                               domProps: { value: _vm.email_service.name },
                               on: {
                                 input: function($event) {
@@ -76306,7 +76364,11 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { type: "email", placeholder: "Email" },
+                              attrs: {
+                                type: "email",
+                                required: "",
+                                placeholder: "Email"
+                              },
                               domProps: { value: _vm.email_service.email },
                               on: {
                                 input: function($event) {
@@ -76337,6 +76399,7 @@ var render = function() {
                               ],
                               staticClass: "form-control",
                               attrs: {
+                                required: "",
                                 cols: "30",
                                 rows: "10",
                                 placeholder: "Mensaje"
@@ -76359,10 +76422,7 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "button",
-                            {
-                              staticClass: "submit-btn  btn-rounded gd-bg-1",
-                              on: { click: _vm.enviar }
-                            },
+                            { staticClass: "submit-btn  btn-rounded gd-bg-1" },
                             [_vm._v(_vm._s(_vm.enviando))]
                           )
                         ])
@@ -76683,7 +76743,12 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "Elija el plan de acuerdo a la necesidad de su empresa, si necesita asesoria, no dude en escribirnos al correo : fdfdf@nortec.com"
+                    "Elija el plan de acuerdo a la necesidad de su empresa, si necesita asesoria, no dude en escribirnos al correo : "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "mailto:contacto@tenvioperu.com" } },
+                    [_vm._v("contacto@tenvioperu.com")]
                   )
                 ])
               ])

@@ -27,8 +27,10 @@
                 <input type="email" v-model="form.correo" :class="['input', ($v.form.correo.$error) ? 'is-danger' : '']"  placeholder="Ingrese su correo electrónico" >
             </div>
             <p v-if="!$v.form.correo.required" class="help is-danger">Este campo es requerido</p>
-            <p v-if="!$v.form.correo.email" class="help is-danger">Este campo es inválido</p>
-            <p v-if="$v.form.correo.required && $v.form.correo.email && !$v.form.correo.found" class="help is-danger">El correo electrónico ingresado está siendo utilizado.</p>
+            <p v-else-if="!$v.form.correo.email" class="help is-danger">Este campo es inválido</p>
+            <p v-else-if="valida" class="help text-green green-text">Validando...</p>
+            <p v-else-if="!$v.form.correo.found" class="help is-danger">El correo electrónico ingresado está siendo utilizado.</p>
+            <p v-else class="help">Correcto ✓</p>
 
         </div>
          <div class="field col-12">
@@ -46,14 +48,14 @@
 
 <script>
     import {validationMixin} from 'vuelidate'
-    import {required, numeric, minValue, maxValue,email, maxLength, minLength} from 'vuelidate/lib/validators'
-
+    import {required, numeric, minValue, maxValue,email, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
+    const nombreText = helpers.regex('alpha', /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*$/)
     export default {
         props: ['clickedNext', 'currentStep'],
         mixins: [validationMixin],
         data() {
             return {
-                //nameComplete : ``,
+                valida: false,
                 form: {
                     names: '',
                     appaterno: '',
@@ -67,15 +69,18 @@
             form: {
                 names:{
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    nombreText
                 },
                 appaterno:{
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    nombreText
                 },
                 apmaterno:{
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    nombreText
                 },
                 celular:{
                     required,
@@ -88,7 +93,9 @@
                     async found(value) {
                         try {
                             if (/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i.test(value)){
+                                this.valida = true;
                                 let { data } = await axios.get(`/api/email/${value}`);
+                                this.valida = false;
                                 return !data.message
                             } else return false
                         } catch(e) {
@@ -114,7 +121,7 @@
             },
 
             clickedNext(val) {
-                console.log(val);
+                // console.log(val);
                 if(val === true) {
                     this.$v.form.$touch();
                 }

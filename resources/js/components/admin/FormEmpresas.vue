@@ -141,6 +141,7 @@
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
     const text = helpers.regex('alpha', /^[a-zA-Z0-9&À-ÿ#.\u00f1\u00d1\s]*$/)
+    const nombreText = helpers.regex('alpha', /^[a-zA-Z0-9&À-ÿ#\u00f1\u00d1\s]*$/)
 
     import Swal from 'sweetalert2'
     export default {
@@ -206,11 +207,12 @@
          validations: {
             form: {
                 ruc: {
+                    minLength: minLength(3),
                     maxLength: maxLength(11)
                 },
                 nombre: {
                     required,
-                    text,
+                    nombreText,
                     maxLength: maxLength(50)
                 },
                 telefono: {
