@@ -56,10 +56,34 @@ class FrontController extends Controller
         break;
       case 'recuperaPost':
         return FrontController::recuperaPost($request);
+        break; 
+      case 'email_contactanos':
+        return FrontController::email_contactanos($request);
         break;
       default:
         # code...
         break;
+    }
+  }
+  public static function email_contactanos($request)
+	{
+    $data=$request->get('data');
+     
+		try { 
+		  
+      $mensaje='
+      Hola, acaba de llegar la siguiente consulta:'
+      .'De: '.$data['name']
+      .'Mensaje: '.$data['message']
+      .'email: '.$data['email']
+      .'Porfa, respondela pe kgda :3';
+			Mail::to(Controller::emails)->send(new SendCargo('CONTÁCTA CON NOSOTROS', '', '', $mensaje));
+			return true;
+		}  catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
     }
   }
   public static function recupera($request)
