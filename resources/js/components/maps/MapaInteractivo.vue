@@ -15,7 +15,9 @@
             'clickDisabled', //true or false
             'geoWatch', // true or false
             'dragableDisabled' ,//true or false
-            'minZoom'
+            'minZoom',
+            'center',
+            'geoUpdate'
         ],
         mounted() {
             this.initMap();
@@ -23,7 +25,7 @@
         data(){
             return{
                 map: null,
-                marker: L.marker([0,0]),
+                marker: null,
                 polyline: null,
                 marker_layers:[]
             }
@@ -32,6 +34,21 @@
             layers: function(newValue, oldValue) {
               this.cleanLayers()
               this.initLayers()
+            },
+            center: function(center, oldValue){
+                if(this.marker !== null) this.marker.removeFrom(this.map); 
+                var LatLng = L.latLng(center.lat, center.lng);
+                this.map.setView(LatLng, 15);
+                this.createMarker(LatLng, 'Mi ubicación', center.city, null, false, false);
+            },
+            geoUpdate: function(){
+                this.layers = [];
+                if(this.marker !== null) this.marker.removeFrom(this.map); 
+                this.map.locate({
+                    setView: true,
+                    maxZoom: 17
+                });
+
             }
         },
         methods:{
@@ -108,11 +125,11 @@
                     marker.bindTooltip(layer.direccion || 'Default').openTooltip();
 
                    
-                      let urlIcon = layer.icon || null;
-                      if(urlIcon){
-                          var icon =  L.icon({ iconUrl: urlIcon, iconSize: [35, 50],iconAnchor: [17, 50], popupAnchor: [2, -50] })
-                          marker.setIcon(icon);
-                      }
+                    let urlIcon = layer.icon || null;
+                    if(urlIcon){
+                        var icon =  L.icon({ iconUrl: urlIcon, iconSize: [35, 50],iconAnchor: [17, 50], popupAnchor: [2, -50] })
+                        marker.setIcon(icon);
+                    }
 
                     marker.addTo(this.map);
                     this.marker_layers.push(marker);

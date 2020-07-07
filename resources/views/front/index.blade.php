@@ -19,13 +19,8 @@
                     <div class="containLine"> <div class="line-low bg1 n600" style="visibility: visible;"></div> </div>
                     <p class="slide__desc"></p>
                     <form action="{{ route('list') }}" method="get">
-<<<<<<< HEAD
                     <input type="text"  name="search" class="input__search" placeholder="Busca tu ciudad o restaurant favorito">
                     <a href="/negocios-cercanos" class="btn btn__primary my-5"><i class="fa fa-map-marker-alt fa-2x" aria-hidden="true"></i>Buscar restaurantes o negocios cercanos</a>
-=======
-                    <input type="text"  name="search" class="input__search text-center" placeholder="Busca tu ciudad o restaurant favorito">
-                    <button type="submit" class="btn btn__primary my-5"><i class="fa fa-map-marker-alt fa-2x" aria-hidden="true"></i>Buscar restaurantes o negocios cercanos</button>
->>>>>>> 889f3637b4f22094c7960e15411468fa459f4c94
                     </form>
                 </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->

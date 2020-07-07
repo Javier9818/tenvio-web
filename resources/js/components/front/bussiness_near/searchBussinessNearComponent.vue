@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row justify-content-center row-search">
-            <input class="form-control offset-2 offset-md-0 col-6 col-md-9" type="search" placeholder="Buscar lugar" aria-label="Search">
+            <input ref="autocomplete"  class="form-control offset-2 offset-md-0 col-6 col-md-9" type="search" placeholder="Buscar lugar" aria-label="Search">
             <button class="btn btn-filter ml-2 col-3 col-md-1" type="button" data-toggle="modal" data-target="#myModal"> <i class="fas fa-sliders-h"></i> Filtros</button>
         </div>
 
@@ -13,8 +13,15 @@
             :minZoom='15'
             @geoPosition ='loadNearBussiness'
             :layers='companies'
+            :center='geoCoords'
+            :geoUpdate ='geoUpdate'
         ></mapa-interactivo>
-
+        
+        <div class="contenedor">
+            <button class="botonF1" @click="geoUpdate = !geoUpdate" title="Mi ubicación">
+                <i class="fas fa-map-marked-alt"></i>
+            </button>
+        </div>
 
         <div class="modal left fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -73,7 +80,26 @@
             'categorias'
         ],
         mounted() {
-           
+            this.autocomplete = new google.maps.places.Autocomplete(
+                (this.$refs.autocomplete),
+                {
+                    types: ['geocode']
+                }
+            );
+            this.autocomplete.setComponentRestrictions(
+            {'country': ['pe']});
+
+            this.autocomplete.addListener('place_changed', () => {
+                let place = this.autocomplete.getPlace();
+                let ac = place.address_components;
+                let lat = place.geometry.location.lat();
+                let lng = place.geometry.location.lng();
+                let city = ac[0]["short_name"];
+
+                this.loadNearBussiness({lat, lng});
+                this.geoCoords = {lat, lng, city};
+                //console.log(`The user picked ${city} with the coordinates ${lat}, ${lng}`);
+            });
         },
         data(){
             return{
@@ -92,7 +118,10 @@
                 companies_temp:[],
                 categorias_unique: [],
                 categorias_extend:[],
-                message_state:false
+                message_state:false,
+
+                geoCoords:null,
+                geoUpdate:false
             }
         },
         methods:{
@@ -133,10 +162,11 @@
                 return icon;
             },
             loadNearBussiness: async function({lat, lng}){
+                let array_empresas = [];
                 await axios.get(`/api/bussiness-near/${lat}/${lng}`).then( ({data}) => {
                     // console.log(data.empresas);
                     data.empresas.forEach(e => {
-                        this.companies.push({
+                        array_empresas.push({
                             ...e,
                             icon: this.icon(e),
                             popup:`<h4 class="title-popup"><i class="fas fa-store mr-2"></i>${e.nombre}<h4>
@@ -160,8 +190,8 @@
                             </div>`
                         });
                     });
-
-                    this.companies_global = this.companies.slice();
+                    this.companies = array_empresas;
+                    this.companies_global = array_empresas.slice();
                 });
 
                 this.filterDataApi();
@@ -184,16 +214,21 @@
                 this.builFilters()
             },
             builFilters: function(){
+                this.categorias_items = []
+                let categorias_items_extend = [] , tiponegocios_items = []
                 this.categorias_local.forEach( e => {
                     if(this.categorias_unique.includes(e.id + '')) 
-                        this.categorias_items_extend.push(e);
+                        categorias_items_extend.push(e);
                 });
 
+                this.categorias_items_extend = categorias_items_extend;
+
                 this.tiponegocios_local.forEach( e => {
-                    if(this.categorias_items_extend.find( c => c.tipo_negocio_id === e.id )){
-                        this.tiponegocios_items.push(e);
+                    if(categorias_items_extend.find( c => c.tipo_negocio_id === e.id )){
+                        tiponegocios_items.push(e);
                     }     
                 });
+                this.tiponegocios_items = tiponegocios_items;
             },
             countTipoNegocios: function(id){
                 var count = 0;
