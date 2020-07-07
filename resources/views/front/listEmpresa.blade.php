@@ -54,9 +54,10 @@
         <div class="row ">
           <!-- Post Item #1 -->
           @if($empresas===null)
-            <div class="alert alert-primary text-center" role="alert">
+            <!-- <div class="alert alert-primary text-center" role="alert">
               <h3  >No encontrado, click <a href="/" style=" border-bottom: solid blue 0.2px">aquí</a> para regresar a inicio </h3>
-            </div>
+            </div> -->
+            <img src="" alt="" class=" img-fluid text-center">
           @else
             @foreach ($empresas as $empresa)
             <div class="col-sm-12 col-md-6 col-lg-4">
