@@ -56,7 +56,7 @@ class FrontController extends Controller
         break;
       case 'recuperaPost':
         return FrontController::recuperaPost($request);
-        break; 
+        break;
       case 'email_contactanos':
         return FrontController::email_contactanos($request);
         break;
@@ -68,9 +68,9 @@ class FrontController extends Controller
   public static function email_contactanos($request)
 	{
     $data=$request->get('data');
-     
-		try { 
-		  
+
+		try {
+
       $mensaje='
       Hola, acaba de llegar la siguiente consulta de '
       .$data['name']
@@ -94,10 +94,10 @@ class FrontController extends Controller
       ->selectRaw('users.id, users.email, concat(personas.nombres," ",personas.appaterno," ",personas.apmaterno) as persona')
       ->where('users.username','=',$request->get('user'))
       ->orWhere('users.email','=',$request->get('user'))
-      ->get(); 
+      ->get();
         if(count($id))
           return FrontController::EnviaEmail($id[0]);
-        else 
+        else
           return false;
      } catch (\Exception  $e) {
       return [
@@ -110,8 +110,8 @@ class FrontController extends Controller
   }
   public static function EnviaEmail($request)
 	{
-    
-		try { 
+
+		try {
 			$cifrado = Crypt::encrypt(json_encode(["id" => $request->id]));
       $url = 'http://127.0.0.1:8000/recoverypassword/'.$cifrado;
       $mensaje='Hola, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
@@ -288,7 +288,7 @@ class FrontController extends Controller
       ->where(
         [
           ['empresas.nombre','like','%'.$request->get('search').'%'],
-          ['empresas.estado', '!=', 'VENCIDO']
+          ['empresas.estado', '=', 'ACTIVO']
         ])
       // ->whereRaw('MATCH(empresas.nombre ) AGAINST (?)', ["'".$request->get('search')."'"])
       ->groupBy('empresas.id')
@@ -305,7 +305,7 @@ class FrontController extends Controller
         ->where(
           [
             ['categorias.descripcion','like','%'.$request->get('search').'%'],
-            ['empresas.estado', '!=', 'VENCIDO']
+            ['empresas.estado', '=', 'ACTIVO']
           ])
         ->get();
         if (count($empresas)>0) {
@@ -330,7 +330,7 @@ class FrontController extends Controller
           [
             ['categorias.state','=',1],
             ['categorias.descripcion','like','%'.$Categoria.'%'],
-            ['empresas.estado', '!=', 'VENCIDO']
+            ['empresas.estado', '=', 'ACTIVO']
           ]
           )
         ->get();
@@ -348,12 +348,12 @@ class FrontController extends Controller
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
       ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
-      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,tipo_negocio.descripcion as tipo_negocio')      
+      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,tipo_negocio.descripcion as tipo_negocio')
       ->where(
         [
           ['categorias.state','=',1],
           ['ciudad.nombre','like','%'.$Ubicacion.'%'],
-          ['empresas.estado', '!=', 'VENCIDO']
+          ['empresas.estado', '=', 'ACTIVO']
         ])
       ->groupBy('empresas.id')
       ->get();
@@ -369,11 +369,11 @@ class FrontController extends Controller
         ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
         ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
         ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
-        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto', 'ciudad.nombre as ciudad', 'ciudad.distrito_id','tipo_negocio.descripcion as tipo_negocio')        
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto', 'ciudad.nombre as ciudad', 'ciudad.distrito_id','tipo_negocio.descripcion as tipo_negocio')
         ->where(
           [
             ['empresas.nombre_unico','=', $nombre],
-            ['empresas.estado', '!=', 'VENCIDO']
+            ['empresas.estado', '=', 'ACTIVO']
           ])
         ->get();
         return view('front.empresa')->with("data",$empresa);
@@ -383,7 +383,7 @@ class FrontController extends Controller
 
   }
   public static function productos(Request $request)
-  { 
+  {
     // $state=DB::table('empresa')
     // ->select('empresa.estado')
     // ->where('empresas.id', '=', $request->get('id'))
@@ -395,7 +395,7 @@ class FrontController extends Controller
     //   ];
     $where=[
       ['empresas.id', '=', $request->get('id')],
-      ['empresas.estado', '!=', 'VENCIDO'],
+      ['empresas.estado', '=', 'ACTIVO'],
       ['productos.usuario_puede_ver', '=',1],
       ['productos.estado', '=',1],
     ];
@@ -436,9 +436,9 @@ class FrontController extends Controller
         ->join('categorias_menus', 'categorias_menus.id', '=', 'productos.categorias_menu_id')
         ->selectRaw(' DISTINCT categorias_menus.descripcion as text, categorias_menus.id as value')
         ->where(
-        [ 
+        [
           ['empresas.id','=',$request->get('id')],
-          ['empresas.estado', '!=', 'VENCIDO']
+          ['empresas.estado', '=', 'ACTIVO']
         ])
         ->get();
      }catch (\Exception  $e) {
@@ -458,19 +458,19 @@ class FrontController extends Controller
         ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
         ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')
         ->where(
-          [ 
+          [
             ['categorias.state','=',1]
-          ])   
+          ])
         ->get();
       }
         return DB::table('categorias')
-        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id') 
-        ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')        
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
+        ->selectRaw('categorias.id,categorias.descripcion,categorias.icon')
         ->where(
           [
             ['tipo_negocio.id', '=',$request->get('id')],
             ['categorias.state','=',1]
-          ])   
+          ])
         ->get();
      }catch (\Exception  $e) {
       return [
@@ -482,9 +482,9 @@ class FrontController extends Controller
   public static function TipoNegocio()
   {
      try {
-      return DB::table('tipo_negocio')        
-        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')      
-        ->where('tipo_negocio.state','=',1)   
+      return DB::table('tipo_negocio')
+        ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion')
+        ->where('tipo_negocio.state','=',1)
         ->get();
      }catch (\Exception  $e) {
       return [

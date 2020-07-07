@@ -46846,7 +46846,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* fallback */\n@font-face {\r\n  font-family: \"Material Icons\";\r\n  font-style: normal;\r\n  font-weight: 400;\r\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\r\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\r\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\r\n  font-family: \"Material Icons\";\r\n  font-weight: normal;\r\n  font-style: normal;\r\n  font-size: 24px;\r\n  line-height: 1;\r\n  letter-spacing: normal;\r\n  text-transform: none;\r\n  display: inline-block;\r\n  white-space: nowrap;\r\n  word-wrap: normal;\r\n  direction: ltr;\r\n  -webkit-font-feature-settings: \"liga\";\r\n  -webkit-font-smoothing: antialiased;\n}\r\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* fallback */\n@font-face {\n  font-family: \"Material Icons\";\n  font-style: normal;\n  font-weight: 400;\n  src: local(\"Material Icons\"), local(\"MaterialIcons-Regular\"),\n    url(https://fonts.gstatic.com/s/materialicons/v17/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2)\n      format(\"woff2\");\n}\n.material-icons[data-v-d0aab9e6] {\n  font-family: \"Material Icons\";\n  font-weight: normal;\n  font-style: normal;\n  font-size: 24px;\n  line-height: 1;\n  letter-spacing: normal;\n  text-transform: none;\n  display: inline-block;\n  white-space: nowrap;\n  word-wrap: normal;\n  direction: ltr;\n  -webkit-font-feature-settings: \"liga\";\n  -webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 // exports
 
@@ -76257,10 +76257,15 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c(
-                    "div",
+                    "form",
                     {
                       staticClass: "contact-form sec-margin",
-                      attrs: { id: "contact_form_submit" }
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.enviar()
+                        }
+                      }
                     },
                     [
                       _c("div", { staticClass: "row" }, [
@@ -76276,7 +76281,11 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { type: "text", placeholder: "Nombre" },
+                              attrs: {
+                                type: "text",
+                                required: "",
+                                placeholder: "Nombre"
+                              },
                               domProps: { value: _vm.email_service.name },
                               on: {
                                 input: function($event) {
@@ -76306,7 +76315,11 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { type: "email", placeholder: "Email" },
+                              attrs: {
+                                type: "email",
+                                required: "",
+                                placeholder: "Email"
+                              },
                               domProps: { value: _vm.email_service.email },
                               on: {
                                 input: function($event) {
@@ -76337,6 +76350,7 @@ var render = function() {
                               ],
                               staticClass: "form-control",
                               attrs: {
+                                required: "",
                                 cols: "30",
                                 rows: "10",
                                 placeholder: "Mensaje"
@@ -76359,10 +76373,7 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "button",
-                            {
-                              staticClass: "submit-btn  btn-rounded gd-bg-1",
-                              on: { click: _vm.enviar }
-                            },
+                            { staticClass: "submit-btn  btn-rounded gd-bg-1" },
                             [_vm._v(_vm._s(_vm.enviando))]
                           )
                         ])
@@ -76683,7 +76694,12 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "Elija el plan de acuerdo a la necesidad de su empresa, si necesita asesoria, no dude en escribirnos al correo : fdfdf@nortec.com"
+                    "Elija el plan de acuerdo a la necesidad de su empresa, si necesita asesoria, no dude en escribirnos al correo : "
+                  ),
+                  _c(
+                    "a",
+                    { attrs: { href: "mailto:contacto@tenvioperu.com" } },
+                    [_vm._v("contacto@tenvioperu.com")]
                   )
                 ])
               ])
@@ -98015,7 +98031,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\empresa\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
+module.exports = __webpack_require__(/*! C:\Users\RobertGutierrez\Desktop\Nortec\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
 
 
 /***/ })

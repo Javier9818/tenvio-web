@@ -26,7 +26,7 @@ class EmpresaController extends Controller
                 "plan_monto" => 0.0,
                 "fecha_vencimiento" => Carbon::now()->addDays(30)
             ]);
-            Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad]);
+            Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad,'foto'=>'logoEmpresaDefault.png']);
         });
 
         return response()->json(["message" => "Actualización exitosa", "empresa" => $request->id]);
