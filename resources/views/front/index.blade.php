@@ -12,7 +12,7 @@
 <section id="slider" class="slider slider-layout1">
     <div class="container slide-item align-v-h text-center">
         <div class="row">
-            <div class="col-sm-12 col-md-8 col-lg-6">
+            <div class="col-sm-7 col-md-8 col-lg-6">
                 <div class="slide__content">
                     <!-- <span class="slide__subtitle d-none">Text</span> -->
                     <h2 class="slide__title  text-dark">Negocios locales a <span class="title__spam">un click</span> de <span class="title__spam">Distancia!</span></h2>
