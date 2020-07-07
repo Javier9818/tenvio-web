@@ -4,36 +4,42 @@
         <div class="field col-12">
             <label class="label">Nombre de usuario</label>
             <div class="control">
-                <input :class="['input', ($v.form.user.$error) ? 'is-danger' : '']" v-model="form.user" type="text" placeholder="Ingrese un nombre de usuario">
+                <input :class="['input', ($v.form.user.$error) ? 'is-danger' : 'is-valid']" v-model="form.user" type="text" placeholder="Ingrese un nombre de usuario">
             </div>
             <p v-if="!$v.form.user.required" class="help is-danger">Este campo es requerido</p>
-            <p v-if="!$v.form.user.maxLength" class="help is-danger">El nombre de usuario no pueden superar los 20 caracteres</p>
-            <p v-if="$v.form.user.required && !$v.form.user.minLength" class="help is-danger">El nombre de usuario debe tener más de 6 caracteres</p>
-            <p v-if="$v.form.user.maxLength && $v.form.user.minLength && $v.form.user.required && !$v.form.user.found" class="help is-danger">El nombre de usuario ya está siendo utilizado.</p>
+            <p v-else-if="!$v.form.user.alpha" class="help is-danger">Este campo no acepta caracteres especiales '*"%$... o espacios en blanco</p>
+            <p v-else-if="!$v.form.user.maxLength" class="help is-danger">El nombre de usuario no pueden superar los 20 caracteres</p>
+            <p v-else-if="!$v.form.user.minLength" class="help is-danger">El nombre de usuario debe tener más de 6 caracteres</p>
+            <p v-else-if="valida" class="help text-green green-text">Validando...</p>
+            <p v-else-if="!$v.form.user.found" class="help is-danger">El nombre de usuario ya está siendo utilizado.</p>
+            <p v-else class="help">Correcto ✓</p>
         </div>
         <div class="field col-12">
             <label class="label">Contraseña</label>
             <div class="control">
-                <input :class="['input', ($v.form.password.$error) ? 'is-danger' : '']" v-model="form.password" type="password" placeholder="Ingrese apellidos paternos">
+                <input :class="['input', ($v.form.password.$error) ? 'is-danger' : 'is-valid']" v-model="form.password" type="password" placeholder="Ingrese apellidos paternos">
             </div>
-            <p v-if="$v.form.password.$error" class="help is-danger">Este campo es inválido</p>
-             <p v-if="!$v.form.password.maxLength" class="help is-danger">La contraseña no pueden superar los 18 caracteres</p>
-            <p v-if="$v.form.password.required && !$v.form.password.minLength" class="help is-danger">La contraseña debe tener más de 7 caracteres</p>
-            
-        </div> 
+            <p v-if="!$v.form.password.required" class="help is-danger">Este campo es requerido</p>
+            <p v-else-if="!$v.form.password.alpha" class="help is-danger">no acepta caracteres especiales '*"%$... o espacios en blanco</p>
+            <p v-else-if="!$v.form.password.minLength" class="help is-danger">La contraseña debe tener más de 6 caracteres</p>
+            <p v-else-if="!$v.form.password.maxLength" class="help is-danger">La contraseña no debe tener más de 50 caracteres</p>
+            <p v-else class="help">Correcto ✓</p>
+            <!-- <p v-if="$v.form.password.$error" class="help is-danger">Este campo es inválido</p> -->
+        </div>
     </div>
 </template>
 
 <script>
     import {validationMixin} from 'vuelidate'
     import {required, numeric, maxLength, minLength, email, helpers} from 'vuelidate/lib/validators'
-    const alpha = helpers.regex('alpha', /^[a-zA-ZÀ-ÿ\u00f1\u00d1\s]*$/)
+    const alpha = helpers.regex('alpha', /^[a-zA-ZÀ-ÿ0-9\u00f1\u00d1]*$/)
 
     export default {
         props: ['clickedNext', 'currentStep', 'names','appaterno','apmaterno', 'correo', 'celular'],
         mixins: [validationMixin],
         data() {
             return {
+                valida: false,
                 form: {
                     user:'',
                     password:''
@@ -44,27 +50,28 @@
             form: {
                 user: {
                     required,
+                    alpha,
                     maxLength: maxLength(20),
                     minLength: minLength(6),
                     async found(value) {
+                        var alpha =this.$v.form.user.alpha;
                         try {
-                            if (value.length >= 6 && value.length <= 20){
-                                let { data } = await axios.get(`/api/username/${value}`);
-                                return !data.message
+                            if (value.length >= 6 && value.length <= 20 && alpha){
+                                this.valida = true;
+                                let res = false;
+                                await axios.get(`/api/username/${value}`).then( ({data}) => {
+                                    res = !data.message
+                                }).finally( () => { this.valida = false;});
+                                return res
                             } else return false
-                        } catch(e) {
-                        return false;
-                        }
-                    }, 
-                    async isUnique(value) 
-                    { 
-                        if ((/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/.test(value)) || (/^[0-9]+$/.test(value))) return true 
+                        } catch(e) {return false;}
                     }
                 },
                 password: {
                     required,
-                    maxLength: maxLength(18),
-                    minLength: minLength(7)
+                    alpha,
+                    minLength: minLength(6),
+                    maxLength: maxLength(50)
                 }
             }
         },
