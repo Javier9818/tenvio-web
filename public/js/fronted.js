@@ -5281,6 +5281,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5561,11 +5563,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      email_service: {
+        name: '',
+        message: '',
+        email: ''
+      },
+      enviando: 'Enviar'
+    };
+  },
   mounted: function mounted() {},
   methods: {
     register: function register() {
       this.$emit('register');
+    },
+    enviar: function enviar() {
+      var that = this;
+      this.enviando = 'Enviando';
+      axios.post('/front/email_contactanos', {
+        data: this.email_service
+      }).then(function (response) {
+        if (response.data.success == 0) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('ERROR', 'Ha ocurrido un error', 'error');else {
+          if (response.data) {
+            that.enviando = 'Enviar';
+            sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se ha enviado su consulta, nos comunicaremos contigo en unos minutos', 'success');
+            location.reload();
+          } else sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Ups', 'Vuelve a intentarlo más tarde, disculpa :(', 'warning');
+        }
+      });
     }
   }
 });
@@ -46856,7 +46884,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -76196,7 +76224,160 @@ var render = function() {
     _vm._v(" "),
     _vm._m(5),
     _vm._v(" "),
-    _vm._m(6)
+    _c(
+      "div",
+      {
+        staticClass:
+          "contact-form-area-02 contact-bg padding-bottom-120 padding-top-120",
+        attrs: { id: "contact" }
+      },
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "contact-area-wrapper",
+                  attrs: { id: "contact" }
+                },
+                [
+                  _c("span", { staticClass: "subtitle" }, [
+                    _vm._v("Contácta con nosotros")
+                  ]),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "title" }, [
+                    _vm._v("Escríbenos tus dudas")
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "Envía tus dudas o sugerencias, estaremos atentos a escucharte para seguir mejorando."
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "contact-form sec-margin",
+                      attrs: { id: "contact_form_submit" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.email_service.name,
+                                  expression: "email_service.name"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", placeholder: "Nombre" },
+                              domProps: { value: _vm.email_service.name },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.email_service,
+                                    "name",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.email_service.email,
+                                  expression: "email_service.email"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "email", placeholder: "Email" },
+                              domProps: { value: _vm.email_service.email },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.email_service,
+                                    "email",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-12" }, [
+                          _c("div", { staticClass: "form-group textarea" }, [
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.email_service.message,
+                                  expression: "email_service.message"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                cols: "30",
+                                rows: "10",
+                                placeholder: "Mensaje"
+                              },
+                              domProps: { value: _vm.email_service.message },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.email_service,
+                                    "message",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "submit-btn  btn-rounded gd-bg-1",
+                              on: { click: _vm.enviar }
+                            },
+                            [_vm._v(_vm._s(_vm.enviando))]
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(6)
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -76658,116 +76839,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "contact-form-area-02 contact-bg padding-bottom-120 padding-top-120",
-        attrs: { id: "contact" }
-      },
-      [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "contact-area-wrapper",
-                  attrs: { id: "contact" }
-                },
-                [
-                  _c("span", { staticClass: "subtitle" }, [
-                    _vm._v("Contácta con nosotros")
-                  ]),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "title" }, [
-                    _vm._v("Escríbenos tus dudas")
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Envía tus dudas o sugerencias, estaremos atentos a escucharte para seguir mejorando."
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "form",
-                    {
-                      staticClass: "contact-form sec-margin",
-                      attrs: { action: "index.html", id: "contact_form_submit" }
-                    },
-                    [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "uname",
-                                placeholder: "Nombre"
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "email",
-                                placeholder: "Email"
-                              }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-12" }, [
-                          _c("div", { staticClass: "form-group textarea" }, [
-                            _c("textarea", {
-                              staticClass: "form-control",
-                              attrs: {
-                                name: "message",
-                                id: "message",
-                                cols: "30",
-                                rows: "10",
-                                placeholder: "Mensaje"
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "submit-btn  btn-rounded gd-bg-1",
-                              attrs: { type: "submit" }
-                            },
-                            [_vm._v("Enviar")]
-                          )
-                        ])
-                      ])
-                    ]
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c("div", { staticClass: "img-wrapper" }, [
-                _c("img", {
-                  attrs: {
-                    src: "assets/images/landing_pages/contact-mobile.png",
-                    alt: ""
-                  }
-                })
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "img-wrapper" }, [
+        _c("img", {
+          attrs: {
+            src: "assets/images/landing_pages/contact-mobile.png",
+            alt: ""
+          }
+        })
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -97934,11 +98015,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
-=======
-module.exports = __webpack_require__(/*! C:\Users\RobertGutierrez\Desktop\Nortec\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
->>>>>>> e82e01887d2887df858f77898cae02eea6d53259
 
 
 /***/ })
