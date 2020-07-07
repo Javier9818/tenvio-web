@@ -245,7 +245,7 @@
                             <span class="subtitle">Contácta con nosotros</span>
                             <h3 class="title">Escríbenos tus dudas</h3>
                             <p>Envía tus dudas o sugerencias, estaremos atentos a escucharte para seguir mejorando.</p>
-                            <form  id="contact_form_submit" class="contact-form sec-margin">
+                            <form v-on:submit.prevent="enviar()"   class="contact-form sec-margin">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -261,7 +261,7 @@
                                         <div class="form-group textarea">
                                             <textarea  required v-model="email_service.message" class="form-control" cols="30" rows="10" placeholder="Mensaje"></textarea>
                                         </div>
-                                        <button class="submit-btn  btn-rounded gd-bg-1" @click="enviar">{{enviando}}</button>
+                                        <button   class="submit-btn  btn-rounded gd-bg-1" >{{enviando}}</button>
                                     </div>
                                 </div>
                             </form>
