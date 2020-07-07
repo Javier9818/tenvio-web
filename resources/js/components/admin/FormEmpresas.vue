@@ -206,12 +206,14 @@
          validations: {
             form: {
                 ruc: {
-                    maxLength: maxLength(11)
+                    maxLength: maxLength(11),
+                    minLength: minLength(11)
                 },
                 nombre: {
                     required,
                     text,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    minLength: minLength(4)
                 },
                 telefono: {
                     numeric,

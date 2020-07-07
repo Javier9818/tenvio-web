@@ -34,7 +34,7 @@
          <div class="field col-12">
             <label class="label">Celular * </label>
             <div class="control">
-                <input type="number" :class="['input', ($v.form.celular.$error) ? 'is-danger' : '']"  placeholder="Ingrese su número de celular" v-model="form.celular">
+                <input type="number" :class="['input', ($v.form.celular.$error) ? 'is-danger' : '']"  placeholder="Ingrese su número de celular" v-model="form.celular" maxlength="9" minlength="6">
             </div>
             <p class="ml-1">Su número de celular será utilizado como medio de contácto al realizar un pedido.</p>
             <p v-if="$v.form.celular.$error" class="help is-danger">Este campo es inválido</p>
@@ -46,7 +46,7 @@
 
 <script>
     import {validationMixin} from 'vuelidate'
-    import {required, numeric, minValue, maxValue,email, maxLength, minLength} from 'vuelidate/lib/validators'
+    import {required, numeric, minValue, maxValue,email, maxLength, minLength, } from 'vuelidate/lib/validators'
 
     export default {
         props: ['clickedNext', 'currentStep'],
@@ -67,20 +67,40 @@
             form: {
                 names:{
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    minLength: minLength(5),
+                    async isUnique(value) 
+                    { 
+                        if ((/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/.test(value))) return true 
+                    }
+                    
                 },
                 appaterno:{
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    minLength: minLength(4),
+                    async isUnique(value) 
+                    { 
+                        if ((/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/.test(value))) return true 
+                    }
                 },
                 apmaterno:{
                     required,
-                    maxLength: maxLength(50)
+                    maxLength: maxLength(50),
+                    minLength: minLength(4),
+                    async isUnique(value) 
+                    { 
+                        if ((/^[ñA-Za-z _]*[ñA-Za-z][ñA-Za-z _]*$/.test(value))) return true 
+                    }
                 },
                 celular:{
                     required,
                     maxLength: maxLength(10),
-                    minLength: minLength(6)
+                    minLength: minLength(6),
+                    async isUnique(value) 
+                    { 
+                        if ((/^[0-9]+$/.test(value))) return true 
+                    }
                 },
                 correo:{
                     required,
