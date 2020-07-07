@@ -35,7 +35,7 @@
 
 <section id="blogGrid" class="blog blog-grid pb-60">
 @if($empresas!==null)
-<div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave.svg') !!}"  alt="slide img"></div>
+<div class="bg-img"><img src="{!! asset('assets/images/backgrounds/wave2.svg') !!}"  alt="slide img"></div>
 @endif
   
 
