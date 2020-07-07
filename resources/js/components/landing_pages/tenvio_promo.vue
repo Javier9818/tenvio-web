@@ -140,7 +140,7 @@
                         <div class="section-title">
                             <span class="subtitle">Nuestros Planes</span>
                             <h3 class="title extra">Conozca nuestros precios</h3>
-                            <p>Elija el plan de acuerdo a la necesidad de su empresa, si necesita asesoria, no dude en escribirnos al correo : fdfdf@nortec.com</p>
+                            <p>Elija el plan de acuerdo a la necesidad de su empresa, si necesita asesoria, no dude en escribirnos al correo : <a href="mailto:contacto@tenvioperu.com">contacto@tenvioperu.com</a></p>
                         </div>
                     </div>
                 </div>
