@@ -82,3 +82,20 @@ body.vertical-layout[data-color=bg-gradient-x-purple-blue] .navbar-container, bo
 .header-navbar .navbar-container ul.nav li .scrollable-container {
     overflow-y: scroll;
 }
+
+.cart__shiping p, .form__control__javier{
+    color: black !important;
+    font-size: 1.2em !important;
+}
+
+.label{
+    font-size: 1.2em !important;
+    color: rgb(68, 68, 68) !important;
+    font-weight: bold !important;
+}
+
+@media only screen and (min-width: 768px){
+    .cart__product-price, .cart__product-quantity, .cart__product-total, .cart__product-title{
+        font-size: 1.2em !important;
+    }
+}

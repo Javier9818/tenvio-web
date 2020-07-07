@@ -57,8 +57,8 @@
       </div>
     </div>
     <div class="form-group col-12">
-        <label for="address" class="label">Ingrese la referencia de destino</label>
-        <input type="text" id="address" v-model="direccion" class=" form-control focused" placeholder="Ingresar referencia" required>
+        <label for="address" class="label">Ingrese la dirección de destino</label>
+        <input type="text" id="address" v-model="direccion" class="form-control focused form__control__javier" placeholder="Ingresar dirección" required>
     </div>
     <div class="col-sm-12 col-md-8 col-lg-8">
         <div class="cart__shiping">

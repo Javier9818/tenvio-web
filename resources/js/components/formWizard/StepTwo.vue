@@ -17,7 +17,7 @@
         <div class="field col-12">
             <label class="label">Contraseña</label>
             <div class="control">
-                <input :class="['input', ($v.form.password.$error) ? 'is-danger' : 'is-valid']" v-model="form.password" type="password" placeholder="Ingrese apellidos paternos">
+                <input :class="['input', ($v.form.password.$error) ? 'is-danger' : 'is-valid']" v-model="form.password" type="password" placeholder="Ingrese su contraseña">
             </div>
             <p v-if="!$v.form.password.required" class="help is-danger">Este campo es requerido</p>
             <p v-else-if="!$v.form.password.alpha" class="help is-danger">no acepta caracteres especiales '*"%$... o espacios en blanco</p>
