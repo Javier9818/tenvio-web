@@ -79,7 +79,7 @@
                     <div class="post__content">
                       <div class="post__meta">
                         <div class="post__meta-cat">
-                          <a href="#">{{$empresa->categoria}}</a>
+                          <a href="#">{{$empresa->tipo_negocio}}</a>
                         </div><!-- /.post-meta-cat -->
                       </div><!-- /.post-meta -->
                     </div>

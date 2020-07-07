@@ -28,7 +28,7 @@
       }
     ?>               
       <div class="col-sm-12 col-md-12 col-lg-12">
-        <span class="pagetitle__subheading">Restaurant</span>
+        <span class="pagetitle__subheading">{{$data[0]->tipo_negocio}}</span>
         <h1 class="pagetitle__heading">{{$data[0]->nombre}}</h1>
         <nav aria-label="breadcrumb" >
           <ol class="breadcrumb justify-content-center">

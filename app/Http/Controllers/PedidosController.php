@@ -207,10 +207,10 @@ class PedidosController extends Controller
 	*/
 
 	public static function entregar(Request $request){
-		$empresa_id = session('empresa');
+        $empresa_id = $request->get('empresa');
 		$idpedido = $request->get('idpedido');
         if (Pedidos::entregar($idpedido, $empresa_id) == false)
-			dd();
+            return response()->json(["Message" => "Error"], 500);
         return response()->json(["Message" => "ok"], 200);
 	}
 

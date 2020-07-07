@@ -21,9 +21,9 @@
 			</b-col>
 			<b-col sm="12" md="12">
 				<b-form-group label="Acciones" label-align="center" class="text-center">
-					<b-button @click="rechazar(rowPagoSelccionado)" v-if="rowPagoSelccionado.item.estado=='Pendiente a Aprobar'" variant="danger" size="sm">Rechazar Pago</b-button>
+					<b-button @click="rechazar(rowPagoSelccionado)" v-if="rowPagoSelccionado.item.estado=='PENDIENTE A APROBAR'" variant="danger" size="sm">Rechazar Pago</b-button>
 					<b-button @click="cerrarModal" variant="info" size="sm">Cerrar</b-button>
-					<b-button @click="aprobar(rowPagoSelccionado)" v-if="rowPagoSelccionado.item.estado=='Pendiente a Aprobar'" variant="success" size="sm">Aprobar Pago</b-button>
+					<b-button @click="aprobar(rowPagoSelccionado)" v-if="rowPagoSelccionado.item.estado=='PENDIENTE A APROBAR'" variant="success" size="sm">Aprobar Pago</b-button>
 				</b-form-group>
 			</b-col>
 			<br>

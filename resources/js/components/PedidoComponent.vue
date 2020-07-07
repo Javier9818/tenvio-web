@@ -29,13 +29,7 @@
 				<div class="card-header">
 					<h4 class="card-title">Pedido {{index + 1}} - Código: {{item.idpedido}}</h4>
 					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-					<div class="heading-elements">
-						<ul class="list-inline mb-0">
-							<!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
-							<li><button class="btn bg-primary white" v-on:click="aceptar(item, index)">Aceptar</button></li>
-							<li><button class="btn bg-danger white" v-on:click="cancelar(item, index)">Cancelar / Anular</button></li>
-						</ul>
-					</div>
+
 				</div>
 				<div class="card-content collapse show">
 					<div class="card-body">

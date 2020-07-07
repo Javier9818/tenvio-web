@@ -245,26 +245,26 @@
                             <span class="subtitle">Contácta con nosotros</span>
                             <h3 class="title">Escríbenos tus dudas</h3>
                             <p>Envía tus dudas o sugerencias, estaremos atentos a escucharte para seguir mejorando.</p>
-                            <form action="index.html" id="contact_form_submit" class="contact-form sec-margin">
+                            <div  id="contact_form_submit" class="contact-form sec-margin">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="uname" placeholder="Nombre">
+                                            <input type="text" class="form-control" v-model="email_service.name" placeholder="Nombre">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="email" placeholder="Email">
+                                            <input type="email" class="form-control" v-model="email_service.email" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group textarea">
-                                            <textarea name="message" id="message" class="form-control" cols="30" rows="10" placeholder="Mensaje"></textarea>
+                                            <textarea   v-model="email_service.message" class="form-control" cols="30" rows="10" placeholder="Mensaje"></textarea>
                                         </div>
-                                        <button class="submit-btn  btn-rounded gd-bg-1" type="submit">Enviar</button>
+                                        <button class="submit-btn  btn-rounded gd-bg-1" @click="enviar">{{enviando}}</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -279,13 +279,46 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
     export default {
+        data()
+        {
+            return{
+                email_service:{
+                    name:'',
+                    message:'',
+                    email:''
+                },
+                enviando:'Enviar'
+            }
+        },
         mounted() {
-
+        
         },
         methods:{
             register(){
                 this.$emit('register');
+            },
+            enviar()
+            {
+                var that = this;
+                this.enviando='Enviando'
+                axios.post('/front/email_contactanos',{data:this.email_service})
+                .then(function (response) {
+                    if (response.data.success==0)  
+                        Swal.fire('ERROR', 'Ha ocurrido un error', 'error')
+                    else{
+                        if(response.data)
+                        {
+                            that.enviando='Enviar'
+                             Swal.fire('Éxito', 'Se ha enviado su consulta, nos comunicaremos contigo en unos minutos', 'success')
+                             location.reload()
+                        }
+                           
+                        else
+                            Swal.fire('Ups', 'Vuelve a intentarlo más tarde, disculpa :(', 'warning')
+                    } 
+                });
             }
         }
     }

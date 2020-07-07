@@ -8,7 +8,7 @@
     @include('front.nav')
 @endsection
 
-@section('contenido') 
+@section('contenido')
 <section id="slider" class="slider slider-layout1">
     <div class="container slide-item align-v-h text-center">
         <div class="row">
@@ -19,8 +19,13 @@
                     <div class="containLine"> <div class="line-low bg1 n600" style="visibility: visible;"></div> </div>
                     <p class="slide__desc"></p>
                     <form action="{{ route('list') }}" method="get">
+<<<<<<< HEAD
                     <input type="text"  name="search" class="input__search" placeholder="Busca tu ciudad o restaurant favorito">
                     <a href="/negocios-cercanos" class="btn btn__primary my-5"><i class="fa fa-map-marker-alt fa-2x" aria-hidden="true"></i>Buscar restaurantes o negocios cercanos</a>
+=======
+                    <input type="text"  name="search" class="input__search text-center" placeholder="Busca tu ciudad o restaurant favorito">
+                    <a href="{{route('negocios_cercanos')}}" class="btn btn__primary my-5"><i class="fa fa-map-marker-alt fa-2x" aria-hidden="true"></i>Buscar restaurantes o negocios cercanos</a>
+>>>>>>> e82e01887d2887df858f77898cae02eea6d53259
                     </form>
                 </div><!-- /.slide-content -->
             </div><!-- /.col-lg-12 -->

@@ -56,10 +56,34 @@ class FrontController extends Controller
         break;
       case 'recuperaPost':
         return FrontController::recuperaPost($request);
+        break; 
+      case 'email_contactanos':
+        return FrontController::email_contactanos($request);
         break;
       default:
         # code...
         break;
+    }
+  }
+  public static function email_contactanos($request)
+	{
+    $data=$request->get('data');
+     
+		try { 
+		  
+      $mensaje='
+      Hola, acaba de llegar la siguiente consulta de '
+      .$data['name']
+      .' Mensaje: '.$data['message']
+      .' email: '.$data['email']
+      .' Porfa, respondela pe kgda :3';
+			Mail::to(Controller::emails)->send(new SendCargo('CONTÁCTA CON NOSOTROS', '', '', $mensaje));
+			return true;
+		}  catch (\Exception  $e) {
+      return [
+        'Message'=> $e->getMessage(),
+        'success'=>false
+      ];
     }
   }
   public static function recupera($request)
@@ -259,7 +283,8 @@ class FrontController extends Controller
       $empresas =DB::table('empresas')
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
-      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
+      ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
+      ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','tipo_negocio.descripcion as tipo_negocio')
       ->where(
         [
           ['empresas.nombre','like','%'.$request->get('search').'%'],
@@ -275,7 +300,8 @@ class FrontController extends Controller
         $empresas =DB::table('empresas')
         ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
         ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
-        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','categorias.descripcion as categoria')
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto','tipo_negocio.descripcion as tipo_negocio')
         ->where(
           [
             ['categorias.descripcion','like','%'.$request->get('search').'%'],
@@ -321,7 +347,8 @@ class FrontController extends Controller
       ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
       ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
       ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
-      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,categorias.descripcion as categoria')      
+      ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
+      ->selectRaw('empresas.id ,empresas.nombre,empresas.nombre_unico,empresas.descripcion,empresas.foto,tipo_negocio.descripcion as tipo_negocio')      
       ->where(
         [
           ['categorias.state','=',1],
@@ -339,8 +366,10 @@ class FrontController extends Controller
       try {
         $empresa =DB::table('empresas')
         ->join('ciudad', 'ciudad.id', '=', 'empresas.ciudad_id')
-        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto', 'ciudad.nombre as ciudad', 'ciudad.distrito_id')
-        // ->where('empresas.nombre','=',str_replace('-',' ',$nombre))
+        ->join('categoria_empresa', 'categoria_empresa.empresa_id', '=', 'empresas.id')
+        ->join('categorias', 'categorias.id', '=', 'categoria_empresa.categoria_id')
+        ->join('tipo_negocio', 'tipo_negocio.id', '=', 'categorias.tipo_negocio_id')
+        ->select('empresas.id','empresas.nombre','empresas.nombre_unico','empresas.descripcion','empresas.foto', 'ciudad.nombre as ciudad', 'ciudad.distrito_id','tipo_negocio.descripcion as tipo_negocio')        
         ->where(
           [
             ['empresas.nombre_unico','=', $nombre],
