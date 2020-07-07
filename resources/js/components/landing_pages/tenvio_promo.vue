@@ -245,26 +245,26 @@
                             <span class="subtitle">Contácta con nosotros</span>
                             <h3 class="title">Escríbenos tus dudas</h3>
                             <p>Envía tus dudas o sugerencias, estaremos atentos a escucharte para seguir mejorando.</p>
-                            <div  id="contact_form_submit" class="contact-form sec-margin">
+                            <form  id="contact_form_submit" class="contact-form sec-margin">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" v-model="email_service.name" placeholder="Nombre">
+                                            <input type="text" required class="form-control" v-model="email_service.name" placeholder="Nombre">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" v-model="email_service.email" placeholder="Email">
+                                            <input type="email" required class="form-control" v-model="email_service.email" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="form-group textarea">
-                                            <textarea   v-model="email_service.message" class="form-control" cols="30" rows="10" placeholder="Mensaje"></textarea>
+                                            <textarea  required v-model="email_service.message" class="form-control" cols="30" rows="10" placeholder="Mensaje"></textarea>
                                         </div>
                                         <button class="submit-btn  btn-rounded gd-bg-1" @click="enviar">{{enviando}}</button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     <div class="col-lg-6">
