@@ -190,9 +190,9 @@ export default {
           this.producto.cant++;
           break;
         case '-':
-          if(this.producto.cant==0)
+          if(this.producto.cant-1==0)
             break;
-          this.producto.cant--;
+            this.producto.cant--;
           break;
         default:
           break;
@@ -255,6 +255,7 @@ export default {
 			.then(function (response) {
         
         that.productos = response.data.data;
+        console.log(that.productos)
         if(that.bool==false)
         {     
           that.bool=true;     

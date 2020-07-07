@@ -7,9 +7,7 @@
     @include('front.nav')
 @endsection
 @section('contenido')
-<style>
-    
-</style>
+ 
 <link rel="stylesheet" href="{!! asset('assets/css/profile_styles.css') !!}">
     <div class="container emp-profile"  >
         <form method="post">
