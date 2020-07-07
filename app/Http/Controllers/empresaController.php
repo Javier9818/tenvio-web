@@ -21,7 +21,7 @@ class EmpresaController extends Controller
             $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => ucwords(strtolower($request->ciudadCreate)), "distrito_id" => $request->distrito]))->id : $request->ciudad;
             Contrato::create([
                 "empresa_id" => $request->id,
-                "estado" => 'ACTIVO',
+                "estado" => Contrato::$CONTRATO_VIGENTE,
                 "plan_id" => 1,
                 "plan_monto" => 0.0,
                 "fecha_vencimiento" => Carbon::now()->addDays(30)
@@ -50,7 +50,7 @@ class EmpresaController extends Controller
 
             Contrato::create([
                 "empresa_id" => $empresa->id,
-                "estado" => 'ACTIVO',
+                "estado" => Contrato::$CONTRATO_VIGENTE,
                 "plan_id" => 1,
                 "plan_monto" => 0.0,
                 "fecha_vencimiento" => Carbon::now()->addDays(30)
@@ -217,7 +217,7 @@ class EmpresaController extends Controller
             ]
         )
         ->get();
-        
+
     }
 
 }

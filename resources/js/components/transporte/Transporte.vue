@@ -44,7 +44,7 @@
                                      Cancelar
                                 </b-button>
                             </div>
-                            
+
                         </div>
                     </div>
                     <mapa-interactivo :clickDisabled ='true' height='75vh' width='100%' @geoPosition='geoPosition' :layers='[infoModal.data]' ></mapa-interactivo>
@@ -63,6 +63,7 @@
     export default {
         mounted() {
             this.items = this.formatLayer();
+
         },
         data(){
             return{
@@ -74,16 +75,16 @@
                     detalle:[]
                 },
                 fields: [
-                    'cliente', 
+                    'cliente',
                     {key:'id', label:'Pedido'},
-                    {key:'direccion', label:'Dirección'}, 
+                    {key:'direccion', label:'Dirección'},
                     {
-                        key:'monto', 
-                        label:'Monto', 
+                        key:'monto',
+                        label:'Monto',
                         formatter: (value, key, item) => {
                             return `S/.${value}`
                         },
-                    }, 
+                    },
                     'opciones'
                 ],
                 items: []
@@ -129,7 +130,7 @@
 					cancelButtonText: 'No'
 				}).then((result) => {
 					if (result.value) {
-						axios.post('/api/entregaPedido', {idpedido: id}).then((data) => {
+						axios.post('/api/entregaPedido', {idpedido: id,empresa}).then((data) => {
                             Swal.fire('Éxito','El pedido se entregó con éxito','success')
                             this.items.map( (item, index) => {
                             if(item.id === id ) this.items.splice(index, 1);

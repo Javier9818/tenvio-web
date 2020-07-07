@@ -4375,8 +4375,8 @@ __webpack_require__.r(__webpack_exports__);
     generaPedido: function generaPedido() {
       var _this4 = this;
 
-      this.marker = this.$refs.mapaComponent.marker;
-      if (!document.getElementById('radio-group-1').checked) return;
+      this.marker = this.$refs.mapaComponent.marker; //if(!document.getElementById('radio-group-1').checked)
+      //return
 
       if (this.$refs.mapaComponent.marker.getLatLng().lng === 0 && this.$refs.mapaComponent.marker.getLatLng().lat === 0) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
@@ -4972,7 +4972,7 @@ __webpack_require__.r(__webpack_exports__);
     listPedidos: function listPedidos() {
       var that = this;
       axios.post('/front/ListPedido').then(function (response) {
-        that.items = response.data;
+        that.items = response.data.data;
         that.totalRows = that.items.length;
       });
     }
@@ -5130,9 +5130,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/front/recupera', {
         user: this.username
       }).then(function (response) {
-        this.hideModal();
+        that.hideModal();
         if (response.data.success == 0) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('ERROR', 'Ha ocurrido un error', 'error');else {
-          if (response.data == 1) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se ha generado su solicitud, revise su correo por favor.', 'success');else sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('No encontrado', 'El usuario no existe', 'warning');
+          if (response.data) sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('Éxito', 'Se ha generado su solicitud, revise su correo por favor.', 'success');else sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire('No encontrado', 'El usuario no existe', 'warning');
         }
       });
     }
@@ -5700,6 +5700,7 @@ __webpack_require__.r(__webpack_exports__);
         this.map.locate({
           setView: true,
           maxZoom: 17,
+          zoom: 17,
           watch: this.geoWatch === true ? true : false
         });
         this.map.on('locationfound', function (e) {
@@ -46797,7 +46798,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\r\n    height: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.mapaInteractivo[data-v-17e7f4da]{\n    height: 100%;\n}\n", ""]);
 
 // exports
 
@@ -97856,11 +97857,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-module.exports = __webpack_require__(/*! C:\Users\Javier\Documents\Briceño\deliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
-=======
 module.exports = __webpack_require__(/*! C:\Users\RobertGutierrez\Desktop\Nortec\DeliveryWeb\resources\js\fronted.js */"./resources/js/fronted.js");
->>>>>>> 889f3637b4f22094c7960e15411468fa459f4c94
 
 
 /***/ })

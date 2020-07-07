@@ -117,7 +117,7 @@ export default {
             this.producto.cant++;
             break;
           case '-':
-            
+
             if(this.producto.cant==1)
               break;
             this.producto.cant--;
@@ -229,8 +229,8 @@ export default {
       },
       generaPedido: function () {
          this.marker=this.$refs.mapaComponent.marker;
-         if(!document.getElementById('radio-group-1').checked)
-          return
+         //if(!document.getElementById('radio-group-1').checked)
+          //return
 
         if(this.$refs.mapaComponent.marker.getLatLng().lng === 0 && this.$refs.mapaComponent.marker.getLatLng().lat === 0){
             Swal.fire({

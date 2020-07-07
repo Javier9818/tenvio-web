@@ -54,6 +54,7 @@
                     this.map.locate({
                         setView: true,
                         maxZoom: 17,
+                        zoom: 17,
                         watch: this.geoWatch === true ? true: false
                     });
                     this.map.on('locationfound', (e) => {
@@ -63,14 +64,14 @@
                     });
                 }else
                     if(this.layer)this.initLayer();
-                
-                
+
+
                 if(!this.clickDisabled)
-                    this.map.on('click', (e) => { 
-                        this.marker.removeFrom(this.map); 
+                    this.map.on('click', (e) => {
+                        this.marker.removeFrom(this.map);
                         this.createMarker(e.latlng, 'Esta es mi ubicación', '<i class="fas fa-child fa-2x"></i> Esta es mi ubicación', false, true, true);
                 });
-                
+
                 if(this.layers)this.initLayers();
             },
             createMarker: function(LatLng, title, popup, iconUrl, draggable, first){
@@ -82,7 +83,7 @@
                 if(first) this.$emit('geoPosition', markerX.getLatLng());
                 if(first && ((this.layers || []).length === 1)) this.dibujaLinea(markerX, this.layers[0]); //Dibujar linea para layers[0]
 
-                if(draggable && !this.dragableDisabled) 
+                if(draggable && !this.dragableDisabled)
                     markerX.on('dragend', (event) => {
                         var marker = event.target;
                         var position = marker.getLatLng();
@@ -92,7 +93,7 @@
                         if(first) this.$emit('geoPosition', position);
                         if(first && ((this.layers || []).length === 1)) this.dibujaLinea(marker, this.layers[0]); //Dibujar linea para layers[0]
                     });
-                
+
                 if(first) this.marker = markerX
             },
             initLayer() {
@@ -107,7 +108,7 @@
                     // console.log(marker.getPopup());
                     marker.bindTooltip(layer.direccion || 'Default').openTooltip();
 
-                   
+
                       let urlIcon = layer.icon || null;
                       if(urlIcon){
                           var icon =  L.icon({ iconUrl: urlIcon, iconSize: [35, 50],iconAnchor: [17, 50], popupAnchor: [2, -50] })
