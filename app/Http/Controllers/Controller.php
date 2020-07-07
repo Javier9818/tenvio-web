@@ -13,6 +13,5 @@ class Controller extends BaseController
 {
   
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    const  emails=['cferrercava@gmail.com','rjgutierrez@unitru.edu.pe','jhordanlcix97@gmail.com','jnavezaroca@gmail.com','jbriceno@unitru.edu.pe'];
-    // const  emails='cferrercava@gmail.com,rjgutierrez@unitru.edu.pe,jhordanlcix97@gmail.com,jnavezaroca@gmail.com,jbriceno@unitru.edu.pe';
+    const  emails=['cferrercava@gmail.com','rjgutierrez@unitru.edu.pe','jhordanlcix97@gmail.com','jaironavezaroca@gmail.com','jbriceno@unitru.edu.pe']; 
 }
