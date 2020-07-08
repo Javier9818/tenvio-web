@@ -99,3 +99,8 @@ body.vertical-layout[data-color=bg-gradient-x-purple-blue] .navbar-container, bo
         font-size: 1.2em !important;
     }
 }
+
+
+.product__item{
+    background-color: red;   
+}

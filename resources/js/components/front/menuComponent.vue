@@ -3,6 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-9">
+
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
 
@@ -21,11 +22,17 @@
 
 
             </div><!-- /.col-lg-12 -->
-          </div><!-- /.row -->
-          <div class="row">
-            <!--For-->
+          </div>
 
+          <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
+
+              <div class="product__item">
+                  <div class="row">
+                    
+                  </div>
+              </div>
+
               <div class="product-item">
                 <div class="product__img align-items-center">
                   <img style="width:300px height:250px" :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
@@ -34,8 +41,8 @@
                       <button type="button" class="btn__javier" @click="funSelecciona(item)">
                         Comprar <p class="d-inline d-md-none">S/. {{item.precio}}</p>
                       </button>
-                    </div><!-- /.product__action -->
-                  </div><!-- /.product__hover-->
+                    </div>
+                  </div>
                 </div><!-- /.product-img -->
                 <div class="product__content">
                   <h4 class="product__title__javier">{{item.nombre}}</h4>
@@ -43,10 +50,10 @@
                   <span class="product__price__javier d-none d-md-block">S/. {{item.precio}}</span>
                    
                 </div><!-- /.product-content -->
-              </div><!-- /.product-item -->
-            </div><!-- /.col-lg-4 -->
-            <!--For-->
-          </div><!-- /.row -->
+              </div>
+            </div>
+          </div>
+
           <div class="row">        
             <div class="col-sm-12 col-md-12 col-lg-3 text-center align-items-center">
             </div>    
@@ -63,8 +70,9 @@
             </div><!-- /.col-lg-12 -->
             <div class="col-sm-12 col-md-12 col-lg-3 text-center align-items-center">
             </div>
-          </div><!-- /.row -->
-        </div><!-- /.col-lg-9 -->
+          </div>
+        </div>
+
         <div class="col-sm-12 col-md-12 col-lg-3">
           <aside class="sidebar sidebar-layou2">
             <div class="widget widget-search">
