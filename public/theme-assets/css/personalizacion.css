@@ -102,5 +102,45 @@ body.vertical-layout[data-color=bg-gradient-x-purple-blue] .navbar-container, bo
 
 
 .product__item{
-    background-color: red;   
+    border: 1px solid rgb(180, 178, 178);
+    padding: 10px;
+    margin-bottom: 30px;
+}
+.title__product{
+    color: rgb(94, 93, 93);
+    font-size: 1.8em;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.description__product{
+    font-size: 1.7em;
+    color: gray;
+}
+
+.price__product{
+    font-size: 2.7em;
+    color: #f38e35;
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+.btn__product, .btn__product:hover{
+    background-color: #f38e35;
+    color: white;
+    font-size: 1.2em;
+    margin-top: 15px;
+}
+
+
+@media only screen and (min-width: 200px) and (max-width: 500px){
+    .price__product{
+        text-align: center;
+    }
+    /* .btn__product{
+        margin-top: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    } */
 }

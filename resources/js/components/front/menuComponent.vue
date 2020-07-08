@@ -27,30 +27,25 @@
           <div class="row">
             <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
 
-              <div class="product__item">
-                  <div class="row">
-                    
+              <div class="product__item container-fluid">
+                  <div class="row justify-content-center align-items-center">
+                      <div class="col-md-5">
+                        <img :src="'/storage/imgproductos/'+item.foto" alt="Imágen de producto" class=" img-fluid text-center">
+                      </div>
+                      <div class="col-md-7 pt-2">
+                        <p class="title__product">{{item.nombre}}</p>
+                        <hr>
+                        <p class="description__product">{{item.descripcion}}</p>
+                        <div class="row">
+                          <p class="price__product col-5 col-md-12">S/.{{item.precio}}</p>
+                          <button type="button" class="btn btn__product" @click="funSelecciona(item)">
+                            Comprar
+                          </button>
+                        </div>
+                      </div>
                   </div>
               </div>
 
-              <div class="product-item">
-                <div class="product__img align-items-center">
-                  <img style="width:300px height:250px" :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
-                  <div class="product__hover">
-                    <div class="product__action">
-                      <button type="button" class="btn__javier" @click="funSelecciona(item)">
-                        Comprar <p class="d-inline d-md-none">S/. {{item.precio}}</p>
-                      </button>
-                    </div>
-                  </div>
-                </div><!-- /.product-img -->
-                <div class="product__content">
-                  <h4 class="product__title__javier">{{item.nombre}}</h4>
-                  <div class="product__cat__javier">{{item.descripcion}}</div>
-                  <span class="product__price__javier d-none d-md-block">S/. {{item.precio}}</span>
-                   
-                </div><!-- /.product-content -->
-              </div>
             </div>
           </div>
 

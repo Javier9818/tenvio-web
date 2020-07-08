@@ -161,18 +161,18 @@ $(function () {
     });
 
     /*==========   Switch Between List view and Grid View   ==========*/
-    // $('.product-item').parent().addClass('list-view');
-    // $('.filter-option-view a').on('click', function (e) {
-    //     e.preventDefault()
-    //     $(this).addClass('active').siblings().removeClass('active');
-    // })
+    $('.product-item').parent().addClass('list-view');
+    $('.filter-option-view a').on('click', function (e) {
+        e.preventDefault()
+        $(this).addClass('active').siblings().removeClass('active');
+    })
     
-    // $('#listView').on('click', function (e) {
-    //     $('.product-item').parent().addClass('list-view');
-    // });
-    // $('#gridView').on('click', function (e) {
-    //     $('.product-item').parent().removeClass('list-view');
-    // });
+    $('#listView').on('click', function (e) {
+        $('.product-item').parent().addClass('list-view');
+    });
+    $('#gridView').on('click', function (e) {
+        $('.product-item').parent().removeClass('list-view');
+    });
 
     /*==========   Owl Carousel  ==========*/
     $('.carousel').each(function () {
