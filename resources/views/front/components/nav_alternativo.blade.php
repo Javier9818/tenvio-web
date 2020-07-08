@@ -194,7 +194,8 @@
 <div id="app" class="">
   <nav class="navbar navbar-ligth bg-ligth">
     <a href='/' class="navbar-brand link__back"> <i class="fas fa-arrow-left"></i> Volver</a>
-    <img class="navbar-brand" src="/assets/images/logo/logo-white.png" alt="logo" width="100px">
+    <a href='/' >  <img class="navbar-brand" src="/assets/images/logo/logo-white.png" alt="logo" width="100px">  </a>
+   
     
   </nav>
   

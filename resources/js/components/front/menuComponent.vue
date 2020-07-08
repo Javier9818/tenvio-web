@@ -26,12 +26,12 @@
             <!--For-->
 
             <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
-              <div class="product-item">
+              <div class="product-item ">
                 <div class="product__img align-items-center">
                   <img style="width:300px height:250px" :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
-                  <div class="product__hover">
-                    <div class="product__action">
-                      <button type="button" class="btn__javier" @click="funSelecciona(item)">
+                  <div class="product__hover"> 
+                    <div class="product__action"> 
+                      <button type="button" class="btn btn__javier" @click="funSelecciona(item)">
                         Comprar <p class="d-inline d-md-none">S/. {{item.precio}}</p>
                       </button>
                     </div><!-- /.product__action -->
@@ -41,7 +41,7 @@
                   <h4 class="product__title__javier">{{item.nombre}}</h4>
                   <div class="product__cat__javier">{{item.descripcion}}</div>
                   <span class="product__price__javier d-none d-md-block">S/. {{item.precio}}</span>
-                   
+                   <span class="product__price__javier d-none d-md-block">&times; </span>
                 </div><!-- /.product-content -->
               </div><!-- /.product-item -->
             </div><!-- /.col-lg-4 -->
