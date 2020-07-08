@@ -3,14 +3,15 @@
   <b-table
       show-empty
       small
-      stacked="md"
+      responsive
       :items="items"
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
+
     >
       <template v-slot:cell(actions)="row">
-        <b-button size="sm" @click="verSeguimiento(row.item.pedido)">
+        <b-button size="sm" class=" btn-sm" @click="verSeguimiento(row.item.pedido)">
           Ver seguimiento
         </b-button>
       </template>
