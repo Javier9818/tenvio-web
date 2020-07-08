@@ -26,12 +26,12 @@
             <!--For-->
 
             <div class="col-sm-6 col-md-6 col-lg-4 list-view" v-for="(item, key) in productos" :key="key">
-              <div class="product-item">
+              <div class="product-item ">
                 <div class="product__img align-items-center">
-                  <img style="width:300px; height:250px" :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
-                  <div class="product__hover">
-                    <div class="product__action">
-                      <button type="button" class="btn__javier" @click="funSelecciona(item)">
+                  <img style="width:300px height:250px" :src="'/storage/imgproductos/'+item.foto" :alt="'/storage/imgproductos/'+item.foto" class=" img-fluid text-center">
+                  <div class="product__hover"> 
+                    <div class="product__action"> 
+                      <button type="button" class="btn btn__javier" @click="funSelecciona(item)">
                         Comprar <p class="d-inline d-md-none">S/. {{item.precio}}</p>
                       </button>
                     </div><!-- /.product__action -->
@@ -41,6 +41,7 @@
                   <h4 class="product__title__javier">{{item.nombre}}</h4>
                   <div class="product__cat__javier">{{item.descripcion}}</div>
                   <span class="product__price__javier d-none d-md-block">S/. {{item.precio}}</span>
+                   <span class="product__price__javier d-none d-md-block">&nbsp; </span>
                 </div><!-- /.product-content -->
               </div><!-- /.product-item -->
             </div><!-- /.col-lg-4 -->
@@ -51,7 +52,7 @@
             </div>    
             <div class="col-sm-12 col-md-12 col-lg-6 text-center align-items-center">
               <nav class="pagination-area">
-                <b-pagination size="lg" 
+                <b-pagination size="md" 
                   v-model="currentPage"
                   :total-rows="rows"
                   :per-page="perPage"
@@ -83,22 +84,7 @@
                 </ul>
               </div><!-- /.widget-content -->
             </div><!-- /.widget-categories -->
-            <div class="widget widget-poducts d-none">
-              <h5 class="widget__title">Productos+ Comprados</h5>
-              <div class="widget__content">
-                <!-- product item #1 -->
-                <div class="widget-product-item">
-                  <div class="widget__product-img">
-                    <a href="#"><img src="assets/images/shop/grid/2.jpg" alt="product"></a>
-                  </div><!-- /.product-product-img -->
-                  <div class="widget__product-content">
-                    <h6 class="widget__product-title"><a href="#">1 Pollo entero </a></h6>
-                    <span class="widget__product-price">S/. 45.00</span>
-                  </div><!-- /.widget-product-content -->
-                </div><!-- /.widget-product-item -->
-              </div><!-- /.widget-content -->
-            </div><!-- /.widget-poducts -->
-
+           
           </aside><!-- /.sidebar -->
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
@@ -109,11 +95,11 @@
             <div class="col-sm-12 col-md-12 col-lg-12 align-items-center text-center">
               <div class="row align-items-center">
                 <div class="col-12 col-lg-6 col-sm-6 product__single-img text-center">
-                  <img :src="'/storage/imgproductos/'+producto.foto" alt="Product" class="zoomin text-center" style="visibility: visible;">
+                  <img :src="'/storage/imgproductos/'+producto.foto" alt="Product" class="zoomin text-center" style="visibility: visible">
                 </div>
                 <div class="col-12  col-lg-6 col-sm-6">
                   <h4 class="product__title my-2" style="font-size: 1.5em">{{producto.nombre}}</h4>
-                  <span class="product__price" style="font-size: 2em;">S/. {{producto.precio}}</span>
+                  <span class="product__price" style="font-size: 2em">S/. {{producto.precio}}</span>
                 </div>
               </div>
             </div>
@@ -158,7 +144,7 @@
 </template>
 
 <script>
-import EventBus from '../../event-bus';
+import EventBus from '../../event-bus'
 export default {
   props: ['id','nombre'],
   data()
@@ -187,24 +173,24 @@ export default {
     funAdd: function (key) {
       switch (key) {
         case '+':
-          this.producto.cant++;
-          break;
+          this.producto.cant++
+          break
         case '-':
-          if(this.producto.cant-1==0)
-            break;
-            this.producto.cant--;
-          break;
+          if(this.producto.cant==1)
+            break
+            this.producto.cant-- 
+          break
         default:
-          break;
+          break
       }
     },
     funBusqueda: function (params) {
-      this.funcionProductos('all',this.currentPage);
+      this.funcionProductos('all',this.currentPage)
     },
     funCambia: function () {
       setTimeout(() => { 
       this.funcionProductos('all',this.currentPage)
-      }, 250);
+      }, 250)
      
     },
     funSelecciona: function (item) {
@@ -215,8 +201,8 @@ export default {
       this.producto.id=item.id
       this.producto.empresa=this.id
       this.producto.name_empresa=this.nombre
-      this.producto.cant=1;
-      this.showModal();
+      this.producto.cant=1
+      this.showModal()
     },
     
     funCarrito: function (key) {
@@ -224,52 +210,52 @@ export default {
       switch (key) {
         case 'c':
           if(this.producto.cant>0)
-            this.funAddCarrito(this.producto);
-          this.hideModal();
-          break;
+            this.funAddCarrito(this.producto)
+          this.hideModal()
+          break
         case 'x':
-           location.href="/micarrito";
-          break;
+           location.href="/micarrito"
+          break
         default:
-          break;
+          break
       }
-    },
+    },     
     funAddCarrito: function (item) {
-      EventBus.$emit('i-got-clicked', this.producto);
+      EventBus.$emit('i-got-clicked', item)
     },
     funcAcciona: function () {
-      this.funcionProductos(this.categoria,1);
+      this.funcionProductos(this.categoria,1)
     },
     funcionCategorias:function () {
-      var that = this;
+      var that = this
 			axios.post('/front/categorias',{id:that.id})
 			.then(function (response) { 
         response.data.forEach(element => {
-          that.categorias.push(element);
-        });
-			});
+          that.categorias.push(element)
+        })
+			})
     },
     funcionProductos:function (item, index) {
-      var that = this;
+      var that = this
 			axios.post('/front/productos',{tipo:item, id:that.id, page:index, search:that.buscar})
 			.then(function (response) {
         
-        that.productos = response.data.data;
-        console.log(that.productos)
+        that.productos = response.data.data
+         
         if(that.bool==false)
         {     
-          that.bool=true;     
+          that.bool=true     
           that.rows= response.data.last_page
         
         }
       
-			});
+			})
     }
   },
   mounted()
   {
-    this.funcionCategorias();
-    this.funcionProductos('all',1);
+    this.funcionCategorias()
+    this.funcionProductos('all',1)
   }
 }
 </script>

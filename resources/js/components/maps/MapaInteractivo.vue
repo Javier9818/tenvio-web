@@ -107,6 +107,7 @@
 
                 if(draggable && !this.dragableDisabled)
                     markerX.on('dragend', (event) => {
+                        this.circle !== null ? this.circle.removeFrom(this.map) : null;
                         var marker = event.target;
                         var position = marker.getLatLng();
                         marker.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true'});

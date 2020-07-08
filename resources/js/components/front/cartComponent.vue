@@ -58,7 +58,7 @@
     </div>
     <div class="form-group col-12">
         <label for="address" class="label">Ingrese la dirección de destino</label>
-        <input type="text" id="address" v-model="direccion" class=" form-control focused" placeholder="Ingresar dirección" required>
+        <input type="text" id="address" v-model="direccion" class="form-control focused form__control__javier" placeholder="Ingresar dirección" required>
     </div>
     <div class="col-sm-12 col-md-8 col-lg-8">
         <div class="cart__shiping">
@@ -210,7 +210,7 @@ export default {
               tipoEntrega:0,
               lat:0,
               lng:0,
-              direccion:'',
+              direccion:' ',
               total:this.generaTotal(empresa, array)
             }
           }
@@ -245,7 +245,7 @@ export default {
             this.empresas.forEach(element => {
                 element.lat=this.marker.getLatLng().lat,
                 element.lng=this.marker.getLatLng().lng,
-                element.direccion= this.direccion
+                element.direccion= (this.direccion=="")?' ':this.direccion
             });
 
 
@@ -264,7 +264,7 @@ export default {
                 productos: that.productos,
             }).then(function (response) {
                     Swal.fire({
-                        text:'Su pedido se ha registrado satisfactoriamente.',
+                        text:'Su pedido se ha registrado satisfactoriamente, en unos minutos la empresa se contactará contigo.',
                         icon: 'success',
                         title: 'Éxito',
                     }).then(() => {
