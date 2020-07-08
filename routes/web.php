@@ -3,11 +3,19 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Artisan;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+// ================================================ CPANEL =================================================*/
+Route::get('/comand', 
+  function (){
+     Artisan::call('view:cache');
+  }
+);
 
 // ================================================ LANDING PAGES =================================================*/
 Route::get('/quienes-somos', 'GeneralController@vistaPromocional');
@@ -64,7 +72,7 @@ Route::get('/recoverypassword/{cifrado}', 'FrontController@Recover')->name('Reco
 Route::get('/', 'FrontController@categoriasIndex')->name('inicio');
 Route::get('/empresa', function(){return view('front.empresa');});
 Route::get('/micarrito', function(){return view('front.cart');})->middleware('auth');
-Route::get('/pedidos', function(){return view('front.pedidos');});
+Route::get('/pedidos', function(){return view('front.pedidos');})->middleware('auth');
 Route::get('/list', 'FrontController@ListEmpresas')->name('list');
 Route::get('/list/{Categoria}', 'FrontController@BuscaxCategoria')->name('BuscaxCategoria');
 Route::get('/seguimiento/{cifrado}', 'FrontController@seguimiento')->name('seguimiento');

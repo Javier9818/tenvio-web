@@ -54,7 +54,7 @@
             </div>    
             <div class="col-sm-12 col-md-12 col-lg-6 text-center align-items-center">
               <nav class="pagination-area">
-                <b-pagination size="lg" 
+                <b-pagination size="md" 
                   v-model="currentPage"
                   :total-rows="rows"
                   :per-page="perPage"
@@ -87,22 +87,7 @@
                 </ul>
               </div><!-- /.widget-content -->
             </div><!-- /.widget-categories -->
-            <div class="widget widget-poducts d-none">
-              <h5 class="widget__title">Productos+ Comprados</h5>
-              <div class="widget__content">
-                <!-- product item #1 -->
-                <div class="widget-product-item">
-                  <div class="widget__product-img">
-                    <a href="#"><img src="assets/images/shop/grid/2.jpg" alt="product"></a>
-                  </div><!-- /.product-product-img -->
-                  <div class="widget__product-content">
-                    <h6 class="widget__product-title"><a href="#">1 Pollo entero </a></h6>
-                    <span class="widget__product-price">S/. 45.00</span>
-                  </div><!-- /.widget-product-content -->
-                </div><!-- /.widget-product-item -->
-              </div><!-- /.widget-content -->
-            </div><!-- /.widget-poducts -->
-
+           
           </aside><!-- /.sidebar -->
         </div><!-- /.col-lg-3 -->
       </div><!-- /.row -->
