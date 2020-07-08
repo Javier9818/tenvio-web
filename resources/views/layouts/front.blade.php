@@ -77,8 +77,8 @@
                 <div class="contact-box">
                   <h6 class="contact__box-title">Contactanos</h6>
                   <ul class="contact__box-list newColor">
-                    <li><span> </span><a href="mailto:Babette@7oroof.com">contacto@tenvioperu.com</a></li>
-                    {{-- <li><span> </span><a href="tel:020101236547">98171187</a></li> --}}
+                    <li><span> </span><a href="mailto:contacto@tenvioperu.com">contacto@tenvioperu.com</a></li>
+                    <li><span> </span><a href="tel:044-700433">044-700433</a></li> 
                   </ul>
                 </div><!-- /.contact-box -->
               </div><!-- /.col-lg-4 -->

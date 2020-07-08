@@ -68,7 +68,7 @@
           <!-- Post Item #1 -->
           
             @foreach ($empresas as $empresa)
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
               <div class="card  " style=" background-color: #fff;
                 display: flex;
                 justify-content: center;
@@ -82,7 +82,7 @@
                   <div class="post-item">
                     <div class="post__img">
                       <a href="#">
-                      <img src="/storage/images/perfilEmpresa/{{$empresa->foto}}" alt="post image">
+                      <img src="/storage/images/perfilEmpresa/{{$empresa->foto}}" width="450px" height="250px" alt="post image">
                       </a>
                     </div><!-- /.post__img -->
                     <div class="post__content">
