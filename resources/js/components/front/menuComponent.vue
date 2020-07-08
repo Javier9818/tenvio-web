@@ -53,8 +53,8 @@
             <div class="col-sm-12 col-md-12 col-lg-3 text-center align-items-center">
             </div>    
             <div class="col-sm-12 col-md-12 col-lg-6 text-center align-items-center">
-              <nav class="pagination-area">
-                <b-pagination size="md" 
+              <nav class="pagination-area  ">
+                <b-pagination size="lg" 
                   v-model="currentPage"
                   :total-rows="rows"
                   :per-page="perPage"
