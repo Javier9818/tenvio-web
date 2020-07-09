@@ -1,28 +1,33 @@
 <template>
-    <div :hidden="!mostrar">
-		<div>
-			<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-		</div>
-  		<!--<vue-loaders name="pacman" color="black" scale="0.9"></vue-loaders>-->
-		<br>{{texto_}}
+    <div :hidden="!mostrar" class=" align-items-center"> 
+			<b-modal ref="my-modal" hide-footer   style="background-color: rgba(0,0,0,.0001) !important;"  >
+       	<div class=" text-center">
+					<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+					<br>{{texto_}}
+				</div>				
+    	</b-modal>
     </div>
 </template>
 
 <script>
 export default {
-	props: {
-		mostrar: Boolean,
-		texto: String
-	},
+	props:['mostrar','texto'],
 	data() {
 		return {
-			texto_: this.texto
+			texto_: this.texto			
 		}
 	},
 	methods: {
+		showModal() {
+			this.$refs['my-modal'].show()
+		},
+		hideModal() {
+			this.$refs['my-modal'].hide()
+		},
 	},
 	mounted() {
-	},
+		  
+	}, 
 	created: function(){
 		//console.log(this.texto);
 		if (this.texto == null)
@@ -49,7 +54,7 @@ export default {
 	  width: 7px;
 	  height: 7px;
 	  border-radius: 50%;
-	  background: #fff;
+	  background: rgb(0, 0, 0);
 	  /*background: #000;*/
 	  margin: -4px 0 0 -4px;
 	}
@@ -117,4 +122,5 @@ export default {
 	    transform: rotate(360deg);
 	  }
 	}
+	
 </style>

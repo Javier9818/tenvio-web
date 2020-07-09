@@ -111,7 +111,7 @@
               <div class="row align-items-center">
                 <div class=" col-12  col-lg-12 col-sm-12">
                   <nav class="nav nav-tabs justify-content-center">
-                    <a class="nav__link">Descripción</a>
+                    <a class="nav__link">Descripción</a> 
                     </nav>
                   <div class="product__desc">
                     <p>{{producto.descripcion}}</p>

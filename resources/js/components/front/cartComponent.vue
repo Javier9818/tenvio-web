@@ -1,5 +1,6 @@
 <template>
    <form class="row" @submit.prevent="generaPedido">
+     <loader mostrar="loader" ref="modalcito" texto="Espere un momento por favor"></loader>
     <div class="col-sm-12 col-md-12 col-lg-12">
         <div v-for=" empresa in empresas" :key="empresa.id">
           <div class="col-8"> <h4> Empresa: {{empresa.name_empresa}}</h4> </div>
@@ -50,7 +51,7 @@
                     </td>
                   </template>
                 </tr>
-                <tr><td colspan="3"></td><td class=" text-center" style=" font-weight: bolder; font-size:1rem">S/. {{empresa.total}}</td></tr>
+                <tr><td colspan="3"></td><td class=" text-center" style=" font-weight: bolder font-size:1rem">S/. {{empresa.total}}</td></tr>
               </tbody>
             </table>
           </div><!-- /.cart-table -->
@@ -79,12 +80,13 @@
             </div>
         </div>
     </div>
-    <!-- <b-form-select v-model="selected" :options="tipoPedidos"></b-form-select> -->
+      
    </form>
+    
 </template>
 
 <script>
-import EventBus from '../../event-bus';
+import EventBus from '../../event-bus'
 import Swal from 'sweetalert2'
 export default {
     props:['user'],
@@ -104,57 +106,58 @@ export default {
             client:{
               username:'',
               password:''
-            }
+            },
+            load:false
         }
     },
     methods:{
       funAdd: function (key,index) {
 
-         this.producto=this.productos[index];
-         this.generaTotal(this.producto.empresa,this.productos);
+         this.producto=this.productos[index]
+         this.generaTotal(this.producto.empresa,this.productos)
         switch (key) {
           case '+':
-            this.producto.cant++;
-            break;
+            this.producto.cant++
+            break
           case '-':
 
             if(this.producto.cant==1)
-              break;
-            this.producto.cant--;
-            break;
+              break
+            this.producto.cant--
+            break
           default:
-            break;
+            break
         }
 
         this.empresas.forEach(element => {
           if(element.empresa=this.producto.empresa)
           {
-            element.total=this.generaTotal(this.producto.empresa,this.productos);
+            element.total=this.generaTotal(this.producto.empresa,this.productos)
           }
-        });
-         this.productos[index]=this.producto;
-        let cockie=this.productos;
+        })
+         this.productos[index]=this.producto
+        let cockie=this.productos
         this.$cookies.set('carrito',JSON.stringify(cockie))
-        ;
-        EventBus.$emit('ActualizaEnCart', true);
+        
+        EventBus.$emit('ActualizaEnCart', true)
       },
       eliminar: function(index){
-          this.productos.splice(index,1);
-          let cockie=this.productos;
-          this.$cookies.set('carrito',JSON.stringify(cockie));
-            EventBus.$emit('elimiarEnCart', true);
-          this.empresas=this.distinct(this.productos);
+          this.productos.splice(index,1)
+          let cockie=this.productos
+          this.$cookies.set('carrito',JSON.stringify(cockie))
+            EventBus.$emit('elimiarEnCart', true)
+          this.empresas=this.distinct(this.productos)
       },
       recarga: function () {
-        let cockie=JSON.parse(this.$cookies.get('carrito'));
-        this.productos = (cockie==null)? []:cockie;
-        this.empresas=this.distinct(this.productos);
-        this.temp_productos=this.productos;
-        this.tiposEntrega();
+        let cockie=JSON.parse(this.$cookies.get('carrito'))
+        this.productos = (cockie==null)? []:cockie
+        this.empresas=this.distinct(this.productos)
+        this.temp_productos=this.productos
+        this.tiposEntrega()
 
       },
       temp: function ( ) {
-        var that = this;
+        var that = this
           Vue.swal.fire({
             icon: 'question',
             title: '¿Desea enviar?',
@@ -162,16 +165,16 @@ export default {
             text: 'Aviso'
           }).then((result) => {
             if (!result.value)
-              return;
+              return
             axios.post('/front/GeneraPedido',{empresas:that.empresas, productos:that.productos})
             .then(function (response) {
               if(response.data)
-                Swal.fire('Éxito', 'Se ha generado su pedido', 'success');
+                Swal.fire('Éxito', 'Se ha generado su pedido', 'success')
               else
-                Swal.fire('ERROR', 'Ha ocurrido un error', 'error');
-            });
+                Swal.fire('ERROR', 'Ha ocurrido un error', 'error')
+            })
 
-          });
+          })
 
 
       },
@@ -180,24 +183,24 @@ export default {
          setTimeout(() => {
           this.tipoPedidos.forEach(element => {
           if (element.id==id) {
-            this.tipoPedidosTemp.push(element);
+            this.tipoPedidosTemp.push(element)
           }
-          });
+          })
 
-          return  this.tipoPedidosTemp;
-         }, 1500);
+          return  this.tipoPedidosTemp
+         }, 1500)
 
       },
       tiposEntrega: function () {
-        var that = this;
+        var that = this
         axios.post('/front/TipoPedido',{empresas:this.empresas})
         .then(function (response) {
-           that.tipoPedidos= response.data;
-        });
+           that.tipoPedidos= response.data
+        })
 
       },
       toFixed: function (params) {
-        return params.toFixed(2);
+        return params.toFixed(2)
       },
       distinct: function (array) {
         return Array.from(new Set(array.map(s=>s.empresa)))
@@ -214,7 +217,7 @@ export default {
               total:this.generaTotal(empresa, array)
             }
           }
-        );
+        )
       },
       generaTotal: function (empresa,array) {
         let total=0
@@ -223,12 +226,12 @@ export default {
           {
             total+=element.precio*element.cant
           }
-        });
+        })
 
-        return total;
+        return total
       },
       generaPedido: function () {
-         this.marker=this.$refs.mapaComponent.marker;
+         this.marker=this.$refs.mapaComponent.marker
          //if(!document.getElementById('radio-group-1').checked)
           //return
 
@@ -238,71 +241,74 @@ export default {
             title: 'ERROR',
             showCancelButton: true,
             text: 'Debe de aceptar el acceso a su ubicación para continuar con el pedido'
-            });
+            })
         }
         else{
-
+            
             this.empresas.forEach(element => {
                 element.lat=this.marker.getLatLng().lat,
                 element.lng=this.marker.getLatLng().lng,
                 element.direccion= (this.direccion=="")?' ':this.direccion
-            });
+            })
 
 
-            var that = this;
+            var that = this
             Swal.fire({
             icon: 'question',
             title: '¿Desea generar el pedido?',
             showCancelButton: true,
             text: 'Aviso'
             }).then((result) => {
+              
             if (!result.value)
-                return;
-
+                return
+            that.$refs.modalcito.showModal()             
             axios.post('/front/GeneraPedido', {
                 empresas: that.empresas,
                 productos: that.productos,
             }).then(function (response) {
-                    Swal.fire({
-                        text:'Su pedido se ha registrado satisfactoriamente, en unos minutos la empresa se contactará contigo.',
-                        icon: 'success',
-                        title: 'Éxito',
-                    }).then(() => {
-                        that.$cookies.set('carrito',JSON.stringify([]))
-                        location.href="/";
-                    });
+                that.$refs.modalcito.hideModal() 
+                Swal.fire({
+                  text:'Su pedido se ha registrado satisfactoriamente, en unos minutos la empresa se contactará contigo.',
+                  icon: 'success',
+                  title: 'Éxito',
+                }).then(() => {
+                  that.$cookies.set('carrito',JSON.stringify([]))
+                  location.href="/"
+                })
 
                 }).catch(function (response){
+                  that.$refs.modalcito.hideModal() 
                     Swal.fire({
                     icon: 'error',
                     title: 'ERROR',
                     text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
-                    }).then(() => {location.reload();});
-                });
-            });
+                    }).then(() => {location.reload()})
+                })
+            })
         }
       }
     },
     computed:{
       calcularTotal(){
 
-        this.total = 0;
-        var item;
+        this.total = 0
+        var item
         this.productos.forEach(element => {
-              this.total = this.total + (element.precio*element.cant);
-        });
-        return this.total;
+              this.total = this.total + (element.precio*element.cant)
+        })
+        return this.total
       }
     },
     mounted() {
-        this.recarga();
-
+        this.recarga()
+        this.load=true
     },
     created: function () {
         EventBus.$on('EliminarenModal', function(boolean)  {
           if(boolean)
-           this.recarga();
-        }.bind(this));
+           this.recarga()
+        }.bind(this))
     }
 }
 </script>
