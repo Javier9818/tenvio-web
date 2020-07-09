@@ -1,18 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
-      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-      crossorigin=""/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAeTM7b0MYnEP8-Ax6GmvD6jV3xgpMac60"></script>
-    <title>Tenvio - Negocios cercanos</title>
-    <style>
+@extends('layouts.front')
+@section('title')
+    TeEnvio - Negocios cercanos
+@endsection
+
+@section('nav')
+    @include('front.nav')
+@endsection
+
+@section('styles')
+<link rel="shortcut icon" href="/assets/landing_index/images/favicon.png" type="image/png">
+    
+<!--====== Default CSS ======-->
+<link rel="stylesheet" href="/assets/landing_index/css/default.css">
+<!--====== Animate CSS ======-->
+<link rel="stylesheet" href="/assets/landing_index/css/animate.css">
+    
+<!--====== lineicons CSS ======-->
+<link rel="stylesheet" href="/assets/landing_index/css/lineicons.css">
+<link rel="stylesheet" href="/assets/landing_index/css/style.css">
+<style>
+    h4{
+      color: white !important;
+      font-weight: 0 !important;
+    }
+    .modal-title{
+      color: grey !important;
+    }
     .link__back{
       color: white !important;
     }
@@ -103,13 +116,13 @@
       /* !PERSONALIZACIÓN DEL POPUP*/
 
       .row-search{
-        top: 90px;
+        top: 130px;
         position: fixed;
-        z-index: 1000;
+        z-index: 500;
         width: 100vw;
       }
       .btn-filter{
-        background: #f79723;
+        background: #feb21c;
         color: white;
       }
 
@@ -118,8 +131,11 @@
         color: white;
       }
 
+      .header{
+        position: initial;
+      }
+
       .navbar{
-        background: #f79723;
         z-index: 1000;
         -webkit-box-shadow: 0px 6px 12px 2px rgba(140,140,140,1);
         -moz-box-shadow: 0px 6px 12px 2px rgba(140,140,140,1);
@@ -133,6 +149,7 @@
         box-shadow: 0px 6px 12px 2px rgba(140,140,140,1);
         font-size:1.2em !important;
       }
+
       
       .modal.left .modal-dialog,
       .modal.right .modal-dialog {
@@ -185,27 +202,8 @@
         border-radius: 0 !important;
       }
     </style>
-</head>
-<body>
- <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>
-<div id="app" class="">
-  <nav class="navbar navbar-ligth bg-ligth">
-    <a href='/' class="navbar-brand link__back"> <i class="fas fa-arrow-left"></i> Volver</a>
-    <a href='/' >  <img class="navbar-brand" src="/assets/images/logo/logo-white.png" alt="logo" width="100px">  </a>
-   
-    
-  </nav>
-  
-  <search-bussiness-near tiponegocios="{{$tiponegocios}}" categorias="{{$categorias}}"></search-bussiness-near>
+@endsection
 
-</div>
-
-<script src="/js/fronted.js" type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
-</html>
+@section('contenido')
+<search-bussiness-near tiponegocios="{{$tiponegocios}}" categorias="{{$categorias}}"></search-bussiness-near>
+@endsection

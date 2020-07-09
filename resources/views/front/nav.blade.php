@@ -4,7 +4,7 @@
     <div class="container">
         <a class="navbar-brand" href="/">
         <img src="{!! asset('assets/images/logo/logo2.png') !!}" style="width: 115px;" class="logo-light" alt="logo">
-          <img src="{!! asset('assets/images/logo/logo2.png') !!}" style="width: 115px;" class="logo-dark" alt="logo">
+        <img src="{!! asset('assets/images/logo/logo-v4.png') !!}" width="30%" class="logo-dark" alt="logo">
         </a>
         <button class="navbar-toggler" type="button">
         <span class="menu-lines"><span></span></span>

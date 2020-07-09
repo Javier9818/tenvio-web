@@ -11,14 +11,11 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 // ================================================ CPANEL =================================================*/
-Route::get('/comand', 
-  function (){
-     Artisan::call('view:cache');
-  }
-);
+Route::get('/comand', function (){Artisan::call('view:cache');});
 
 // ================================================ LANDING PAGES =================================================*/
 Route::get('/quienes-somos', 'GeneralController@vistaPromocional');
+// Route::get('/indexv2',function (){ return view('front.components.index_alternativo');});
 
 
 // ================================================ BLOQUE EMPRESA =================================================*/

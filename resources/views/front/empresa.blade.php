@@ -49,3 +49,7 @@
   <!-- /.shop Products -->
 
 @endsection
+
+@section('footer')
+  @include('front.components.footer')
+@endsection
