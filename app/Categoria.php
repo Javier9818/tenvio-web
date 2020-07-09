@@ -12,7 +12,7 @@ class Categoria extends Model
     public static  function _GET($request)
     {
         return Categoria::where('tipo_negocio_id', $request->get('id'))
-            ->select('id', 'descripcion','state','created_at')
+            ->select('id', 'descripcion','state','created_at','icon')
             ->get();
     }
     public static function _Save($request)

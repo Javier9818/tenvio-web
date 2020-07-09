@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('title')
-    Compra
+    Seguimiento
 @endsection
 
 @section('nav')

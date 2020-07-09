@@ -26,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Blade::component('side-nav-admin', SideNavAdmin::class);
+        Blade::setEchoFormat('e(utf8_encode(%s))');
     }
 }

@@ -72,7 +72,7 @@
           <p>Ingrese nuevo item</p>
           <b-form-input v-model="input_value" placeholder="Ingrese nuevo item"></b-form-input>
           <br>
-          <b-form-input v-if="view" v-model="item.icon" placeholder="Ingrese icon font-awesome(solo título)"></b-form-input>
+          <b-form-input   v-model="item.icon" placeholder="Ingrese icon font-awesome(solo título)"></b-form-input>
         </div>
         <div class=" text-center">
           <b-button class="mt-2" variant="danger"  @click="hideModal('save')">Cerrar</b-button>
@@ -84,7 +84,7 @@
           <p>Editar item</p>
           <b-form-input v-model="item.descripcion" placeholder="Ingrese item"></b-form-input>
           <br>
-          <b-form-input v-if="view" v-model="item.icon" placeholder="Ingrese icon font-awesome(solo título)"></b-form-input>
+          <b-form-input   v-model="item.icon" placeholder="Ingrese icon font-awesome(solo título)"></b-form-input>
         </div>
         <div class=" text-center">
           <b-button class="mt-2" variant="danger"  @click="hideModal('edit')">Cerrar</b-button>
@@ -106,7 +106,8 @@ import Swal from 'sweetalert2'
           perPage: 5,
           fields: [
             { key: 'id', label: 'Item',sortable: true, sortDirection: 'desc'},
-            { key: 'descripcion', label: 'Tipo de Negocio',sortable: true, sortDirection: 'desc'},
+            { key: 'descripcion', label: 'Tipo de Negocio',sortable: true, sortDirection: 'desc'},            
+            { key: 'icon', label: 'Icono',sortable: true, sortDirection: 'desc'},
             { key: 'state', label: 'Estado'},
             { key: 'created_at', label: 'Fecha',sortable: true, sortDirection: 'desc'}            
           ],
@@ -147,6 +148,7 @@ import Swal from 'sweetalert2'
           fields: [
             { key: 'id', label: 'Item',sortable: true, sortDirection: 'desc'},
             { key: 'descripcion', label: 'Tipo de Negocio',sortable: true, sortDirection: 'desc'},
+            { key: 'icon', label: 'Icono',sortable: true, sortDirection: 'desc'},
             { key: 'state', label: 'Estado'},
             { key: 'created_at', label: 'Fecha',sortable: true, sortDirection: 'desc'}           
           ],

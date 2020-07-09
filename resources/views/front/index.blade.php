@@ -70,52 +70,8 @@
                 </div> <!-- section title -->
             </div>
         </div> <!-- row -->
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="single-services services-color-1 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                    <div class="services-icon d-flex align-items-center justify-content-center">
-                        <i class="lni lni-layers"></i>
-                    </div>
-                    <div class="services-content">
-                        <h4 class="services-title"><a href="#">Restaurantes</a></h4>
-                        <p class="text">Encuentra pollerias, chifas, u otros negocios de comida, cercanos a ti.</p>
-                    </div>
-                </div> <!-- single services -->
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single-services services-color-2 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
-                    <div class="services-icon d-flex align-items-center justify-content-center">
-                        <i class="lni lni-layout"></i>
-                    </div>
-                    <div class="services-content">
-                        <h4 class="services-title"><a href="#">Ropa</a></h4>
-                        <p class="text">Encuentra las mejores tiendas de ropa cercanas a ti.</p>
-                    </div>
-                </div> <!-- single services -->
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single-services services-color-3 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.6s">
-                    <div class="services-icon d-flex align-items-center justify-content-center">
-                        <i class="lni lni-bolt"></i>
-                    </div>
-                    <div class="services-content">
-                        <h4 class="services-title"><a href="#">Tecnología</a></h4>
-                        <p class="text">Encuentra las mejores tiendas de técnología cercanas a tí.</p>
-                    </div>
-                </div> <!-- single services -->
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single-services services-color-4 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.8s">
-                    <div class="services-icon d-flex align-items-center justify-content-center">
-                        <i class="lni lni-protection"></i>
-                    </div>
-                    <div class="services-content">
-                        <h4 class="services-title"><a href="#">Resposterias</a></h4>
-                        <p class="text">Encuentra las mejores resposterias u pastelerias cercanos a ti.</p>
-                    </div>
-                </div> <!-- single services -->
-            </div>
-        </div> <!-- row -->
+        <front-categories-component></front-categories-component>
+        
     </div> <!-- container -->
 </section>
 <!--====== SERVICES PART ENDS ======-->
