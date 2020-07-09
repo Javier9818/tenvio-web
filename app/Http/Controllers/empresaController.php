@@ -7,6 +7,7 @@ use App\Contrato;
 use App\Empresa;
 use App\Ciudad;
 use App\TipoNegocio;
+use App\Pagos;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,13 +21,16 @@ class EmpresaController extends Controller
     public function activateEmpresa(Request $request){
         DB::transaction(function () use ($request){
             $ciudad = ($request->ciudad == null)? (Ciudad::create(["nombre" => ucwords(strtolower($request->ciudadCreate)), "distrito_id" => $request->distrito]))->id : $request->ciudad;
-            Contrato::create([
+            $contrato = Contrato::create([
                 "empresa_id" => $request->id,
                 "estado" => Contrato::$CONTRATO_VIGENTE,
                 "plan_id" => 1,
                 "plan_monto" => 0.0,
+                "plan_precio" => 0.0,/////////////////
+                "pedidos_total" => 100,///////////
                 "fecha_vencimiento" => Carbon::now()->addDays(30)
             ]);
+			Pagos::registrar($contrato, '');
             Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad,'foto'=>'logoEmpresaDefault.png']);
         });
 

@@ -42,16 +42,18 @@ class Pagos extends Model
 		return Pagos::find($pago_id);
 	}
 	public static function registrar($contrato, $voucher, $plan = ''){
-		return Pagos::create([
+		$precio = ($plan=='')?$contrato->plan_precio:$plan->precio;
+		$pago = Pagos::create([
 			'empresa_id' => $contrato->empresa_id,
 			'contratos_id' => $contrato->id,
 			'plan_id' => ($plan=='')?$contrato->plan_id:$plan->id,
-			'precio' => ($plan=='')?$contrato->plan_precio:$plan->precio,
+			'precio' => $precio,
 			'cantidad_pedidos' => ($plan=='')?$contrato->pedidos_total:$plan->cantidad_pedidos,
 			'urlfoto' => $voucher,
-			'estado' => static::$PAGO_PENDIENTE,
+			'estado' => ($precio != 0)?static::$PAGO_PENDIENTE:static::$PAGO_APROBADO,
 			'observacion' => null
 		]);
+		return $pago;
 	}
 	public static function pagosporcontrato($empresa_id, $contrato_id){
 		return Pagos::where(['pagos.empresa_id' => $empresa_id, 'pagos.contratos_id' => $contrato_id])
