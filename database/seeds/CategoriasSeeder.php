@@ -13,13 +13,13 @@ class CategoriasSeeder extends Seeder
      */
     public function run()
     {
-        TipoNegocio::create(["descripcion" => 'RESTAURANTE','state'=>1]);
-        TipoNegocio::create(["descripcion" => 'RESPOTERIA','state'=>1]);
-        TipoNegocio::create(["descripcion" => 'BODEGA','state'=>1]);
-        TipoNegocio::create(["descripcion" => 'TIENDA DE ROPA','state'=>1]);
-        TipoNegocio::create(["descripcion" => 'TIENDA DE ELECTRÓNICA','state'=>1]);
-        TipoNegocio::create(["descripcion" => 'TIENDA DE ACCESORIOS','state'=>1]);
-        TipoNegocio::create(["descripcion" => 'LIBRERIA','state'=>1]);
+        TipoNegocio::create(["descripcion" => 'RESTAURANTE','state'=>1,"icon"=>"lni lni-dinner"]);
+        TipoNegocio::create(["descripcion" => 'RESPOTERIA','state'=>1,"icon"=>"lni lni-cake"]);
+        TipoNegocio::create(["descripcion" => 'BODEGA','state'=>1,"icon"=>"lni lni-restaurant"]);
+        TipoNegocio::create(["descripcion" => 'TIENDA DE ROPA','state'=>1,"icon"=>"lni lni-shopping-basket"]);
+        TipoNegocio::create(["descripcion" => 'TIENDA DE ELECTRÓNICA','state'=>1,"icon"=>"lni lni-laptop-phone"]);
+        TipoNegocio::create(["descripcion" => 'TIENDA DE ACCESORIOS','state'=>1,"icon"=>"lni lni-game"]);
+        TipoNegocio::create(["descripcion" => 'LIBRERIA','state'=>1,"icon"=>"lni lni-book"]);
 
         Categoria::create(["descripcion" => "POLLERIA", "tipo_negocio_id" => 1,"icon"=>"drumstick-bite",'state'=>1]);
         Categoria::create(["descripcion" => "CHIFA", "tipo_negocio_id" => 1,"icon"=>"salad",'state'=>1]);

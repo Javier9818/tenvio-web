@@ -17,6 +17,7 @@ class CreateTipoNegocioTable extends Migration
             $table->id();
             $table->string('descripcion');
             $table->integer('state');
+            $table->string('icon');
             $table->timestamps();
         });
     }

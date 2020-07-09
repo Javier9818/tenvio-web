@@ -1,15 +1,62 @@
 <template>
-   <div class="container">
+  <div class="row">
+    <div class="col-lg-3 col-sm-6" v-for="(item, index) of MerchantType" :key="index">
+        <div class="single-services services-color-3 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
+            <div class="services-icon d-flex align-items-center justify-content-center">
+              <i :class="item.icon"></i> 
+            </div>
+            <div class="services-content">
+                <h4 class="services-title"><a href="#">{{item.descripcion}}</a></h4>
+                <p class="text">{{item.texto}}</p>
+            </div>
+        </div> <!-- single services -->
+    </div>
+    
+    <!-- <div class="col-lg-3 col-sm-6">
+        <div class="single-services services-color-2 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.4s">
+            <div class="services-icon d-flex align-items-center justify-content-center">
+                <i class="lni lni-layout"></i>
+            </div>
+            <div class="services-content">
+                <h4 class="services-title"><a href="#">Ropa</a></h4>
+                <p class="text">Encuentra las mejores tiendas de ropa cercanas a ti.</p>
+            </div>
+        </div>  
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="single-services services-color-3 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.6s">
+            <div class="services-icon d-flex align-items-center justify-content-center">
+                <i class="lni lni-bolt"></i>
+            </div>
+            <div class="services-content">
+                <h4 class="services-title"><a href="#">Tecnología</a></h4>
+                <p class="text">Encuentra las mejores tiendas de técnología cercanas a tí.</p>
+            </div>
+        </div>  
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="single-services services-color-4 text-center mt-30 wow fadeInUpBig" data-wow-duration="1.3s" data-wow-delay="0.8s">
+            <div class="services-icon d-flex align-items-center justify-content-center">
+                <i class="lni lni-protection"></i>
+            </div>
+            <div class="services-content">
+                <h4 class="services-title"><a href="#">Resposterias</a></h4>
+                <p class="text">Encuentra las mejores resposterias u pastelerias cercanos a ti.</p>
+            </div>
+        </div>  
+    </div> -->
+  </div> <!-- row -->
+  <!-- <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
           <div class="menu-wrapper">
             <nav class="nav nav-tabs justify-content-center">
-              <!-- <a class="nav__link active" style="font-family: 'Nunito', sans-serif;" data-toggle="tab" href="#tab1" @click="funcionCategories(0)">TODO</a> -->
+               
               <a :class="(index==0)?'nav__link  active':'nav__link ' " style="font-family: 'Nunito', sans-serif; margin-bottom: 2%" data-toggle="tab" :href="'#tab'+(index+2)"  v-for="(item, index) of MerchantType" :key="index" @click="funcionCategories(item.id)">{{item.descripcion}}</a>
             </nav>
-          </div><!-- /.menu-wrapper  -->
-        </div><!-- /.col-lg-12 -->
-      </div><!-- /.row -->
+          </div>
+        </div>
+      </div>
     <div class="row ">
       <div class="col-lg-3 col-md-4  col-6 d-flex justify-content-around" v-for="(item, index) of Categories" :key="index" style="cursor: pointer" @click="redirect(item.descripcion)">
         <div class="card d-flex align-items-center p-5 my-3" style="width: 18rem; width: 250px;
@@ -35,7 +82,7 @@
         </div>
       </div>
     </div>
-  </div><!-- /.container -->
+  </div>  -->
 </template>
  
 <script>
@@ -48,6 +95,7 @@ export default {
     }
   },
   methods:{
+    
     funcionMerchantType:function () {
       var that = this;
 			axios.post('/front/TipoNegocio')
@@ -67,8 +115,7 @@ export default {
     }
   },
   mounted(){
-    this.funcionMerchantType();
-    this.funcionCategories(1);
+    this.funcionMerchantType(); 
   }
 }
 </script>

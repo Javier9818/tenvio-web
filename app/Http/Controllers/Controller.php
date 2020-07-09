@@ -16,5 +16,7 @@ class Controller extends BaseController
     //const url = 'http://127.0.0.1:8000/';
     const url = 'https://demo.tenvioperu.com/';
     const  emails=['contacto@tenvioperu.com'];
+    const mensaje1='Encuentra ';
+    const mensaje2=' y más negocios cercanos a ti.';
     // const  emails=['mensajero@tenvioperu.com','cferrercava@gmail.com','rjgutierrez@unitru.edu.pe','jhordanlcix97@gmail.com','jaironavezaroca@gmail.com','jbriceno@unitru.edu.pe'];
 }
