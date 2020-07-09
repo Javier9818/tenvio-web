@@ -32,7 +32,7 @@
             <div class="contact-box">
                 <h6 class="contact__box-title">Contactanos</h6>
                 <ul class="contact__box-list newColor">
-                <li><span> </span><a href="mailto:Babette@7oroof.com">contacto@tenvioperu.com</a></li>
+                <li><span> </span><a href="mailto:contacto@tenvioperu.com">contacto@tenvioperu.com</a></li>
                 {{-- <li><span> </span><a href="tel:020101236547">98171187</a></li> --}}
                 </ul>
             </div><!-- /.contact-box -->
@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12 position-static">
             <div class="footer__logo-wrap text-center">
-            <img src="{!! asset('/assets/images/logo/LogoWhite_TeEnvio.png') !!}" width="25%" alt="logo" class="footer__logo">
+            <img src="{!! asset('/assets/images/logo/logo-v8-white.png') !!}" width="25%" alt="logo" class="footer__logo">
             </div>
             </div><!-- /.col-lg-12 -->
         </div><!-- /.row -->
@@ -61,8 +61,8 @@
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="footer__copyright mb-30">
-                <span>&copy; Plataforma Virtual creada por </span>
-                <a href="/quienes-somos" target="blank" class="color-theme"> <img src="/assets/images/landing_pages/logo-white.png" width="10%" style=" margin-top:-1%" alt="logo"></a>
+                {{-- <span>&copy; Plataforma Virtual creada por </span> --}}
+                <a href="/quienes-somos" target="blank" class="color-theme"> <img src="/assets/images/landing_pages/logo-white.png" width="50%" style=" margin-top:-1%" alt="logo"></a>
             </div>
             <ul class="social__icons social__icons-white justify-content-center">
                 <li><a href="https://www.facebook.com/teenvioperu"><i class="fab fa-facebook-f"></i></a></li>
