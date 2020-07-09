@@ -40,6 +40,7 @@
 		</b-modal>
 		-->
 		<div class="text-center">
+			<loader :mostrar="true"></loader>
 			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
 		</div>
 		<br>

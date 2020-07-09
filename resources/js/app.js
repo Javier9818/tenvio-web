@@ -86,8 +86,9 @@ Vue.component('table-tiponegocio', require('./components/admin/TableTipoNegocios
 Vue.component('table-solicitudes', require('./components/admin/TableSolicitudes.vue').default);
 Vue.component('cobros-component', require('./components/admin/CobrosComponent.vue').default);
 
-
-Vue.component('loader', require('./components/extras/Loader.vue').default)
+//loader sexy del pacman
+Vue.component('loader', require('./components/extras/LoaderAdmin.vue').default)
+//vue file agent
 Vue.component('sube-archivos', require('./components/extras/SubeArchivos.vue').default)
 
 Vue.component('menu-categorias', require('./components/menu/Categorias.vue').default);
