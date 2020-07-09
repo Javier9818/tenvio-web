@@ -10,6 +10,10 @@ import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 Vue.$cookies.config('1d')
 
+
+//loader circular
+Vue.component('loader-front', require('./components/extras/LoaderFront.vue').default)
+
 Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue').default);
 //FRONT CLIENTE
 Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
