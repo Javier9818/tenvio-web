@@ -12,7 +12,7 @@ Vue.$cookies.config('1d')
 
 
 //loader circular
-Vue.component('loader-front', require('./components/extras/LoaderFront.vue').default)
+Vue.component('loader', require('./components/extras/LoaderFront.vue').default)
 
 Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue').default);
 //FRONT CLIENTE
