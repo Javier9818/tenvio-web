@@ -40,15 +40,15 @@
 		</b-modal>
 		-->
 		<div class="text-center">
-			<loader :mostrar="true"></loader>
+			<loader :mostrar="mostrarLoader"></loader>
 			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
 		</div>
 		<br>
 		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields" :tbody-tr-class="rowClass">
 			<template v-slot:cell(opciones)="row">
 				<b-button @click="cargarVer(row)" v-b-modal.ver-contrato variant="success" size="sm">Ver</b-button>
-				<b-button v-if="row.item.estado=='Rechazado'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Reintentar Pago</b-button>
-				<!--<b-button v-if="row.item.estado=='Válido'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>-->
+				<b-button v-if="row.item.estado=='RECHAZADO'" @click="cargarActualizarVocher(row)" v-b-modal.actualizar-voucher variant="info" size="sm">Reintentar Pago</b-button>
+				<!--<b-button v-if="row.item.estado=='VIGENTE'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="warning" size="sm">Extender mi Plan</b-button>-->
 			</template>
 		</b-table>
 		<b-modal id="ver-contrato" size="lg" scrollable centered hide-backdrop title="Ver Contrato" hide-footer>
@@ -70,6 +70,9 @@
 			<b-form-group label="Total de Pedidos" label-cols-sm="5" class="mb-0">
 				{{contratoSeleccionado.pedidos_total}}
 			</b-form-group>
+			<div class="text-center">
+				<loader :mostrar="mostrarLoader2"></loader>
+			</div>
 			<div class="row">
 				<div v-for="(lista_pagos, i) in contratoSeleccionado.listapagos" class="col-6">
 					<div class="text-center">
@@ -98,7 +101,7 @@
 			</div>
 			<div class="text-center pt-1">
 				<b-button @click="cerrarModal" variant="danger" size="sm">Cerrar</b-button>
-				<b-button v-if="contratoSeleccionado.estado=='Vigente'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="success" size="sm">Extender mi Plan</b-button>
+				<b-button v-if="contratoSeleccionado.estado=='VIGENTE'" @click="cargarExtenderPlan()" v-b-modal.extender-plan variant="success" size="sm">Extender mi Plan</b-button>
 			</div>
 		</b-modal>
 		<b-modal id="actualizar-plan" size="lg" scrollable centered hide-backdrop title="Renovar Contrato" hide-footer>
@@ -222,14 +225,14 @@
 					<sube-archivos @archivosubido="archivosubido"></sube-archivos>
 				</b-form-group>
 			</b-col>
+			<div class="text-center">
+				<loader :mostrar="mostrarLoader3"></loader>
+			</div>
 			<div class="text-center pt-1">
 				<b-button @click="cerrarModal" variant="danger" size="sm">Cerrar</b-button>
 				<b-button @click="enviarPagoExtension" variant="success" size="sm" :disabled="deshabilitaboton">Extender mi Plan</b-button>
 			</div>
 		</b-modal>
-		<div hidden>
-			{{aaaaaa}}
-		</div>
 	</div>
 </template>
 
@@ -262,38 +265,42 @@ export default {
 			listaExtensiones: [],
 			idExtensionSeleccionada: -1,
 			extensionSeleccionada: {},
-			aaaaaa: false
+			mostrarLoader: false,
+			mostrarLoader2: false,
+			mostrarLoader3: false,
 		}
 	},
 	methods:{
 		cargarPagosPorContrato: function(){
 			var that = this;
-			this.aaaaaa = false;
+			this.mostrarLoader2 = true;
 			axios.post(this.ruta+'/pagosporcontrato', {contrato_id: this.contratoSeleccionado.id})
 			.then(function (response) {
 				let datos = response.data;
 				that.contratoSeleccionado.listapagos = datos;
-				that.aaaaaa=true;
-				console.log(datos);
+				//console.log(datos);
 			})
 			.catch(()=>{
 				that.mensajeError(true);
 			})
-			.finally(()=>{});
+			.finally(()=>{
+				that.mostrarLoader2 = false;
+			});
 		},
 		cargarVer: function(row){
 			this.contratoSeleccionado = row.item;
 			this.indexContratoSeleccionado = row.index;
 			if(this.contratoSeleccionado.listapagos == null)
 				this.cargarPagosPorContrato();
-			console.log(row);
+			//console.log(row);
 		},
 		enviarPagoExtension: function(){
 			var that = this;
+			this.mostrarLoader3 = true;
 			axios.post(this.ruta+'/extenderplan', {
-				voucher:this.fotovouchersubir,
-				contrato_id:this.contratoSeleccionado.id,
-				plan_id:this.idExtensionSeleccionada
+				voucher: this.fotovouchersubir,
+				contrato_id: this.contratoSeleccionado.id,
+				plan_id: this.idExtensionSeleccionada
 			})
 			.then(function (response) {
 					let datos = response.data;
@@ -306,15 +313,22 @@ export default {
 						.then(()=>{
 							//location.reload();
 						});
+						//REGULARIZAR
+						that.contratoSeleccionado.listapagos = null;
+						that.cerrarModal();
+						//
 					}
 					else{
 						that.mensajeError(false);
 					}
 			})
-			.catch(()=>{
+			.catch((error)=>{
+				console.log(error);
 				that.mensajeError(true);
 			})
-			.finally(()=>{});
+			.finally(()=>{
+				that.mostrarLoader3 = false;
+			});
 		},
 		cargarExtenderPlan: function(row){
 			//this.contratoSeleccionado = row.item;
@@ -325,8 +339,8 @@ export default {
 				this.cargarExtensiones();
 		},
 		actualizarVoucher: function(){
-			console.log(this.contratoSeleccionado.pago_id);
-			console.log(this.fotovouchersubir);
+			//console.log(this.contratoSeleccionado.pago_id);
+			//console.log(this.fotovouchersubir);
 				var that = this;
 				axios.post(this.ruta+'/actualizarvoucher', {voucher:this.fotovouchersubir, pago_id:this.contratoSeleccionado.pago_id})
 				.then(function (response) {
@@ -355,8 +369,8 @@ export default {
 			this.fotovouchersubir = [];
 			this.contratoSeleccionado = row.item;
 			this.indexContratoSeleccionado = row.index;
-			console.log(this.contratoSeleccionado);
-			console.log(this.indexContratoSeleccionado);
+			//console.log(this.contratoSeleccionado);
+			//console.log(this.indexContratoSeleccionado);
 		},
 		cerrarModal: function(){
 			this.$bvModal.hide('ver-contrato');
@@ -404,12 +418,12 @@ export default {
 		seleccionoExtension(item){
 			this.extensionSeleccionada = this.listaExtensiones.filter((itm) => itm.id == item);
 			this.extensionSeleccionada = this.extensionSeleccionada[0];
-			console.log(this.extensionSeleccionada);
+			//console.log(this.extensionSeleccionada);
 		},
 		seleccionoPlan(item){
 			this.planSeleccionado = this.listaPlanes.filter((itm) => itm.id == item);
 			this.planSeleccionado = this.planSeleccionado[0];
-			console.log(this.planSeleccionado);
+			//console.log(this.planSeleccionado);
 		},
 		cargarExtensiones: function(){
 			var that = this;
@@ -489,6 +503,7 @@ export default {
 		},
 		cargarContratos: function(){
 			var that = this;
+			this.mostrarLoader = true;
 			axios.post(this.ruta+'/listacontratos')
 			.then(function (response) {
 				let datos = response.data;
@@ -497,10 +512,12 @@ export default {
 				that.formatearContratos();
 			})
 			.catch((error)=>{
-				console.log(error);
+				//console.log(error);
 				that.mensajeError(true);
 			})
-			.finally(()=>{});
+			.finally(()=>{
+				that.mostrarLoader = false;
+			});
 		},
 		mensajeError: function(bul){
 			var mensaje = '';
