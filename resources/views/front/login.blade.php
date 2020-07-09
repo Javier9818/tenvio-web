@@ -63,12 +63,12 @@
 
                             </form>
                         </div>
-                        <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-2 "><span>Inicia sesion usando</span></p>
+                        {{-- <p class="card-subtitle line-on-side text-muted text-center font-small-3 mx-2 my-2 "><span>Inicia sesion usando</span></p>
                         <div class="text-center">
                             <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-facebook"><span class="ft-facebook"></span></a>
                             <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-twitter"><span class="ft-twitter"></span></a>
                             <a href="#" class="btn btn-social-icon round mr-1 mb-1 btn-instagram"><span class="ft-instagram"></span></a>
-                        </div>
+                        </div> --}}
 
                         <p class="card-subtitle text-muted text-right font-small-3 mx-2 mb-1"><span>¿No tienes una cuenta? <a href="/registro" class="card-link">Regístrate</a></span></p>
                     </div>

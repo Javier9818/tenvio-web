@@ -113,8 +113,8 @@ class FrontController extends Controller
 
 		try {
 			$cifrado = Crypt::encrypt(json_encode(["id" => $request->id]));
-      $url = 'http://127.0.0.1:8000/recoverypassword/'.$cifrado;
-      $mensaje='Hola, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
+            $url = Controller::url.'recoverypassword/'.$cifrado;
+            $mensaje='Hola, se ha recibido su solicitud de "RECUPERACIÓN DE CONTRASEÑA", por favor ingrese al siguiente link: '.$url.' para poder realizarlo.';
 			Mail::to($request->email)->send(new SendCargo($request->persona, $url, $request->email, $mensaje));
 			return true;
 		}  catch (\Exception  $e) {

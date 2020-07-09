@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 2rem 3rem; text-align: left;" class="row">
-        <div class="field col-12">
+        <div class="field col-6">
             <label class="label" >Nombres</label>
             <div class="control">
                 <input type="text" v-model="form.names" :class="['input', ($v.form.names.$error) ? 'is-danger' : '']" placeholder="Ingrese  su nombre">
@@ -21,7 +21,7 @@
             </div>
             <p v-if="$v.form.apmaterno.$error" class="help is-danger">Este campo es inválido</p>
         </div>
-        <div class="field col-12">
+        <div class="field col-6">
             <label class="label">Email</label>
             <div class="control">
                 <input type="email" v-model="form.correo" :class="['input', ($v.form.correo.$error) ? 'is-danger' : '']"  placeholder="Ingrese su correo electrónico" >
@@ -86,9 +86,9 @@
                     required,
                     maxLength: maxLength(10),
                     minLength: minLength(6),
-                    async isUnique(value) 
-                    { 
-                        if ((/^[0-9]+$/.test(value))) return true 
+                    async isUnique(value)
+                    {
+                        if ((/^[0-9]+$/.test(value))) return true
                     }
                 },
                 correo:{
