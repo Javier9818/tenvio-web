@@ -7,7 +7,7 @@
 
         <mapa-interactivo 
             width='100' 
-            height='90vh'
+            height='85vh'
             :clickDisabled='true'
             :dragableDisabled='true'
             :minZoom='15'
