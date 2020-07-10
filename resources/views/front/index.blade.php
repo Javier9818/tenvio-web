@@ -65,7 +65,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-7">
                 <div class="section-title text-center pb-25">
-                    <h3 class="title">Lo que necesitas, a tu alcance</h3>
+                    <h3 class="title">Lo que necesitas no, a tu alcance</h3>
                     <p class="text">Estamos asociados con una gran variedad de negocios cercanos a tu localidad, con el objetivo de que encuentres en nuestro sitio lo que estás buscando.</p>
                 </div> <!-- section title -->
             </div>
