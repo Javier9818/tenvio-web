@@ -124,7 +124,8 @@
                 </b-form-select>
             </b-overlay>
         </div>
-        <div class="col-md-6 mt-2">
+        <div class="col-md-12 mt-2 text-center">
+			<loader :mostrar="mostrarLoader" texto="Actualizando..."></loader>
             <button type="submit" class="btn btn-primary btn-sm"> <i class="ft-save"></i> {{edit}}</button>
         </div>
     </form>
@@ -177,7 +178,8 @@
                 departamentos:[],
                 provincias:[],
                 distritos:[],
-                ciudades
+                ciudades,
+				mostrarLoader:false
             }
         },
          validations: {
@@ -221,7 +223,6 @@
             },
              selectCategoria(categorias, lastSelectItem){
                 this.form.categorias = categorias;
-
             },
             handleTipoNegocio(){
                 this.loadCategorias = true;
@@ -235,14 +236,20 @@
             update(){
                 this.$v.$touch()
 
-                if(!this.$v.$invalid)
+                if(!this.$v.$invalid){
+					this.mostrarLoader = true;
+					var that = this;
                     axios.put(`/api/empresa/${this.form.id}`, this.form).then( data => {
-
                         Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
-
-                    }).catch(error => {
+						this.$emit('fineditar');
+                    })
+					.catch(error => {
                         Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+                    })
+					.finally(()=>{
+						that.mostrarLoader = false;
                     });
+				}
             },
             handleDepartamento: async function(){
                 this.form.provincia = null;
