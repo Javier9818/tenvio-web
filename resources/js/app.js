@@ -121,3 +121,15 @@ Vue.component('front-seguimiento-component', require('./components/front/seguimi
 const app = new Vue({
     el: '#app',
 });
+
+
+// let {data} = response;
+// let res = ''
+// data.forEach(e => {
+//     res = res + `<option value="${e.idProveedor}">${e.razonsocial}</option>`
+// });
+
+// $('#padres').empty();
+// setTimeout(() => {
+//     $('#padres').append(res);
+// }, 500);
