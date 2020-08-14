@@ -11,10 +11,10 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Rubik:400,500,700%7cShadows+Into+Light&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{!! asset('assets/css/libraries.css') !!}" />
+    <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/scripts_front/libraries.css" />
   <!-- <link rel="stylesheet" href="assets/css/animate.css" /> -->
-  <link rel="stylesheet" href="{!! asset('assets/css/style.css') !!}" />
-  <link rel="stylesheet" href="{!! asset('theme-assets/css/personalizacion.css') !!}" />
+  <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/scripts_front/style.css" />
+  <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/scripts_front/personalizacion.css"/>
   <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
   
@@ -23,7 +23,7 @@
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""/>
   <!--NOTIFICACIONES PUSHER -->
-  <script src="{!! asset('notify/push.min.js') !!}"></script>
+  <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/push.min.js"></script>
   @yield('styles')
 </head>
 
@@ -59,12 +59,12 @@
 
   </div>
   <!-- /.wrapper -->
-  <script src="/js/fronted.js" type="text/javascript"></script>
+  <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/fronted.js" type="text/javascript"></script>
   <!-- <script src="/js/app.js" type="text/javascript"></script>                  -->
-  <script src="{!! asset('assets/js/jquery-3.3.1.min.js') !!}"></script>
-  <script src="{!! asset('assets/js/plugins.js') !!}"></script>
+  <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/jquery-3.3.1.min.js"></script>
+  <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/plugins.js"></script>
   <!-- <script src="assets/js/wow.min.js"></script> -->
-  <script src="{!! asset('assets/js/main.js') !!}"></script>
+  <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/main.js"></script>
 
   @yield('script')
 </body>
