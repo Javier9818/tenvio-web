@@ -24,7 +24,7 @@
 			</div>
             <!--<label for="">Filtrar por Categorías</label>-->
         </b-modal>
-		<div v-for="(item, index) in pedidos" :key="item.idpedido">
+		<div v-for="(item, index) in pedidos">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title">Pedido {{index + 1}} - Código: {{item.idpedido}}</h4>
@@ -37,7 +37,7 @@
 							<div class="col-md-4">
 								<h4>Descripción</h4>
 								<ul>
-									<li v-for="itm in item.productos" :key="itm.nombre + (item.id || 10)">
+									<li v-for="itm in item.productos">
 										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
 									</li>
 									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->

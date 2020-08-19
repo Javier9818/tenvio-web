@@ -34,7 +34,7 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
                              <data-empresa :form="form" v-if="edit === 'editar'"></data-empresa>
-                             <form-empresa-edit :edit="edit" :form="form" v-else></form-empresa-edit>
+                             <form-empresa-edit :edit="edit" :form="form" v-else @fineditar="fineditar"></form-empresa-edit>
                         </div>
                     </div>
                 </div>
@@ -61,6 +61,11 @@
                     distritoName:''
                 }
             }
-        }
+        },
+		methods: {
+			fineditar: function(){
+				this.edit = 'editar';
+			}
+		}
     }
 </script>

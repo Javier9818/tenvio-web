@@ -112,7 +112,7 @@ class PedidosController extends Controller
       ->join('users', 'users.id', '=', 'asignacion.user_id')
 			->join('pedidos_users', 'asignacion.id', '=', 'pedidos_users.asignacion_id')
 			->join('pedidos', 'pedidos.id', '=', 'pedidos_users.pedidos_id')
-			->join('detalle_pedidos', 'detalle_pedidos.pedido_id', '=', 'Pedidos.id')
+			->join('detalle_pedidos', 'detalle_pedidos.pedido_id', '=', 'pedidos.id')
 			->select(DB::raw('SUM(detalle_pedidos.cantidad*detalle_pedidos.precio_unit) as mount'))
       ->where(
 				[
