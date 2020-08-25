@@ -45,3 +45,39 @@
     </div><!-- /.container -->
   </section><!-- /.shopping-cart -->
 @endsection
+
+
+@section('script')
+	<script src="https://checkout.culqi.com/js/v3"></script>
+	<script type="text/javascript">
+		Culqi.publicKey = 'pk_test_CSsdk4OiuyLGXyQm';
+		Culqi.settings({
+			title: 'Tenvio Perú',
+			currency: 'PEN',
+			description: 'Comida',
+			amount: 100
+		});
+		function culqi() {
+			if (Culqi.token) {
+				console.log(Culqi);
+				console.log(Culqi.token);
+				console.log(Culqi.token.email);
+				var token = Culqi.token.id;
+				//alert('Se ha creado un token:' + token);
+				var detail = {
+					token: Culqi.token.id,
+					email: Culqi.token.email
+				}
+				console.log(detail);
+				console.log(detail);
+				console.log(detail);
+				var _eventoenviarpagoculqi = new CustomEvent('enviarpagoculqi', {detail:detail});
+				document.dispatchEvent(_eventoenviarpagoculqi);
+			}
+			else {
+				console.log(Culqi.error);
+				//alert(Culqi.error.user_message);
+			}
+		};
+	</script>
+@endsection

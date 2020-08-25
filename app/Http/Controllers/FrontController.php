@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendCargo;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Blade;
+use App\TransCulqi;
+
 class FrontController extends Controller
 {
-  
+
   public static function Funciones($opcion,Request $request)
   {
     switch ($opcion) {
@@ -212,10 +214,10 @@ class FrontController extends Controller
      )
      ->get();
     $data2= DB::table('detalle_pedidos')
-     ->join('productos', 'detalle_pedidos.producto_id', '=', 'productos.id')   
+     ->join('productos', 'detalle_pedidos.producto_id', '=', 'productos.id')
      ->select('detalle_pedidos.cantidad','detalle_pedidos.precio_unit','productos.nombre','productos.foto')
      ->where(
-      [         
+      [
         ['detalle_pedidos.pedido_id','=', $data[0]->pedido]
       ]
     )
@@ -255,8 +257,19 @@ class FrontController extends Controller
       ];
     }
   }
-  public static function GeneraPedido( Request $request)
+
+
+  public static function GeneraPedido(Request $request)
   {
+	  //dd($request->get('datos'));
+	  $token = $request->get('datos')['token'];
+	  $email = $request->get('datos')['email'];
+	  $description = $request->get('datos')['description'];
+
+	  $transCulqi = TransCulqi::pagar($token, $email, $description);
+	  if (!$transCulqi['success']){
+		  return ['success' => false, 'msj' => $transCulqi['msj']];
+	  }
 
     DB::transaction(function () use ($request){
         foreach ($request->get('empresas') as $key => $empresa) {
@@ -287,8 +300,8 @@ class FrontController extends Controller
         }
     });
 
+	  return ['success' => true];
   }
-
 
   public static function ListEmpresas( Request $request){
 
@@ -508,18 +521,18 @@ class FrontController extends Controller
         ->get();
   }
   public static function TipoNegocio()
-  { 
-   
+  {
+
      try {
       $data= DB::table('tipo_negocio')
         ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion, tipo_negocio.icon as icon, tipo_negocio.descripcion as texto')
         ->where('tipo_negocio.state','=',1)
         ->get();
-        foreach ($data as $key => $value) {          
-          $data2=FrontController::TipoNegocio_categoria($value->id); 
-          $message= ' '; 
-          foreach ($data2 as $key1 => $tipos) { 
-            $message.=(((($tipos->descripcion)))).((($key1+1)!=(count($data2)))?', ':'');  
+        foreach ($data as $key => $value) {
+          $data2=FrontController::TipoNegocio_categoria($value->id);
+          $message= ' ';
+          foreach ($data2 as $key1 => $tipos) {
+            $message.=(((($tipos->descripcion)))).((($key1+1)!=(count($data2)))?', ':'');
           }
           $value->texto=FrontController::mensaje1.$message.FrontController::mensaje2;
         }

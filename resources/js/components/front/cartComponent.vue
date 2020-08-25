@@ -75,14 +75,28 @@
             <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
             </ul>
             <br>
+			<div class="">
+				<div class="text-center">
+					<b>Medio de Pago</b>
+				</div>
+				<input type="radio" id="uno" value="T" v-model="medioPago">
+				<label for="uno">Pago Tarjeta</label>
+				<br>
+				<input type="radio" id="dos" value="Y" v-model="medioPago">
+				<label for="dos">YAPE</label>
+				<br>
+				<input type="radio" id="tres" value="P" v-model="medioPago">
+				<label for="tres">PLIN</label>
+				<br>
+			</div>
             <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">
                 <button class="btn btn-primary" type="submit">Realizar Pedido</button>
             </div>
         </div>
     </div>
-      
+
    </form>
-    
+
 </template>
 
 <script>
@@ -107,7 +121,9 @@ export default {
               username:'',
               password:''
             },
-            load:false
+            load:false,
+			medioPago: 'T',
+			description: 'Pedido por delivery', //variable para culqi
         }
     },
     methods:{
@@ -138,7 +154,7 @@ export default {
          this.productos[index]=this.producto
         let cockie=this.productos
         this.$cookies.set('carrito',JSON.stringify(cockie))
-        
+
         EventBus.$emit('ActualizaEnCart', true)
       },
       eliminar: function(index){
@@ -173,10 +189,7 @@ export default {
               else
                 Swal.fire('ERROR', 'Ha ocurrido un error', 'error')
             })
-
           })
-
-
       },
       tiposEntregaData: function (id) {
 
@@ -230,11 +243,55 @@ export default {
 
         return total
       },
+	  generaPedidoCulqi: function(e){
+		  Culqi.settings({
+			  title: 'Tenvio Perú',
+			  currency: 'PEN',
+			  description: this.description,
+			  amount: this.total * 100
+		  });
+		Culqi.open();
+		e.preventDefault();
+	  },
+	  generaPedidoFin: function(datos){
+		  var that = this;
+		  this.$refs.modalcito.showModal();
+		  axios.post('/front/GeneraPedido', {
+			  empresas: this.empresas,
+			  productos: this.productos,
+			  datos: datos,
+		  }).then(function (response) {
+			  that.$refs.modalcito.hideModal()
+			  if (response.data.success == true){
+			  	Swal.fire({
+				  	text:'Su pedido se ha registrado satisfactoriamente, en unos minutos la empresa se contactará contigo.',
+				  	icon: 'success',
+				  	title: 'Éxito',
+			  	}).then(() => {
+				  	//that.$cookies.set('carrito',JSON.stringify([]))
+				  	location.href="/"
+			  	})
+			  }
+			  else{
+				  Swal.fire({
+					  icon: 'error',
+					  title: 'Error',
+					  text: response.data.msj
+				  });
+			  }
+		  }).catch(function (response){
+			  that.$refs.modalcito.hideModal()
+			  Swal.fire({
+				  icon: 'error',
+				  title: 'ERROR',
+				  text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
+			  }).then(() => {location.reload()})
+		  })
+	  },
       generaPedido: function () {
          this.marker=this.$refs.mapaComponent.marker
          //if(!document.getElementById('radio-group-1').checked)
           //return
-
         if(this.$refs.mapaComponent.marker.getLatLng().lng === 0 && this.$refs.mapaComponent.marker.getLatLng().lat === 0){
             Swal.fire({
             icon: 'error',
@@ -244,14 +301,11 @@ export default {
             })
         }
         else{
-            
             this.empresas.forEach(element => {
                 element.lat=this.marker.getLatLng().lat,
                 element.lng=this.marker.getLatLng().lng,
                 element.direccion= (this.direccion=="")?' ':this.direccion
             })
-
-
             var that = this
             Swal.fire({
             icon: 'question',
@@ -259,33 +313,10 @@ export default {
             showCancelButton: true,
             text: 'Aviso'
             }).then((result) => {
-              
             if (!result.value)
                 return
-            that.$refs.modalcito.showModal()             
-            axios.post('/front/GeneraPedido', {
-                empresas: that.empresas,
-                productos: that.productos,
-            }).then(function (response) {
-                that.$refs.modalcito.hideModal() 
-                Swal.fire({
-                  text:'Su pedido se ha registrado satisfactoriamente, en unos minutos la empresa se contactará contigo.',
-                  icon: 'success',
-                  title: 'Éxito',
-                }).then(() => {
-                  that.$cookies.set('carrito',JSON.stringify([]))
-                  location.href="/"
-                })
-
-                }).catch(function (response){
-                  that.$refs.modalcito.hideModal() 
-                    Swal.fire({
-                    icon: 'error',
-                    title: 'ERROR',
-                    text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
-                    }).then(() => {location.reload()})
-                })
-            })
+			that.generaPedidoCulqi()
+  	  		})
         }
       }
     },
@@ -308,7 +339,12 @@ export default {
         EventBus.$on('EliminarenModal', function(boolean)  {
           if(boolean)
            this.recarga()
-        }.bind(this))
+	   }.bind(this)),
+	   document.addEventListener('enviarpagoculqi', (datos) => {
+		   console.log(datos);
+		   datos.detail.description = this.description;
+		   this.generaPedidoFin(datos.detail);
+	   });
     }
 }
 </script>
@@ -327,4 +363,3 @@ export default {
         font-size: 1em !important;
         color: rgb(122, 122, 122) !important;
     }
-
