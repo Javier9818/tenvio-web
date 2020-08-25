@@ -123,7 +123,8 @@ export default {
             },
             load:false,
 			medioPago: 'T',
-			description: 'Pedido por delivery', //variable para culqi
+			description: 'Pedido', //variable para culqi
+			mododev: false, //si es true, evita que se borre el pedido de memoria
         }
     },
     methods:{
@@ -268,7 +269,8 @@ export default {
 				  	icon: 'success',
 				  	title: 'Éxito',
 			  	}).then(() => {
-				  	//that.$cookies.set('carrito',JSON.stringify([]))
+					if (!that.mododev)
+				  		that.$cookies.set('carrito',JSON.stringify([]))
 				  	location.href="/"
 			  	})
 			  }

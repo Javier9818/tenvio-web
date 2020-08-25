@@ -57,6 +57,21 @@
 			description: 'Comida',
 			amount: 100
 		});
+		Culqi.options({
+			lang: 'es',
+			modal: true,
+			//customButton: 'Pagar S./'+'15'+'.00 soles',
+			//customButton: 'Pagar pe cagada',
+			style: {
+				//logo: 'https://beta.tenvioperu.com/assets/images/favicon/favicon2.ico',
+				logo: 'https://i.imgur.com/XnIjAws.png',
+				maincolor: '#0898e7',
+				buttontext: '#ffffff',
+				maintext: '#4A4A4A',
+				desctext: '#4A4A4A'
+				//https://www.rgbtohex.net/rgb/
+			}
+		});
 		function culqi() {
 			if (Culqi.token) {
 				console.log(Culqi);
