@@ -1,0 +1,509 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`personas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`personas` (
+  `id` INT NOT NULL,
+  `nombres` VARCHAR(80) NULL,
+  `appaterno` VARCHAR(80) NULL,
+  `apmaterno` VARCHAR(80) NULL,
+  `celular` VARCHAR(10) NULL,
+  `direccion` VARCHAR(100) NULL,
+  `created_at` VARCHAR(100) NULL,
+  `updated_at` VARCHAR(100) NULL,
+  `dni` VARCHAR(11) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(60) NULL,
+  `email` VARCHAR(45) NULL,
+  `password` VARCHAR(100) NULL,
+  `isAdmin` TINYINT NULL,
+  `isCustomer` TINYINT NULL,
+  `foto` VARCHAR(20) NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  `remeberToken` VARCHAR(45) NULL,
+  `persons_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_users_persons1_idx` (`persons_id` ASC) VISIBLE,
+  CONSTRAINT `fk_users_persons1`
+    FOREIGN KEY (`persons_id`)
+    REFERENCES `mydb`.`personas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`permisos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`permisos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(80) NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`permiso_user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`permiso_user` (
+  `permisos_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`permisos_id`, `users_id`),
+  INDEX `fk_permisos_has_users_users1_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_permisos_has_users_permisos_idx` (`permisos_id` ASC) VISIBLE,
+  CONSTRAINT `fk_permisos_has_users_permisos`
+    FOREIGN KEY (`permisos_id`)
+    REFERENCES `mydb`.`permisos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_permisos_has_users_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`ciudad`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`ciudad` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NULL,
+  `distrito_id` INT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`empresas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`empresas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ruc` VARCHAR(11) NULL,
+  `nombre` VARCHAR(80) NULL,
+  `nombre_unico` VARCHAR(45) NULL,
+  `descripcion` VARCHAR(100) NULL,
+  `telefono` VARCHAR(10) NULL,
+  `celular` VARCHAR(10) NULL,
+  `direccion` VARCHAR(150) NULL,
+  `foto` VARCHAR(100) NULL,
+  `estado` VARCHAR(45) NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  `ciudad_id` INT NOT NULL,
+  `latitud` VARCHAR(25) NULL,
+  `longitud` VARCHAR(25) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_empresas_ciudad1_idx` (`ciudad_id` ASC) VISIBLE,
+  CONSTRAINT `fk_empresas_ciudad1`
+    FOREIGN KEY (`ciudad_id`)
+    REFERENCES `mydb`.`ciudad` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`cargos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`cargos` (
+  `id` INT NOT NULL,
+  `descripcion` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`users_empresas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`users_empresas` (
+  `cargo_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
+  `empresas_id` INT NOT NULL,
+  INDEX `fk_users_empresas_cargo1_idx` (`cargo_id` ASC) VISIBLE,
+  INDEX `fk_users_empresas_users1_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_users_empresas_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_users_empresas_cargo1`
+    FOREIGN KEY (`cargo_id`)
+    REFERENCES `mydb`.`cargos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_empresas_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_empresas_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tipo_negocio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tipo_negocio` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`categorias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`categorias` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NULL,
+  `tipo_negocio_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_categorias_tipo_negocio1_idx` (`tipo_negocio_id` ASC) VISIBLE,
+  CONSTRAINT `fk_categorias_tipo_negocio1`
+    FOREIGN KEY (`tipo_negocio_id`)
+    REFERENCES `mydb`.`tipo_negocio` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`categorias_menus`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`categorias_menus` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(80) NULL,
+  `created_at` VARCHAR(45) NULL,
+  `updated_at` VARCHAR(45) NULL,
+  `empresas_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_categoriasmenus_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_categoriasmenus_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`productos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`productos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NULL,
+  `descripcion` VARCHAR(45) NULL,
+  `foto` VARCHAR(100) NULL,
+  `precio` DOUBLE NULL,
+  `created_at` VARCHAR(45) NULL,
+  `updated_at` VARCHAR(45) NULL,
+  `categoriasmenus_id` INT NOT NULL,
+  `empresas_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_productos_categoriasmenus1_idx` (`categoriasmenus_id` ASC) VISIBLE,
+  INDEX `fk_productos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_categoriasmenus1`
+    FOREIGN KEY (`categoriasmenus_id`)
+    REFERENCES `mydb`.`categorias_menus` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_productos_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tipo_entregas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tipo_entregas` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`pedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`pedidos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `direccion` VARCHAR(45) NULL,
+  `estado` VARCHAR(30) NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  `users_id` INT NOT NULL,
+  `latitud` VARCHAR(45) NULL,
+  `longitud` VARCHAR(45) NULL,
+  `tipos_id` INT NOT NULL,
+  `meta_latitud` VARCHAR(45) NULL,
+  `meta_longitud` VARCHAR(45) NULL,
+  `tipo_entregas_id` INT NOT NULL,
+  `empresas_id` INT NOT NULL,
+  `monto` DOUBLE NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pedidos_users1_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_tipo_entregas1_idx` (`tipo_entregas_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pedidos_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedidos_tipo_entregas1`
+    FOREIGN KEY (`tipo_entregas_id`)
+    REFERENCES `mydb`.`tipo_entregas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedidos_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`detalle_pedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`detalle_pedidos` (
+  `productos_id` INT NOT NULL,
+  `pedidos_id` INT NOT NULL,
+  `cantidad` INT NULL,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  `precio_unit` DOUBLE NULL,
+  PRIMARY KEY (`productos_id`, `pedidos_id`),
+  INDEX `fk_productos_has_pedidos_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
+  INDEX `fk_productos_has_pedidos_productos1_idx` (`productos_id` ASC) VISIBLE,
+  CONSTRAINT `fk_productos_has_pedidos_productos1`
+    FOREIGN KEY (`productos_id`)
+    REFERENCES `mydb`.`productos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_productos_has_pedidos_pedidos1`
+    FOREIGN KEY (`pedidos_id`)
+    REFERENCES `mydb`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`programas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`programas` (
+  `id` INT NOT NULL,
+  `fecha_programada` DATE NULL,
+  `hora_programada` VARCHAR(30) NULL,
+  `pedidos_id` INT NOT NULL,
+  `created_at` TIMESTAMP NULL,
+  `update_at` TIMESTAMP NULL,
+  `estado` TINYINT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_programacion_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
+  CONSTRAINT `fk_programacion_pedidos1`
+    FOREIGN KEY (`pedidos_id`)
+    REFERENCES `mydb`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`plan`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`plan` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NULL,
+  `descripcion` VARCHAR(45) NULL,
+  `precio` FLOAT NULL,
+  `tipo` INT(1) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`contratos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`contratos` (
+  `id` INT NOT NULL,
+  `created_at` VARCHAR(45) NULL,
+  `updated_at` VARCHAR(45) NULL,
+  `estado` VARCHAR(30) NULL,
+  `fecha_vencimiento` DATETIME NULL,
+  `empresas_id` INT NOT NULL,
+  `plan_id` INT NOT NULL,
+  `plan_monto` FLOAT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_contratos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  INDEX `fk_contratos_plan1_idx` (`plan_id` ASC) VISIBLE,
+  CONSTRAINT `fk_contratos_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contratos_plan1`
+    FOREIGN KEY (`plan_id`)
+    REFERENCES `mydb`.`plan` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`pagos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`pagos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `monto` DOUBLE NULL,
+  `estado` VARCHAR(45) NULL,
+  `created_at` VARCHAR(45) NULL,
+  `updated_at` VARCHAR(45) NULL,
+  `empresas_id` INT NOT NULL,
+  `contratos_id` INT NOT NULL,
+  `url_foto` VARCHAR(45) NULL,
+  `observacion` VARCHAR(45) NULL,
+  `plan_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pagos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  INDEX `fk_pagos_contratos1_idx` (`contratos_id` ASC) VISIBLE,
+  INDEX `fk_pagos_plan1_idx` (`plan_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pagos_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pagos_contratos1`
+    FOREIGN KEY (`contratos_id`)
+    REFERENCES `mydb`.`contratos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pagos_plan1`
+    FOREIGN KEY (`plan_id`)
+    REFERENCES `mydb`.`plan` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tipo_entregas_empresas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`tipo_entregas_empresas` (
+  `tipo_entregas_id` INT NOT NULL,
+  `empresas_id` INT NOT NULL,
+  `estado` TINYINT NULL,
+  PRIMARY KEY (`tipo_entregas_id`, `empresas_id`),
+  INDEX `fk_tipo_entregas_has_empresas_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  INDEX `fk_tipo_entregas_has_empresas_tipo_entregas1_idx` (`tipo_entregas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_tipo_entregas_has_empresas_tipo_entregas1`
+    FOREIGN KEY (`tipo_entregas_id`)
+    REFERENCES `mydb`.`tipo_entregas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tipo_entregas_has_empresas_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`asignacion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`asignacion` (
+  `id` INT NOT NULL,
+  `created_at` VARCHAR(45) NULL,
+  `updated_at` VARCHAR(45) NULL,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_asignacion_users1_idx` (`users_id` ASC) VISIBLE,
+  CONSTRAINT `fk_asignacion_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`pedidos_users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`pedidos_users` (
+  `id` INT NOT NULL,
+  `pedidos_id` INT NOT NULL,
+  `asignacion_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pedidos_users_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_users_asignacion1_idx` (`asignacion_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pedidos_users_pedidos1`
+    FOREIGN KEY (`pedidos_id`)
+    REFERENCES `mydb`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedidos_users_asignacion1`
+    FOREIGN KEY (`asignacion_id`)
+    REFERENCES `mydb`.`asignacion` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`categoria_empresa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`categoria_empresa` (
+  `empresas_id` INT NOT NULL,
+  `categorias_id` INT NOT NULL,
+  PRIMARY KEY (`empresas_id`, `categorias_id`),
+  INDEX `fk_empresas_has_categorias_categorias1_idx` (`categorias_id` ASC) VISIBLE,
+  INDEX `fk_empresas_has_categorias_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  CONSTRAINT `fk_empresas_has_categorias_empresas1`
+    FOREIGN KEY (`empresas_id`)
+    REFERENCES `mydb`.`empresas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_empresas_has_categorias_categorias1`
+    FOREIGN KEY (`categorias_id`)
+    REFERENCES `mydb`.`categorias` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
