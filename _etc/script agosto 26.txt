@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`empresas` (
   `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ACTIVO',
   `latitud` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `longitud` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `token_fb` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
