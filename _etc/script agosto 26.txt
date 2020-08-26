@@ -1,3 +1,4 @@
+DROP DATABASE mydb;
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -18,15 +19,15 @@ USE `mydb` ;
 -- Table `mydb`.`personas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`personas` (
-  `id` INT NOT NULL,
-  `nombres` VARCHAR(80) NULL,
-  `appaterno` VARCHAR(80) NULL,
-  `apmaterno` VARCHAR(80) NULL,
-  `celular` VARCHAR(10) NULL,
-  `direccion` VARCHAR(100) NULL,
-  `created_at` VARCHAR(100) NULL,
-  `updated_at` VARCHAR(100) NULL,
-  `dni` VARCHAR(11) NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `appaterno` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apmaterno` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dni` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `celular` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -35,21 +36,23 @@ ENGINE = InnoDB;
 -- Table `mydb`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(60) NULL,
-  `email` VARCHAR(45) NULL,
-  `password` VARCHAR(100) NULL,
-  `isAdmin` TINYINT NULL,
-  `isCustomer` TINYINT NULL,
-  `foto` VARCHAR(20) NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
-  `remeberToken` VARCHAR(45) NULL,
-  `persons_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(80) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
+  `isCustomer` tinyint(1) NOT NULL DEFAULT '0',
+  `persona_id` bigint(20) unsigned COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_users_persons1_idx` (`persons_id` ASC) VISIBLE,
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  INDEX `fk_users_persons1_idx` (`persona_id` ASC),
   CONSTRAINT `fk_users_persons1`
-    FOREIGN KEY (`persons_id`)
+    FOREIGN KEY (`persona_id`)
     REFERENCES `mydb`.`personas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -60,10 +63,10 @@ ENGINE = InnoDB;
 -- Table `mydb`.`permisos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`permisos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `descripcion` VARCHAR(80) NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -72,18 +75,20 @@ ENGINE = InnoDB;
 -- Table `mydb`.`permiso_user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`permiso_user` (
-  `permisos_id` INT NOT NULL,
-  `users_id` INT NOT NULL,
-  PRIMARY KEY (`permisos_id`, `users_id`),
-  INDEX `fk_permisos_has_users_users1_idx` (`users_id` ASC) VISIBLE,
-  INDEX `fk_permisos_has_users_permisos_idx` (`permisos_id` ASC) VISIBLE,
+  `permiso_id` bigint(20) unsigned NOT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`permiso_id`, `user_id`),
+  INDEX `fk_permisos_has_users_users1_idx` (`user_id` ASC),
+  INDEX `fk_permisos_has_users_permisos_idx` (`permiso_id` ASC),
   CONSTRAINT `fk_permisos_has_users_permisos`
-    FOREIGN KEY (`permisos_id`)
+    FOREIGN KEY (`permiso_id`)
     REFERENCES `mydb`.`permisos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_permisos_has_users_users1`
-    FOREIGN KEY (`users_id`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -94,9 +99,11 @@ ENGINE = InnoDB;
 -- Table `mydb`.`ciudad`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`ciudad` (
-  `id` INT NOT NULL,
-  `nombre` VARCHAR(45) NULL,
-  `distrito_id` INT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `distrito_id` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -105,23 +112,25 @@ ENGINE = InnoDB;
 -- Table `mydb`.`empresas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`empresas` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `ruc` VARCHAR(11) NULL,
-  `nombre` VARCHAR(80) NULL,
-  `nombre_unico` VARCHAR(45) NULL,
-  `descripcion` VARCHAR(100) NULL,
-  `telefono` VARCHAR(10) NULL,
-  `celular` VARCHAR(10) NULL,
-  `direccion` VARCHAR(150) NULL,
-  `foto` VARCHAR(100) NULL,
-  `estado` VARCHAR(45) NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
-  `ciudad_id` INT NOT NULL,
-  `latitud` VARCHAR(25) NULL,
-  `longitud` VARCHAR(25) NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `ruc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_unico` varchar(110) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `celular` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ciudad_id` bigint(20) unsigned NOT NULL,
+  `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ACTIVO',
+  `latitud` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `longitud` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_empresas_ciudad1_idx` (`ciudad_id` ASC) VISIBLE,
+  UNIQUE KEY `empresas_nombre_unico_unique` (`nombre_unico`),
+  FULLTEXT KEY `nombre_unico` (`nombre_unico`),
+  INDEX `fk_empresas_ciudad1_idx` (`ciudad_id` ASC),
   CONSTRAINT `fk_empresas_ciudad1`
     FOREIGN KEY (`ciudad_id`)
     REFERENCES `mydb`.`ciudad` (`id`)
@@ -134,8 +143,8 @@ ENGINE = InnoDB;
 -- Table `mydb`.`cargos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`cargos` (
-  `id` INT NOT NULL,
-  `descripcion` VARCHAR(45) NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -144,24 +153,26 @@ ENGINE = InnoDB;
 -- Table `mydb`.`users_empresas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`users_empresas` (
-  `cargo_id` INT NOT NULL,
-  `users_id` INT NOT NULL,
-  `empresas_id` INT NOT NULL,
-  INDEX `fk_users_empresas_cargo1_idx` (`cargo_id` ASC) VISIBLE,
-  INDEX `fk_users_empresas_users1_idx` (`users_id` ASC) VISIBLE,
-  INDEX `fk_users_empresas_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `cargo_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  INDEX `fk_users_empresas_cargo1_idx` (`cargo_id` ASC),
+  INDEX `fk_users_empresas_users1_idx` (`user_id` ASC),
+  INDEX `fk_users_empresas_empresas1_idx` (`empresa_id` ASC),
   CONSTRAINT `fk_users_empresas_cargo1`
     FOREIGN KEY (`cargo_id`)
     REFERENCES `mydb`.`cargos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_empresas_users1`
-    FOREIGN KEY (`users_id`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_empresas_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -172,8 +183,11 @@ ENGINE = InnoDB;
 -- Table `mydb`.`tipo_negocio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`tipo_negocio` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `descripcion` VARCHAR(45) NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -182,11 +196,15 @@ ENGINE = InnoDB;
 -- Table `mydb`.`categorias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`categorias` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `descripcion` VARCHAR(45) NULL,
-  `tipo_negocio_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_negocio_id` bigint(20) unsigned NOT NULL,
+  `state` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_categorias_tipo_negocio1_idx` (`tipo_negocio_id` ASC) VISIBLE,
+  INDEX `fk_categorias_tipo_negocio1_idx` (`tipo_negocio_id` ASC),
   CONSTRAINT `fk_categorias_tipo_negocio1`
     FOREIGN KEY (`tipo_negocio_id`)
     REFERENCES `mydb`.`tipo_negocio` (`id`)
@@ -199,15 +217,16 @@ ENGINE = InnoDB;
 -- Table `mydb`.`categorias_menus`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`categorias_menus` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `descripcion` VARCHAR(80) NULL,
-  `created_at` VARCHAR(45) NULL,
-  `updated_at` VARCHAR(45) NULL,
-  `empresas_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `estado` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_categoriasmenus_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  INDEX `fk_categoriasmenus_empresas1_idx` (`empresa_id` ASC),
   CONSTRAINT `fk_categoriasmenus_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -218,25 +237,27 @@ ENGINE = InnoDB;
 -- Table `mydb`.`productos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`productos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL,
-  `descripcion` VARCHAR(45) NULL,
-  `foto` VARCHAR(100) NULL,
-  `precio` DOUBLE NULL,
-  `created_at` VARCHAR(45) NULL,
-  `updated_at` VARCHAR(45) NULL,
-  `categoriasmenus_id` INT NOT NULL,
-  `empresas_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(80) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `precio` decimal(8,2) NOT NULL,
+  `categorias_menu_id` bigint(20) unsigned NOT NULL,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `estado` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usuario_puede_ver` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_productos_categoriasmenus1_idx` (`categoriasmenus_id` ASC) VISIBLE,
-  INDEX `fk_productos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  INDEX `fk_productos_categoriasmenus1_idx` (`categorias_menu_id` ASC),
+  INDEX `fk_productos_empresas1_idx` (`empresa_id` ASC),
   CONSTRAINT `fk_productos_categoriasmenus1`
-    FOREIGN KEY (`categoriasmenus_id`)
+    FOREIGN KEY (`categorias_menu_id`)
     REFERENCES `mydb`.`categorias_menus` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_productos_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -247,8 +268,8 @@ ENGINE = InnoDB;
 -- Table `mydb`.`tipo_entregas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`tipo_entregas` (
-  `id` INT NOT NULL,
-  `nombre` VARCHAR(45) NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -257,36 +278,36 @@ ENGINE = InnoDB;
 -- Table `mydb`.`pedidos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`pedidos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `direccion` VARCHAR(45) NULL,
-  `estado` VARCHAR(30) NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
-  `users_id` INT NOT NULL,
-  `latitud` VARCHAR(45) NULL,
-  `longitud` VARCHAR(45) NULL,
-  `tipos_id` INT NOT NULL,
-  `meta_latitud` VARCHAR(45) NULL,
-  `meta_longitud` VARCHAR(45) NULL,
-  `tipo_entregas_id` INT NOT NULL,
-  `empresas_id` INT NOT NULL,
-  `monto` DOUBLE NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PENDIENTE',
+  `comentario` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `longitud` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_latitud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_longitud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `tipo_id` bigint(20) unsigned NOT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `monto` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_pedidos_users1_idx` (`users_id` ASC) VISIBLE,
-  INDEX `fk_pedidos_tipo_entregas1_idx` (`tipo_entregas_id` ASC) VISIBLE,
-  INDEX `fk_pedidos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_users1_idx` (`user_id` ASC),
+  INDEX `fk_pedidos_tipo_entregas1_idx` (`tipo_id` ASC),
+  INDEX `fk_pedidos_empresas1_idx` (`empresa_id` ASC),
   CONSTRAINT `fk_pedidos_users1`
-    FOREIGN KEY (`users_id`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pedidos_tipo_entregas1`
-    FOREIGN KEY (`tipo_entregas_id`)
+    FOREIGN KEY (`tipo_id`)
     REFERENCES `mydb`.`tipo_entregas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pedidos_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -297,22 +318,22 @@ ENGINE = InnoDB;
 -- Table `mydb`.`detalle_pedidos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`detalle_pedidos` (
-  `productos_id` INT NOT NULL,
-  `pedidos_id` INT NOT NULL,
-  `cantidad` INT NULL,
-  `created_at` TIMESTAMP NULL,
-  `updated_at` TIMESTAMP NULL,
-  `precio_unit` DOUBLE NULL,
-  PRIMARY KEY (`productos_id`, `pedidos_id`),
-  INDEX `fk_productos_has_pedidos_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
-  INDEX `fk_productos_has_pedidos_productos1_idx` (`productos_id` ASC) VISIBLE,
+  `producto_id` bigint(20) unsigned NOT NULL,
+  `pedido_id` bigint(20) unsigned NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_unit` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`producto_id`, `pedido_id`),
+  INDEX `fk_productos_has_pedidos_pedidos1_idx` (`pedido_id` ASC),
+  INDEX `fk_productos_has_pedidos_productos1_idx` (`producto_id` ASC),
   CONSTRAINT `fk_productos_has_pedidos_productos1`
-    FOREIGN KEY (`productos_id`)
+    FOREIGN KEY (`producto_id`)
     REFERENCES `mydb`.`productos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_productos_has_pedidos_pedidos1`
-    FOREIGN KEY (`pedidos_id`)
+    FOREIGN KEY (`pedido_id`)
     REFERENCES `mydb`.`pedidos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -323,17 +344,17 @@ ENGINE = InnoDB;
 -- Table `mydb`.`programas`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`programas` (
-  `id` INT NOT NULL,
-  `fecha_programada` DATE NULL,
-  `hora_programada` VARCHAR(30) NULL,
-  `pedidos_id` INT NOT NULL,
-  `created_at` TIMESTAMP NULL,
-  `update_at` TIMESTAMP NULL,
-  `estado` TINYINT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha_programada` date NOT NULL,
+  `hora_programada` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` smallint(6) NOT NULL DEFAULT '1',
+  `pedido_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_programacion_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
+  INDEX `fk_programacion_pedidos1_idx` (`pedido_id` ASC),
   CONSTRAINT `fk_programacion_pedidos1`
-    FOREIGN KEY (`pedidos_id`)
+    FOREIGN KEY (`pedido_id`)
     REFERENCES `mydb`.`pedidos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -344,11 +365,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`plan`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`plan` (
-  `id` INT NOT NULL,
-  `nombre` VARCHAR(45) NULL,
-  `descripcion` VARCHAR(45) NULL,
-  `precio` FLOAT NULL,
-  `tipo` INT(1) NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `precio` double(8,2) NOT NULL,
+  `cantidad_pedidos` int(11) NOT NULL,
+  `tipo` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -357,19 +381,22 @@ ENGINE = InnoDB;
 -- Table `mydb`.`contratos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`contratos` (
-  `id` INT NOT NULL,
-  `created_at` VARCHAR(45) NULL,
-  `updated_at` VARCHAR(45) NULL,
-  `estado` VARCHAR(30) NULL,
-  `fecha_vencimiento` DATETIME NULL,
-  `empresas_id` INT NOT NULL,
-  `plan_id` INT NOT NULL,
-  `plan_monto` FLOAT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `plan_id` bigint(20) unsigned NOT NULL,
+  `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `plan_precio` double(8,2) NOT NULL,
+  `pedidos_total` int(11) NOT NULL,
+  `pedidos_contador` int(11) NOT NULL,
+  `fecha_inicio` datetime NOT NULL DEFAULT NOW(),
+  `fecha_vencimiento` datetime NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_contratos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
-  INDEX `fk_contratos_plan1_idx` (`plan_id` ASC) VISIBLE,
+  INDEX `fk_contratos_empresas1_idx` (`empresa_id` ASC),
+  INDEX `fk_contratos_plan1_idx` (`plan_id` ASC),
   CONSTRAINT `fk_contratos_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -385,22 +412,23 @@ ENGINE = InnoDB;
 -- Table `mydb`.`pagos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`pagos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `monto` DOUBLE NULL,
-  `estado` VARCHAR(45) NULL,
-  `created_at` VARCHAR(45) NULL,
-  `updated_at` VARCHAR(45) NULL,
-  `empresas_id` INT NOT NULL,
-  `contratos_id` INT NOT NULL,
-  `url_foto` VARCHAR(45) NULL,
-  `observacion` VARCHAR(45) NULL,
-  `plan_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `contratos_id` bigint(20) unsigned NOT NULL,
+  `plan_id` bigint(20) unsigned NOT NULL,
+  `precio` double NOT NULL,
+  `cantidad_pedidos` int(11) NOT NULL,
+  `urlfoto` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `observacion` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_pagos_empresas1_idx` (`empresas_id` ASC) VISIBLE,
-  INDEX `fk_pagos_contratos1_idx` (`contratos_id` ASC) VISIBLE,
-  INDEX `fk_pagos_plan1_idx` (`plan_id` ASC) VISIBLE,
+  INDEX `fk_pagos_empresas1_idx` (`empresa_id` ASC),
+  INDEX `fk_pagos_contratos1_idx` (`contratos_id` ASC),
+  INDEX `fk_pagos_plan1_idx` (`plan_id` ASC),
   CONSTRAINT `fk_pagos_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -420,20 +448,22 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`tipo_entregas_empresas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`tipo_entregas_empresas` (
-  `tipo_entregas_id` INT NOT NULL,
-  `empresas_id` INT NOT NULL,
-  `estado` TINYINT NULL,
-  PRIMARY KEY (`tipo_entregas_id`, `empresas_id`),
-  INDEX `fk_tipo_entregas_has_empresas_empresas1_idx` (`empresas_id` ASC) VISIBLE,
-  INDEX `fk_tipo_entregas_has_empresas_tipo_entregas1_idx` (`tipo_entregas_id` ASC) VISIBLE,
+CREATE TABLE IF NOT EXISTS `mydb`.`tipo_entrega_empresas` (
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `tipo_entrega_id` bigint(20) unsigned NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`tipo_entrega_id`, `empresa_id`),
+  INDEX `fk_tipo_entregas_has_empresas_empresas1_idx` (`empresa_id` ASC),
+  INDEX `fk_tipo_entregas_has_empresas_tipo_entregas1_idx` (`tipo_entrega_id` ASC),
   CONSTRAINT `fk_tipo_entregas_has_empresas_tipo_entregas1`
-    FOREIGN KEY (`tipo_entregas_id`)
+    FOREIGN KEY (`tipo_entrega_id`)
     REFERENCES `mydb`.`tipo_entregas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tipo_entregas_has_empresas_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -444,14 +474,14 @@ ENGINE = InnoDB;
 -- Table `mydb`.`asignacion`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`asignacion` (
-  `id` INT NOT NULL,
-  `created_at` VARCHAR(45) NULL,
-  `updated_at` VARCHAR(45) NULL,
-  `users_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_asignacion_users1_idx` (`users_id` ASC) VISIBLE,
+  INDEX `fk_asignacion_users1_idx` (`user_id` ASC),
   CONSTRAINT `fk_asignacion_users1`
-    FOREIGN KEY (`users_id`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `mydb`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -462,12 +492,12 @@ ENGINE = InnoDB;
 -- Table `mydb`.`pedidos_users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`pedidos_users` (
-  `id` INT NOT NULL,
-  `pedidos_id` INT NOT NULL,
-  `asignacion_id` INT NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `asignacion_id` bigint(20) unsigned NOT NULL,
+  `pedidos_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_pedidos_users_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
-  INDEX `fk_pedidos_users_asignacion1_idx` (`asignacion_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_users_pedidos1_idx` (`pedidos_id` ASC),
+  INDEX `fk_pedidos_users_asignacion1_idx` (`asignacion_id` ASC),
   CONSTRAINT `fk_pedidos_users_pedidos1`
     FOREIGN KEY (`pedidos_id`)
     REFERENCES `mydb`.`pedidos` (`id`)
@@ -485,25 +515,46 @@ ENGINE = InnoDB;
 -- Table `mydb`.`categoria_empresa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`categoria_empresa` (
-  `empresas_id` INT NOT NULL,
-  `categorias_id` INT NOT NULL,
-  PRIMARY KEY (`empresas_id`, `categorias_id`),
-  INDEX `fk_empresas_has_categorias_categorias1_idx` (`categorias_id` ASC) VISIBLE,
-  INDEX `fk_empresas_has_categorias_empresas1_idx` (`empresas_id` ASC) VISIBLE,
+  `empresa_id` bigint(20) unsigned NOT NULL,
+  `categoria_id` bigint(20) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`empresa_id`, `categoria_id`),
+  INDEX `fk_empresas_has_categorias_categorias1_idx` (`categoria_id` ASC),
+  INDEX `fk_empresas_has_categorias_empresas1_idx` (`empresa_id` ASC),
   CONSTRAINT `fk_empresas_has_categorias_empresas1`
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `mydb`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_empresas_has_categorias_categorias1`
-    FOREIGN KEY (`categorias_id`)
+    FOREIGN KEY (`categoria_id`)
     REFERENCES `mydb`.`categorias` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
+CREATE TABLE IF NOT EXISTS `mydb`.`transacciones_culqi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transId` varchar(30) NOT NULL,
+  `amount` decimal(9,2) NOT NULL,
+  `transfer_amount` decimal(9,2) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `description` varchar(80) DEFAULT NULL,
+  `card_number` varchar(16) DEFAULT NULL,
+  `card_brand` varchar(20) DEFAULT NULL,
+  `card_type` varchar(20) DEFAULT NULL,
+  `reference_code` varchar(15) NOT NULL,
+  `authorization_code` varchar(10) NOT NULL,
+  `ip` varchar(60) DEFAULT NULL,
+  `device_type` varchar(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
