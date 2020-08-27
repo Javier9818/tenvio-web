@@ -2,9 +2,9 @@
    <form class="row" @submit.prevent="generaPedido">
      <loader mostrar="loader" ref="modalcito" texto="Espere un momento por favor"></loader>
     <div class="col-sm-12 col-md-12 col-lg-12">
-        <div v-for=" empresa in empresas" :key="empresa.id">
+        <div v-for="(empresa, index) in empresas " :key="index">
           <div class="col-8"> <h4> Empresa: {{empresa.name_empresa}}</h4> </div>
-
+          
           <div class="form-group col-12">
              <b-form-group label="Selecciona el método de envio" class="label">
                 <b-form-radio-group
@@ -13,6 +13,7 @@
                     :options="tipoPedidos"
                     name="radio-options"
                     required
+                    @change="tipoEnvio(index)"
                 ></b-form-radio-group>
             </b-form-group>
           </div>
@@ -55,8 +56,20 @@
               </tbody>
             </table>
           </div><!-- /.cart-table -->
+          <div class="form-group col-12" v-if="showReserva">
+            <label for="address" class="label">Ingresar fecha de reserva</label>
+            <div class="row">
+              <div class="col-6">
+                <input type="date" v-model="empresa.isReserva.date" class=" form-control">
+              </div>
+              <div class="col-6">
+                <input type="time" v-model="empresa.isReserva.time" class=" form-control">
+              </div>
+            </div>    
+          </div>
       </div>
     </div>
+    
     <div class="form-group col-12">
         <label for="address" class="label">Ingrese la dirección de destino</label>
         <input type="text" id="address" v-model="direccion" class="form-control focused form__control__javier" placeholder="Ingresar dirección" required>
@@ -79,14 +92,18 @@
 				<div class="text-center">
 					<b>Medio de Pago</b>
 				</div>
-				<input type="radio" id="uno" value="T" v-model="medioPago">
+          <div class="form-group" v-for="(tipo,index) in tipos" :key="index">           
+            <input type="checkbox" v-model="medioPago" :value="tipo.value">
+            {{tipo.nombre}}          
+          </div>
+				<!-- <input type="radio" id="uno" value="T" v-model="medioPago">
 				<label for="uno">Pago Tarjeta</label>
 				<br>
 				<input type="radio" id="dos" value="Y" v-model="medioPago">
 				<label for="dos">YAPE</label>
 				<br>
 				<input type="radio" id="tres" value="P" v-model="medioPago">
-				<label for="tres">PLIN</label>
+				<label for="tres">PLIN</label> -->
 				<br>
 			</div>
             <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">
@@ -105,29 +122,39 @@ import Swal from 'sweetalert2'
 export default {
     props:['user'],
     data(){
-        return {
-            productos: [],
-            total: 0,
-            producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
-            temp_productos:[],
-            empresas:[],
-            tipoPedidos:[],
-            tipoPedidosTemp:[],
-            selected:'',
-            marker:L.marker([0,0]),
-            ubicacion:[],
-            direccion:'',
-            client:{
-              username:'',
-              password:''
-            },
-            load:false,
-			medioPago: 'T',
-			description: 'Pedido', //variable para culqi
-			mododev: false, //si es true, evita que se borre el pedido de memoria
-        }
+      return {
+        productos: [],
+        total: 0,
+        producto:{descripcion:'',foto:'',nombre:'',precio:'',cant:0, id:0, empresa:0},
+        temp_productos:[],
+        empresas:[],
+        tipoPedidos:[],
+        tipoPedidosTemp:[],
+        selected:'',
+        marker:L.marker([0,0]),
+        ubicacion:[],
+        direccion:'',
+        client:{
+          username:'',
+          password:''
+        },
+        load:false,
+        medioPago: 'T',
+        description: 'Pedido', //variable para culqi
+        mododev: false, //si es true, evita que se borre el pedido de memoria
+        isReserva:{
+          time:null,
+          date:null
+        },
+        showReserva:false
+      }
     },
     methods:{
+       tipoPago(){
+        axios.get(`/api/tipo-pago-front/${empresa}`).then( ({data}) => {
+          this.tipos = data.tipos
+        });
+      } ,
       funAdd: function (key,index) {
 
          this.producto=this.productos[index]
@@ -209,7 +236,7 @@ export default {
         var that = this
         axios.post('/front/TipoPedido',{empresas:this.empresas})
         .then(function (response) {
-           that.tipoPedidos= response.data
+          that.tipoPedidos= response.data
         })
 
       },
@@ -228,7 +255,11 @@ export default {
               lat:0,
               lng:0,
               direccion:' ',
-              total:this.generaTotal(empresa, array)
+              total:this.generaTotal(empresa, array),
+              isReserva:{
+                time:null,
+                date:null
+              }
             }
           }
         )
@@ -317,12 +348,25 @@ export default {
             }).then((result) => {
             if (!result.value)
                 return
-			that.generaPedidoCulqi()
-  	  		})
-        }
+        that.generaPedidoCulqi()
+            })
+          }
+      },
+      tipoEnvio(index){    
+        setTimeout(() => {
+          if (this.empresas[index].tipoEntrega==3) {
+            this.showReserva=true
+          }else{
+            this.showReserva=false
+          }
+        }, 250)                
+      },
+      ver(index){
+        console.log(this.empresas[index].isReserva)
       }
     },
     computed:{
+      
       calcularTotal(){
 
         this.total = 0
@@ -335,6 +379,7 @@ export default {
     },
     mounted() {
         this.recarga()
+        this.tipoPago()
         this.load=true
     },
     created: function () {

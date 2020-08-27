@@ -79,6 +79,7 @@ Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').de
 Vue.component('nombre-publico', require('./components/config/NombrePublico.vue').default);
 Vue.component('ubicacion-component', require('./components/config/Ubicacion.vue').default);
 Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
+Vue.component('tipo-pago', require('./components/config/TipoPagos.vue').default);
 
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
 Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);

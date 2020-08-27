@@ -40,6 +40,10 @@ Route::post('/empresa/search', 'EmpresaController@search');
 Route::get('/tipo-entregas/{empresa}', 'EmpresaController@tiposEntrega');
 Route::put('/tipo-entregas', 'EmpresaController@updateTipoEntrega');
 
+Route::get('/tipo-pago/{empresa}', 'TipopagoController@tiposPago');
+Route::get('/tipo-pago-front/{empresa}', 'TipopagoController@tiposPagoFront');
+Route::put('/tipo-pago', 'TipopagoController@updateTipoPago');
+
 Route::get('/nombre-unico/{empresa}', 'EmpresaController@nombreUnico');
 Route::post('/nombre-unico', 'EmpresaController@validaNombreUnico');
 Route::put('/nombre-unico', 'EmpresaController@updateNombreUnico');
