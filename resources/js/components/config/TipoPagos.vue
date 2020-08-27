@@ -3,7 +3,7 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group" v-for="(tipo,index) in tipos" :key="index">
-           
+            <a   > <i :class=" 'ft-check-circle '+((tipo.estado==1)?'text-success':'') "></i> </a>
             {{tipo.nombre}}
              <a href="javascript:void(0)" @click="_config(index)"> <i class="ft-edit"></i> </a>
           </div>
