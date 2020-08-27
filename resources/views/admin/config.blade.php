@@ -54,6 +54,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-md-5">
+            <div class="card">
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <h4 class="card-title">Autenticación Chatbot Facebook</h4>
+                        <p>El token de autenticación permite el acceso a datos de productos y precios desde un ChatBot en Facebook.</p>
+                        <token-red-social></token-red-social>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 @endsection

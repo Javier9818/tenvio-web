@@ -41,6 +41,8 @@ Route::get('/tipo-entregas/{empresa}', 'EmpresaController@tiposEntrega');
 Route::put('/tipo-entregas', 'EmpresaController@updateTipoEntrega');
 
 Route::get('/nombre-unico/{empresa}', 'EmpresaController@nombreUnico');
+Route::get('/token-fb/{empresa}', 'EmpresaController@tokenFb');
+Route::put('/token-fb', 'EmpresaController@updateTokenFb');
 Route::post('/nombre-unico', 'EmpresaController@validaNombreUnico');
 Route::put('/nombre-unico', 'EmpresaController@updateNombreUnico');
 

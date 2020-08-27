@@ -26,7 +26,8 @@ class Empresa extends Model
         'created_at',
         'updated_at',
         'latitud',
-        'longitud'
+        'longitud',
+        'token_fb'
     ];
 
     public static function setImagen($data, $actual = false){

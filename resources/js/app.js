@@ -77,6 +77,7 @@ Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.v
 Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
 Vue.component('nombre-publico', require('./components/config/NombrePublico.vue').default);
+Vue.component('token-red-social', require('./components/config/TokenFacebook.vue').default);
 Vue.component('ubicacion-component', require('./components/config/Ubicacion.vue').default);
 Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
 

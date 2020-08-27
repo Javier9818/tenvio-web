@@ -191,9 +191,21 @@ class EmpresaController extends Controller
         return response()->json(["nombreUnico" => $empresa->nombre_unico]);
     }
 
+    public function tokenFb($idempresa){
+        $empresa = Empresa::find($idempresa);
+        return response()->json(["tokenFb" => $empresa->token_fb]);
+    }
+
     public function updateNombreUnico(Request $request){
         $empresa = Empresa::find($request->empresa);
         $empresa->nombre_unico = $request->nombreUnico;
+        $empresa->save();
+        return response()->json(["Message" => 'Actualización exitosa']);
+    }
+
+    public function updateTokenFb(Request $request){
+        $empresa = Empresa::find($request->empresa);
+        $empresa->token_fb = $request->tokenFb;
         $empresa->save();
         return response()->json(["Message" => 'Actualización exitosa']);
     }
