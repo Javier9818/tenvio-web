@@ -11,7 +11,7 @@
                     </b>
                     <p v-if="stateComponent">{{tokenFb || 'No se encontró token registrado'}}</p>
                     <input type="text" class="form-control" placeholder="Ingrese nombre único" v-model="tokenFb" required
-                     v-on:keyup="convert" :class="{ 'is-invalid': (error), 'is-valid': (error === false) }" v-else >
+                    :class="{ 'is-invalid': (error), 'is-valid': (error === false) }" v-else >
                 </div>
            </div>
            <button type="submit" class="btn btn-sm btn-primary my-1 float-right" v-if="tokenFb!== data.tokenFb">Guardar cambios</button>
