@@ -17,7 +17,7 @@ class TipopagoController extends Controller
     public function tiposPagoFront($empresa){
         $tipos = DB::select('select * from tipopago t
                             inner join tipopago_empresa te on te.tipopago_id = t.id
-                            where te.empresa_id = ?', [$empresa]);
+                            where te.empresa_id = ? and te.estado=1', [$empresa]);
         return response()->json(["tipos" => $tipos], 200);
     }
     public function updateTipoPago(Request $request){

@@ -51,10 +51,12 @@ import Swal from 'sweetalert2'
             },
             index:null,
             deshabilitaboton: false,
-            mostrarLoader: false
+            mostrarLoader: false,
+            isAdmin:null
           }
         },
         mounted() {
+          this.isAdmin= 0
             this._init()
         },
         methods:{            
@@ -86,7 +88,11 @@ import Swal from 'sweetalert2'
             },
             _init(){
               axios.get(`/api/tipo-pago/${empresa}`).then( ({data}) => {
-                this.tipos = data.tipos
+                this.tipos=data.tipos
+                if (isAdmin!=1) { 
+                  this.tipos[4]=this.tipos[5]
+                  this.tipos.pop()
+                }                 
               });
             } 
 
