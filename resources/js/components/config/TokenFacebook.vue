@@ -38,7 +38,7 @@ const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ&\s]*$/)
                 stateComponent:true,
                 tokenFb:null,
                 error:null,
-                data:null,
+                data:{tokenFb:null},
                 busy:null
             }
         },
