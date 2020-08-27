@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
 
         DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [1, 'DELIVERY']);
         DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [2, 'RECEPCIÓN EN LOCAL']);
-        DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [2, 'RESERVAR']);
+        DB::insert('insert into tipo_entregas (id, nombre) values (?, ?)', [3, 'RESERVAR']);
 
         DB::insert('insert into tipopago (id, nombre, value) values (?, ?, ?)', [1, 'YAPE','Y']);
         DB::insert('insert into tipopago (id, nombre, value) values (?, ?, ?)', [2, 'PLIN','P']);
