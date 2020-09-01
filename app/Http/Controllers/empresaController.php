@@ -32,6 +32,19 @@ class EmpresaController extends Controller
             ]);
 			Pagos::registrar($contrato, '');
             Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad,'foto'=>'logoEmpresaDefault.png']);
+
+
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 1, false, '','']);
+             //plin
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 2, false, '','']);
+             //tunki
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 3, false, '','']);
+             //tranferencia
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 4, false, '','']);
+             //culqi
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 5, false, '','']);
+             //contraentrega
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 6, false, '','']);
         });
 
         return response()->json(["message" => "Actualización exitosa", "empresa" => $request->id]);
@@ -111,22 +124,7 @@ class EmpresaController extends Controller
             }
 
             DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id) values (?, ?)', [$empresa->id, 1]);
-            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id, estado) values (?, ?, ?)', [$empresa->id, 2, false]);
-            DB::insert('insert into tipo_entrega_empresas(empresa_id, tipo_entrega_id, estado) values (?, ?, ?)', [$empresa->id, 3, false]);
-
-
-            //yape
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$empresa->id, 1, false, '','']);
-             //plin
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$empresa->id, 2, false, '','']);
-             //tunki
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$empresa->id, 3, false, '','']);
-             //tranferencia
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$empresa->id, 4, false, '','']);
-             //culqi
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$empresa->id, 5, false, '','']);
-             //contraentrega
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$empresa->id, 6, false, '','']);
+        
 
         });
         // Mail::to($request->email)->send(new SendCargo($request->persona, $url, $request->email, $mensaje));

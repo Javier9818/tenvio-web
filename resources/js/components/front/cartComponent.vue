@@ -85,7 +85,7 @@
             <h6>TOTAL:</h6>
             <ul class="list-unstyled mb-0">
 
-            <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li>
+            <li><span>Órden Total :</span><span>S/ {{calcularTotal}}</span></li> 
             </ul>
             <br>
 			<div class="">
