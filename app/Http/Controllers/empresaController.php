@@ -26,8 +26,8 @@ class EmpresaController extends Controller
                 "estado" => Contrato::$CONTRATO_VIGENTE,
                 "plan_id" => 1,
                 "plan_monto" => 0.0,
-                "plan_precio" => 0.0,/////////////////
-                "pedidos_total" => 100,///////////
+                "plan_precio" => 0.0,
+                "pedidos_total" => 100,
                 "fecha_vencimiento" => Carbon::now()->addDays(30)
             ]);
 			Pagos::registrar($contrato, '');
