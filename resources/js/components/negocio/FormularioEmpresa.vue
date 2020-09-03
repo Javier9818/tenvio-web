@@ -9,12 +9,16 @@
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Nombre de la empresa</label> <!--is-invalid-->
             <input type="text" class="form-control" placeholder="Ingrese el nombre de la empresa" v-model="form.nombre">
-            <p v-if="$v.form.nombre.$error" class="help text-danger">Este campo es inválido</p>
+            <p v-if="!$v.form.nombre.maxLength" class="help text-danger">Este campo no puede tener más de 50 caracteres</p>
+            <p v-if="!$v.form.nombre.nombreNegocio" class="help text-danger">Este campo solo puede aceptar un apóstrofe (') como caracter especial</p>
         </div>
         <div class="col-md-6 mt-2">
             <label for="validationCustom01">RUC</label>
             <input type="text" class="form-control" placeholder="Ingrese el RUC de la empresa" v-model="form.ruc">
-            <p v-if="$v.form.ruc.$error" class="help text-danger">Este campo es inválido</p>
+            <p v-if="!$v.form.ruc.minLength" class="help text-danger">Este campo debe de tener 11 números</p>
+            <p v-else-if="!$v.form.ruc.maxLength" class="help text-danger">Este campo debe de tener 11 números</p>
+            <p v-else-if="!$v.form.ruc.ruc" class="help text-danger">Este campo debe de empezar con 10 o 20 o 15 o 16 o 17 seguido de 9 números</p>
+            
         </div>
         <div class="col-md-6 mt-2">
              <label>Tipo de Negocio*</label>
@@ -46,18 +50,22 @@
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Descripción del negocio</label>
             <textarea class="form-control" cols="30" rows="3" v-model="form.descripcion"></textarea>
-            <p v-if="$v.form.descripcion.$error" class="help text-danger">Este campo es inválido</p>
+            <p v-if="!$v.form.descripcion.text" class="help text-danger">Este campo no acepta caracteres especiales</p>
         </div>
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Celular</label>
             <input type="text" class="form-control" placeholder="Ingrese el celular de la empresa" v-model="form.celular">
-            <p v-if="$v.form.celular.$error" class="help text-danger">Este campo es inválido</p>
+            <p v-if="!$v.form.celular.numeric" class="help text-danger">Este campo solo acepta números</p>
+            <p v-else-if="!$v.form.celular.minLength" class="help text-danger">Este campo no puede tener menos de 9 dígitos</p>
+            <p v-else-if="!$v.form.celular.maxLength" class="help text-danger">Este campo no puede tener menos de 9 dígitos</p>
+            <p v-else-if="!$v.form.celular.numeroCelular" class="help text-danger">El número ingresado es inválido</p>
 
         </div>
         <div class="col-md-12 mt-2">
             <label for="validationCustom01">Dirección</label>
             <input type="text" class="form-control" placeholder="Ingrese la dirección de la empresa" v-model="form.direccion">
-            <p v-if="$v.form.direccion.$error" class="help text-danger">Este campo es inválido</p>
+            <p v-if="!$v.form.direccion.direccion" class="help text-danger">Este campo no acepta caracteres especiales</p>
+            <p v-else-if="!$v.form.direccion.maxLength" class="help text-danger">Este campo no puede contener más de 150 caracteres</p>
         </div>
 
             <div class="col-md-6 mt-2">
@@ -135,8 +143,7 @@
     import { MultiSelect } from 'vue-search-select'
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
-    const alpha = helpers.regex('alpha', /^[a-zA-Z0-9À-ÿ&#\u00f1\u00d1\s]*$/)
-    const text = helpers.regex('custom', /^[a-zA-Z0-9À-ÿ&#.\u00f1\u00d1\s]*$/)
+    import {direccion, nombreNegocio, ruc, numeroTelefonico, numeroCelular, text} from '../../utils/expresiones-regulares'
     import Swal from 'sweetalert2'
     export default {
         props:['edit', 'form'],
@@ -185,22 +192,23 @@
          validations: {
             form: {
                 ruc: {
-                    maxLength: maxLength(11)
+                    minLength: minLength(11),
+                    maxLength: maxLength(11),
+                    ruc
                 },
                 nombre: {
                     required,
-                    alpha,
+                    nombreNegocio,
                     maxLength: maxLength(50)
                 },
                 celular:{
-                    required,
                     numeric,
-                    maxLength:maxLength(12),
-                    minLength: minLength(6)
+                    numeroCelular,
+                    maxLength:maxLength(9),
+                    minLength: minLength(9)
                 },
                 direccion:{
-                    required,
-                    text,
+                    direccion,
                     maxLength:maxLength(150)
                 },
                 descripcion:{

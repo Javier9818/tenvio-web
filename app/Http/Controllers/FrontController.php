@@ -258,8 +258,6 @@ class FrontController extends Controller
       ];
     }
   }
-
-
   public static function GeneraPedido(Request $request)
   {
 	$estadoPago = 'NO PAGADO';
@@ -315,7 +313,6 @@ class FrontController extends Controller
 
 	  return ['success' => true];
   }
-
   public static function ListEmpresas( Request $request){
 
     try {
@@ -423,15 +420,6 @@ class FrontController extends Controller
   }
   public static function productos(Request $request)
   {
-    // $state=DB::table('empresa')
-    // ->select('empresa.estado')
-    // ->where('empresas.id', '=', $request->get('id'))
-    // ->get();
-    // if($state[0]=='VENCIDO')
-    //   return [
-    //     'Message'=> 'error',
-    //     'success'=>false
-    //   ];
     $where=[
       ['empresas.id', '=', $request->get('id')],
       ['empresas.estado', '=', 'ACTIVO'],

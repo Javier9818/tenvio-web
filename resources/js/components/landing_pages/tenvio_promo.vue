@@ -33,29 +33,32 @@
             </div>
         </nav>
 
-        <header class="header-area header-bg-9 style-09" id="home">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-lg-6">
-                        <div class="header-inner">
-                            <h1 class="title wow fadeInDown">Tu negocio al alcance de un click</h1>
-                            <p>Ofrece tus productos en tu propia página web, y lleva tu negocio al siguiente nivel.</p>
-                            <div class="btn-wrapper wow fadeInUp">
-                                <a class="boxed-btn-02 reverse-color my-1" href="javascript:void(0)" @click="register">Registrarme</a>
-                                <a href="https://www.youtube.com/watch?v=Q86XXD3pnnw" class=" play-video-btn boxed-btn-02 mfp-iframe my-1"><i class="fa fa-play"></i> ¿Cómo funciona?</a>
+        <b-overlay :show="load">
+            <header class="header-area header-bg-9 style-09" id="home">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-lg-6">
+                            <div class="header-inner">
+                                <h1 class="title wow fadeInDown">Tu negocio al alcance de un click</h1>
+                                <p>Ofrece tus productos en tu propia página web, y lleva tu negocio al siguiente nivel.</p>
+                                <div class="btn-wrapper wow fadeInUp">
+                                    <a class="boxed-btn-02 reverse-color my-1" href="javascript:void(0)" @click="register">Registrarme</a>
+                                    <a href="https://www.youtube.com/watch?v=Q86XXD3pnnw" class=" play-video-btn boxed-btn-02 mfp-iframe my-1"><i class="fa fa-play"></i> ¿Cómo funciona?</a>
+                                </div>
                             </div>
-                        </div>
-                    </div> 
-                    <div class="col-lg-5">
-                        <div class="right-img">
-                            <div class="img-wrapper">
-                                <img src="assets/images/landing_pages/header-right-image.png" alt="header right image">
+                        </div> 
+                        <div class="col-lg-5">
+                            <div class="right-img">
+                                <div class="img-wrapper">
+                                    <img src="assets/images/landing_pages/header-right-image.png" alt="header right image">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        </b-overlay>
+        
 
         <div class="about-app-area padding-top-120" id="about" style="background-image:url(assets/images/landing_pages/bg/about-app-area-bg.png);">
             <div class="container">
@@ -284,6 +287,7 @@ import Swal from 'sweetalert2'
         data()
         {
             return{
+                load: true,
                 email_service:{
                     name:'',
                     message:'',
@@ -293,7 +297,7 @@ import Swal from 'sweetalert2'
             }
         },
         mounted() {
-        
+            this.load = false;
         },
         methods:{
             register(){

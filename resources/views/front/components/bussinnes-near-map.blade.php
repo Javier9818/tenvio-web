@@ -8,6 +8,7 @@
 @endsection
 
 @section('styles')
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyAeTM7b0MYnEP8-Ax6GmvD6jV3xgpMac60"></script>
 <link rel="shortcut icon" href="/assets/landing_index/images/favicon.png" type="image/png">
     
 <!--====== Default CSS ======-->

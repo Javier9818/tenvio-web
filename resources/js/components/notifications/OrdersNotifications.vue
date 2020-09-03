@@ -135,22 +135,18 @@
                         this.close();
                     }
                 });
-
-
             },
         },
         created(){
-            // Echo.channel(`ordersCompany.${company || 0}`)
-            // .listen('NewOrderEvent', (e) => {
-
-            //     if (e.order == null) return;
-            //     else{
-            //         this.orders.push(e.order);
-            //         var messageNotify = `Tienes nueo pedido, revisa tus notificaciones`
-            //         this.notifyPush(messageNotify)
-            //     }
-
-            // });
+            Echo.channel(`ordersCompany.${company || 0}`)
+            .listen('NewOrderEvent', (e) => {
+                if (e.order == null) return;
+                else{
+                    this.orders.push(e.order);
+                    var messageNotify = `Tienes nueo pedido, revisa tus notificaciones`
+                    this.notifyPush(messageNotify)
+                }
+            });
         }
     }
 </script>

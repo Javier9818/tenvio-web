@@ -16,7 +16,7 @@ class GeneralController extends Controller
         
         $tiponegocios = TipoNegocio::all();
         $categorias = Categoria::all();
-        return view('front.components.nav_alternativo', ["tiponegocios" => $tiponegocios, "categorias" => $categorias]);
+        return view('front.components.bussinnes-near-map', ["tiponegocios" => $tiponegocios, "categorias" => $categorias]);
     }
 
     public function bussinessNear($lat, $lng){
