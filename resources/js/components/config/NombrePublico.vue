@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h6>wwww.teloenvio.com/empresas/<p class="namePublic d-inline">{{nombreUnico}}</p></h6>
+        <a :href="rutita+'/empresa/'+nombreUnico"><h6>{{rutita}}/empresas/<p class="namePublic d-inline">{{nombreUnico}}</p></h6></a>
         <a href="javascript:void(0)" v-on:click="stateComponent=true" v-if="!stateComponent"> <i class="ft-edit"></i> Modificar</a>
        <form v-on:submit.prevent="submit" v-if="stateComponent">
            <div class="row">
@@ -33,6 +33,7 @@ import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} fr
 const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ&\s]*$/)
     export default {
         mounted() {
+			this.rutita = window.location.origin;
             axios.get(`/api/nombre-unico/${empresa}`).then( ({data}) => {
                 this.nombreUnico = data.nombreUnico;
                 this.data = data;
@@ -40,6 +41,7 @@ const alpha = helpers.regex('alpha', /^[a-z0-9À-ÿ&\s]*$/)
         },
         data() {
             return {
+				rutita: '',
                 stateComponent:false,
                 nombreUnico:'',
                 error:null,
