@@ -17,6 +17,9 @@ class CreatePedidosTable extends Migration
             $table->id();
             $table->integer('empresa_id');
             $table->string('estado', 20)->default('PENDIENTE');
+			$table->string('estadoPago', 20);
+            $table->integer('id_tipopago');
+            $table->integer('id_regpago');
             $table->string('comentario', 100)->nullable();
             $table->string('latitud');
             $table->string('longitud');

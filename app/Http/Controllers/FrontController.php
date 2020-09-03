@@ -260,6 +260,10 @@ class FrontController extends Controller
   }
   public static function GeneraPedido(Request $request)
   {
+	$estadoPago = 'NO PAGADO';
+	$id_tipopago = $request->get('empresas')['medioPago']['id'];
+	$id_regpago = 0;
+
     $datos=$request->get('datos');
     if (count($datos)>0) {
       $token = $request->get('datos')['token'];
@@ -269,13 +273,14 @@ class FrontController extends Controller
       if (!$transCulqi['success']){
         return ['success' => false, 'msj' => $transCulqi['msj']];
       }
+	  $estadoPago = 'PAGADO';
+	  $id_regpago = $transCulqi['obj']->id;
     }
     $empresa=$request->get('empresas');
-	  
-    //dd($empresa['medioPago']['value']);
-	  
 
-    DB::transaction(function () use ($request){        
+    //dd($empresa['medioPago']['value']);
+
+    DB::transaction(function () use ($request, $estadoPago, $id_tipopago, $id_regpago){
       $empresa=$request->get('empresas');
       $pedido = Pedidos::create([
         'empresa_id' => $empresa['empresa'],
@@ -284,7 +289,10 @@ class FrontController extends Controller
         'user_id'=>Auth::id(),
         'tipo_id'=>$empresa['tipoEntrega'],
         'direccion'=>$empresa['direccion'],
-        'monto'=>$empresa['total']
+        'monto'=>$empresa['total'],
+		'estadoPago' => $estadoPago,
+		'id_tipopago' => $id_tipopago,
+		'id_regpago' => $id_regpago
       ]);
 
       foreach ($request->get('productos') as $key => $producto) {
@@ -300,7 +308,7 @@ class FrontController extends Controller
         }
       }
       $dato_pedido = Pedidos::obtenerPedido($pedido->id);
-      try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}        
+      try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
     });
 
 	  return ['success' => true];

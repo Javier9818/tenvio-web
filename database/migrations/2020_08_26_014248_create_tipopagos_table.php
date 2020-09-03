@@ -16,7 +16,6 @@ class CreateTipopagosTable extends Migration
         Schema::create('tipopago', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50);
-            $table->string('value', 50);
             $table->integer('estado')->default(1);
             $table->string('value', 5);
             $table->timestamps();

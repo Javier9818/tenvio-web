@@ -15,7 +15,7 @@
         <br>
       </div>
       <div class="col-sm-12 col-md-12 col-lg-12 cart__product-action-content  text-right">
-        <button class="btn btn-primary" @click="generaPedido">Realizar Pedido</button>
+        <button class="btn btn-primary" :disabled="verificar" @click="generaPedido">Realizar Pedido</button>
       </div>
     </div> 
   </div>
@@ -30,6 +30,7 @@ export default {
       tiposPago:[],
       total:0,
       description: 'Pedido',
+      state:true
     }
   },
   methods:{
@@ -130,6 +131,12 @@ export default {
         }
       })
       return this.total
+    },
+    verificar(){
+      if (this.empresa.tipoEntrega>0 && this.empresa.direccion!='' && this.empresa.medioPago!=null) {
+        return false
+      }
+      return true
     } 
   },
   mounted(){

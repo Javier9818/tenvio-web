@@ -61,7 +61,7 @@ export default {
             tipoEntrega:0,
             lat:0,
             lng:0,
-            direccion:' ',
+            direccion:'',
             isReserva:{
               time:null,
               date:null
