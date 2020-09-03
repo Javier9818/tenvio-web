@@ -66,7 +66,11 @@ class Pedidos extends Model
 		$select = array(
 			'pedidos.id as idpedido',
 			DB::raw("GROUP_CONCAT(dp.producto_id) as ids"),
-			DB::raw("GROUP_CONCAT(dp.cantidad) as cantidades")
+			DB::raw("GROUP_CONCAT(dp.cantidad) as cantidades"),
+			'estadoPago',
+			'id_tipopago',
+			'tp.nombre as tipopago_nombre',
+			'id_regpago'
 		);
 		if ($bul){
 			$select[] = DB::raw("sum(dp.precio_unit * dp.cantidad) as monto");
@@ -85,6 +89,7 @@ class Pedidos extends Model
 			->join('users as u', 'u.id', '=', 'pedidos.user_id')
 			->join('personas as personas', 'personas.id', '=', 'u.persona_id')
 			->join('tipo_entregas as te', 'te.id', '=', 'pedidos.tipo_id')
+			->join('tipopago as tp', 'tp.id', '=', 'pedidos.id_tipopago')
 			->groupBy('pedidos.id')
 			->get();
 	}
