@@ -18,6 +18,7 @@ class CreateTipopagosTable extends Migration
             $table->string('nombre', 50);
             $table->string('value', 50);
             $table->integer('estado')->default(1);
+            $table->string('value', 5);
             $table->timestamps();
         });
     }

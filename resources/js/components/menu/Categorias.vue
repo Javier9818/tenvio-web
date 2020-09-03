@@ -26,8 +26,9 @@
 				label-align="center"
 				label-size="md"
 				class="mb-0">
-					<b-form-input v-model="categoria.descripcion" placeholder="Descripcion" :state="$v.categoria.descripcion.required"></b-form-input>
+					<b-form-input v-model="categoria.descripcion" placeholder="Descripcion" :state="$v.categoria.descripcion.required && $v.categoria.descripcion.nombreCategoria"></b-form-input>
 					<div class="text-danger" v-if="!$v.categoria.descripcion.required">La descripcion es requerida</div>
+					<div class="text-danger" v-if="!$v.categoria.descripcion.nombreCategoria">La descripcion no puede contener caracteres especiales</div>
 				</b-form-group>
 			</b-col>
 			<div class="text-center">
@@ -45,6 +46,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { required } from 'vuelidate/lib/validators'
+import { nombreCategoria } from '../../utils/expresiones-regulares.js'
 export default {
 	data() {
 		return {
@@ -65,7 +67,7 @@ export default {
 	},
 	validations: {
 		categoria: {
-			descripcion: { required }
+			descripcion: { required, nombreCategoria }
 		}
 	},
 	methods: {

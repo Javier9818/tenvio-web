@@ -30,6 +30,7 @@
 				class="mb-0">
 					<b-form-input v-model="producto.nombre" placeholder="Nombre"></b-form-input>
 					<div class="text-danger" v-if="!$v.producto.nombre.required">Campo requerido</div>
+					<div class="text-danger" v-if="!$v.producto.nombre.nombreProducto">El nombre del producto no puede contener caracteres especiales</div>
 				</b-form-group>
 				<b-form-group
 				label="Descripcion"
@@ -40,6 +41,7 @@
 				class="mb-0">
 					<b-form-input v-model="producto.descripcion" placeholder="Descripcion"></b-form-input>
 					<div class="text-danger" v-if="!$v.producto.descripcion.required">Campo requerido</div>
+					<div class="text-danger" v-if="!$v.producto.descripcion.nombreProductoDescripcion">La descripcion no puede contener caracteres especiales</div>
 				</b-form-group>
 				<b-form-group
 				label="Categoría"
@@ -91,6 +93,7 @@
 
 <script>
 import { ModelListSelect } from 'vue-search-select'
+import { nombreProducto, nombreProductoDescripcion } from '../../utils/expresiones-regulares.js'
 import { required, minValue } from 'vuelidate/lib/validators'
 import Swal from 'sweetalert2'
 export default {
@@ -126,8 +129,8 @@ export default {
 	},
 	validations: {
 		producto: {
-			nombre: { required },
-			descripcion: { required },
+			nombre: { required, nombreProducto },
+			descripcion: { required, nombreProductoDescripcion },
 			categorias_menu_id: { required },
 			precio: { minValue: (value) => value > 0 }
 		},
