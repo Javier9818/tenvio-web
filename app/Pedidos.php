@@ -12,6 +12,9 @@ class Pedidos extends Model
 		'id',
 		'empresa_id',
 		'estado',
+		'estadoPago',///
+		'id_tipopago',///
+		'id_regpago',///
 		'comentario',
 		'latitud',
 		'longitud',
