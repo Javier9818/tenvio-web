@@ -18,7 +18,7 @@ class CreateTipopagoEmpresasTable extends Migration
             $table->integer('tipopago_id');
             $table->string('code', 50);
             $table->string('number', 50);
-            $table->boolean('estado')->default(false);
+            $table->integer('estado');
             $table->timestamps();
         });
     }
