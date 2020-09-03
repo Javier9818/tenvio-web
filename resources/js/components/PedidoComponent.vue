@@ -34,7 +34,7 @@
 				<div class="card-content collapse show">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<h4>Descripción</h4>
 								<ul>
 									<li v-for="itm in item.productos">
@@ -54,6 +54,14 @@
 							<div class="col-md-12">
 								<h4 style="display:inline;">Tipo de Pedido:</h4>
 								<h5 style="display:inline;">{{item.tipo_entrega}}</h5>
+							</div>
+							<div class="col-md-12 mt-2">
+								<h5 style="display:inline;">Tipo de Pago:</h5>
+								<h6 style="display:inline;">{{item.tipopago_nombre}}</h6>
+							</div>
+							<div class="col-md-12 mt-2">
+								<h5 style="display:inline;">Estado de Pago:</h5>
+								<h6 style="display:inline;">{{item.estadoPago}}</h6>
 							</div>
 						</div>
 						<div class="text-center">

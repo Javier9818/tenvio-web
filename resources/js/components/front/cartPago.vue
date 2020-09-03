@@ -74,7 +74,7 @@ export default {
 			  title: 'Tenvio Perú',
 			  currency: 'PEN',
 			  description: this.description,
-			  amount: this.total * 100
+			  amount: this.generatotal() * 100
 		  });
       Culqi.open();
       e.preventDefault();
@@ -83,7 +83,7 @@ export default {
     generaPedidoFin: function(datos){
 		  var that = this;
       this.$refs.modalcito.showModal();
-      this.empresa.total=this.total
+      this.empresa.total=this.generatotal()
 		  axios.post('/front/GeneraPedido', {
 			  empresas: this.empresa,
 			  productos: this.productos,
@@ -120,17 +120,27 @@ export default {
 				  text: 'Sucedió un problema, intente nuevamente en los próximos minutos'
 			  }).then(() => {location.reload()})
 		  })
-	  },
+    },
+    generatotal(){
+      let total=0
+      this.productos.forEach(element => {   
+        if (this.empresa.empresa==element.empresa) {
+          total = total + (element.precio*element.cant) 
+        }
+      }) 
+      return total
+    }
   },
   computed:{
     //total de los productos
     calcularTotal(){     
+      let total=0
       this.productos.forEach(element => {   
         if (this.empresa.empresa==element.empresa) {
-          this.total = this.total + (element.precio*element.cant) 
+          total = total + (element.precio*element.cant) 
         }
-      })
-      return this.total
+      }) 
+      return total
     },
     verificar(){
       if (this.empresa.tipoEntrega>0 && this.empresa.direccion!='' && this.empresa.medioPago!=null) {

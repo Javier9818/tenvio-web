@@ -28,9 +28,7 @@
                 </td>
                 <td class="cart__product-price">S/. {{item.precio}}</td>
                 <td class="cart__product-quantity">
-                    <i class="fa fa-minus decrease-qty text-danger  " style=" cursor: pointer" @click="funAdd('-',index)"></i>
-                    <span style=" border: lightgray 0.5px solid" class=" px-2">{{item.cant}}</span>
-                    <i class="fa fa-plus increase-qty text-success " style=" cursor: pointer" @click="funAdd('+',index)"></i>
+                  <b-form-spinbutton id="demo-sb" @change="funAdd(item,index)" v-model="item.cant" min="1" max="50"></b-form-spinbutton>                   
                 </td>
                 <td class="cart__product-total">
                     S/. {{item.precio*item.cant}}
@@ -56,21 +54,8 @@ export default {
   },
   methods:{    
     //Agrega o quita cantidad a producto
-    funAdd: function (key,index) {
-      let producto=this.productos[index]
-      switch (key) {
-        case '+':
-          producto.cant++
-          break
-        case '-':
-          if(producto.cant==1)
-            break
-          producto.cant--
-          break
-        default:
-          break
-      }
-      this.productos[index]=producto
+    funAdd: function (item,index) {      
+      this.productos[index]=item
       let cockie=this.productos
       this.$cookies.set('carrito',JSON.stringify(cockie))
       EventBus.$emit('ActualizaEnCart', true)
