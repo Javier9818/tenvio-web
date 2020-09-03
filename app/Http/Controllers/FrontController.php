@@ -239,11 +239,12 @@ class FrontController extends Controller
     try {
       $where="";
      // dd($request->get('empresas')[0][0]);
-      foreach ($request->get('empresas') as $key => $value) {
-        $where.='empresas.id='.$value['empresa'];
-        if($key!=count($request->get('empresas'))-1)
-          $where.=' and ';
-      }
+     $where.='empresas.id='.$request->get('empresas').' and tipo_entrega_empresas.estado=true';
+      // foreach ($request->get('empresas') as $key => $value) {
+      //   $where.='empresas.id='.$value['empresa'];
+      //   if($key!=count($request->get('empresas'))-1)
+      //     $where.=' and ';
+      // }
       return DB::table('empresas')
         ->join('tipo_entrega_empresas', 'tipo_entrega_empresas.empresa_id', '=', 'empresas.id')
         ->join('tipo_entregas', 'tipo_entregas.id', '=', 'tipo_entrega_empresas.tipo_entrega_id')
@@ -261,43 +262,47 @@ class FrontController extends Controller
 
   public static function GeneraPedido(Request $request)
   {
-	  //dd($request->get('datos'));
-	  $token = $request->get('datos')['token'];
-	  $email = $request->get('datos')['email'];
-	  $description = $request->get('datos')['description'];
+    $datos=$request->get('datos');
+    if (count($datos)>0) {
+      $token = $request->get('datos')['token'];
+      $email = $request->get('datos')['email'];
+      $description = $request->get('datos')['description'];
+      $transCulqi = TransCulqi::pagar($token, $email, $description);
+      if (!$transCulqi['success']){
+        return ['success' => false, 'msj' => $transCulqi['msj']];
+      }
+    }
+    $empresa=$request->get('empresas');
+	  
+    //dd($empresa['medioPago']['value']);
+	  
 
-	  $transCulqi = TransCulqi::pagar($token, $email, $description);
-	  if (!$transCulqi['success']){
-		  return ['success' => false, 'msj' => $transCulqi['msj']];
-	  }
+    DB::transaction(function () use ($request){        
+      $empresa=$request->get('empresas');
+      $pedido = Pedidos::create([
+        'empresa_id' => $empresa['empresa'],
+        'latitud'=>$empresa['lat'],
+        'longitud'=>$empresa['lng'],
+        'user_id'=>Auth::id(),
+        'tipo_id'=>$empresa['tipoEntrega'],
+        'direccion'=>$empresa['direccion'],
+        'monto'=>$empresa['total']
+      ]);
 
-    DB::transaction(function () use ($request){
-        foreach ($request->get('empresas') as $key => $empresa) {
-            $pedido = Pedidos::create([
-                'empresa_id' => $empresa['empresa'],
-                'latitud'=>$empresa['lat'],
-                'longitud'=>$empresa['lng'],
-                'user_id'=>Auth::id(),
-                'tipo_id'=>$empresa['tipoEntrega'],
-                'direccion'=>$empresa['direccion'],
-                'monto'=>$empresa['total']
-            ]);
-
-            foreach ($request->get('productos') as $key => $producto) {
-                if ($producto['empresa'] == $empresa['empresa']) {
-                    DB::table('detalle_pedidos')->insert(
-                        [
-                        'producto_id'=>$producto['id'],
-                        'pedido_id'=>$pedido->id,
-                        'cantidad'=>$producto['cant'],
-                        'precio_unit'=>$producto['precio']
-                        ]
-                    );
-                }
-            }
-            $dato_pedido = Pedidos::obtenerPedido($pedido->id);
-            try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
+      foreach ($request->get('productos') as $key => $producto) {
+        if ($producto['empresa'] == $empresa['empresa']) {
+          DB::table('detalle_pedidos')->insert(
+            [
+            'producto_id'=>$producto['id'],
+            'pedido_id'=>$pedido->id,
+            'cantidad'=>$producto['cant'],
+            'precio_unit'=>$producto['precio']
+            ]
+          );
         }
+      }
+      $dato_pedido = Pedidos::obtenerPedido($pedido->id);
+      try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}        
     });
 
 	  return ['success' => true];

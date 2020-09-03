@@ -26,7 +26,11 @@ Vue.component('front-cart-component', require('./components/front/cartComponent.
 Vue.component('form-wizard-unt', require('./components/formWizard/App.vue').default);
 Vue.component('front-pedidos-component', require('./components/front/pedidosComponent.vue').default);
 Vue.component('front-seguimiento-component', require('./components/front/seguimientoComponent.vue').default);
-
+Vue.component('list-type-A', require('./components/front/listCartA.vue').default)
+Vue.component('cart-new', require('./components/front/cartNuevo.vue').default)
+Vue.component('method-envio', require('./components/front/methodEnvio.vue').default)
+Vue.component('ubication', require('./components/front/ubication.vue').default)
+Vue.component('pago', require('./components/front/cartPago.vue').default)
 
 Vue.component('tenvio-promo-component', require('./components/landing_pages/tenvio_promo.vue').default);
 Vue.component('tenvio-registro-component', require('./components/landing_pages/tenvio_registro.vue').default);

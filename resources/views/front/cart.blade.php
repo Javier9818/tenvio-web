@@ -40,7 +40,8 @@
       =========================== -->
   <section id="ShoppinCcart" class="shop shopping-cart pb-50">
     <div class="container">
-        <front-cart-component user="{{(Auth::id()==null)? 0:1}}"></front-cart-component>
+        <!-- <front-cart-component user="{{(Auth::id()==null)? 0:1}}"></front-cart-component> -->
+				<cart-new user="{{(Auth::id()==null)? 0:1}}"></cart-new>
       <!-- /.row -->
     </div><!-- /.container -->
   </section><!-- /.shopping-cart -->
