@@ -7,12 +7,11 @@ body{
   
 }
 .emp-profile{
-  padding: 30px !important;
-/* padding: 3%; */
-/* margin-bottom: 3%; */
-/* border-radius: 0.5rem; */
-background: #fff;
-box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box; /* Safari */
+  margin-top: 20px;
+  padding:10px;
+  border-radius: 15px;
+  background: #fff;
+  box-sizing:border-box; -moz-box-sizing:border-box; /* Firefox */ -webkit-box-sizing:border-box;
 }
 .profile-img{
 text-align: center;

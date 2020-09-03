@@ -30,6 +30,7 @@
 				class="mb-0">
 					<b-form-input v-model="producto.nombre" placeholder="Nombre"></b-form-input>
 					<div class="text-danger" v-if="!$v.producto.nombre.required">Campo requerido</div>
+					<div class="text-danger" v-if="!$v.producto.nombre.nombreProducto">El nombre del producto no puede contener caracteres especiales</div>
 				</b-form-group>
 				<b-form-group
 				label="Descripcion"
@@ -40,6 +41,7 @@
 				class="mb-0">
 					<b-form-input v-model="producto.descripcion" placeholder="Descripcion"></b-form-input>
 					<div class="text-danger" v-if="!$v.producto.descripcion.required">Campo requerido</div>
+					<div class="text-danger" v-if="!$v.producto.descripcion.nombreProductoDescripcion">La descripcion no puede contener caracteres especiales</div>
 				</b-form-group>
 				<b-form-group
 				label="Categoría"
@@ -47,7 +49,8 @@
 				label-align-sm="left"
 				label-align="center"
 				label-size="sm"
-				class="mb-0">
+				class="mb-0"
+				style="position:relative; z-index:4;">
 					<model-list-select v-model="producto.categorias_menu_id" :list="categorias" option-value="value" option-text="text" placeholder="Seleccione Categoría"></model-list-select>
 					<div class="text-danger" v-if="!$v.producto.categorias_menu_id.required">Seleccione una categoría</div>
 				</b-form-group>
@@ -57,7 +60,8 @@
 				label-align-sm="left"
 				label-align="center"
 				label-size="sm"
-				class="mb-0">
+				class="mb-0"
+				style="position:relative; z-index:1;">
 					<b-form-input v-model="producto.precio" type="number" placeholder="Precio"></b-form-input>
 					<div class="text-danger" v-if="!$v.producto.precio.minValue">El precio debe ser mayor a 0</div>
 				</b-form-group>
@@ -89,6 +93,7 @@
 
 <script>
 import { ModelListSelect } from 'vue-search-select'
+import { nombreProducto, nombreProductoDescripcion } from '../../utils/expresiones-regulares.js'
 import { required, minValue } from 'vuelidate/lib/validators'
 import Swal from 'sweetalert2'
 export default {
@@ -124,8 +129,8 @@ export default {
 	},
 	validations: {
 		producto: {
-			nombre: { required },
-			descripcion: { required },
+			nombre: { required, nombreProducto },
+			descripcion: { required, nombreProductoDescripcion },
 			categorias_menu_id: { required },
 			precio: { minValue: (value) => value > 0 }
 		},

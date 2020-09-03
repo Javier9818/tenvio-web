@@ -9,6 +9,7 @@
 @endsection
 
 @section('header')
+{{$isAdmin = Auth::user()->isAdmin}}
     <div class="content-header row">
         <div class="content-header-left col-md-4 col-12 mb-2">
             <h3 class="content-header-title">Configuraciones</h3>
@@ -30,7 +31,7 @@
 @section('content')
 <section>
     <div class="row">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-header mb-0">
                     <h4 class="card-title">Tipos de entrega</h4>
@@ -42,8 +43,7 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-5">
+        <div class="col-12 col-md-6">
             <div class="card">
                 <div class="card-content collapse show">
                     <div class="card-body">
@@ -64,12 +64,28 @@
                     </div>
                 </div>
             </div>
+        </div>        
+        <div class="col-12 col-md-12">
+            <div class="card">
+                <div class="card-header mb-0">
+                    <h4 class="card-title">Tipos de pago</h4>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <tipo-pago></tipo-pago>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 @endsection
 
 @section('scripts')
+    <script>
+        let isAdmin = @json($isAdmin);
+    </script>
+
     <script>
         let empresa = @json($empresa);
     </script>

@@ -4,44 +4,51 @@
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Apellido Paterno</label> <!--is-invalid-->
                 <input type="text" class="form-control" placeholder="Ingrese apellidos paternos" required v-model="form.appaterno">
-                <p v-if="$v.form.appaterno.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.appaterno.palabra" class="help text-danger">Este campo es alfabético, además no acepta caracteres especiales, ni espacios</p>
+                <p v-else-if="!$v.form.appaterno.maxLength" class="help text-danger">Este campo no puede contener más de 50 caracteres</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Apellido Materno</label>
                 <input type="text" class="form-control" placeholder="Ingrese apellidos maternos" required v-model="form.apmaterno">
-                <p v-if="$v.form.apmaterno.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.apmaterno.palabra" class="help text-danger">Este campo es alfabético, además no acepta caracteres especiales, ni espacios</p>
+                <p v-else-if="!$v.form.apmaterno.maxLength" class="help text-danger">Este campo no puede contener más de 50 caracteres</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Nombres</label>
                 <input type="text" class="form-control" placeholder="Ingrese nombres" required v-model="form.nombres">
-                <p v-if="$v.form.nombres.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.nombres.oracion" class="help text-danger">Este campo es alfabético, además no acepta caracteres especiales</p>
+                <p v-else-if="!$v.form.nombres.maxLength" class="help text-danger">Este campo no puede contener más de 50 caracteres</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Usuario</label>
                 <input type="text" class="form-control" placeholder="Ingrese un nombre de usuario, ejemplo:primerNombre123 " required v-model="form.username" :class="{ 'is-invalid': errorUsername }">
                 <span class="danger" v-if="errorUsername">Este usuario ya existe, intente con otro diferente</span>
-                <p v-if="$v.form.username.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.username.alphaNum" class="help text-danger">Este campo es alfanumérico, además no acepta caracteres especiales</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Celular</label>
                 <input type="number" class="form-control" placeholder="Ingrese su número de celular" required v-model="form.celular">
-                <p v-if="$v.form.celular.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.celular.numeric" class="help text-danger">Este campo solo acepta números</p>
+                <p v-else-if="!$v.form.celular.minLength" class="help text-danger">Este campo no puede tener menos de 9 dígitos</p>
+                <p v-else-if="!$v.form.celular.maxLength" class="help text-danger">Este campo no puede tener menos de 9 dígitos</p>
+                <p v-else-if="!$v.form.celular.numeroCelular" class="help text-danger">El número ingresado es inválido</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Dni</label>
-                <input type="number" class="form-control" placeholder="Ingrese su número de DNI" required v-model="form.dni">
-                <p v-if="$v.form.dni.$error" class="help text-danger">Este campo es inválido</p>
+                <input type="text" class="form-control" placeholder="Ingrese su número de DNI" required v-model="form.dni">
+                <p v-if="!$v.form.dni.dni" class="help text-danger">Este campo debe de tener 8 dígitos</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Email</label>
                 <input type="email" class="form-control" placeholder="Ingrese su email" required v-model="form.email" :class="{ 'is-invalid': errorEmail }" v-on:keyup="errorEmail=false">
                 <span class="danger" v-if="errorEmail">Este email ya existe, intente con otro diferente</span>
-                <p v-if="$v.form.email.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.email.maxLength" class="help text-danger">Este campo no puede contener más de 100 caracteres</p>
             </div>
             <div class="col-md-6 mt-2">
                 <label for="validationCustom01">Dirección</label>
                 <input type="text" class="form-control" placeholder="Ingrese su dirección" required v-model="form.direccion">
-                <p v-if="$v.form.direccion.$error" class="help text-danger">Este campo es inválido</p>
+                <p v-if="!$v.form.direccion.direccion" class="help text-danger">Este campo no acepta caracteres especiales</p>
+                <p v-else-if="!$v.form.direccion.maxLength" class="help text-danger">Este campo no puede contener más de 150 caracteres</p>
             </div>
              <div class="col-md-6 mt-2">
                     <label>Cargo</label>
@@ -73,8 +80,7 @@
     import Swal from 'sweetalert2'
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, alphaNum, helpers} from 'vuelidate/lib/validators'
-    const text = helpers.regex('custom', /^[a-zA-Z0-9À-ÿ#.\u00f1\u00d1\s]*$/)
-    const alpha = helpers.regex('custom', /^[a-zA-ZÀ-ÿ]*$/)
+    import {oracion, palabra, direccion, numeroCelular, dni} from '../../utils/expresiones-regulares'
     export default {
         props:['edit'],
         mixins: [validationMixin],
@@ -108,42 +114,35 @@
         validations:{
             form:{
                 nombres:{
-                    required,
-                    text,
+                    oracion,
                     maxLength: maxLength(50)
                 },
                 appaterno:{
-                    required,
-                    alpha,
+                    palabra,
                     maxLength: maxLength(50)
                 },
                 apmaterno:{
-                    required,
-                    alpha,
+                    palabra,
                     maxLength: maxLength(50)
                 },
                 celular:{
                     numeric,
-                    maxLength:maxLength(12),
-                    minLength: minLength(6)
+                    numeroCelular,
+                    maxLength:maxLength(9),
+                    minLength: minLength(9)
                 },
                 dni:{
-                    required,
-                    maxLength:maxLength(8),
-                    minLength: minLength(8)
+                    dni
                 },
                 email:{
-                    required,
                     maxLength:maxLength(100)
                 },
                 username:{
-                    required,
                     alphaNum,
                     maxLength:maxLength(50),
                 },
                 direccion:{
-                    required,
-                    text,
+                    direccion,
                     maxLength:maxLength(150)
                 }
             }

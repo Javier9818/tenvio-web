@@ -1,7 +1,7 @@
 <template>
    <div>
     <b-aspect :aspect="3" v-if="!edit">
-        <b-img center  :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.png'" fluid alt="Responsive image"></b-img>
+        <b-img center  :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.jpg'" fluid alt="Responsive image"></b-img>
     </b-aspect>
     <picture-input
     v-else
@@ -12,7 +12,7 @@
     accept="image/jpeg,image/png"
     size="10"
     button-class="btn"
-    zIndex=1
+    :zIndex="1"
     :removable="true"
     :custom-strings="{
         upload: '<h1>Bummer!</h1>',

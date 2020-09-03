@@ -1,6 +1,8 @@
 <template>
     <div class="mapaInteractivo">
-        <div id="map" :style="'height:'+height+'; width:' + width" ></div>
+        <b-overlay :show="load">
+            <div id="map" :style="'height:'+height+'; width:' + width" ></div>
+        </b-overlay>
     </div>
 </template>
 
@@ -24,6 +26,7 @@
         },
         data(){
             return{
+                load: true,
                 map: null,
                 marker: null,
                 polyline: null,
@@ -45,6 +48,7 @@
             geoUpdate: function(){
                 this.layers = [];
                 if(this.marker !== null) {
+                    //  this.load = true;
                      this.marker.removeFrom(this.map); 
                      this.circle.removeFrom(this.map);
                 }
@@ -98,6 +102,7 @@
             },
             createMarker: function(LatLng, title, popup, iconUrl, draggable, first){
                 var markerX = L.marker(LatLng, {draggable: !this.dragableDisabled, title})
+                this.load = false;
                 var deliveryIcon = iconUrl ? L.icon({ iconUrl, iconSize: [50, 50],iconAnchor: [50, 50], popupAnchor: [-20, -50] }): null;
                 if(iconUrl) markerX.setIcon(deliveryIcon);
                 markerX.addTo(this.map);
@@ -118,12 +123,14 @@
                     });
 
                 if(first) this.marker = markerX
+                
             },
             initLayer() {
                 var layer = this.layer;
                 this.createMarker(new L.LatLng(layer.latitud, layer.longitud),layer.title, layer.title, false, true, true);
             },
             initLayers() {
+                this.load = false;
                 this.layers.forEach((layer) => {
                     var marker = new L.marker(new L.LatLng(layer.latitud, layer.longitud), {title: layer.direccion || 'Default'}).
                     bindPopup(layer.popup);

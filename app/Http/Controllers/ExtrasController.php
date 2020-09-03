@@ -11,6 +11,7 @@ class ExtrasController extends Controller
 	//public static $rutaFotosProductos = 'img/productos/';
 	public static $rutaFotosProductos = 'storage/imgproductos/';
 	public static $rutaFotosVouchers = 'storage/imgvouchers/';
+	public static $rutaFotosPagos = 'storage/pagos/';
 
     public function fn($funcion='', Request $request){
 		if ($funcion == 'addArchivo') return $this->addArchivo($request);
@@ -21,6 +22,12 @@ class ExtrasController extends Controller
 		Storage::move(
 			'/public/temp/'.$fotosubida,
 			'/public/imgvouchers/'.$fotosubida
+		);
+	}
+	public static function moverFotoPagos($fotosubida){
+		Storage::move(
+			'/public/temp/'.$fotosubida,
+			'/public/pagos/'.$fotosubida
 		);
 	}
 	public static function moverFotoProducto($fotosubida){

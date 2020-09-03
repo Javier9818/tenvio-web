@@ -40,8 +40,60 @@
       =========================== -->
   <section id="ShoppinCcart" class="shop shopping-cart pb-50">
     <div class="container">
-        <front-cart-component user="{{(Auth::id()==null)? 0:1}}"></front-cart-component>
+        <!-- <front-cart-component user="{{(Auth::id()==null)? 0:1}}"></front-cart-component> -->
+				<cart-new user="{{(Auth::id()==null)? 0:1}}"></cart-new>
       <!-- /.row -->
     </div><!-- /.container -->
   </section><!-- /.shopping-cart -->
+@endsection
+
+
+@section('script')
+	<script src="https://checkout.culqi.com/js/v3"></script>
+	<script type="text/javascript">
+		Culqi.publicKey = 'pk_test_CSsdk4OiuyLGXyQm';
+		Culqi.settings({
+			title: 'Tenvio Perú',
+			currency: 'PEN',
+			description: 'Comida',
+			amount: 100
+		});
+		Culqi.options({
+			lang: 'es',
+			modal: true,
+			//customButton: 'Pagar S./'+'15'+'.00 soles',
+			//customButton: 'Pagar pe cagada',
+			style: {
+				//logo: 'https://beta.tenvioperu.com/assets/images/favicon/favicon2.ico',
+				logo: 'https://i.imgur.com/XnIjAws.png',
+				maincolor: '#0898e7',
+				buttontext: '#ffffff',
+				maintext: '#4A4A4A',
+				desctext: '#4A4A4A'
+				//https://www.rgbtohex.net/rgb/
+			}
+		});
+		function culqi() {
+			if (Culqi.token) {
+				console.log(Culqi);
+				console.log(Culqi.token);
+				console.log(Culqi.token.email);
+				var token = Culqi.token.id;
+				//alert('Se ha creado un token:' + token);
+				var detail = {
+					token: Culqi.token.id,
+					email: Culqi.token.email
+				}
+				console.log(detail);
+				console.log(detail);
+				console.log(detail);
+				var _eventoenviarpagoculqi = new CustomEvent('enviarpagoculqi', {detail:detail});
+				document.dispatchEvent(_eventoenviarpagoculqi);
+			}
+			else {
+				console.log(Culqi.error);
+				//alert(Culqi.error.user_message);
+			}
+		};
+	</script>
 @endsection

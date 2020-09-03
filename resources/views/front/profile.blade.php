@@ -14,7 +14,6 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="card card-cascade">
-
                         <!-- Card image -->
                         <div class="view view-cascade overlay">
                           {{-- <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/men.jpg" alt="Card image cap"> --}}
@@ -26,38 +25,34 @@
 
                         <!-- Card content -->
                         <div class="card-body card-body-cascade text-center">
+                            <!-- Title -->
+                            <h4 class="card-title">
+                                <strong>
+                                    {{-- @foreach ($user as $item)
+                                    {{$item->nombres. ' '.$item->appaterno.' '.$item->apmaterno}}
+                                        @endforeach --}}
+                                </strong>
+                            </h4>
+                            <!-- Subtitle -->
+                            <h6 class="font-weight-bold indigo-text py-2 d-none">Usuario</h6>
+                            <!-- Text -->
+                            <p class="card-text">
+                                <clave-perfil></clave-perfil>
+                            </p>
 
-
-
-                          <!-- Title -->
-                        <h4 class="card-title"><strong>
-                            {{-- @foreach ($user as $item)
-                            {{$item->nombres. ' '.$item->appaterno.' '.$item->apmaterno}}
-                        @endforeach --}}
-                    </strong></h4>
-                          <!-- Subtitle -->
-                          <h6 class="font-weight-bold indigo-text py-2 d-none">Usuario</h6>
-                          <!-- Text -->
-                          <p class="card-text">
-                              <clave-perfil></clave-perfil>
-                          </p>
-
-                          <!-- Facebook -->
-                          <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i></a>
-                          <!-- Twitter -->
-                          <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
-                          <!-- Google + -->
-                          <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
+                            <!-- Facebook -->
+                            <a type="button" class="btn-floating btn-small btn-fb"><i class="fab fa-facebook-f"></i></a>
+                            <!-- Twitter -->
+                            <a type="button" class="btn-floating btn-small btn-tw"><i class="fab fa-twitter"></i></a>
+                            <!-- Google + -->
+                            <a type="button" class="btn-floating btn-small btn-dribbble"><i class="fab fa-dribbble"></i></a>
 
                         </div>
 
                         <!-- Card footer -->
                         <div class="card-footer text-muted text-center">
-                            __
                         </div>
-
-                      </div>
-                      <!-- Card Regular -->
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -78,7 +73,7 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <user-perfil></user-perfil>
                         </div>
-                        <div class="tab-pane fade active" id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade " id="pedidos" role="tabpanel" aria-labelledby="profile-tab">
                             <front-pedidos-component></front-pedidos-component>
                         </div>
                         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">

@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendCargo;
 use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Support\Facades\Hash; 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Blade;
+use App\TransCulqi;
+
 class FrontController extends Controller
 {
-  
+
   public static function Funciones($opcion,Request $request)
   {
     switch ($opcion) {
@@ -212,10 +214,10 @@ class FrontController extends Controller
      )
      ->get();
     $data2= DB::table('detalle_pedidos')
-     ->join('productos', 'detalle_pedidos.producto_id', '=', 'productos.id')   
+     ->join('productos', 'detalle_pedidos.producto_id', '=', 'productos.id')
      ->select('detalle_pedidos.cantidad','detalle_pedidos.precio_unit','productos.nombre','productos.foto')
      ->where(
-      [         
+      [
         ['detalle_pedidos.pedido_id','=', $data[0]->pedido]
       ]
     )
@@ -237,11 +239,12 @@ class FrontController extends Controller
     try {
       $where="";
      // dd($request->get('empresas')[0][0]);
-      foreach ($request->get('empresas') as $key => $value) {
-        $where.='empresas.id='.$value['empresa'];
-        if($key!=count($request->get('empresas'))-1)
-          $where.=' and ';
-      }
+     $where.='empresas.id='.$request->get('empresas').' and tipo_entrega_empresas.estado=true';
+      // foreach ($request->get('empresas') as $key => $value) {
+      //   $where.='empresas.id='.$value['empresa'];
+      //   if($key!=count($request->get('empresas'))-1)
+      //     $where.=' and ';
+      // }
       return DB::table('empresas')
         ->join('tipo_entrega_empresas', 'tipo_entrega_empresas.empresa_id', '=', 'empresas.id')
         ->join('tipo_entregas', 'tipo_entregas.id', '=', 'tipo_entrega_empresas.tipo_entrega_id')
@@ -255,41 +258,61 @@ class FrontController extends Controller
       ];
     }
   }
-  public static function GeneraPedido( Request $request)
+  public static function GeneraPedido(Request $request)
   {
+	$estadoPago = 'NO PAGADO';
+	$id_tipopago = $request->get('empresas')['medioPago']['id'];
+	$id_regpago = 0;
 
-    DB::transaction(function () use ($request){
-        foreach ($request->get('empresas') as $key => $empresa) {
-            $pedido = Pedidos::create([
-                'empresa_id' => $empresa['empresa'],
-                'latitud'=>$empresa['lat'],
-                'longitud'=>$empresa['lng'],
-                'user_id'=>Auth::id(),
-                'tipo_id'=>$empresa['tipoEntrega'],
-                'direccion'=>$empresa['direccion'],
-                'monto'=>$empresa['total']
-            ]);
+    $datos=$request->get('datos');
+    if (count($datos)>0) {
+      $token = $request->get('datos')['token'];
+      $email = $request->get('datos')['email'];
+      $description = $request->get('datos')['description'];
+      $transCulqi = TransCulqi::pagar($token, $email, $description);
+      if (!$transCulqi['success']){
+        return ['success' => false, 'msj' => $transCulqi['msj']];
+      }
+	  $estadoPago = 'PAGADO';
+	  $id_regpago = $transCulqi['obj']->id;
+    }
+    $empresa=$request->get('empresas');
 
-            foreach ($request->get('productos') as $key => $producto) {
-                if ($producto['empresa'] == $empresa['empresa']) {
-                    DB::table('detalle_pedidos')->insert(
-                        [
-                        'producto_id'=>$producto['id'],
-                        'pedido_id'=>$pedido->id,
-                        'cantidad'=>$producto['cant'],
-                        'precio_unit'=>$producto['precio']
-                        ]
-                    );
-                }
-            }
-            $dato_pedido = Pedidos::obtenerPedido($pedido->id);
-            try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
+    //dd($empresa['medioPago']['value']);
+
+    DB::transaction(function () use ($request, $estadoPago, $id_tipopago, $id_regpago){
+      $empresa=$request->get('empresas');
+      $pedido = Pedidos::create([
+        'empresa_id' => $empresa['empresa'],
+        'latitud'=>$empresa['lat'],
+        'longitud'=>$empresa['lng'],
+        'user_id'=>Auth::id(),
+        'tipo_id'=>$empresa['tipoEntrega'],
+        'direccion'=>$empresa['direccion'],
+        'monto'=>$empresa['total'],
+		'estadoPago' => $estadoPago,
+		'id_tipopago' => $id_tipopago,
+		'id_regpago' => $id_regpago
+      ]);
+
+      foreach ($request->get('productos') as $key => $producto) {
+        if ($producto['empresa'] == $empresa['empresa']) {
+          DB::table('detalle_pedidos')->insert(
+            [
+            'producto_id'=>$producto['id'],
+            'pedido_id'=>$pedido->id,
+            'cantidad'=>$producto['cant'],
+            'precio_unit'=>$producto['precio']
+            ]
+          );
         }
+      }
+      $dato_pedido = Pedidos::obtenerPedido($pedido->id);
+      try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
     });
 
+	  return ['success' => true];
   }
-
-
   public static function ListEmpresas( Request $request){
 
     try {
@@ -397,15 +420,6 @@ class FrontController extends Controller
   }
   public static function productos(Request $request)
   {
-    // $state=DB::table('empresa')
-    // ->select('empresa.estado')
-    // ->where('empresas.id', '=', $request->get('id'))
-    // ->get();
-    // if($state[0]=='VENCIDO')
-    //   return [
-    //     'Message'=> 'error',
-    //     'success'=>false
-    //   ];
     $where=[
       ['empresas.id', '=', $request->get('id')],
       ['empresas.estado', '=', 'ACTIVO'],
@@ -508,18 +522,18 @@ class FrontController extends Controller
         ->get();
   }
   public static function TipoNegocio()
-  { 
-   
+  {
+
      try {
       $data= DB::table('tipo_negocio')
         ->selectRaw('tipo_negocio.id, tipo_negocio.descripcion, tipo_negocio.icon as icon, tipo_negocio.descripcion as texto')
         ->where('tipo_negocio.state','=',1)
         ->get();
-        foreach ($data as $key => $value) {          
-          $data2=FrontController::TipoNegocio_categoria($value->id); 
-          $message= ' '; 
-          foreach ($data2 as $key1 => $tipos) { 
-            $message.=(((($tipos->descripcion)))).((($key1+1)!=(count($data2)))?', ':'');  
+        foreach ($data as $key => $value) {
+          $data2=FrontController::TipoNegocio_categoria($value->id);
+          $message= ' ';
+          foreach ($data2 as $key1 => $tipos) {
+            $message.=(((($tipos->descripcion)))).((($key1+1)!=(count($data2)))?', ':'');
           }
           $value->texto=FrontController::mensaje1.$message.FrontController::mensaje2;
         }

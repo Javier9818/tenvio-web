@@ -24,7 +24,7 @@
 			</div>
             <!--<label for="">Filtrar por Categorías</label>-->
         </b-modal>
-		<div v-for="(item, index) in pedidos" :key="item.idpedido">
+		<div v-for="(item, index) in pedidos">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title">Pedido {{index + 1}} - Código: {{item.idpedido}}</h4>
@@ -34,10 +34,10 @@
 				<div class="card-content collapse show">
 					<div class="card-body">
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<h4>Descripción</h4>
 								<ul>
-									<li v-for="itm in item.productos" :key="itm.nombre + (item.id || 10)">
+									<li v-for="itm in item.productos">
 										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
 									</li>
 									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->
@@ -54,6 +54,14 @@
 							<div class="col-md-12">
 								<h4 style="display:inline;">Tipo de Pedido:</h4>
 								<h5 style="display:inline;">{{item.tipo_entrega}}</h5>
+							</div>
+							<div class="col-md-12 mt-2">
+								<h5 style="display:inline;">Tipo de Pago:</h5>
+								<h6 style="display:inline;">{{item.tipopago_nombre}}</h6>
+							</div>
+							<div class="col-md-12 mt-2">
+								<h5 style="display:inline;">Estado de Pago:</h5>
+								<h6 style="display:inline;">{{item.estadoPago}}</h6>
 							</div>
 						</div>
 						<div class="text-center">

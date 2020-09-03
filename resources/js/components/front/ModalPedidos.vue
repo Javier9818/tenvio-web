@@ -110,30 +110,22 @@
 
         },
         created(){
-            // Echo.channel(`ordersClient.${this.user}`)
-            //     .listen('ChangeStateOrderEvent', ({data}) => {
-
-            //         this.items.map( (item) => {
-            //             if(item.pedido === data.pedido.idpedido) {
-            //                 item.state = data.state;
-
-
-            //                 var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} <br> ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}<br>
-            //                      ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
-
-            //                 this.notifyPush(messageNotify)
-
-            //                 Swal.fire(
-            //                    'Cambio de estado',
-            //                     messageNotify,
-            //                     `${data.state === 'CANCELADO' ? 'error' : 'success'}`
-            //                 ).then((data) => {location.href = '/pedidos'});
-
-
-            //             }
-            //         });
-
-            // });
+            Echo.channel(`ordersClient.${this.user}`)
+                .listen('ChangeStateOrderEvent', ({data}) => {
+                    this.items.map( (item) => {
+                        if(item.pedido === data.pedido.idpedido) {
+                            item.state = data.state;
+                            var messageNotify = `El pedido al negocio "${item.empresa}" con código ${data.pedido.idpedido} \n ${data.state == 'ENVIANDO' ? 'Se está ': 'Ha sido '} ${data.state}\n
+                                 ${data.state === 'CANCELADO' ? 'Motivo: ' + data.comentario: ''}`
+                            this.notifyPush(messageNotify)
+                            Swal.fire(
+                               'Cambio de estado',
+                                messageNotify,
+                                `${data.state === 'CANCELADO' ? 'error' : 'success'}`
+                            ).then((data) => {location.href = '/pedidos'});
+                        }
+                    });
+            });
         }
     }
 </script>
