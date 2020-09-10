@@ -18,6 +18,15 @@
         <button class="btn btn-primary" :disabled="verificar" @click="generaPedido">Realizar Pedido</button>
       </div>
     </div> 
+    <!-- <b-modal ref="dataTempBot" hide-footer title="Datos">
+      <div class="d-block text-center">
+        <input type="email" class=" form-control" v-model="empresa.correo" placeholder="Correo" required>
+        <input type="number" class=" form-control" v-model="empresa.number" placeholder="Número telefónico" required>
+      </div>
+      <div class=" text-center">
+        <b-button variant="success"  @click="generaPedido" :disabled="!(empresa.correo!=null && empresa.number!=null && empresa.number.length>=9)">Registrar</b-button>
+      </div>      
+    </b-modal> -->
   </div>
 </template>
 
@@ -37,12 +46,33 @@ export default {
     //tipos de pago
     tipoPago(empresa){
       var that= this
-      axios.get(`/api/tipo-pago-front/${empresa}`).then( function (response) {
+      axios.get(`/api/tipo-pago-front/${empresa}`).then( function (response) {        
         that.tiposPago=response.data.tipos 
-      });       
-    },
+        if (that.empresa.medioPago!==null) {
+          that.tiposPago.forEach(element => {
+            if (that.empresa.medioPago==element.tipopago_id) {
+              that.empresa.medioPago=element
+            }
+          })
+        }
+      })   
+    },   
     //genera pedido
     generaPedido() { 
+      // if (this.empresa.usuario==2 && this.state) {
+      //   if (this.empresa.correo!=null && this.empresa.number!=null && this.empresa.number.length>=9) {
+      //     this.state=false
+      //     console.log(this.state);
+      //     this.generaPedido()
+      //   }else{
+      //     this.$refs['dataTempBot'].show()
+      //     return
+      //   }        
+      // }else{
+      //   if (this.empresa.usuario==2) {
+      //     this.$refs['dataTempBot'].hide()
+      //   }
+      // }
       if(this.empresa.lng === 0 && this.empresa.lat === 0){
         Swal.fire({
         icon: 'error',
@@ -83,6 +113,10 @@ export default {
     generaPedidoFin: function(datos){
 		  var that = this;
       this.$refs.modalcito.showModal();
+      if (this.empresa.usuario==1) {
+        this.empresa.correo='-'
+        this.empresa.number='-'
+      }
       this.empresa.total=this.generatotal()
 		  axios.post('/front/GeneraPedido', {
 			  empresas: this.empresa,
@@ -101,9 +135,12 @@ export default {
               if (element.empresa!=that.empresa.empresa) 
                 productos.push(element)              
             });
-            that.$cookies.set('carrito',JSON.stringify(productos))
-            window.open('/mipago/'+response.data.id, '_blank');
-            location.reload()
+            that.$cookies.set('carrito',JSON.stringify(productos))            
+            // if (this.empresa.usuario==1) {
+            //   window.open('/mipago/'+response.data.id, '_blank')            
+            // }
+            location.href="/"
+           
 			  	})
 			  }
 			  else{

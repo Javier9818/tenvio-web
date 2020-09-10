@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\DB;
 use App\Pedidos;
 use App\Producto;
 use App\Events\ChangeStateOrderEvent;
+use App\TransCulqi;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Email_PagadoCulqi;
+use App\Empresa;
 
 class PedidosController extends Controller
 {
@@ -227,10 +231,41 @@ class PedidosController extends Controller
     }
 
 	static function cancelar(Request $request){
-		$idpedido = $request->get('idpedido');
-        $comentario = $request->get('comentario');
-        $idCliente = $request->get('idusuario');
-        Pedidos::cancelar($idpedido, $comentario);
+
+		DB::beginTransaction();
+		try {
+			DB::commit();
+			$idpedido = $request->get('idpedido');
+			$comentario = $request->get('comentario');
+			$idCliente = $request->get('idusuario');
+			Pedidos::cancelar($idpedido, $comentario);
+			$id_tipopago = $request->get('pedido')['id_tipopago'];
+			if ($id_tipopago == Pedidos::$PAGO_CULQI){
+				$id_regpago = $request->get('pedido')['id_regpago'];
+				$transaccion = TransCulqi::devolver($id_regpago);
+				Pedidos::devolverPago($idpedido);
+				//mensaje via email
+				$email = $transaccion->email;
+				$objDemo = new \stdClass();
+				$objDemo->accion = "Devolución";
+				$objDemo->email = $email;
+				$objDemo->empresa = Empresa::find(Session('empresa'))->nombre;
+				$objDemo->comentario = $comentario;
+				$objDemo->idPedido = $idpedido;
+				$objDemo->precio = $transaccion->amount;
+				$objDemo->tipopago = $request->get('pedido')['tipopago_nombre'];
+				$objDemo->codTransact = $transaccion->transId.' / '.$transaccion->id;
+				$objDemo->codTransactRefund = $transaccion->idRefund;
+				//Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
+				Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
+			}
+		}
+		catch (\Exception $e) {
+			dd($e);
+			$mensaje = 'Hubo un error, intente nuevamente más tarde';
+			return $mensaje;
+			DB::rollback();
+		}
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'CANCELADO', "comentario" => $comentario], $idCliente));} catch (\Throwable $th) {}
 	}
 

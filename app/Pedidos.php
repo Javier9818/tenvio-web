@@ -5,6 +5,8 @@ use DB;
 use App\PedidosUsers;
 use App\Contrato;
 
+//PARA MEJORAR : campo comentario aplica para chatbot y para rechazar pedido
+
 class Pedidos extends Model
 {
 	protected $table = 'pedidos';
@@ -32,6 +34,8 @@ class Pedidos extends Model
 		'updated_at' => 'datetime:d/m/Y h:i a',
 		'fecha_entrega' => 'datetime:d/m/Y h:i a'
 	];
+
+	public static $PAGO_CULQI = 5;
 
 	public static function listar($empresa_id, $tipo, $fecha){
 		$where = array('pedidos.empresa_id' => $empresa_id);
@@ -70,7 +74,8 @@ class Pedidos extends Model
 			'estadoPago',
 			'id_tipopago',
 			'tp.nombre as tipopago_nombre',
-			'id_regpago'
+			'id_regpago',
+			'comentario'
 		);
 		if ($bul){
 			$select[] = DB::raw("sum(dp.precio_unit * dp.cantidad) as monto");
@@ -162,6 +167,14 @@ class Pedidos extends Model
 			]);
 		}
 		return $asignacion;
+	}
+
+
+	public static function devolverPago($idpedido){
+		return Pedidos::where('id', $idpedido)
+			->update([
+				'estadoPAGO' => 'DEVUELTO'
+			]);
 	}
 }
 

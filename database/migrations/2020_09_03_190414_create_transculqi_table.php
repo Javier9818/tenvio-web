@@ -27,6 +27,7 @@ class CreateTransCulqiTable extends Migration
 			$table->string('authorization_code', 10);
 			$table->string('ip', 60);
 			$table->string('device_type', 20);
+            $table->string('idRefund', 30)->nullable();
             $table->timestamps();
         });
     }

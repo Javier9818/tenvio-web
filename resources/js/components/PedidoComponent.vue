@@ -1,9 +1,10 @@
 <template>
 	<div class="col-12">
-        <!-- <b-button v-b-modal.modal-center variant="warning" class="mb-2">{{pedidos.length}} pedidos</b-button> -->
-
-
-        <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
+		<!--
+        <b-button v-b-modal.modal-center variant="warning" class="mb-2">{{pedidos.length}} pedidos</b-button>
+        <b-button v-b-modal.modal-center variant="success" class="mb-2">Filtrar</b-button>
+		-->
+        <!--<b-button variant="danger" @click="cancelar_todos" class="mb-2">Cancelar todos los pedidos        <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
             <label for="">Filtrar Pedidos</label>
             <div class="container">
                 <select class="form-control" v-model="filtropedido" @change="filtrar_tipopedido">
@@ -24,7 +25,7 @@
 			</div>
             <!--<label for="">Filtrar por Categorías</label>-->
         </b-modal>
-		
+
 		<div  class="row justify-content-around">
 			<div class="card col-md-5" v-for="(item, index) in pedidos" :key="index">
 				<div class="card-header">
@@ -61,6 +62,10 @@
 									<li>Nombres: {{item.nombres}}</li>
 									<li>Destino: {{item.direccion}}</li>
 								</ul>
+								<div class="mb-1" :hidden="item.comentario==null">
+									<b style="display:inline;" class="mb-2">Comentario: </b>
+									{{item.comentario}}
+								</div>
 							</div>
 						</div>
 						<div class="text-center">
@@ -178,9 +183,10 @@
 				this.pedidos = pedidosTemp;
 			},
 			cambiaestado: function(operacion, comentario, bul, idrepartidor){
+				console.log(operacion);
 				if (operacion == 'Aceptar')
 					operacion = '/aceptar';
-				else if (operacion == 'Cancelar')
+				else if (operacion == 'Cancelar' || operacion == 'Anular')
 					operacion = '/cancelar';
 				else
 					return;
@@ -199,11 +205,18 @@
 					that.pedidos.splice(that.indexPedidoSeleccionado, 1);
 					that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
 					that.indexPedidoSeleccionado = -1;
-					Swal.fire(
-						'Éxito',
-						'Los cambios se realizaron correctamente',
-						'success'
-					)
+					if (operacion == 'Cancelar' || operacion == 'Anular')
+						Swal.fire(
+							'Éxito',
+							'El pedido se ha anulado correctamente',
+							'success'
+						);
+					else
+						Swal.fire(
+							'Éxito',
+							'Los cambios se realizaron correctamente',
+							'success'
+						);
 				})
 				.catch(()=>{
 					Swal.fire(

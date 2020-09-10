@@ -66,13 +66,13 @@ class FrontController extends Controller
       case 'email_contactanos':
         return FrontController::email_contactanos($request);
         break;
-      
+
       default:
         # code...
         break;
     }
   }
-   
+
   public static function email_contactanos($request)
 	{
     $data=$request->get('data');
@@ -276,7 +276,8 @@ class FrontController extends Controller
 	  $precio = 0;
 	  foreach ($request->get('productos') as $p) {
 	  	$precio += doubleval($p['precio']) * $p['cant'];
-	  }
+    }
+    $transCulqi=null;
 	  if (count($datos)>0) {
 		  $token = $request->get('datos')['token'];
 		  $email = $request->get('datos')['email'];
@@ -292,18 +293,26 @@ class FrontController extends Controller
 	  //dd($empresa['medioPago']['value']);
 
 	  DB::transaction(function () use ($datos, $precio, $transCulqi, $request, $estadoPago, $id_tipopago, $id_regpago){
-		  $empresa=$request->get('empresas');
+      $empresa=$request->get('empresas');
+      $user= Auth::id();
+      if ($empresa['usuario']==2) {
+        $user=DB::table('users')
+        ->select('id')
+        ->where('username','like','teenviobot')
+        ->get()[0]->id;
+      }
 		  $pedido = Pedidos::create([
 			  'empresa_id' => $empresa['empresa'],
 			  'latitud'=>$empresa['lat'],
 			  'longitud'=>$empresa['lng'],
-			  'user_id'=>Auth::id(),
+			  'user_id'=>$user,
 			  'tipo_id'=>$empresa['tipoEntrega'],
 			  'direccion'=>$empresa['direccion'],
 			  'monto'=>$empresa['total'],
 			  'estadoPago' => $estadoPago,
 			  'id_tipopago' => $id_tipopago,
-			  'id_regpago' => $id_regpago
+        'id_regpago' => $id_regpago,
+        'comentario' => $empresa['correo'].' - '. $empresa['number']
 		  ]);
 
 		  foreach ($request->get('productos') as $key => $producto) {
@@ -336,6 +345,7 @@ class FrontController extends Controller
 			  $tipopago = $request->get('empresas')['medioPago']['nombre'];
 			  $email = $request->get('datos')['email'] ?? '';
 			  $objDemo = new \stdClass();
+			  $objDemo->accion = "Pagó";
 			  $objDemo->nombre = $var->nmbre;
 			  $objDemo->email = $email;
 			  $objDemo->empresa = $empresas;

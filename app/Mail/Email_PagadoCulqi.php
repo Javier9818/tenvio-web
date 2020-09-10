@@ -19,8 +19,12 @@ class Email_PagadoCulqi extends Mailable
 	}
 
 	public function build(){
+		if ($this->obj->accion == 'Pagó')
+			$asunto = 'Comprobante de pago - Tenvioperu';
+		if ($this->obj->accion == 'Devolución')
+			$asunto = 'Su pedido ha sido denegado';
 		return $this->from('contacto@tenvioperu.com')
 		->view('emails.pagado_culqi')
-		->subject('Comprobante de pago - Tenvioperu');
+		->subject($asunto);
 	}
 }
