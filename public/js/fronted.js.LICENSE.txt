@@ -1,9 +1,24 @@
 /*!
+	 * The buffer module from node.js, for the browser.
+	 *
+	 * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+	 * @license  MIT
+	 */
+
+/*!
  * BootstrapVue Icons, generated from Bootstrap Icons 1.0.0-alpha3
  *
  * @link https://icons.getbootstrap.com/
  * @license MIT
  * https://github.com/twbs/icons/blob/master/LICENSE.md
+ */
+
+/*!
+ * Pusher JavaScript Library v4.3.1
+ * https://pusher.com/
+ *
+ * Copyright 2017, Pusher
+ * Released under the MIT licence.
  */
 
 /*!
