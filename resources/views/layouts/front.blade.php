@@ -59,7 +59,8 @@
 
   </div>
   <!-- /.wrapper -->
-  <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/fronted.js" type="text/javascript"></script>
+  <script src="/js/fronted.js"></script>
+  <!-- <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/fronted.js" type="text/javascript"></script> -->
   <!-- <script src="/js/app.js" type="text/javascript"></script>                  -->
   <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/jquery-3.3.1.min.js"></script>
   <script src="https://javier9818.github.io/cdn.tenvio/scripts_front/plugins.js"></script>
