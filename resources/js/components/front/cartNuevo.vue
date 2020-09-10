@@ -19,11 +19,11 @@
               :empresa="empresa" 
               ></list-type-A>
             </div>
-            <div class="col-8">
+            <div class="col-12 col-md-8">
               <!--Ubicación del cliente-->
               <ubication :empresa="empresa"></ubication>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-12 col-md-4">
               <!--Zona de pagos-->
               <pago 
               :productos="productos"
