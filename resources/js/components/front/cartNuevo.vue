@@ -108,7 +108,7 @@ export default {
             name_empresa:d_bot.name_empresa}
         )
       });
-      this.$cookies.set('carrito',JSON.stringify(this.productos))      
+      this.$cookies.set('carrito',JSON.stringify(this.productos))
     } 
   },
   mounted(){
