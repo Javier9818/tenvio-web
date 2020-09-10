@@ -1,12 +1,43 @@
 <template>
-    <div class="container text-center">
+    <div class="container-fluid text-center">
 		<loader :mostrar="mostrarLoader"></loader>
-        <div class="row">
+
+		<div class="row justify-content-center">
+			<div class="card col-12 col-md-5 col-xl-4 ml-1" v-for="product in datos" :key="product.id">
+				<div style="height:190px;">
+					<img class="card-img-top" :src="`/storage/imgproductos/${product.foto}`" alt="Card image cap">
+				</div>
+				<div class="card-body text-left">
+					<div class="row mb-1">
+						<b class="col-4">Nombre: </b> <div class="col-8">{{product.nombre}}</div>
+					</div>
+					<div class="row mb-1">
+						<b class="col-4">Descripción: </b> <div class="col-8">{{product.descripcion}}</div>
+					</div>
+					<div class="row mb-1">
+						<b class="col-4">Categoria: </b> <div class="col-8">{{product.categoria}}</div>
+					</div>
+					<div class="row mb-1">
+						<b class="col-4">Precio: </b> <div class="col-8">S/.{{product.precio}}</div>
+					</div>
+					
+					<div class="row justify-content-center">
+						<b-button variant="warning" class="mr-1" size="sm" @click="editar(product)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
+						<b-button variant="info" class="mr-1" size="sm" v-if="product.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar</b-button>
+						<b-button variant="success" class="mr-1" size="sm" v-else @click="mostrarocultar(product)" :disabled="mostrarLoader">Mostrar</b-button>
+						<b-button variant="danger"  size="sm" @click="eliminar(product)" :disabled="mostrarLoader">Eliminar</b-button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+
+        <!-- <div class="row">
             <div class="table-responsive">
                 <b-container fluid>
 					<b-table show-empty small stacked="md" :items="datos" :fields="columnas" empty-text="No hay elementos para mostrar">
 						<template v-slot:cell(opciones)="row">
-							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
 							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
 							<b-button variant="info" size="sm" v-if="row.item.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar al usuario</b-button>
 							<b-button variant="success" size="sm" v-else @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Mostrar al usuario</b-button>
@@ -15,9 +46,14 @@
 					</b-table>
 				</b-container>
             </div>
-        </div>
-		<div class="text-center">
+        </div> -->
+		<!-- <div class="text-center">
 			<button class="btn btn-primary" v-b-modal.modal-mantenedor @click="nuevo">Nuevo Producto</button>
+		</div> -->
+		<div class="contenedor">
+			<button class="botonF1" v-b-modal.modal-mantenedor @click="nuevo" title="Nuevo producto">
+				<span>+</span>
+			</button>
 		</div>
 		<b-modal id="modal-mantenedor" size="lg" scrollable centered hide-backdrop :title="texto+' Producto'" hide-footer>
 			<b-col sm="12" md="12">

@@ -29,7 +29,8 @@
 @endsection
 
 @section('content')
-<section id="chartjs-bar-charts">
+<menu-productos></menu-productos>
+<!-- <section id="chartjs-bar-charts">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -44,7 +45,7 @@
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body">
-						<menu-productos></menu-productos>
+						
 						<!--
                         <div class="table-responsive">
                             <table class="table">
@@ -77,7 +78,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!--
   <div class="modal fade" id="producto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
