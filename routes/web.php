@@ -69,6 +69,14 @@ Route::get('/recoverypassword/{cifrado}', 'FrontController@Recover')->name('Reco
 Route::get('/', 'FrontController@categoriasIndex')->name('inicio');
 Route::get('/empresa', function(){return view('front.empresa');});
 Route::get('/micarrito', function(){return view('front.cart');})->middleware('auth');
+Route::get('/micarrito-bot/{bot}', function($bot){
+  $let = base64_decode($bot);
+  //$let =json_decode($let,false);
+  return view('front.cart',['data'=>$let]);
+});
+Route::get('/mipago/{id}', function($id){
+  return view('front.detailPago',['id'=>$id]);
+})->middleware('auth');
 Route::get('/pedidos', function(){return view('front.pedidos');})->middleware('auth');
 Route::get('/list', 'FrontController@ListEmpresas')->name('list');
 Route::get('/list/{Categoria}', 'FrontController@BuscaxCategoria')->name('BuscaxCategoria');

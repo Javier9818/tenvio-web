@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  props:['user'],
+  props:['databot'],
   data(){
     return {
       productos: [],
@@ -77,12 +77,49 @@ export default {
       let cockie=JSON.parse(this.$cookies.get('carrito'))
       this.productos = (cockie==null)? []:cockie
       this.empresas=this.distinct(this.productos)
+    },
+    transform(){
+      let d_bot=JSON.parse(this.databot)
+      let productosBot=[]
+      this.empresas.push({
+        empresa: d_bot.idempresa,
+        name_empresa: d_bot.name_empresa,
+        tipoEntrega:d_bot.metodo_envio,
+        lat:0,
+        lng:0,
+        direccion:d_bot.direccion,
+        isReserva:{
+          time:null,
+          date:null
+        },
+        medioPago:d_bot.metodo_pago,
+        total:0
+      }) 
+      d_bot.productos.forEach(element => {
+        this.productos.push(
+          {
+            descripcion:' ',
+            foto:element.foto,
+            nombre:element.nombre,
+            precio:element.precio,
+            cant:element.cantidad, 
+            id:element.idproducto, 
+            empresa:d_bot.idempresa, 
+            name_empresa:d_bot.name_empresa}
+        )
+      });
+      this.$cookies.set('carrito',JSON.stringify(this.productos))      
     } 
   },
   mounted(){
-    setTimeout(() => {      
-      this.recarga()
-    }, 1000);
+    if (this.databot!== undefined) {
+      this.transform()
+    }
+    else{
+      setTimeout(() => {      
+        this.recarga()
+      }, 1000)
+    }    
   }, 
 }
 </script>
