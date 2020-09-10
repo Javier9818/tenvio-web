@@ -67,7 +67,10 @@ export default {
               date:null
             },
             medioPago:null,
-            total:0
+            total:0,
+            usuario:1,
+            correo:null,
+            number:null
           }
         }
       )
@@ -78,8 +81,14 @@ export default {
       this.productos = (cockie==null)? []:cockie
       this.empresas=this.distinct(this.productos)
     },
+    /*
+      usuario
+        Tipo 1= persona registrada
+        Tipo 2= bot
+    */
     transform(){
       let d_bot=JSON.parse(this.databot)
+      console.log(d_bot);
       let productosBot=[]
       this.empresas.push({
         empresa: d_bot.idempresa,
@@ -93,7 +102,10 @@ export default {
           date:null
         },
         medioPago:d_bot.metodo_pago,
-        total:0
+        total:0,
+        usuario:2,
+        correo:d_bot.correo,
+        number:d_bot.referencia
       }) 
       d_bot.productos.forEach(element => {
         this.productos.push(
@@ -105,7 +117,8 @@ export default {
             cant:element.cantidad, 
             id:element.idproducto, 
             empresa:d_bot.idempresa, 
-            name_empresa:d_bot.name_empresa}
+            name_empresa:d_bot.name_empresa
+          }
         )
       });
       this.$cookies.set('carrito',JSON.stringify(this.productos))
