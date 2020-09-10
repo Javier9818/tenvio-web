@@ -4,8 +4,8 @@
 
 		<div class="row justify-content-center">
 			<div class="card col-12 col-md-5 col-xl-4 ml-1" v-for="product in datos" :key="product.id">
-				<div style="height:190px;">
-					<img class="card-img-top" :src="`/storage/imgproductos/${product.foto}`" alt="Card image cap" height="100%">
+				<div style="">
+					<img class="card-img-top" :src="`/storage/imgproductos/${product.foto}`" alt="Card image cap" >
 				</div>
 				<div class="card-body text-left">
 					<div class="row mb-1">
