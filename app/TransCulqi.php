@@ -26,14 +26,14 @@ class TransCulqi extends Model
 		'updated_at'
 	];
 
-	public static function pagar($token, $email, $description){
+	public static function pagar($token, $email, $description, $precio){
 		$culqi = new \Culqi\Culqi(array('api_key' => "sk_test_kGwRa6VcTAQBVb0F"));
 		//$culqitokens = new \Culqi\Tokens($culqi);
 		//dd($culqitokens->create(true));
 		try {
 			$charge = $culqi->Charges->create(
 				array(
-					"amount" => 1000,
+					"amount" => intval($precio * 100),
 					"capture" => true,
 					"currency_code" => "PEN",
 					"description" => $description,

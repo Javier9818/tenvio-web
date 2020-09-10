@@ -17,6 +17,9 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Blade;
 use App\TransCulqi;
+use App\Mail\Email_PagadoCulqi;
+use App\Persona;
+
 
 class FrontController extends Controller
 {
@@ -258,61 +261,95 @@ class FrontController extends Controller
       ];
     }
   }
+
   public static function GeneraPedido(Request $request)
   {
-	$estadoPago = 'NO PAGADO';
-	$id_tipopago = $request->get('empresas')['medioPago']['id'];
-	$id_regpago = 0;
+	  $estadoPago = 'NO PAGADO';
+	  $id_tipopago = $request->get('empresas')['medioPago']['id'];
+	  $id_regpago = 0;
 
-    $datos=$request->get('datos');
-    if (count($datos)>0) {
-      $token = $request->get('datos')['token'];
-      $email = $request->get('datos')['email'];
-      $description = $request->get('datos')['description'];
-      $transCulqi = TransCulqi::pagar($token, $email, $description);
-      if (!$transCulqi['success']){
-        return ['success' => false, 'msj' => $transCulqi['msj']];
-      }
-	  $estadoPago = 'PAGADO';
-	  $id_regpago = $transCulqi['obj']->id;
-    }
-    $empresa=$request->get('empresas');
+	  $datos=$request->get('datos');
 
-    //dd($empresa['medioPago']['value']);
+	  //precio total
+	  $precio = 0;
+	  foreach ($request->get('productos') as $p) {
+	  	$precio += doubleval($p['precio']) * $p['cant'];
+	  }
+	  if (count($datos)>0) {
+		  $token = $request->get('datos')['token'];
+		  $email = $request->get('datos')['email'];
+		  $description = $request->get('datos')['description'];
+		  $transCulqi = TransCulqi::pagar($token, $email, $description, $precio);
+		  if (!$transCulqi['success']){
+			  return ['success' => false, 'msj' => $transCulqi['msj']];
+		  }
+		  $estadoPago = 'PAGADO';
+		  $id_regpago = $transCulqi['obj']->id;
+	  }
+	  $empresa=$request->get('empresas');
+	  //dd($empresa['medioPago']['value']);
 
-    DB::transaction(function () use ($request, $estadoPago, $id_tipopago, $id_regpago){
-      $empresa=$request->get('empresas');
-      $pedido = Pedidos::create([
-        'empresa_id' => $empresa['empresa'],
-        'latitud'=>$empresa['lat'],
-        'longitud'=>$empresa['lng'],
-        'user_id'=>Auth::id(),
-        'tipo_id'=>$empresa['tipoEntrega'],
-        'direccion'=>$empresa['direccion'],
-        'monto'=>$empresa['total'],
-		'estadoPago' => $estadoPago,
-		'id_tipopago' => $id_tipopago,
-		'id_regpago' => $id_regpago
-      ]);
+	  DB::transaction(function () use ($precio, $transCulqi, $request, $estadoPago, $id_tipopago, $id_regpago){
+		  $empresa=$request->get('empresas');
+		  $pedido = Pedidos::create([
+			  'empresa_id' => $empresa['empresa'],
+			  'latitud'=>$empresa['lat'],
+			  'longitud'=>$empresa['lng'],
+			  'user_id'=>Auth::id(),
+			  'tipo_id'=>$empresa['tipoEntrega'],
+			  'direccion'=>$empresa['direccion'],
+			  'monto'=>$empresa['total'],
+			  'estadoPago' => $estadoPago,
+			  'id_tipopago' => $id_tipopago,
+			  'id_regpago' => $id_regpago
+		  ]);
 
-      foreach ($request->get('productos') as $key => $producto) {
-        if ($producto['empresa'] == $empresa['empresa']) {
-          DB::table('detalle_pedidos')->insert(
-            [
-            'producto_id'=>$producto['id'],
-            'pedido_id'=>$pedido->id,
-            'cantidad'=>$producto['cant'],
-            'precio_unit'=>$producto['precio']
-            ]
-          );
-        }
-      }
-      $dato_pedido = Pedidos::obtenerPedido($pedido->id);
-      try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
-    });
+		  foreach ($request->get('productos') as $key => $producto) {
+			  if ($producto['empresa'] == $empresa['empresa']) {
+				  DB::table('detalle_pedidos')->insert(
+					  [
+						  'producto_id'=>$producto['id'],
+						  'pedido_id'=>$pedido->id,
+						  'cantidad'=>$producto['cant'],
+						  'precio_unit'=>$producto['precio']
+					  ]
+				  );
+			  }
+		  }
+		  $dato_pedido = Pedidos::obtenerPedido($pedido->id);
+		  try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
+		  ////////////////////////
+			  //INICIO MENSAJEEEE
+			  $var = DB::table('personas')
+			  ->where('id', Auth::user()->persona_id)
+			  ->select(DB::raw("concat(nombres, ' ', appaterno, ' ', apmaterno) as nmbre"))
+			  ->first();
+			  $descripcion = '';
+			  foreach ($request->get('productos') as $p) {
+				$descripcion .= $p['descripcion'].' ('.$p['cant'].'un)';
+			  }
+			  $empresas = $request->get('empresas')['name_empresa'];
+			  //EMAIL
+			  $tipopago = $request->get('empresas')['medioPago']['nombre'];
+			  $email = $request->get('datos')['email'] ?? '';
+			  $objDemo = new \stdClass();
+			  $objDemo->nombre = $var->nmbre;
+			  $objDemo->email = $email;
+			  $objDemo->empresa = $empresas;
+			  $objDemo->descripcion = $descripcion;
+			  $objDemo->idPedido = $pedido->id;///////////
+			  $objDemo->precio = $precio;
+			  $objDemo->tipopago = $tipopago;
+			  $objDemo->codTransact = $transCulqi['obj']->transId-' / '.$transCulqi['obj']->id;/////////////
+			  //Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
+			  Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
+			  //FIN MENSAJEEEE
+		  });
+		  return ['success' => true];
+	  }
 
-	  return ['success' => true];
-  }
+
+
   public static function ListEmpresas( Request $request){
 
     try {
