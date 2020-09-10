@@ -289,7 +289,7 @@ class FrontController extends Controller
 	  $empresa=$request->get('empresas');
 	  //dd($empresa['medioPago']['value']);
 
-	  DB::transaction(function () use ($precio, $transCulqi, $request, $estadoPago, $id_tipopago, $id_regpago){
+	  DB::transaction(function () use ($datos, $precio, $transCulqi, $request, $estadoPago, $id_tipopago, $id_regpago){
 		  $empresa=$request->get('empresas');
 		  $pedido = Pedidos::create([
 			  'empresa_id' => $empresa['empresa'],
@@ -319,6 +319,7 @@ class FrontController extends Controller
 		  $dato_pedido = Pedidos::obtenerPedido($pedido->id);
 		  try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
 		  ////////////////////////
+		   if (count($datos)>0) {
 			  //INICIO MENSAJEEEE
 			  $var = DB::table('personas')
 			  ->where('id', Auth::user()->persona_id)
@@ -340,10 +341,11 @@ class FrontController extends Controller
 			  $objDemo->idPedido = $pedido->id;///////////
 			  $objDemo->precio = $precio;
 			  $objDemo->tipopago = $tipopago;
-			  $objDemo->codTransact = $transCulqi['obj']->transId-' / '.$transCulqi['obj']->id;/////////////
+			  $objDemo->codTransact = $transCulqi['obj']->transId.' / '.$transCulqi['obj']->id;/////////////
 			  //Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
 			  Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
 			  //FIN MENSAJEEEE
+		    }
 		  });
 		  return ['success' => true];
 	  }
