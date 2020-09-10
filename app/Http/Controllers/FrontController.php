@@ -66,11 +66,13 @@ class FrontController extends Controller
       case 'email_contactanos':
         return FrontController::email_contactanos($request);
         break;
+      
       default:
         # code...
         break;
     }
   }
+   
   public static function email_contactanos($request)
 	{
     $data=$request->get('data');
@@ -208,12 +210,12 @@ class FrontController extends Controller
     try {
       $data= DB::table('pedidos')
      ->join('empresas', 'pedidos.empresa_id', '=', 'empresas.id')
-     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date')
+     ->select('empresas.nombre as empresa','pedidos.estado as state','pedidos.id as pedido', 'pedidos.created_at as date','empresas.ruc','empresas.telefono','pedidos.direccion as direccion_pedido')
      ->where(
-       [
-         ['pedidos.user_id','=', Auth::user()->persona_id],
-         ['pedidos.id','=', $request->get('id')]
-       ]
+      [
+        ['pedidos.user_id','=', Auth::user()->persona_id],
+        ['pedidos.id','=', $request->get('id')]
+      ]
      )
      ->get();
     $data2= DB::table('detalle_pedidos')
