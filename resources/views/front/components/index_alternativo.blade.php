@@ -26,9 +26,9 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-10">
                 <div class="header-image">
-                    <img src="/assets/landing_index/images/header-app.png" alt="app" class="image wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
+                    <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/header-app.png" alt="app" class="image wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
                     <div class="image-shape wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.8s">
-                        <img src="/assets/landing_index/images/image-shape.svg" alt="shape">
+                        <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/image-shape.svg" alt="shape">
                     </div>
                 </div> <!-- header image -->
             </div>
@@ -36,7 +36,7 @@
     </div> <!-- container -->
     <div class="header-shape-1"></div> <!-- header shape -->
     <div class="header-shape-2">
-        <img src="/assets/landing_index/images/header-shape-2.svg" alt="shape">
+        <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/header-shape-2.svg" alt="shape">
     </div> <!-- header shape -->
 </div> <!-- header hero -->
 @endsection

@@ -1,10 +1,38 @@
 <template>
     <div>
-        <b-table :items="items" :fields="fields" responsive="sm">
-            <template v-slot:cell(opciones)="row">
-                <button class="mr-2 btn btn-sm btn-success" title="Ver detale" @click="showModal(row.item)"><i class="ft-eye"></i> Detalle</button>
-            </template>
-        </b-table>
+        
+        <div class="row">
+            <div class="col-xl-4 col-lg-6 col-md-12" v-for="item in items" :key="item.id">
+                <div class="card pull-up ecom-card-1 bg-white">
+                    <div class="card-content ecom-card2 height-180">
+                        <h5 class="text-muted primary position-absolute p-1">{{item.nombre}}</h5>
+                        <div>
+                            <i class="ft-home primary font-large-1 float-right p-1"></i>
+                        </div>
+                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3  ">
+                            <div class="container mt-1">
+                                <div class="row mt-1">
+                                    <div class="col-3"><b>Ruc:</b></div>
+                                    <div class="col-9">{{item.ruc}}</div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-3"><b>Celular:</b></div>
+                                    <div class="col-9">{{item.celular}}</div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-3"><b>Distrito:</b></div>
+                                    <div class="col-9">{{ubicacion(item.distrito_id)}}</div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <button class="btn btn-sm btn-success mr-1" title="Ver detale" @click="showModal(item)"><i class="ft-eye"></i> Detalle</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- <b-modal id="modalFormEmpresa" title="Solicitud de empresa" size="lg" scrollable hide-footer>
             <form-empresa-register @click="$bvModal.hide('modalFormEmpresa')" @close="$bvModal.hide('modalFormEmpresa')" @update="update" :dataFields="{departamentos, provinciasGlobal, distritosGlobal}" :dataForm="dataForm"></form-empresa-register>
         </b-modal> -->

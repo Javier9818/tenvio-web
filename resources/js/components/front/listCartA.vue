@@ -1,9 +1,10 @@
  <template>
   <div>
     <div >
-     
+      
       <div class="cart-table table-responsive" >
-        <table class="table table-bordered">
+        
+        <table class="table table-bordered ">
           <thead>
             <tr>
               <th>Producto</th>
@@ -28,7 +29,7 @@
                 </td>
                 <td class="cart__product-price">S/. {{item.precio}}</td>
                 <td class="cart__product-quantity">
-                  <b-form-spinbutton id="demo-sb" @change="funAdd(item,index)" v-model="item.cant" min="1" max="50"></b-form-spinbutton>                   
+                  <b-form-spinbutton md id="demo-sb" class="" @change="funAdd(item,index)" v-model="item.cant" min="1" max="50"></b-form-spinbutton>                   
                 </td>
                 <td class="cart__product-total">
                     S/. {{item.precio*item.cant}}
@@ -49,7 +50,7 @@ export default {
   props:['productos','empresa'],
   data(){
     return{ 
-      productos1:[]
+      productos1:[] 
     }
   },
   methods:{    
