@@ -5,6 +5,8 @@ use DB;
 use App\PedidosUsers;
 use App\Contrato;
 
+//PARA MEJORAR : campo comentario aplica para chatbot y para rechazar pedido
+
 class Pedidos extends Model
 {
 	protected $table = 'pedidos';
@@ -72,7 +74,8 @@ class Pedidos extends Model
 			'estadoPago',
 			'id_tipopago',
 			'tp.nombre as tipopago_nombre',
-			'id_regpago'
+			'id_regpago',
+			'comentario'
 		);
 		if ($bul){
 			$select[] = DB::raw("sum(dp.precio_unit * dp.cantidad) as monto");
