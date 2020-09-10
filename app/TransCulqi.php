@@ -96,7 +96,7 @@ class TransCulqi extends Model
 			);
 			$transaccion->idRefund = $refund->id;
 			$transaccion->save();
-			return ($refund);
+			return $transaccion;
 		} catch (Exception $e) {
 			throw new \Exception("Error no especificado", 1);
 			//return ($e->getMessage());

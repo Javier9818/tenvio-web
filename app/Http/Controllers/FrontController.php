@@ -66,13 +66,13 @@ class FrontController extends Controller
       case 'email_contactanos':
         return FrontController::email_contactanos($request);
         break;
-      
+
       default:
         # code...
         break;
     }
   }
-   
+
   public static function email_contactanos($request)
 	{
     $data=$request->get('data');
@@ -345,6 +345,7 @@ class FrontController extends Controller
 			  $tipopago = $request->get('empresas')['medioPago']['nombre'];
 			  $email = $request->get('datos')['email'] ?? '';
 			  $objDemo = new \stdClass();
+			  $objDemo->accion = "Pagó";
 			  $objDemo->nombre = $var->nmbre;
 			  $objDemo->email = $email;
 			  $objDemo->empresa = $empresas;
