@@ -36,6 +36,46 @@
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
    <script src="{!! asset('notify/push.min.js') !!}"></script>
+
+  <style>
+      .contenedor{
+          width:90px;
+          height:240px;
+          display:scroll;
+          position:fixed;
+          bottom:10px;
+          right:10px;
+      }
+
+      .contenedor2{
+          width:90px;
+          height:240px;
+          display:scroll;
+          position:fixed;
+          bottom:80px;
+          right:10px;
+          cursor:pointer !important;
+      }
+      .botonF1{
+          cursor:pointer;
+          width:60px;
+          height:60px;
+          border-radius:100%;
+          background:#F44336;
+          right:0;
+          bottom:0;
+          position:absolute;
+          margin-right:16px;
+          margin-bottom:16px;
+          border:none;
+          outline:none;
+          color:#FFF;
+          font-size:36px;
+          box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+          transition:.3s;
+      }
+  </style>
+
     @yield('styles')
   </head>
   <body class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-menu" data-color="bg-gradient-x-purple-blue" data-col="2-columns">
@@ -44,17 +84,19 @@
         @yield('nav')
         @yield('sideNav')
 
-        <div class="app-content content">
+        <div class="app-content content" >
         <div class="content-wrapper">
             <div class="content-wrapper-before"></div>
                 @yield('header')
                 <div class="content-body"><!-- Bar charts section start -->
-                    @yield('content')
+                  @yield('content')
                 </div>
         </div>
         </div>
+       
     </div>
-
+    
+    
     {{$company = Session::get('empresa') ?? ''}}
 
     <script>

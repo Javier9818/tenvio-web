@@ -29,7 +29,8 @@
 @endsection
 
 @section('content')
-<section id="chartjs-bar-charts">
+<table-empleados></table-empleados>
+<!-- <section id="chartjs-bar-charts">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -50,7 +51,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 @endsection
 
 @section('scripts')
