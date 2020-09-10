@@ -33,6 +33,8 @@ class Pedidos extends Model
 		'fecha_entrega' => 'datetime:d/m/Y h:i a'
 	];
 
+	public static $PAGO_CULQI = 5;
+
 	public static function listar($empresa_id, $tipo, $fecha){
 		$where = array('pedidos.empresa_id' => $empresa_id);
 		if ($tipo == 'Todo'){
@@ -162,6 +164,14 @@ class Pedidos extends Model
 			]);
 		}
 		return $asignacion;
+	}
+
+
+	public static function devolverPago($idpedido){
+		return Pedidos::where('id', $idpedido)
+			->update([
+				'estadoPAGO' => 'DEVUELTO'
+			]);
 	}
 }
 

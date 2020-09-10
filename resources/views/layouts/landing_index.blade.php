@@ -11,22 +11,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--====== Favicon Icon ======-->
-    <link rel="shortcut icon" href="/assets/landing_index/images/favicon.png" type="image/png">
+    <link rel="shortcut icon" href="https://javier9818.github.io/cdn.tenvio/landing_index/images/favicon.png" type="image/png">
         
     <!--====== Animate CSS ======-->
-    <link rel="stylesheet" href="/assets/landing_index/css/animate.css">
+    <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/animate.css">
         
     <!--====== lineicons CSS ======-->
-    <link rel="stylesheet" href="/assets/landing_index/css/lineicons.css">
+    <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/lineicons.css">
         
     <!--====== Bootstrap CSS ======-->
-    <link rel="stylesheet" href="/assets/landing_index/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/bootstrap.min.css">
     
     <!--====== Default CSS ======-->
-    <link rel="stylesheet" href="/assets/landing_index/css/default.css">
+    <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/default.css">
     
     <!--====== Style CSS ======-->
-    <link rel="stylesheet" href="/assets/landing_index/css/style.css">
+    <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/style.css">
     
 </head>
 
@@ -65,7 +65,7 @@
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg">
                             <a class="navbar-brand" href="index.html">
-                                <img src="/assets/landing_index/images/logo.png" alt="Logo">
+                                <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/logo.png" alt="Logo">
                             </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="toggler-icon"></span>
@@ -177,7 +177,7 @@
                 <div class="col-lg-6">
                     <div class="about-image mt-50 wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
                         <div class="about-shape"></div>
-                        <img class="app" src="/assets/landing_index/images/about-app.png" alt="app">
+                        <img class="app" src="https://javier9818.github.io/cdn.tenvio/landing_index/images/about-app.png" alt="app">
                     </div> <!-- about image -->
                 </div>
                 <div class="col-lg-6">
@@ -203,11 +203,11 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-lg-6 col-md-9">
                     <div class="download-image mt-50 wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.2s">
-                        <img class="image" src="/assets/landing_index/images/download-app.png" alt="download">
+                        <img class="image" src="https://javier9818.github.io/cdn.tenvio/landing_index/images/download-app.png" alt="download">
                         
                         <div class="download-shape-1"></div>
                         <div class="download-shape-2">
-                            <img class="svg" src="/assets/landing_index/images/download-shape.svg" alt="shape">
+                            <img class="svg" src="https://javier9818.github.io/cdn.tenvio/landing_index/images/download-shape.svg" alt="shape">
                         </div>
                     </div> <!-- download image -->
                 </div>
@@ -216,8 +216,8 @@
                         <h3 class="download-title">Download and Start Using!</h3>
                         <p class="text">Alii nusquam cu duo, vim eu consulatu percipitur, meis doorcomprehen sam at vis. Vel ut dignissim signiferumq Alii nusquam cuduo, vim eusde consulatu percipitur, meis dolor comprehensam at vij. Alii nusquam cu duo, vim eu consulatu percipitur, meis doorcomprehen sam at vis. Vel ut dignissim signiferumq nusquam.</p>
                         <ul>
-                            <li><a class="app-store" href="#"><img src="/assets/landing_index/images/app-store.png" alt="store"></a></li>
-                            <li><a class="play-store" href="#"><img src="/assets/landing_index/images/play-store.png" alt="store"></a></li>
+                            <li><a class="app-store" href="#"><img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/app-store.png" alt="store"></a></li>
+                            <li><a class="play-store" href="#"><img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/play-store.png" alt="store"></a></li>
                         </ul>
                     </div> <!-- download image -->
                 </div>
@@ -239,7 +239,7 @@
         <div class="footer-shape shape-6"></div>
         <div class="footer-shape shape-7"></div>
         <div class="footer-shape shape-8">
-            <img class="svg" src="/assets/landing_index/images/footer-shape.svg" alt="Shape">
+            <img class="svg" src="https://javier9818.github.io/cdn.tenvio/landing_index/images/footer-shape.svg" alt="Shape">
         </div>
         
         <div class="footer-widget pt-30 pb-80">
@@ -248,7 +248,7 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="footer-about mt-50 wow fadeIn" data-wow-duration="1.3s" data-wow-delay="0.2s">
                             <a class="logo" href="#" >
-                                <img src="/assets/landing_index/images/logo.png" alt="Logo">
+                                <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/logo.png" alt="Logo">
                             </a>
                             <p class="text">Lorem ipsum dolor sit amet consetetur sadipscing elitr, sederfs diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam.</p>
                             <ul class="social">
@@ -375,24 +375,24 @@
 
 
     <!--====== Jquery js ======-->
-    <script src="/assets/landing_index/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="/assets/landing_index/js/vendor/modernizr-3.7.1.min.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/vendor/modernizr-3.7.1.min.js"></script>
     
     <!--====== Bootstrap js ======-->
-    <script src="/assets/landing_index/js/popper.min.js"></script>
-    <script src="/assets/landing_index/js/bootstrap.min.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/popper.min.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/bootstrap.min.js"></script>
     
     
     <!--====== WOW js ======-->
-    <script src="/assets/landing_index/js/wow.min.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/wow.min.js"></script>
     
     
     <!--====== Scrolling Nav js ======-->
-    <script src="/assets/landing_index/js/jquery.easing.min.js"></script>
-    <script src="/assets/landing_index/js/scrolling-nav.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/jquery.easing.min.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/scrolling-nav.js"></script>
     
     <!--====== Main js ======-->
-    <script src="/assets/landing_index/js/main.js"></script>
+    <script src="https://javier9818.github.io/cdn.tenvio/landing_index/js/main.js"></script>
     
 </body>
 

@@ -79,6 +79,7 @@ Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.v
 Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
 Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
 Vue.component('nombre-publico', require('./components/config/NombrePublico.vue').default);
+Vue.component('token-red-social', require('./components/config/TokenFacebook.vue').default);
 Vue.component('ubicacion-component', require('./components/config/Ubicacion.vue').default);
 Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
 Vue.component('tipo-pago', require('./components/config/TipoPagos.vue').default);
@@ -124,3 +125,15 @@ Vue.component('front-seguimiento-component', require('./components/front/seguimi
 const app = new Vue({
     el: '#app',
 });
+
+
+// let {data} = response;
+// let res = ''
+// data.forEach(e => {
+//     res = res + `<option value="${e.idProveedor}">${e.razonsocial}</option>`
+// });
+
+// $('#padres').empty();
+// setTimeout(() => {
+//     $('#padres').append(res);
+// }, 500);

@@ -1,9 +1,10 @@
 <template>
 	<div class="col-12">
+		<!--
         <b-button v-b-modal.modal-center variant="warning" class="mb-2">{{pedidos.length}} pedidos</b-button>
         <b-button v-b-modal.modal-center variant="success" class="mb-2">Filtrar</b-button>
-        <b-button variant="danger" @click="cancelar_todos" class="mb-2">Cancelar todos los pedidos</b-button>
-        <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
+		-->
+        <!--<b-button variant="danger" @click="cancelar_todos" class="mb-2">Cancelar todos los pedidos        <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
             <label for="">Filtrar Pedidos</label>
             <div class="container">
                 <select class="form-control" v-model="filtropedido" @change="filtrar_tipopedido">
@@ -24,54 +25,65 @@
 			</div>
             <!--<label for="">Filtrar por Categorías</label>-->
         </b-modal>
-		<div v-for="(item, index) in pedidos">
-			<div class="card">
-				<div class="card-header">
-					<h4 class="card-title">Pedido {{index + 1}} - Código: {{item.idpedido}}</h4>
-					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 
+		<div  class="row justify-content-around">
+			<div class="card col-md-5" v-for="(item, index) in pedidos" :key="index">
+				<div class="card-header">
+					<h5 class="text-muted primary position-absolute">Pedido {{index + 1}} - Código: {{item.idpedido}}</h5>
+					<div><i class="ft-pie-chart primary font-large-1 float-right "></i></div>
 				</div>
-				<div class="card-content collapse show">
+				<div class="card-content">
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-6">
-								<h4>Descripción</h4>
+								<b>Descripción:</b>
 								<ul>
 									<li v-for="itm in item.productos">
 										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
 									</li>
-									<!--<li>1/4 de Pollo a la braza (2 unidades)</li>-->
 								</ul>
+								<div class="mb-1">
+									<b style="display:inline;" class="mb-2">Tipo de Pedido: </b>
+									{{item.tipo_entrega}}
+								</div>
+								<div class="mb-1">
+									<b style="display:inline;" class="mb-2">Tipo de Pago: </b>
+									{{item.tipopago_nombre}}
+								</div>
+								<div class="mb-1">
+									<b style="display:inline;" class="mb-2">Estado de Pago: </b>
+									{{item.estadoPago}}
+								</div>
 							</div>
 							<div class="col-md-6">
-								<h4>Cliente</h4>
+								<b>Cliente</b>
 								<ul>
 									<li>Celular: {{item.celular}}</li>
 									<li>Nombres: {{item.nombres}}</li>
 									<li>Destino: {{item.direccion}}</li>
 								</ul>
 							</div>
-							<div class="col-md-12">
-								<h4 style="display:inline;">Tipo de Pedido:</h4>
-								<h5 style="display:inline;">{{item.tipo_entrega}}</h5>
-							</div>
-							<div class="col-md-12 mt-2">
-								<h5 style="display:inline;">Tipo de Pago:</h5>
-								<h6 style="display:inline;">{{item.tipopago_nombre}}</h6>
-							</div>
-							<div class="col-md-12 mt-2">
-								<h5 style="display:inline;">Estado de Pago:</h5>
-								<h6 style="display:inline;">{{item.estadoPago}}</h6>
-							</div>
 						</div>
 						<div class="text-center">
-							<button class="btn bg-primary white" v-on:click="aceptar(item, index)">Aceptar</button>
-							<button class="btn bg-danger white" v-on:click="cancelar(item, index)">Cancelar / Anular</button>
+							<button class="btn bg-primary white btn-sm" v-on:click="aceptar(item, index)">Aceptar</button>
+							<button class="btn bg-danger white btn-sm" v-on:click="cancelar(item, index)">Cancelar / Anular</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		<div class="contenedor">
+            <button class="botonF1 bg-primary" v-b-modal.modal-center variant="warning" title="Filtrar">
+                <span><i class="ft-filter white font-large-1"></i></span>
+            </button>
+        </div>
+
+		<div class="contenedor2">
+            <button class="botonF1 bg-danger" @click="cancelar_todos" title="Cancelar todos">
+                <span><i class="ft-trash white font-large-1"></i></span>
+            </button>
+        </div>
 	</div>
 </template>
 
@@ -167,9 +179,10 @@
 				this.pedidos = pedidosTemp;
 			},
 			cambiaestado: function(operacion, comentario, bul, idrepartidor){
+				console.log(operacion);
 				if (operacion == 'Aceptar')
 					operacion = '/aceptar';
-				else if (operacion == 'Cancelar')
+				else if (operacion == 'Cancelar' || operacion == 'Anular')
 					operacion = '/cancelar';
 				else
 					return;
@@ -188,11 +201,18 @@
 					that.pedidos.splice(that.indexPedidoSeleccionado, 1);
 					that.pedidosOriginal.splice(that.indexPedidoSeleccionado, 1);
 					that.indexPedidoSeleccionado = -1;
-					Swal.fire(
-						'Éxito',
-						'Los cambios se realizaron correctamente',
-						'success'
-					)
+					if (operacion == 'Cancelar' || operacion == 'Anular')
+						Swal.fire(
+							'Éxito',
+							'El pedido se ha anulado correctamente',
+							'success'
+						);
+					else
+						Swal.fire(
+							'Éxito',
+							'Los cambios se realizaron correctamente',
+							'success'
+						);
 				})
 				.catch(()=>{
 					Swal.fire(

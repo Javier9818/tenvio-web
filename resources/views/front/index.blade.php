@@ -9,16 +9,16 @@
 @endsection
 
 @section('styles')
-<link rel="shortcut icon" href="/assets/landing_index/images/favicon.png" type="image/png">
+<link rel="shortcut icon" href="https://javier9818.github.io/cdn.tenvio/landing_index/images/favicon.png" type="image/png">
     
 <!--====== Default CSS ======-->
-<link rel="stylesheet" href="/assets/landing_index/css/default.css">
+<link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/default.css">
 <!--====== Animate CSS ======-->
-<link rel="stylesheet" href="/assets/landing_index/css/animate.css">
+<link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/animate.css">
     
 <!--====== lineicons CSS ======-->
-<link rel="stylesheet" href="/assets/landing_index/css/lineicons.css">
-<link rel="stylesheet" href="/assets/landing_index/css/style.css">
+<link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/lineicons.css">
+<link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/landing_index/css/style.css">
 @endsection
 
 @section('contenido')
@@ -45,7 +45,7 @@
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 col-10">
                 <div class="header-image">
-                    <img src="/assets/landing_index/images/header-app-tenvio.png" alt="app" class="image wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
+                    <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/header-app-tenvio.png" alt="app" class="image wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
                     <!-- <div class="image-shape wow fadeInRightBig" data-wow-duration="1.3s" data-wow-delay="0.8s">
                         <img src="/assets/landing_index/images/image-shape.svg" alt="shape">
                     </div> -->
@@ -55,7 +55,7 @@
     </div> <!-- container -->
     <div class="header-shape-1"></div> <!-- header shape -->
     <div class="header-shape-2">
-        <img src="/assets/landing_index/images/header-shape-2.svg" alt="shape">
+        <img src="https://javier9818.github.io/cdn.tenvio/landing_index/images/header-shape-2.svg" alt="shape">
     </div> <!-- header shape -->
 </div> <!-- header hero -->
 
@@ -83,7 +83,7 @@
             <div class="col-lg-6">
                 <div class="about-image mt-50 wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.5s">
                     <div class="about-shape"></div>
-                    <img class="app" src="/assets/landing_index/images/about-app-tenvio.png" alt="app">
+                    <img class="app" src="https://javier9818.github.io/cdn.tenvio/landing_index/images/about-app-tenvio.png" alt="app">
                 </div> <!-- about image -->
             </div>
             <div class="col-lg-6">

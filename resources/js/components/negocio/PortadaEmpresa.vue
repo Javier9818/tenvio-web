@@ -3,7 +3,6 @@
     <b-aspect :aspect="3" v-if="!edit">
         <b-img center  :src="form.foto ? '/storage/images/perfilEmpresa/'+form.foto : '/img/imagenDefault.jpg'" fluid alt="Responsive image"></b-img>
     </b-aspect>
-
     <picture-input
     v-else
     ref="pictureInput"

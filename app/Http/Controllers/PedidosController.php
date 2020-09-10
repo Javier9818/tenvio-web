@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Pedidos;
 use App\Producto;
 use App\Events\ChangeStateOrderEvent;
+use App\TransCulqi;
 
 class PedidosController extends Controller
 {
@@ -231,6 +232,12 @@ class PedidosController extends Controller
         $comentario = $request->get('comentario');
         $idCliente = $request->get('idusuario');
         Pedidos::cancelar($idpedido, $comentario);
+		$id_tipopago = $request->get('pedido')['id_tipopago'];
+		if ($id_tipopago == Pedidos::$PAGO_CULQI){
+			$id_regpago = $request->get('pedido')['id_regpago'];
+			TransCulqi::devolver($id_regpago);
+			Pedidos::devolverPago($idpedido);
+		}
         try { event( new ChangeStateOrderEvent(["pedido" => $request->pedido, "state" => 'CANCELADO', "comentario" => $comentario], $idCliente));} catch (\Throwable $th) {}
 	}
 

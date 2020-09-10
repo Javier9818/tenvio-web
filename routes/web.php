@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 // ================================================ CPANEL =================================================*/
-Route::get('/comand', function (){Artisan::call('view:cache');});
+Route::get('/comand-link', function (){Artisan::call('storage:link');});
+Route::get('/comand-view', function (){Artisan::call('view:cache');});
 
 // ================================================ LANDING PAGES =================================================*/
 Route::get('/quienes-somos', 'GeneralController@vistaPromocional');

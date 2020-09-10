@@ -22,12 +22,15 @@ class TransCulqi extends Model
 		'authorization_code',
 		'ip',
 		'device_type',
+		'idRefund',
 		'created_at',
 		'updated_at'
 	];
 
+	public static $SECRET_KEY = "sk_test_kGwRa6VcTAQBVb0F";
+
 	public static function pagar($token, $email, $description, $precio){
-		$culqi = new \Culqi\Culqi(array('api_key' => "sk_test_kGwRa6VcTAQBVb0F"));
+		$culqi = new \Culqi\Culqi(array('api_key' => static::$SECRET_KEY));
 		//$culqitokens = new \Culqi\Tokens($culqi);
 		//dd($culqitokens->create(true));
 		try {
@@ -79,6 +82,27 @@ class TransCulqi extends Model
 			'device_type' => $charge->source->client->device_type
 		]);
 	}
+
+	public static function devolver($id){
+		$transaccion = TransCulqi::find($id);
+		try {
+			$culqi = new \Culqi\Culqi(array('api_key' => static::$SECRET_KEY));
+			$refund = $culqi->Refunds->create(
+				array(
+					"amount" => intval($transaccion->amount * 100),
+					"charge_id" => $transaccion->transId,
+					"reason" => "solicitud_comprador"
+				)
+			);
+			$transaccion->idRefund = $refund->id;
+			$transaccion->save();
+			return ($refund);
+		} catch (Exception $e) {
+			throw new \Exception("Error no especificado", 1);
+			//return ($e->getMessage());
+		}
+	}
+
 }
 
 /*
