@@ -1,5 +1,17 @@
 window.Vue = require('vue');
 
+import Echo from 'laravel-echo';
+
+window.Pusher = require('pusher-js');
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '23df8ad0a8b7617a4838',
+    cluster: 'us2'
+    // wsHost: window.location.hostname,
+    // wsPort: 6001,
+    // disableStats: true
+});
+
 require('./bootstrap');
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)

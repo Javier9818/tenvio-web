@@ -52,6 +52,11 @@ export default {
 					sortable: false
 				},
 				{
+					key: 'tipopago_nombre',
+					label: 'Medio de Pago',
+					sortable: true
+				},
+				{
 					key: 'monto',
 					label: 'Monto',
 					sortable: true

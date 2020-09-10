@@ -14,10 +14,12 @@ import Echo from 'laravel-echo';
 window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    disableStats: true
+    key: '23df8ad0a8b7617a4838',
+    cluster: 'us2'
+    //key: process.env.MIX_PUSHER_APP_KEY,
+    // wsHost: window.location.hostname,
+    // wsPort: 6001,
+    // disableStats: true
 });
 
 

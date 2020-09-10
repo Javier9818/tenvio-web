@@ -34,17 +34,17 @@ class EmpresaController extends Controller
             Empresa::where('id', $request->id)->update(['estado' => 'ACTIVO', 'ciudad_id' => $ciudad,'foto'=>'logoEmpresaDefault.png']);
 
 
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 1, false, '','']);
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 1, 0, '','']);
              //plin
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 2, false, '','']);
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 2, 0, '','']);
              //tunki
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 3, false, '','']);
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 3, 0, '','']);
              //tranferencia
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 4, false, '','']);
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 4, 0, '','']);
              //culqi
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 5, false, '','']);
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 5, 0, '','']);
              //contraentrega
-            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 6, false, '','']);
+            DB::insert('insert into tipopago_empresa(empresa_id, tipopago_id, estado, code,number) values (?, ?, ?, ?, ?)', [$request->id, 6, 1, '','']);
         });
 
         return response()->json(["message" => "Actualización exitosa", "empresa" => $request->id]);

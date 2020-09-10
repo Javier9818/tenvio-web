@@ -38,9 +38,9 @@ return [
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
                 'encrypted' => true,
-                'host' => env('PUSHER_HOST'),
-                'port' => env('PUSHER_PORT'),
-                'scheme' => 'http'
+                // 'host' => env('PUSHER_HOST'),
+                // 'port' => env('PUSHER_PORT'),
+                // 'scheme' => 'http'
             ],
         ],
 
