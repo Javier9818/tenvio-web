@@ -102,6 +102,7 @@ export default {
                 productos.push(element)              
             });
             that.$cookies.set('carrito',JSON.stringify(productos))
+            window.open('/mipago/'+response.data.id, '_blank');
             location.reload()
 			  	})
 			  }
