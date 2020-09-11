@@ -62,6 +62,10 @@
 									<li>Nombres: {{item.nombres}}</li>
 									<li>Destino: {{item.direccion}}</li>
 								</ul>
+								<div class="mb-1" :hidden="item.comentario==null">
+									<b style="display:inline;" class="mb-2">Comentario: </b>
+									{{item.comentario}}
+								</div>
 							</div>
 						</div>
 						<div class="text-center">

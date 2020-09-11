@@ -66,13 +66,13 @@ class FrontController extends Controller
       case 'email_contactanos':
         return FrontController::email_contactanos($request);
         break;
-      
+
       default:
         # code...
         break;
     }
   }
-   
+
   public static function email_contactanos($request)
 	{
     $data=$request->get('data');
@@ -333,7 +333,7 @@ class FrontController extends Controller
 		  }
 		  $dato_pedido = Pedidos::obtenerPedido($pedido->id);
 		  try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
-      ////////////////////////
+
         $nombre='';
         $correo='';
         $descripcion = '';
@@ -376,7 +376,7 @@ class FrontController extends Controller
         //Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
         Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
         //FIN MENSAJEEEE
-		    
+
 		  });
 		  return ['success' => true];
 	  }
