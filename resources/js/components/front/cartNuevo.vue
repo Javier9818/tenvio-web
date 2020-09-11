@@ -80,6 +80,7 @@ export default {
       let cockie=JSON.parse(this.$cookies.get('carrito'))
       this.productos = (cockie==null)? []:cockie
       this.empresas=this.distinct(this.productos)
+      console.log(this.empresas);
     },
     /*
       usuario
