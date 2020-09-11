@@ -73,6 +73,7 @@ export default {
       //     this.$refs['dataTempBot'].hide()
       //   }
       // }
+      console.log(this.empresa.usuario);
       if(this.empresa.lng === 0 && this.empresa.lat === 0){
         Swal.fire({
         icon: 'error',
@@ -116,6 +117,7 @@ export default {
       if (this.empresa.usuario==1) {
         this.empresa.correo='-'
         this.empresa.number='-'
+        console.log(this.empresa.usuario);
       }
       this.empresa.total=this.generatotal()
 		  axios.post('/front/GeneraPedido', {

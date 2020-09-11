@@ -294,6 +294,10 @@ class FrontController extends Controller
 
 	  DB::transaction(function () use ($datos, $precio, $transCulqi, $request, $estadoPago, $id_tipopago, $id_regpago){
       $empresa=$request->get('empresas');
+      $code='';
+      if(count($datos)>0){
+        $code= $transCulqi['obj']->transId.' / '.$transCulqi['obj']->id;
+      }
       $user= Auth::id();
       if ($empresa['usuario']==2) {
         $user=DB::table('users')
@@ -329,35 +333,50 @@ class FrontController extends Controller
 		  }
 		  $dato_pedido = Pedidos::obtenerPedido($pedido->id);
 		  try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
-		  ////////////////////////
-		   if (count($datos)>0) {
-			  //INICIO MENSAJEEEE
-			  $var = DB::table('personas')
-			  ->where('id', Auth::user()->persona_id)
-			  ->select(DB::raw("concat(nombres, ' ', appaterno, ' ', apmaterno) as nmbre"))
-			  ->first();
-			  $descripcion = '';
-			  foreach ($request->get('productos') as $p) {
-				$descripcion .= $p['descripcion'].' ('.$p['cant'].'un)';
-			  }
-			  $empresas = $request->get('empresas')['name_empresa'];
-			  //EMAIL
-			  $tipopago = $request->get('empresas')['medioPago']['nombre'];
-			  $email = $request->get('datos')['email'] ?? '';
-			  $objDemo = new \stdClass();
-			  $objDemo->accion = "Pagó";
-			  $objDemo->nombre = $var->nmbre;
-			  $objDemo->email = $email;
-			  $objDemo->empresa = $empresas;
-			  $objDemo->descripcion = $descripcion;
-			  $objDemo->idPedido = $pedido->id;///////////
-			  $objDemo->precio = $precio;
-			  $objDemo->tipopago = $tipopago;
-			  $objDemo->codTransact = $transCulqi['obj']->transId.' / '.$transCulqi['obj']->id;/////////////
-			  //Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
-			  Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
-			  //FIN MENSAJEEEE
-		    }
+
+        $nombre='';
+        $correo='';
+        $descripcion = '';
+        if ($empresa['usuario']==2) {
+          $nombre='bot';
+          $correo=$empresa['correo'];
+        }
+        else{
+          //INICIO MENSAJEEEE
+          $var = DB::table('personas')
+          ->where('id', Auth::user()->persona_id)
+          ->select(DB::raw("concat(nombres, ' ', appaterno, ' ', apmaterno) as nmbre"))
+          ->first();          
+          $nombre=$var->nmbre;
+          $correo=DB::table('users')
+            ->select('email')
+            ->where('id','=',Auth::user()->persona_id)
+            ->get()[0]->email; 
+        }
+        
+        foreach ($request->get('productos') as $p)
+        {
+          $descripcion .= $p['descripcion'].' ('.$p['cant'].'un)';              
+        } 
+        
+        $empresas = $request->get('empresas')['name_empresa'];
+        //EMAIL
+        $tipopago = $request->get('empresas')['medioPago']['nombre'];
+        
+        $email = $request->get('datos')['email'] ?? $correo;
+        $objDemo = new \stdClass();
+        $objDemo->nombre = $nombre;
+        $objDemo->email = $email;
+        $objDemo->empresa = $empresas;
+        $objDemo->descripcion = $descripcion;
+        $objDemo->idPedido = $pedido->id;///////////
+        $objDemo->precio = $precio;
+        $objDemo->tipopago = $tipopago;
+        $objDemo->codTransact = $code;/////////////
+        //Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
+        Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
+        //FIN MENSAJEEEE
+
 		  });
 		  return ['success' => true];
 	  }
