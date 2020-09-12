@@ -295,15 +295,22 @@ class FrontController extends Controller
 	  DB::transaction(function () use ($datos, $precio, $transCulqi, $request, $estadoPago, $id_tipopago, $id_regpago){
       $empresa=$request->get('empresas');
       $code='';
+      $nombre='';
+      $correo='';
+      $descripcion = '';
       if(count($datos)>0){
         $code= $transCulqi['obj']->transId.' / '.$transCulqi['obj']->id;
       }
-      $user= Auth::id();
+      $user= 0;
       if ($empresa['usuario']==2) {
+        $nombre='bot';
+        $correo=$empresa['correo'];
         $user=DB::table('users')
         ->select('id')
         ->where('username','like','teenviobot')
         ->get()[0]->id;
+      }else{
+        $user= Auth::id();
       }
 		  $pedido = Pedidos::create([
 			  'empresa_id' => $empresa['empresa'],
@@ -334,14 +341,8 @@ class FrontController extends Controller
 		  $dato_pedido = Pedidos::obtenerPedido($pedido->id);
 		  try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
 
-        $nombre='';
-        $correo='';
-        $descripcion = '';
-        if ($empresa['usuario']==2) {
-          $nombre='bot';
-          $correo=$empresa['correo'];
-        }
-        else{
+        
+        if ($empresa['usuario']==1) {
           //INICIO MENSAJEEEE
           $var = DB::table('personas')
           ->where('id', Auth::user()->persona_id)
@@ -349,9 +350,9 @@ class FrontController extends Controller
           ->first();          
           $nombre=$var->nmbre;
           $correo=DB::table('users')
-            ->select('email')
-            ->where('id','=',Auth::user()->persona_id)
-            ->get()[0]->email; 
+          ->select('email')
+          ->where('id','=',Auth::user()->persona_id)
+          ->get()[0]->email; 
         }
         
         foreach ($request->get('productos') as $p)
@@ -365,18 +366,17 @@ class FrontController extends Controller
         
         $email = $request->get('datos')['email'] ?? $correo;
         $objDemo = new \stdClass();
+        $objDemo->accion = "Pagó";
         $objDemo->nombre = $nombre;
         $objDemo->email = $email;
         $objDemo->empresa = $empresas;
         $objDemo->descripcion = $descripcion;
-        $objDemo->idPedido = $pedido->id;///////////
+        $objDemo->idPedido = $pedido->id;
         $objDemo->precio = $precio;
         $objDemo->tipopago = $tipopago;
-        $objDemo->codTransact = $code;/////////////
-        //Mail::to("jaironavezaroca@gmail.com")->send(new Email_PagadoCulqi($objDemo));
+        $objDemo->codTransact = $code;
         Mail::to($email)->send(new Email_PagadoCulqi($objDemo));
         //FIN MENSAJEEEE
-
 		  });
 		  return ['success' => true];
 	  }
