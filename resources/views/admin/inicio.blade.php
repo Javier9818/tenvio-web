@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title') Delivery - Admin @endsection
+@section('title') Tenvio - Panel de Administración @endsection
 @section('nav')
     {{-- @include('admin.components.nav') --}}
 @endsection

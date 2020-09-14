@@ -57,4 +57,17 @@ class LoginController extends Controller
             return redirect('/login')->withErrors(['login-error' => 'Usuario o contraseña incorrectos']);
     }
 
+    public function logout(){
+        Auth::logout(); 
+        return redirect('/');
+    }
+
+    public function show(){
+        return view('front.login');
+    }
+
+    public function showRegister(){
+        return view('front/regist');
+    }
+
 }

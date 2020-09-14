@@ -1128,8 +1128,8 @@ ul {
     width: 100%;
     top: 0px; 
     z-index: 1000;
-    position: fixed;
-    background-color: saddlebrown;
+    /* position: fixed;
+    background-color: saddlebrown; */
   }
   .navbar-area.header-style-09 .nav-container .nav-right-content ul li .boxed-btn {
     border-radius: 5px;

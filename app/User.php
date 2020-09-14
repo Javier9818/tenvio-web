@@ -67,4 +67,18 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Permiso');
     }
 
+    public static function getEmployeeByUserId($id){
+        $empleado = DB::select('select *, c.id as cargo from users u
+            inner join users_empresas ue on u.id = ue.user_id
+            inner join personas p on p.id = u.persona_id
+            inner join cargos c on c.id = ue.cargo_id
+            where u.id = ?', [$id]);
+        
+        return $empleado[0];
+    }
+
+    public static function getRolesByUserId($id){
+        return DB::select('select permiso_id as id from permiso_user where user_id = ?', [$id]);
+    }
+
 }
