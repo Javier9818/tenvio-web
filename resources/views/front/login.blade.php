@@ -23,7 +23,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4 m-0 p-0">
                     <div class="card-header border-0 bg-transparent">
                         <div class="text-center mb-1">
-                                <img src="assets/images/logo/logo2.png" alt="AQUI VA EL LOGO" style="width: 50%;">
+                                <img src="assets/images/logo/logo-v8.png" alt="AQUI VA EL LOGO" style="width: 50%;">
 
                         </div>
                         <div class="font-large-1  text-center">
