@@ -1,10 +1,72 @@
 <template>
+<section>
 	<div class="col-12">
-		<!--
-        <b-button v-b-modal.modal-center variant="warning" class="mb-2">{{pedidos.length}} pedidos</b-button>
-        <b-button v-b-modal.modal-center variant="success" class="mb-2">Filtrar</b-button>
-		-->
-        <!--<b-button variant="danger" @click="cancelar_todos" class="mb-2">Cancelar todos los pedidos        <b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
+		<div  class="row">
+			<div v-for="(item, index) in pedidos" :key="index" class="col-md-6">
+				<div class="card" >
+					<div class="card-header">
+						<h5 class="text-muted primary position-absolute">Pedido {{index + 1}} - Código: {{item.idpedido}}</h5>
+						<div><i class="ft-pie-chart primary font-large-1 float-right "></i></div>
+					</div>
+					<div class="card-content">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-6">
+									<b>Descripción:</b>
+									<ul>
+										<li v-for="itm in item.productos" :key="itm.id">
+											{{itm.nombre}} ({{itm.cantidad}} unidad(es))
+										</li>
+									</ul>
+									<div class="mb-1">
+										<b style="display:inline;" class="mb-2">Tipo de Pedido: </b>
+										{{item.tipo_entrega}}
+									</div>
+									<div class="mb-1">
+										<b style="display:inline;" class="mb-2">Tipo de Pago: </b>
+										{{item.tipopago_nombre}}
+									</div>
+									<div class="mb-1">
+										<b style="display:inline;" class="mb-2">Estado de Pago: </b>
+										{{item.estadoPago}}
+									</div>
+								</div>
+								<div class="col-md-6">
+									<b>Cliente</b>
+									<ul>
+										<li>Celular: {{item.celular}}</li>
+										<li>Nombres: {{item.nombres}}</li>
+										<li>Destino: {{item.direccion}}</li>
+									</ul>
+									<div class="mb-1" :hidden="item.comentario==null">
+										<b style="display:inline;" class="mb-2">Comentario: </b>
+										{{item.comentario}}
+									</div>
+								</div>
+							</div>
+							<div class="text-center">
+								<button class="btn bg-primary white btn-sm" v-on:click="aceptar(item, index)">Aceptar</button>
+								<button class="btn bg-danger white btn-sm" v-on:click="cancelar(item, index)">Cancelar / Anular</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="contenedor">
+            <button class="botonF1 bg-primary" v-b-modal.modal-center variant="warning" title="Filtrar">
+                <span><i class="ft-filter white font-large-1"></i></span>
+            </button>
+        </div>
+
+		<div class="contenedor2">
+            <button class="botonF1 bg-danger" @click="cancelar_todos" title="Cancelar todos">
+                <span><i class="ft-trash white font-large-1"></i></span>
+            </button>
+        </div>
+	</div>
+	<b-modal id="modal-center" centered title="Filtrar" ok-only hide-backdrop>
             <label for="">Filtrar Pedidos</label>
             <div class="container">
                 <select class="form-control" v-model="filtropedido" @change="filtrar_tipopedido">
@@ -24,71 +86,9 @@
 			   </multi-select>
 			</div>
             <!--<label for="">Filtrar por Categorías</label>-->
-        </b-modal>
-
-		<div  class="row justify-content-around">
-			<div class="card col-md-5" v-for="(item, index) in pedidos" :key="index">
-				<div class="card-header">
-					<h5 class="text-muted primary position-absolute">Pedido {{index + 1}} - Código: {{item.idpedido}}</h5>
-					<div><i class="ft-pie-chart primary font-large-1 float-right "></i></div>
-				</div>
-				<div class="card-content">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-6">
-								<b>Descripción:</b>
-								<ul>
-									<li v-for="itm in item.productos">
-										{{itm.nombre}} ({{itm.cantidad}} unidad(es))
-									</li>
-								</ul>
-								<div class="mb-1">
-									<b style="display:inline;" class="mb-2">Tipo de Pedido: </b>
-									{{item.tipo_entrega}}
-								</div>
-								<div class="mb-1">
-									<b style="display:inline;" class="mb-2">Tipo de Pago: </b>
-									{{item.tipopago_nombre}}
-								</div>
-								<div class="mb-1">
-									<b style="display:inline;" class="mb-2">Estado de Pago: </b>
-									{{item.estadoPago}}
-								</div>
-							</div>
-							<div class="col-md-6">
-								<b>Cliente</b>
-								<ul>
-									<li>Celular: {{item.celular}}</li>
-									<li>Nombres: {{item.nombres}}</li>
-									<li>Destino: {{item.direccion}}</li>
-								</ul>
-								<div class="mb-1" :hidden="item.comentario==null">
-									<b style="display:inline;" class="mb-2">Comentario: </b>
-									{{item.comentario}}
-								</div>
-							</div>
-						</div>
-						<div class="text-center">
-							<button class="btn bg-primary white btn-sm" v-on:click="aceptar(item, index)">Aceptar</button>
-							<button class="btn bg-danger white btn-sm" v-on:click="cancelar(item, index)">Cancelar / Anular</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="contenedor">
-            <button class="botonF1 bg-primary" v-b-modal.modal-center variant="warning" title="Filtrar">
-                <span><i class="ft-filter white font-large-1"></i></span>
-            </button>
-        </div>
-
-		<div class="contenedor2">
-            <button class="botonF1 bg-danger" @click="cancelar_todos" title="Cancelar todos">
-                <span><i class="ft-trash white font-large-1"></i></span>
-            </button>
-        </div>
-	</div>
+    </b-modal>
+</section>
+	
 </template>
 
 <script>

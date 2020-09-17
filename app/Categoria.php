@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Categoria extends Model
 {
@@ -42,6 +43,12 @@ class Categoria extends Model
 			->update([
 				'state' => $request->get('state')
 			]);
+    }
+
+    public static function getCategoryByTypeBussiness($id){
+        $categorias = DB::table('categorias')->selectRaw('id as value, descripcion as text')
+            ->where('tipo_negocio_id','=',$id)->get();
+        return $categorias;
     }
 }
 

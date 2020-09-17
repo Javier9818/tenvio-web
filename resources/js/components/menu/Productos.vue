@@ -1,23 +1,43 @@
 <template>
-    <div class="container text-center">
+    <div class="container-fluid text-center">
 		<loader :mostrar="mostrarLoader"></loader>
-        <div class="row">
-            <div class="table-responsive">
-                <b-container fluid>
-					<b-table show-empty small stacked="md" :items="datos" :fields="columnas" empty-text="No hay elementos para mostrar">
-						<template v-slot:cell(opciones)="row">
-							<!--<a :href="'/panel/cuestionario/mantenedor/' + row.item.id_cuestionario">Ver</a>-->
-							<b-button variant="warning" size="sm" @click="editar(row.item)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
-							<b-button variant="info" size="sm" v-if="row.item.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar al usuario</b-button>
-							<b-button variant="success" size="sm" v-else @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Mostrar al usuario</b-button>
-							<b-button variant="danger" size="sm" @click="eliminar(row.item)" :disabled="mostrarLoader">Eliminar</b-button>
-						</template>
-					</b-table>
-				</b-container>
-            </div>
-        </div>
-		<div class="text-center">
-			<button class="btn btn-primary" v-b-modal.modal-mantenedor @click="nuevo">Nuevo Producto</button>
+
+		<div class="row">
+			<div v-for="product in datos" :key="product.id" class="col-12 col-md-6 col-xl-4">
+				<div class="card">
+					<div class="img-card">
+						<img  :src="`/storage/imgproductos/${product.foto}`" alt="Card image cap">
+					</div>
+					<div class="card-body text-left">
+						<div class="row mb-1">
+							<b class="col-4">Nombre: </b> <div class="col-8">{{product.nombre}}</div>
+						</div>
+						<div class="row mb-1">
+							<b class="col-4">Descripción: </b> <div class="col-8">{{product.descripcion}}</div>
+						</div>
+						<div class="row mb-1">
+							<b class="col-4">Categoria: </b> <div class="col-8">{{product.categoria}}</div>
+						</div>
+						<div class="row mb-1">
+							<b class="col-4">Precio: </b> <div class="col-8">S/.{{product.precio}}</div>
+						</div>
+						
+						<div class="row justify-content-center">
+							<b-button variant="warning" class="mr-1" size="sm" @click="editar(product)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
+							<b-button variant="info" class="mr-1" size="sm" v-if="product.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar</b-button>
+							<b-button variant="success" class="mr-1" size="sm" v-else @click="mostrarocultar(product)" :disabled="mostrarLoader">Mostrar</b-button>
+							<b-button variant="danger"  size="sm" @click="eliminar(product)" :disabled="mostrarLoader">Eliminar</b-button>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="contenedor">
+			<button class="botonF1" v-b-modal.modal-mantenedor @click="nuevo" title="Nuevo producto">
+				<span>+</span>
+			</button>
 		</div>
 		<b-modal id="modal-mantenedor" size="lg" scrollable centered hide-backdrop :title="texto+' Producto'" hide-footer>
 			<b-col sm="12" md="12">
@@ -92,153 +112,173 @@
 </template>
 
 <script>
-import { ModelListSelect } from 'vue-search-select'
-import { nombreProducto, nombreProductoDescripcion } from '../../utils/expresiones-regulares.js'
-import { required, minValue } from 'vuelidate/lib/validators'
-import Swal from 'sweetalert2'
-export default {
-	data() {
-		return {
-			rutaCategorias: '/intranet/categorias',
-			ruta: '/intranet/productos',
-			datos: [],
-			columnas: [
-				{ key: 'id', label: 'Id' },
-				{ key: 'nombre', label: 'Nombre' },
-				{ key: 'descripcion', label: 'Descripcion' },
-				{ key: 'categoria', label: 'Categoria' },
-				{ key: 'precio', label: 'Precio' },
-				{ key: 'opciones', label: 'Opciones' }
-			],
-			categorias: [],
+	import { ModelListSelect } from 'vue-search-select'
+	import { nombreProducto, nombreProductoDescripcion } from '../../utils/expresiones-regulares.js'
+	import { required, minValue } from 'vuelidate/lib/validators'
+	import Swal from 'sweetalert2'
+	export default {
+		data() {
+			return {
+				rutaCategorias: '/intranet/categorias',
+				ruta: '/intranet/productos',
+				datos: [],
+				columnas: [
+					{ key: 'id', label: 'Id' },
+					{ key: 'nombre', label: 'Nombre' },
+					{ key: 'descripcion', label: 'Descripcion' },
+					{ key: 'categoria', label: 'Categoria' },
+					{ key: 'precio', label: 'Precio' },
+					{ key: 'opciones', label: 'Opciones' }
+				],
+				categorias: [],
+				producto: {
+					id: 0,
+					nombre: '',
+					descripcion: '',
+					precio: 0,
+					foto: '',
+					categorias_menu_id: null,
+					fotosubida: null,
+					usuario_puede_ver: 1
+				},
+				rutaImagenes: '',
+				texto: 'Registrar',
+				deshabilitaboton: false,
+				mostrarLoader: false,
+			}
+		},
+		validations: {
 			producto: {
-				id: 0,
-				nombre: '',
-				descripcion: '',
-				precio: 0,
-				foto: '',
-				categorias_menu_id: null,
-				fotosubida: null,
-				usuario_puede_ver: 1
+				nombre: { required, nombreProducto },
+				descripcion: { required, nombreProductoDescripcion },
+				categorias_menu_id: { required },
+				precio: { minValue: (value) => value > 0 }
 			},
-			rutaImagenes: '',
-			texto: 'Registrar',
-			deshabilitaboton: false,
-			mostrarLoader: false,
-		}
-	},
-	validations: {
-		producto: {
-			nombre: { required, nombreProducto },
-			descripcion: { required, nombreProductoDescripcion },
-			categorias_menu_id: { required },
-			precio: { minValue: (value) => value > 0 }
 		},
-	},
 
-	methods: {
-		archivosubido: function({valor, fileRecords}){
-			if (fileRecords.length == 1)
-				fileRecords[0].urlResized = '.';
-			console.log({valor, fileRecords});
-			this.producto.fotosubida = fileRecords;
-			this.deshabilitaboton = valor;
-		},
-		cargarCategorias: function(){
-			var that = this;
-			axios.post(this.rutaCategorias+'/listarvselect')
-			.then(function (response) {
-				that.categorias = response.data;
-			});
-		},
-		cerrarModal(){
-			this.$bvModal.hide('modal-mantenedor');
-		},
-		nuevo: function(){
-			this.texto = "Registrar";
-			this.producto.id = 0;
-			this.producto.nombre = '';
-			this.producto.descripcion = '';
-			this.producto.precio = 0;
-			this.producto.foto = '';
-			this.producto.fotosubida = null;
-			this.producto.categorias_menu_id = null;
-			this.producto.usuario_puede_ver = 1;
-		},
-		editar: function(item){
-			console.log(item);
-			this.texto = "Modificar";
-			this.producto.id = item.id;
-			this.producto.nombre = item.nombre;
-			this.producto.descripcion = item.descripcion;
-			this.producto.precio = item.precio;
-			this.producto.foto = item.foto;
-			this.producto.categorias_menu_id = item.categorias_menu_id;
-			this.producto.usuario_puede_ver = item.usuario_puede_ver;
-		},
-		eliminar: function(item){
-			this.producto.id = item.id;
-			this.producto.foto = '';
-			this.producto.fotoSubida = '';
-			this.setupddel(true);
-		},
-		mostrarocultar: function(item){
-			this.editar(item);
-			if (this.producto.usuario_puede_ver == 0)
+		methods: {
+			archivosubido: function({valor, fileRecords}){
+				if (fileRecords.length == 1)
+					fileRecords[0].urlResized = '.';
+				console.log({valor, fileRecords});
+				this.producto.fotosubida = fileRecords;
+				this.deshabilitaboton = valor;
+			},
+			cargarCategorias: function(){
+				var that = this;
+				axios.post(this.rutaCategorias+'/listarvselect')
+				.then(function (response) {
+					that.categorias = response.data;
+				});
+			},
+			cerrarModal(){
+				this.$bvModal.hide('modal-mantenedor');
+			},
+			nuevo: function(){
+				this.texto = "Registrar";
+				this.producto.id = 0;
+				this.producto.nombre = '';
+				this.producto.descripcion = '';
+				this.producto.precio = 0;
+				this.producto.foto = '';
+				this.producto.fotosubida = null;
+				this.producto.categorias_menu_id = null;
 				this.producto.usuario_puede_ver = 1;
-			else
-				this.producto.usuario_puede_ver = 0;
-			this.setupddel(false);
+			},
+			editar: function(item){
+				console.log(item);
+				this.texto = "Modificar";
+				this.producto.id = item.id;
+				this.producto.nombre = item.nombre;
+				this.producto.descripcion = item.descripcion;
+				this.producto.precio = item.precio;
+				this.producto.foto = item.foto;
+				this.producto.categorias_menu_id = item.categorias_menu_id;
+				this.producto.usuario_puede_ver = item.usuario_puede_ver;
+			},
+			eliminar: function(item){
+				this.producto.id = item.id;
+				this.producto.foto = '';
+				this.producto.fotoSubida = '';
+				this.setupddel(true);
+			},
+			mostrarocultar: function(item){
+				this.editar(item);
+				if (this.producto.usuario_puede_ver == 0)
+					this.producto.usuario_puede_ver = 1;
+				else
+					this.producto.usuario_puede_ver = 0;
+				this.setupddel(false);
+			},
+			setupddel: function(eliminar){
+				console.log(this.producto);
+				this.mostrarLoader = true;
+				var that = this;
+				axios.post(this.ruta+'/setupddel', {producto: this.producto, eliminar: eliminar})
+				.then(function (response) {
+					//console.log(response.data);
+					if(response.data == true){
+						Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
+						that.cerrarModal();
+						that.cargarProductos();
+					}
+					else if(response.data.mensaje != null){
+						Swal.fire('Hay un problema', response.data.mensaje, 'error');
+					}
+					else{
+						Swal.fire('Error', 'Ha sucedido un error, recargue la página e intente nuevamente', 'error');
+					}
+				})
+				.catch(function(error){
+					Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
+				})
+				.finally(function(){
+					that.mostrarLoader = false;
+				});
+			},
+			cargarProductos: function(){
+				this.datos = [];
+				this.mostrarLoader = true;
+				var that = this;
+				axios.post(this.ruta+'/listar')
+				.then(function (response) {
+					that.datos = response.data.productos;
+					that.rutaImagenes = response.data.rutaImagenes;
+				})
+				.finally(()=>{
+					that.mostrarLoader = false;
+				});
+			}
 		},
-		setupddel: function(eliminar){
-			console.log(this.producto);
-			this.mostrarLoader = true;
-			var that = this;
-			axios.post(this.ruta+'/setupddel', {producto: this.producto, eliminar: eliminar})
-			.then(function (response) {
-				//console.log(response.data);
-				if(response.data == true){
-					Swal.fire('Éxito', 'Se han guardado los cambios', 'success');
-					that.cerrarModal();
-					that.cargarProductos();
-				}
-				else if(response.data.mensaje != null){
-					Swal.fire('Hay un problema', response.data.mensaje, 'error');
-				}
-				else{
-					Swal.fire('Error', 'Ha sucedido un error, recargue la página e intente nuevamente', 'error');
-				}
-			})
-			.catch(function(error){
-				Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error');
-			})
-			.finally(function(){
-				that.mostrarLoader = false;
-			});
+		mounted() {
+			console.log(this.$v.producto);
 		},
-		cargarProductos: function(){
-			this.datos = [];
-			this.mostrarLoader = true;
-			var that = this;
-			axios.post(this.ruta+'/listar')
-			.then(function (response) {
-				that.datos = response.data.productos;
-				that.rutaImagenes = response.data.rutaImagenes;
-			})
-			.finally(()=>{
-				that.mostrarLoader = false;
-			});
+		created: function(){
+			this.cargarCategorias();
+			this.cargarProductos();
+		},
+		components: {
+		ModelListSelect
 		}
-	},
-	mounted() {
-		console.log(this.$v.producto);
-	},
-	created: function(){
-		this.cargarCategorias();
-		this.cargarProductos();
-	},
-    components: {
-      ModelListSelect
-    }
-}
+	}
 </script>
+
+<style scoped>
+	.img-card{
+		padding: 10px;
+		height: 200px;
+		display:flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	
+
+	@supports(object-fit: cover){
+		.img-card img{
+			height: 100%;
+			object-fit: cover;
+			object-position: center center;
+		}
+	}
+</style>

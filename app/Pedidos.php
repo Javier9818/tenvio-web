@@ -1,7 +1,7 @@
 <?php
 namespace App;
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\PedidosUsers;
 use App\Contrato;
 
@@ -29,7 +29,7 @@ class Pedidos extends Model
 		'updated_at',
 		'monto'
 	];
-	//update_at as fecha_entrega
+
 	protected $casts = [
 		'updated_at' => 'datetime:d/m/Y h:i a',
 		'fecha_entrega' => 'datetime:d/m/Y h:i a'
@@ -176,42 +176,20 @@ class Pedidos extends Model
 				'estadoPAGO' => 'DEVUELTO'
 			]);
 	}
+
+	public static function getOrdersByEmployeeId($id){
+		$pedidos = DB::table('pedidos')
+		->join("pedidos_users", "pedidos_users.pedidos_id", "pedidos.id")
+		->join("asignacion", "asignacion.id", "pedidos_users.asignacion_id")
+		->join("users", "users.id", "=", "pedidos.user_id")
+		->join("personas", "personas.id", "=", "users.persona_id")
+		->join("detalle_pedidos", "detalle_pedidos.pedido_id", "=", "pedidos.id")
+		->selectRaw('pedidos.id, CONCAT(personas.appaterno ," ", personas.apmaterno ," ",personas.nombres) as cliente,
+		pedidos.direccion, pedidos.monto, pedidos.latitud, pedidos.longitud, personas.celular')
+		->whereRaw("asignacion.user_id= ? and pedidos.estado ='ENVIANDO'", [$id])
+		->groupBy("pedidos.id")
+		->get();
+
+		return $pedidos;
+	}
 }
-
-
-
-
-
-/*
-Laravel : Syntax error or access violation: 1055 Error
-https://stackoverflow.com/questions/40917189/laravel-syntax-error-or-access-violation-1055-error
--------------- lista de pedidos, datos del pedido y del usuario
-select
-	pe.id as idpedido,
-	GROUP_CONCAT(dp.producto_id) AS ids,
-	GROUP_CONCAT(dp.cantidad) AS cantidades,
-	p.id as idusuario, p.nombres, p.appaterno, p.apmaterno, p.celular, p.direccion
-from pedidos pe
-join detalle_pedidos dp on pe.id = dp.pedido_id
-join users u on u.id = pe.user_id
-join personas p on p.id = u.persona_id
-where pe.empresa_id = 1
-group by(pe.id)
-;
-
--------------- pedir productos de todos los pedidos de una empresa de manera separada
-select distinct pr.id, pr.nombre, pr.descripcion, pr.foto, pr.precio, cm.descripcion
-from productos pr
-join categorias_menus cm on cm.id = pr.categorias_menu_id
--- join detalle_pedidos dp on dp.producto_id = pr.id
--- join pedidos pe on pe.id = dp.pedido_id
-where pr.estado = 1 and pr.empresa_id = 1
-;
-
----------------- empleados con el rol 5, repartidor Deliveryselect p.id, nombres, dni, celular, direccion
-from personas p
-join users u on u.persona_id = p.id
-join users_empresas ue on ue.user_id = u.id
-join permiso_user pu on pu.user_id = ue.user_id
-where ue.empresa_id = 1 and permiso_id = 5
-*/
