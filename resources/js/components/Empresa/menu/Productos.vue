@@ -113,7 +113,7 @@
 
 <script>
 	import { ModelListSelect } from 'vue-search-select'
-	import { nombreProducto, nombreProductoDescripcion } from '../../utils/expresiones-regulares.js'
+	import { nombreProducto, nombreProductoDescripcion } from '../../../utils/expresiones-regulares.js'
 	import { required, minValue } from 'vuelidate/lib/validators'
 	import Swal from 'sweetalert2'
 	export default {

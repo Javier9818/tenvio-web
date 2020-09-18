@@ -143,7 +143,7 @@
     import { MultiSelect } from 'vue-search-select'
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, helpers} from 'vuelidate/lib/validators'
-    import {direccion, nombreNegocio, ruc, numeroTelefonico, numeroCelular, text} from '../../utils/expresiones-regulares'
+    import {direccion, nombreNegocio, ruc, numeroTelefonico, numeroCelular, text} from '../../../utils/expresiones-regulares'
     import Swal from 'sweetalert2'
     export default {
         props:['edit', 'form'],

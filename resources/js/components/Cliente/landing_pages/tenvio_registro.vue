@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import formempresa from'../admin/FormEmpresas'
+import formempresa from'../../admin/FormEmpresas'
 import 'vue-search-select/dist/VueSearchSelect.css'
     export default {
         mounted() {

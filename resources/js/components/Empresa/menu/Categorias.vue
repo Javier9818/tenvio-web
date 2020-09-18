@@ -46,7 +46,7 @@
 <script>
 import Swal from 'sweetalert2'
 import { required } from 'vuelidate/lib/validators'
-import { nombreCategoria } from '../../utils/expresiones-regulares.js'
+import { nombreCategoria } from '../../../utils/expresiones-regulares.js'
 export default {
 	data() {
 		return {

@@ -62,59 +62,41 @@ Vue.use(Vuelidate)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('orders-notifications', require('./components/notifications/OrdersNotifications.vue').default);
-Vue.component('ventas-component', require('./components/contabilidad/VentasComponent.vue').default);
-Vue.component('pagos-component', require('./components/contabilidad/PagosComponent.vue').default);
-Vue.component('pedido-component', require('./components/PedidoComponent.vue').default);
-Vue.component('entrega-local-component', require('./components/EntregaLocalComponent.vue').default);
-Vue.component('asignacion-component', require('./components/AsignacionComponent.vue').default);
-Vue.component('estado-pedido-component', require('./components/EstadoPedidoComponent.vue').default);
-Vue.component('detalle-asignacion-component', require('./components/DetalleAsignacionComponent.vue').default);
-Vue.component('form-empleado', require('./components/negocio/FormEmpleado.vue').default);
-Vue.component('table-empleados', require('./components/negocio/TableEmpleados.vue').default);
-Vue.component('info-empresa', require('./components/negocio/InformacionEmpresaComponent.vue').default);
-Vue.component('foto-portada-empresa', require('./components/negocio/PortadaEmpresa.vue').default);
-Vue.component('data-empresa', require('./components/negocio/InformacionEmpresa.vue').default);
-Vue.component('form-empresa-edit', require('./components/negocio/FormularioEmpresa.vue').default);
-Vue.component('tipo-entrega', require('./components/config/TipoEntregas.vue').default);
-Vue.component('nombre-publico', require('./components/config/NombrePublico.vue').default);
-Vue.component('token-red-social', require('./components/config/TokenFacebook.vue').default);
-Vue.component('ubicacion-component', require('./components/config/Ubicacion.vue').default);
-Vue.component('transporte-component', require('./components/transporte/Transporte.vue').default);
-Vue.component('tipo-pago', require('./components/config/TipoPagos.vue').default);
 
+Vue.component('orders-notifications', require('./components/Empresa/notifications/OrdersNotifications.vue').default);
+Vue.component('ventas-component', require('./components/Empresa/contabilidad/VentasComponent.vue').default);
+Vue.component('pagos-component', require('./components/Empresa/contabilidad/PagosComponent.vue').default);
+Vue.component('pedido-component', require('./components/Empresa/PedidoComponent.vue').default);
+Vue.component('entrega-local-component', require('./components/Empresa/EntregaLocalComponent.vue').default);
+Vue.component('asignacion-component', require('./components/Empresa/AsignacionComponent.vue').default);
+Vue.component('estado-pedido-component', require('./components/Empresa/EstadoPedidoComponent.vue').default);
+Vue.component('detalle-asignacion-component', require('./components/Empresa/DetalleAsignacionComponent.vue').default);
+Vue.component('form-empleado', require('./components/Empresa/negocio/FormEmpleado.vue').default);
+Vue.component('table-empleados', require('./components/Empresa/negocio/TableEmpleados.vue').default);
+Vue.component('info-empresa', require('./components/Empresa/negocio/InformacionEmpresaComponent.vue').default);
+Vue.component('foto-portada-empresa', require('./components/Empresa/negocio/PortadaEmpresa.vue').default);
+Vue.component('data-empresa', require('./components/Empresa/negocio/InformacionEmpresa.vue').default);
+Vue.component('form-empresa-edit', require('./components/Empresa/negocio/FormularioEmpresa.vue').default);
+Vue.component('tipo-entrega', require('./components/Empresa/config/TipoEntregas.vue').default);
+Vue.component('nombre-publico', require('./components/Empresa/config/NombrePublico.vue').default);
+Vue.component('token-red-social', require('./components/Empresa/config/TokenFacebook.vue').default);
+Vue.component('ubicacion-component', require('./components/Empresa/config/Ubicacion.vue').default);
+Vue.component('tipo-pago', require('./components/Empresa/config/TipoPagos.vue').default);
+Vue.component('transporte-component', require('./components/Empresa/Transporte/Transporte.vue').default);
+Vue.component('menu-categorias', require('./components/Empresa/menu/Categorias.vue').default);
+Vue.component('menu-productos', require('./components/Empresa/menu/Productos.vue').default);
+Vue.component('loader', require('./components/Utils/LoaderAdmin.vue').default) /*loader pacman*/
+
+
+//PARTE DEL ADMINISTRADOR GLOBAL
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);
-Vue.component('table-empresas', require('./components/admin/TableEmpresas.vue').default);
-Vue.component('table-tiponegocio', require('./components/admin/TableTipoNegocios.vue').default);
-Vue.component('table-solicitudes', require('./components/admin/TableSolicitudes.vue').default);
-Vue.component('cobros-component', require('./components/admin/CobrosComponent.vue').default);
+Vue.component('table-empresas', require('./components/Admin/TableEmpresas.vue').default);
+Vue.component('table-tiponegocio', require('./components/Admin/TableTipoNegocios.vue').default);
+Vue.component('table-solicitudes', require('./components/Admin/TableSolicitudes.vue').default);
+Vue.component('cobros-component', require('./components/Admin/CobrosComponent.vue').default);
 
-//loader sexy del pacman
-Vue.component('loader', require('./components/extras/LoaderAdmin.vue').default)
-//vue file agent
-Vue.component('sube-archivos', require('./components/extras/SubeArchivos.vue').default)
 
-Vue.component('menu-categorias', require('./components/menu/Categorias.vue').default);
-Vue.component('menu-productos', require('./components/menu/Productos.vue').default);
 
-Vue.component('foto-perfil', require('./components/auth/fotoPerfil.vue').default);
-Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
-Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default);
-
-Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue').default);
-Vue.component('card-map', require('./components/maps/CardMapComponent.vue').default);
-
-//FRONT CLIENTE
-Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
-Vue.component('modal-pedidos', require('./components/front/ModalPedidos.vue').default)
-
-/*FRONT*/
-Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
-Vue.component('front-cart-component', require('./components/front/cartComponent.vue').default)
-
-Vue.component('front-pedidos-component', require('./components/front/pedidosComponent.vue').default);
-Vue.component('front-seguimiento-component', require('./components/front/seguimientoComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -125,15 +107,3 @@ Vue.component('front-seguimiento-component', require('./components/front/seguimi
 const app = new Vue({
     el: '#app',
 });
-
-
-// let {data} = response;
-// let res = ''
-// data.forEach(e => {
-//     res = res + `<option value="${e.idProveedor}">${e.razonsocial}</option>`
-// });
-
-// $('#padres').empty();
-// setTimeout(() => {
-//     $('#padres').append(res);
-// }, 500);

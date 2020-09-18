@@ -80,7 +80,7 @@
     import Swal from 'sweetalert2'
     import {validationMixin} from 'vuelidate'
     import {required, numeric, minValue, maxValue, maxLength, minLength, alphaNum, helpers} from 'vuelidate/lib/validators'
-    import {oracion, palabra, direccion, numeroCelular, dni} from '../../utils/expresiones-regulares'
+    import {oracion, palabra, direccion, numeroCelular, dni} from '../../../utils/expresiones-regulares'
     export default {
         props:['edit'],
         mixins: [validationMixin],
