@@ -6,7 +6,7 @@
   <title>SISTEMA MENSAJERO</title>
 </head>
 <body>
-<p style="text-align: center;"><img src="https://tenvioperu.com/img/logo2.png" alt="" width="251" height="189" /></p>
+<p style="text-align: center;"><img src="https://beta.tenvioperu.com/assets/images/logo/logo-v8.png" alt="" width="251" height="189" /></p>
 <p style="text-align: left;"><strong>{{$names}}</strong></p>
 <p style="text-align: left;">{{$email}}</p>
 <p style="text-align: left;">&nbsp;</p>
