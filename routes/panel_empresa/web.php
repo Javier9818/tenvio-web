@@ -14,10 +14,10 @@ Route::get('/intranet/empleado/edit/{id}', 'Empresa\EmpleadoController@editEmplo
 
 
 
-Route::get('/intranet/ventas', 'ContabilidadController@fn1')->middleware('can:gestionar-contabilidad, visit-company');
-Route::get('/intranet/pagos', 'ContabilidadController@fn2')->middleware('can:gestionar-contabilidad, visit-company');
-Route::post('/intranet/ventas/{funcion}', 'ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
-Route::post('/intranet/pagos/{funcion}', 'ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
+Route::get('/intranet/ventas', 'Empresa\ContabilidadController@fn1')->middleware('can:gestionar-contabilidad, visit-company');
+Route::get('/intranet/pagos', 'Empresa\ContabilidadController@fn2')->middleware('can:gestionar-contabilidad, visit-company');
+Route::post('/intranet/ventas/{funcion}', 'Empresa\ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
+Route::post('/intranet/pagos/{funcion}', 'Empresa\ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
 
 Route::get('/intranet/asignar-delivery', 'Empresa\PedidosController@vista_asignar')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/estado-pedido', 'Empresa\PedidosController@vista_estado')->middleware('can:gestionar-pedidos, visit-company');

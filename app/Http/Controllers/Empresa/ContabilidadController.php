@@ -1,15 +1,17 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Empresa;
 
+use App\Http\Controllers\Controller;
+//use App\Http\Controllers\PedidosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Pedidos;
 use App\Producto;
-use App\Http\Controllers\PedidosController;
 use App\Events\ChangeStateOrderEvent;
 use App\Contrato;
 use App\Plan;
 use App\Pagos;
+use App\Http\Controllers\ExtrasController;
 
 class ContabilidadController extends Controller
 {
