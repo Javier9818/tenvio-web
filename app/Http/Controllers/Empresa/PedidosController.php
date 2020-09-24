@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Empresa;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Pedidos;
@@ -21,18 +22,33 @@ class PedidosController extends Controller
             return response()->json(["detalle" => $detalle], 200);
     }
 
-	public function fn2($funcion='', Request $request){
+	public function vista_asignar(Request $request){
+		return view('admin.pedidos.asignacionDelivery', ["empresa" => session('empresa')]);
+	}
+	public function vista_estado(Request $request){
+		return view('admin.pedidos.estadoPedido', ["empresa" => session('empresa')]);
+	}
+	public function vista_cocina(Request $request){
+		return view('admin.pedidos.pedidosRecepcion', ["empresa" => session('empresa')]);
+	}
+	public function vista_pedidos(Request $request){
+		return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
+	}
+	/*
+	public function fn2($funcion='', Request $request){//vista_cocina
 		return $this->fn('2', $request);
 	}
-	public function fn3($funcion='', Request $request){
+	public function fn3($funcion='', Request $request){//vista_asignar
 		return $this->fn('3', $request);
 	}
-	public function fn4($funcion='', Request $request){
+	public function fn4($funcion='', Request $request){//vista_estado
 		return $this->fn('4', $request);
 	}
 	public function fn5($funcion='', Request $request){
 		return $this->fn('5', $request);
 	}
+	*/
+	/*
     public function fn($funcion='', Request $request){
 		if ($funcion == 'listartodo') return $this->listartodo($request);
 		else if ($funcion == 'listarrecepcion') return $this->listarrecepcion($request);
@@ -52,6 +68,7 @@ class PedidosController extends Controller
 		else if ($funcion == '4') return view('admin.pedidos.estadoPedido', ["empresa" => session('empresa')]);
 		else return view('admin.pedidos.pedidos',  ["empresa" => session('empresa')]);
 	}
+	*/
 
 	static function DetalleAsignacion($funcion)
 	{
@@ -211,7 +228,8 @@ class PedidosController extends Controller
 	*/
 
 	public static function entregar(Request $request){
-        $empresa_id = $request->get('empresa');
+        //$empresa_id = $request->get('empresa');
+		$empresa_id = session('empresa');
 		$idpedido = $request->get('idpedido');
         if (Pedidos::entregar($idpedido, $empresa_id) == false)
             return response()->json(["Message" => "Error"], 500);

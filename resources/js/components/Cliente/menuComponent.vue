@@ -181,7 +181,7 @@ export default {
         case '-':
           if(this.producto.cant==1)
             break
-            this.producto.cant-- 
+          this.producto.cant--          
           break
         default:
           break
@@ -213,7 +213,8 @@ export default {
       switch (key) {
         case 'c':
           if(this.producto.cant>0)
-            this.funAddCarrito(this.producto)
+            this.funAddCarrito(this.producto)          
+          addToCartEvent(this.producto)
           this.hideModal()
           break
         case 'x':

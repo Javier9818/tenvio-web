@@ -21,19 +21,19 @@
 						<div class="row mb-1">
 							<b class="col-4">Precio: </b> <div class="col-8">S/.{{product.precio}}</div>
 						</div>
-						
+
 						<div class="row justify-content-center">
 							<b-button variant="warning" class="mr-1" size="sm" @click="editar(product)" v-b-modal.modal-mantenedor :disabled="mostrarLoader">Editar</b-button>
-							<b-button variant="info" class="mr-1" size="sm" v-if="product.usuario_puede_ver==1" @click="mostrarocultar(row.item)" :disabled="mostrarLoader">Ocultar</b-button>
+							<b-button variant="info" class="mr-1" size="sm" v-if="product.usuario_puede_ver==1" @click="mostrarocultar(product)" :disabled="mostrarLoader">Ocultar</b-button>
 							<b-button variant="success" class="mr-1" size="sm" v-else @click="mostrarocultar(product)" :disabled="mostrarLoader">Mostrar</b-button>
 							<b-button variant="danger"  size="sm" @click="eliminar(product)" :disabled="mostrarLoader">Eliminar</b-button>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="contenedor">
 			<button class="botonF1" v-b-modal.modal-mantenedor @click="nuevo" title="Nuevo producto">
 				<span>+</span>
@@ -272,7 +272,7 @@
 		justify-content: center;
 	}
 
-	
+
 
 	@supports(object-fit: cover){
 		.img-card img{

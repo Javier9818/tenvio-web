@@ -1,6 +1,7 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Empresa;
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExtrasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,12 +10,16 @@ use App\Producto;
 
 class ProductosController extends Controller
 {
+	public function vista(Request $request){
+		return view('admin.menu.productos');
+	}
+	/*
     public function fn($funcion='', Request $request){
 		if ($funcion == 'listar') return $this->listar($request);
 		else if ($funcion == 'setupddel') return $this->setupddel($request);
-		//else if ($funcion == 'setupddel') return $this->setupddel($request);
 		else return view('admin.menu.productos');
     }
+	*/
 
 	static function listar(Request $request){
 		$empresa_id = Session::get('empresa');////////////////////////////////////
@@ -59,8 +64,5 @@ class ProductosController extends Controller
 		//return 4949;
 		//return abort(409);
 		return response()->json(true, 200);
-	}
-
-	static function funcion(Request $request){
 	}
 }
