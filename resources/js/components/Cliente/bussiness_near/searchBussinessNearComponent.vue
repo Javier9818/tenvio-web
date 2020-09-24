@@ -2,7 +2,7 @@
     <div>
         <div class="row justify-content-center row-search">
             <input ref="autocomplete"  class="form-control offset-2 offset-md-0 col-9 col-md-9" type="search" placeholder="Buscar lugar" aria-label="Search">
-            <button class="btn btn-filter ml-2 col-3 col-md-1 d-none d-md-block" type="button" data-toggle="modal" data-target="#myModal"> <i class="fas fa-sliders-h"></i> Filtros</button>
+            <button @click="clickComponent('map-filter')" class="btn btn-filter ml-2 col-3 col-md-1 d-none d-md-block" type="button" data-toggle="modal" data-target="#myModal"> <i class="fas fa-sliders-h"></i> Filtros</button>
         </div>
 
         <mapa-interactivo 
@@ -18,10 +18,10 @@
         ></mapa-interactivo>
         
         <div class="contenedor">
-            <button class="botonF2 d-block d-md-none" data-toggle="modal" data-target="#myModal" title="Filtros">
+            <button @click="clickComponent('map-filter')" class="botonF2 d-block d-md-none" data-toggle="modal" data-target="#myModal" title="Filtros">
                 <i class="fas fa-sliders-h"></i>
             </button>
-            <button class="botonF1" @click="geoUpdate = !geoUpdate" title="Mi ubicación">
+            <button  class="botonF1" @click="handleGeoUpdate" title="Mi ubicación">
                 <i class="fas fa-map-marked-alt"></i>
             </button>
         </div>
@@ -241,6 +241,11 @@
                 })
 
                 return count;
+            },
+            clickComponent(name){clickComponent(name);},
+            handleGeoUpdate(){
+                this.geoUpdate = !this.geoUpdate
+                clickComponent('geo-update')
             }
         },
         watch:{

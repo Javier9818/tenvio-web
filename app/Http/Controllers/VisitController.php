@@ -12,7 +12,7 @@ class VisitController extends Controller
         $visit = Visit::firstOrCreate(['id' => $request->id]);
 
         $navigation = $visit->navigation ?? [];
-        array_push($navigation, $request->except('id'));
+        array_push($navigation, $request->except(['id', 'location']));
 
         $visit->location = $request->location ?? [];
         $visit->navigation = $navigation;
