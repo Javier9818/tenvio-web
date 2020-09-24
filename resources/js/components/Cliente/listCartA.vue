@@ -63,6 +63,7 @@ export default {
     },
      //Elimina un producto del carrito
     eliminar: function(index){
+      removeFromCartEvent(this.productos[index])
       this.productos.splice(index,1)
       let cockie=this.productos
       this.$cookies.set('carrito',JSON.stringify(cockie))

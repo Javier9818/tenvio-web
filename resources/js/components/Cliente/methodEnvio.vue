@@ -37,6 +37,11 @@ export default {
     //tipos de envio, el 3 es reserva
     tipoEnvio(){    
       setTimeout(() => {
+        this.tipoPedidos.forEach(element => {
+          if (element.value==this.empresa.tipoEntrega) {            
+          clickComponent(element.text+'-'+this.empresa.empresa)
+          }
+        });
         if (this.empresa.tipoEntrega==3) {
           this.showReserva=true
         }else{

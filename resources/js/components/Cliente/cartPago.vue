@@ -10,7 +10,7 @@
       <br>
       <div class=""> 
         <b-form-group label="Medio de Pago">
-          <b-form-radio v-model="empresa.medioPago" name="some-radios" v-for="(tipo,index) in tiposPago" :key="index" :value="tipo">{{tipo.nombre}}</b-form-radio>
+          <b-form-radio v-model="empresa.medioPago"  name="some-radios" v-for="(tipo,index) in tiposPago" :key="index" :value="tipo" @change="clickstream(index)">{{tipo.nombre}}</b-form-radio>
         </b-form-group> 
         <br>
       </div>
@@ -43,6 +43,9 @@ export default {
     }
   },
   methods:{
+    clickstream(index){    
+      clickComponent(this.tiposPago[index].nombre+'-'+this.empresa.empresa)            
+    },
     //tipos de pago
     tipoPago(empresa){
       var that= this
@@ -72,8 +75,8 @@ export default {
       //   if (this.empresa.usuario==2) {
       //     this.$refs['dataTempBot'].hide()
       //   }
-      // }
-      console.log(this.empresa.usuario);
+      // } 
+      
       if(this.empresa.lng === 0 && this.empresa.lat === 0){
         Swal.fire({
         icon: 'error',
@@ -91,9 +94,11 @@ export default {
         }).then((result) => {
           if (!result.value)
             return
-          if (that.empresa.medioPago.value=='C') {             
+          if (that.empresa.medioPago.value=='C') {           
+            clickComponent('genera-pedido-culqi')  
             that.generaPedidoCulqi()
-          }else{
+          }else{ 
+            clickComponent('genera-pedido')
             that.generaPedidoFin([])
           }
         })
@@ -127,6 +132,7 @@ export default {
 		  }).then(function (response) {
 			  that.$refs.modalcito.hideModal()
 			  if (response.data.success == true){
+          clickComponent('pedido-generado')
 			  	Swal.fire({
 				  	text:'Su pedido se ha registrado satisfactoriamente, en unos minutos la empresa se contactará contigo.',
 				  	icon: 'success',
@@ -153,6 +159,7 @@ export default {
 				  });
 			  }
 		  }).catch(function (response){
+        clickComponent('genera-pedido-error')
 			  that.$refs.modalcito.hideModal()
 			  Swal.fire({
 				  icon: 'error',

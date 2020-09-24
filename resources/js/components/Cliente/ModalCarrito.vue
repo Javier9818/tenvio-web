@@ -21,7 +21,7 @@
                 <span class="color-theme">S/ {{calcularTotal}}</span>
             </div><!-- /.cart-subtotal -->
             <div class="cart-action d-flex justify-content-center">
-                <a href="/micarrito" class="btn btn__primary">Ir a carrito</a>
+                <a href="/micarrito" class="btn btn__primary" @click="clickComponent('/micarrito')">Ir a carrito</a>
             </div><!-- /.cart-action -->
         </div>
     </div>
@@ -40,9 +40,10 @@
         },
         methods:{
             eliminar: function(index){
+                removeFromCartEvent(this.productos[index])
                 this.productos.splice(index,1)
                 let cockie=this.productos
-                this.$cookies.set('carrito',JSON.stringify(cockie))
+                this.$cookies.set('carrito',JSON.stringify(cockie))                
                 EventBus.$emit('EliminarenModal', true)
             },
             recarga: function () {
