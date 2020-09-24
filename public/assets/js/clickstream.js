@@ -1,6 +1,7 @@
  window.addEventListener("beforeunload", function (e) {
       let obj = {
         id: sessionStorage.id,
+        location: JSON.parse(sessionStorage.location || '[]'),
         sessionTime: e.timeStamp,
         clicks: JSON.parse(sessionStorage.click || '[]'),
         path: sessionStorage.path,
@@ -15,14 +16,17 @@
       // return confirmationMessage;                            //Webkit, Safari, Chrome
 });
 
+navigator.geolocation.watchPosition(function({coords}) {
+  sessionStorage.location == undefined ? sessionStorage.location = JSON.stringify({lat: coords.latitude, lng: coords.longitude}): () => {};
+});
 
 function loadPage(){
-    var path = window.location.href
-    if (typeof(Storage) !== 'undefined') {
-      clearStorage()
-      sessionStorage.id == undefined ? sessionStorage.id = Date.now() : () => {}
-      sessionStorage.path !== path ? sessionStorage.path = path : () => {}
-    }else console.log('incompatible');  
+  var path = window.location.href
+  if (typeof(Storage) !== 'undefined') {
+    clearStorage()
+    sessionStorage.id == undefined ? sessionStorage.id = Date.now() : () => {}
+    sessionStorage.path !== path ? sessionStorage.path = path : () => {}
+  }else console.log('incompatible');  
 }
 
 function clickComponent(nameComponent){
@@ -50,4 +54,8 @@ function clearStorage(){
   sessionStorage.removeItem('productsAddedToCart')
   sessionStorage.removeItem('productsRemovedFromCart')
   sessionStorage.removeItem('moneyInvested')
+}
+
+function geLocation(){
+
 }

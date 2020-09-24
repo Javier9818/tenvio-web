@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Visit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class VisitController extends Controller
 {
@@ -15,6 +14,7 @@ class VisitController extends Controller
         $navigation = $visit->navigation ?? [];
         array_push($navigation, $request->except('id'));
 
+        $visit->location = $request->location ?? [];
         $visit->navigation = $navigation;
         $visit->save();
 

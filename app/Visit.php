@@ -10,5 +10,5 @@ class Visit extends Eloquent
 {
     protected $connection = 'mongodb';
     protected $collection = 'visits_webpage';
-    protected $fillable = ['id', 'navigation'];
+    protected $fillable = ['id', 'location', 'navigation'];
 }
