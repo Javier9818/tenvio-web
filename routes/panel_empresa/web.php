@@ -19,12 +19,24 @@ Route::get('/intranet/pagos', 'ContabilidadController@fn2')->middleware('can:ges
 Route::post('/intranet/ventas/{funcion}', 'ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
 Route::post('/intranet/pagos/{funcion}', 'ContabilidadController@fn')->middleware('can:gestionar-contabilidad, visit-company');
 
-Route::get('/intranet/asignar-delivery', 'Empresa\PedidosController@fn3')->middleware('can:gestionar-pedidos, visit-company');
-Route::get('/intranet/estado-pedido', 'Empresa\PedidosController@fn4')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/asignar-delivery', 'Empresa\PedidosController@vista_asignar')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/estado-pedido', 'Empresa\PedidosController@vista_estado')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/pedidos-cocina', 'Empresa\PedidosController@vista_cocina')->middleware('can:gestionar-pedidos, visit-company');
+Route::get('/intranet/pedidos', 'Empresa\PedidosController@vista_pedidos')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/listartodo', 'Empresa\PedidosController@listartodo')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/listarrecepcion', 'Empresa\PedidosController@listarrecepcion')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/listardelivery', 'Empresa\PedidosController@listardelivery')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/listarempleados', 'Empresa\PedidosController@listarempleados')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/aceptar', 'Empresa\PedidosController@aceptar')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/cancelar', 'Empresa\PedidosController@cancelar')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/entregar', 'Empresa\PedidosController@entregar')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/asignar', 'Empresa\PedidosController@asignar')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/cancelartodos', 'Empresa\PedidosController@cancelartodos')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/ListaPedidos', 'Empresa\PedidosController@ListaPedidos')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/montoPedido', 'Empresa\PedidosController@montoPedido')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/MontoAsignacion', 'Empresa\PedidosController@MontoAsignacion')->middleware('can:gestionar-pedidos, visit-company');
+Route::post('/intranet/pedidos/ListaAsignaciones', 'Empresa\PedidosController@ListaAsignaciones')->middleware('can:gestionar-pedidos, visit-company');
 Route::get('/intranet/estado-pedido/{funcion}', 'Empresa\PedidosController@DetalleAsignacion')->middleware('can:gestionar-pedidos, visit-company');
-Route::get('/intranet/pedidos-cocina', 'Empresa\PedidosController@fn2')->middleware('can:gestionar-pedidos, visit-company');
-Route::get('/intranet/pedidos', 'Empresa\PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
-Route::post('/intranet/pedidos/{funcion}', 'Empresa\PedidosController@fn')->middleware('can:gestionar-pedidos, visit-company');
 
 
 Route::get('/intranet/categorias', 'Empresa\CategoriasMenusController@vista')->middleware('can:gestionar-productos, visit-company');
