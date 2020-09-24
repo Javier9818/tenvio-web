@@ -27,5 +27,4 @@ class EmpleadoController extends Controller
         return view('admin.negocio.editEmpleado', ["empleado" => $empleado, "roles" => $rols]);
     }
 
-
 }
