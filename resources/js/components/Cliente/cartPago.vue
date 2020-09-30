@@ -111,7 +111,7 @@ export default {
 			  currency: 'PEN',
 			  description: this.description,
 			  amount: this.generatotal() * 100
-		  });
+      });      
       Culqi.open();
       e.preventDefault();
     },
@@ -138,6 +138,7 @@ export default {
 				  	icon: 'success',
 				  	title: 'Éxito',
 			  	}).then(() => {
+            sessionStorage.moneyInvested = that.generatotal()
             let productos=[]
             that.productos.forEach(element => {
               if (element.empresa!=that.empresa.empresa) 
