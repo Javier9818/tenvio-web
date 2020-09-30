@@ -5,11 +5,10 @@
         sessionTime: e.timeStamp,
         clicks: JSON.parse(sessionStorage.click || '[]'),
         path: sessionStorage.path,
-        productsAddedToCart: sessionStorage.productsAddedToCart || [],
-        productsRemovedFromCart: sessionStorage.productsRemovedFromCart || [],
+        productsAddedToCart: JSON.parse(sessionStorage.productsAddedToCart || '[]'),
+        productsRemovedFromCart: JSON.parse(sessionStorage.productsRemovedFromCart || '[]'),
         moneyInvested: sessionStorage.moneyInvested || 0,
       }
-
       axios.post(`/api/visit`, obj).then(() => { console.log('ok'); })
       // var confirmationMessage = "\o/";
       // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
@@ -54,8 +53,4 @@ function clearStorage(){
   sessionStorage.removeItem('productsAddedToCart')
   sessionStorage.removeItem('productsRemovedFromCart')
   sessionStorage.removeItem('moneyInvested')
-}
-
-function geLocation(){
-
 }

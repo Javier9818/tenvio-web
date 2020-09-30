@@ -238,7 +238,7 @@
                 this.companies_global.forEach( e => {
                     const array = e.tipos_negocio.split(',');
                     if(parseInt(array[0]) === id) count += 1;
-                })
+                })  
 
                 return count;
             },
