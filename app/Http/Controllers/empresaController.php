@@ -222,7 +222,7 @@ class EmpresaController extends Controller
 
     public function tokenFb($idempresa){
         $empresa = Empresa::find($idempresa);
-        return response()->json(["tokenFb" => $empresa->token_fb]);
+        return response()->json(["tokenFb" => $empresa->token_fb, "idFb" => $empresa->id_fb]);
     }
 
     public function updateNombreUnico(Request $request){
@@ -235,6 +235,7 @@ class EmpresaController extends Controller
     public function updateTokenFb(Request $request){
         $empresa = Empresa::find($request->empresa);
         $empresa->token_fb = $request->tokenFb;
+        $empresa->id_fb = $request->idFb;
         $empresa->save();
         return response()->json(["Message" => 'Actualización exitosa']);
     }
