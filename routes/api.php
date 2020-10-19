@@ -67,4 +67,4 @@ Route::post('/cancelaPedido', 'PedidosController@cancelaByRepartidor');
 
 Route::get('/bussiness-near/{lat}/{lng}', 'GeneralController@bussinessNear');
 
-Route::post('/visit', 'VisitController@store');
+// Route::post('/visit', 'VisitController@store');
