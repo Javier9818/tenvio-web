@@ -78,4 +78,20 @@ class Empresa extends Model
                 ->groupBy('empresas.id')
                 ->get();
     }
+
+    public static function getCompany($id){
+        $empresa = DB::select('select e.*, ci.nombre as ciudad, ci.distrito_id as distrito,
+                    GROUP_CONCAT(ce.categoria_id) as categorias,
+                    GROUP_CONCAT(ca.descripcion) as categoriasdes,
+                    tn.id as tiponegocio,
+                    tn.descripcion as tiponegociodes
+                    from empresas e
+                    inner join ciudad ci on ci.id = e.ciudad_id
+                    inner join categoria_empresa ce on ce.empresa_id = e.id
+                    inner join categorias ca on ca.id = ce.categoria_id
+                    inner join tipo_negocio tn on tn.id = ca.tipo_negocio_id
+                    where e.id = ?
+                    group by e.id', [$id]);
+        return $empresa[0];
+    }
 }

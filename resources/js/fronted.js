@@ -24,41 +24,37 @@ Vue.$cookies.config('1d')
 
 
 //loader circular
-Vue.component('loader', require('./components/extras/LoaderFront.vue').default)
+Vue.component('loader', require('./components/Utils/LoaderFront.vue').default)
 
-Vue.component('mapa-interactivo', require('./components/maps/MapaInteractivo.vue').default);
+
 //FRONT CLIENTE
-Vue.component('modal-carrito', require('./components/front/ModalCarrito.vue').default)
-Vue.component('modal-pedidos', require('./components/front/ModalPedidos.vue').default)
+Vue.component('modal-carrito', require('./components/Cliente/ModalCarrito.vue').default)
+Vue.component('modal-pedidos', require('./components/Cliente/ModalPedidos.vue').default)
 
 /*Front*/
-Vue.component('front-categories-component', require('./components/front/categoriesComponent.vue').default)
-Vue.component('front-menu-component', require('./components/front/menuComponent.vue').default)
-Vue.component('front-cart-component', require('./components/front/cartComponent.vue').default)
-Vue.component('form-wizard-unt', require('./components/formWizard/App.vue').default);
-Vue.component('front-pedidos-component', require('./components/front/pedidosComponent.vue').default);
-Vue.component('front-seguimiento-component', require('./components/front/seguimientoComponent.vue').default);
-Vue.component('list-type-A', require('./components/front/listCartA.vue').default)
-Vue.component('cart-new', require('./components/front/cartNuevo.vue').default)
-Vue.component('method-envio', require('./components/front/methodEnvio.vue').default)
-Vue.component('ubication', require('./components/front/ubication.vue').default)
-Vue.component('pago', require('./components/front/cartPago.vue').default)
-Vue.component('detail-pago', require('./components/front/detailCart.vue').default)
+Vue.component('front-categories-component', require('./components/Cliente/categoriesComponent.vue').default)
+Vue.component('front-menu-component', require('./components/Cliente/menuComponent.vue').default)
+Vue.component('front-cart-component', require('./components/Cliente/cartComponent.vue').default)
+Vue.component('form-wizard-unt', require('./components/Cliente/formWizard/App.vue').default);
+Vue.component('front-pedidos-component', require('./components/Cliente/pedidosComponent.vue').default);
+Vue.component('front-seguimiento-component', require('./components/Cliente/seguimientoComponent.vue').default);
+Vue.component('list-type-A', require('./components/Cliente/listCartA.vue').default)
+Vue.component('cart-new', require('./components/Cliente/cartNuevo.vue').default)
+Vue.component('method-envio', require('./components/Cliente/methodEnvio.vue').default)
+Vue.component('ubication', require('./components/Cliente/ubication.vue').default)
+Vue.component('pago', require('./components/Cliente/cartPago.vue').default)
+Vue.component('detail-pago', require('./components/Cliente/detailCart.vue').default)
 
-Vue.component('tenvio-promo-component', require('./components/landing_pages/tenvio_promo.vue').default);
-Vue.component('tenvio-registro-component', require('./components/landing_pages/tenvio_registro.vue').default);
-Vue.component('tenvio-padre-component', require('./components/landing_pages/tenvio_padre.vue').default);
+Vue.component('tenvio-promo-component', require('./components/Cliente/landing_pages/tenvio_promo.vue').default);
+Vue.component('tenvio-registro-component', require('./components/Cliente/landing_pages/tenvio_registro.vue').default);
+Vue.component('tenvio-padre-component', require('./components/Cliente/landing_pages/tenvio_padre.vue').default);
 
-Vue.component('recover-component', require('./components/front/recoverComponent.vue').default);
-Vue.component('post-recover-component', require('./components/front/postRecoverComponent.vue').default);
+Vue.component('recover-component', require('./components/Cliente/recoverComponent.vue').default);
+Vue.component('post-recover-component', require('./components/Cliente/postRecoverComponent.vue').default);
 
-Vue.component('list-map', require('./components/front/inList_Map.vue').default);
+Vue.component('list-map', require('./components/Cliente/inList_Map.vue').default);
 
-Vue.component('search-bussiness-near', require('./components/front/bussiness_near/searchBussinessNearComponent.vue').default);
-
-Vue.component('foto-perfil', require('./components/auth/fotoPerfil.vue').default);
-Vue.component('user-perfil', require('./components/auth/perfil.vue').default);
-Vue.component('clave-perfil', require('./components/auth/contraseña.vue').default);
+Vue.component('search-bussiness-near', require('./components/Cliente/bussiness_near/searchBussinessNearComponent.vue').default);
 
 
 // const EventBus = new Vue();

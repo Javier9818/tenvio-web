@@ -33,16 +33,16 @@
 
                 </li>
             @else
-                <li class="nav__item"><a href="/login" class="nav__item-link">Iniciar Sesion</a></li>
-                <li class="nav__item"><a href="/registro" class="nav__item-link">Registrarse</a></li>
+                <li class="nav__item"><a href="/login" class="nav__item-link" onclick="clickComponent('nav-login')">Iniciar Sesion</a></li>
+                <li class="nav__item"><a href="/registro" class="nav__item-link" onclick="clickComponent('nav-register')">Registrarse</a></li>
             @endauth
         </ul>
         </div>
         <div class="navbar-actions-wrap">
         <div class="navbar-actions d-flex align-items-center">
-            <a href="#" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
-            <modal-carrito></modal-carrito>
-            <modal-pedidos user={{Auth::id()}}></modal-pedidos>
+            <a href="javascript:void(0)" onclick="clickComponent('buscar-negocio')" class="navbar__action-btn search-popup-trigger"><i class="fa fa-search"></i></a>
+            <modal-carrito onclick="clickComponent('nav-carrito')"></modal-carrito>
+            <modal-pedidos onclick="clickComponent('nav-pedidos')" user={{Auth::id()}}></modal-pedidos>
         </div>
         </div>
     </div>

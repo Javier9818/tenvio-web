@@ -38,4 +38,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 
-
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('sube-archivos', require('./components/Utils/SubeArchivos.vue').default) /* vue file agent */
+Vue.component('foto-perfil', require('./components/Auth/fotoPerfil.vue').default);
+Vue.component('user-perfil', require('./components/Auth/perfil.vue').default);
+Vue.component('clave-perfil', require('./components/Auth/contraseña.vue').default);
+Vue.component('mapa-interactivo', require('./components/Utils/maps/MapaInteractivo.vue').default);

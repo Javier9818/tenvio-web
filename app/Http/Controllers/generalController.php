@@ -62,38 +62,6 @@ class GeneralController extends Controller
         return response()->json(["cargos" => $roles], 200);
     }
 
-    public function vistaEmpleados(){
-        return view('admin.negocio.empleados', ["empresa" => session('empresa')]);
-    }
-
-    public function vistaNuevoEmpleado(){
-        return view('admin.negocio.crearEmpleado', ["empresa" => session('empresa')]);
-    }
-
-    public function vistaConfiguraciones(){
-        return view('admin.config', ["empresa" => session('empresa')]);
-    }
-
-    public function vistaUbicacion(){
-        $empresa = Empresa::find(session('empresa'));
-        return view('admin.ubicacion', ["empresa" => $empresa]);
-    }
-
-    public function vistaTransporte(){
-        $pedidos = DB::table('pedidos')
-                ->join("pedidos_users", "pedidos_users.pedidos_id", "pedidos.id")
-                ->join("asignacion", "asignacion.id", "pedidos_users.asignacion_id")
-                ->join("users", "users.id", "=", "pedidos.user_id")
-                ->join("personas", "personas.id", "=", "users.persona_id")
-                ->join("detalle_pedidos", "detalle_pedidos.pedido_id", "=", "pedidos.id")
-                ->selectRaw('pedidos.id, CONCAT(personas.appaterno ," ", personas.apmaterno ," ",personas.nombres) as cliente,
-                pedidos.direccion, pedidos.monto, pedidos.latitud, pedidos.longitud, personas.celular')
-                ->whereRaw("asignacion.user_id= ? and pedidos.estado ='ENVIANDO'", [Auth::id()])
-                ->groupBy("pedidos.id")
-                ->get();
-        return view('admin.transporte.transporte', ["empresa" => session('empresa'), "pedidosAsignados" => $pedidos]);
-    }
-
     public function ciudades($ditritoId){
         $ciudades = Ciudad::where('distrito_id', $ditritoId)->get();
         return response()->json(["ciudades" => $ciudades], 200);
@@ -109,6 +77,6 @@ class GeneralController extends Controller
 
     public function vistaPromocional(){
         $tiponegocios = TipoNegocio::all();
-        return view('landing_pages.tenvio_promocional', ["tiponegocios" => $tiponegocios]);
+        return view('front.quienes-somos', ["tiponegocios" => $tiponegocios]);
     }
 }

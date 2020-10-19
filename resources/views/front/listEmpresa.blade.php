@@ -95,7 +95,7 @@
                   </div>
                   <h3 class="card-title text-capitalize">{{strtolower($empresa->nombre)}}</h3>
                   <p class="card-text" style="color:black">{{$empresa->descripcion}}</p>
-                  <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}" class="btn btn-primary   d-block " style=" font-size:large">Visitar</a>
+                  <a href="{{url('/empresa/'.str_replace(' ','-',$empresa->nombre_unico))}}" class="btn btn-primary   d-block " style=" font-size:large" onclick="clickComponent('empresa/{{$empresa->nombre_unico}}')">Visitar</a>
                 </div>
               </div>
             </div>

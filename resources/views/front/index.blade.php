@@ -38,8 +38,8 @@
                     <h3 class="header-title wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.2s">Negocios locales a <span> un click </span> de <span>Distancia!</span></h3>
                     <p class="text wow fadeInLeftBig" data-wow-duration="1.3s" data-wow-delay="0.6s">Busca tu restaurant o negocio favorito, o utiliza nuestra moderna plataforma de geolocalización para encontrar el producto que deseas, fácil, rápido y seguro.</p>
                     <div class="row justify-content-around mt-2">
-                        <a href="javascript:void(0)" rel="nofollow" class="main-btn wow fadeInLeftBig search-popup-trigger col-9 col-md-4" data-wow-duration="1.3s" data-wow-delay="0.8s"><i class="lni lni-search-alt"></i>  Buscar negocio</a>
-                        <a href="/negocios-cercanos" rel="nofollow" class="main-btn secondary-btn wow fadeInLeftBig col-9 col-md-6" data-wow-duration="1.3s" data-wow-delay="0.8s"><i class="lni lni-map-marker"></i> Buscar negocios cercanos</a>
+                        <a href="javascript:void(0)" onclick="clickComponent('buscar-negocio')" rel="nofollow" class="main-btn wow fadeInLeftBig search-popup-trigger col-9 col-md-4" data-wow-duration="1.3s" data-wow-delay="0.8s"><i class="lni lni-search-alt"></i>  Buscar negocio</a>
+                        <a href="/negocios-cercanos" onclick="clickComponent('buscar-negocio-cercano')" rel="nofollow" class="main-btn secondary-btn wow fadeInLeftBig col-9 col-md-6" data-wow-duration="1.3s" data-wow-delay="0.8s"><i class="lni lni-map-marker"></i> Buscar negocios cercanos</a>
                     </div>
                 </div> <!-- header hero content -->
             </div>

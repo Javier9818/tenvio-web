@@ -19,6 +19,7 @@ class CreateEmpresasTable extends Migration
             $table->string('nombre', 100);
             $table->string('token_fb', 200)->nullable();
             $table->string('id_fb', 100)->nullable();
+            // $table->string('fb_id', 20)->nullable();
             $table->string('nombre_unico', 110)->unique();
             $table->string('descripcion')->nullable();
             $table->string('telefono', 10)->nullable();

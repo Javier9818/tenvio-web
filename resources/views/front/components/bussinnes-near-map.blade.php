@@ -202,7 +202,7 @@
       .modal-content{
         border-radius: 0 !important;
       }
-    </style>
+</style>
 @endsection
 
 @section('contenido')

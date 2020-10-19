@@ -17,25 +17,26 @@
     <link rel="shortcut icon" type="image/x-icon" href="/theme-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css" rel="stylesheet">
+    
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/vendors.css">
-    <!-- END VENDOR CSS-->
     <!-- BEGIN CHAMELEON  CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/app-lite.css">
-    <!-- END CHAMELEON  CSS-->
     <!-- BEGIN Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/core/menu/menu-types/vertical-menu.css">
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/core/colors/palette-gradient.css">
     <link rel="stylesheet" type="text/css" href="/theme-assets/css/personalizacion.css">
-
+    
+    <!-- BEGIN LEAFLET CSS-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
       crossorigin=""/>
-    <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
-   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
-   crossorigin=""></script>
-   <script src="{!! asset('notify/push.min.js') !!}"></script>
+    <!-- BEGIN LEAFLET JS-->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+    <!-- BEGIN PUSH JS-->
+    <script src="{!! asset('notify/push.min.js') !!}"></script>
 
   <style>
       .contenedor{
@@ -83,30 +84,23 @@
         @include('admin.components.nav')
         @yield('nav')
         @yield('sideNav')
-
         <div class="app-content content" >
-        <div class="content-wrapper">
-            <div class="content-wrapper-before"></div>
-                @yield('header')
-                <div class="content-body"><!-- Bar charts section start -->
-                  @yield('content')
-                </div>
-        </div>
+          <div class="content-wrapper">
+              <div class="content-wrapper-before"></div>
+              @yield('header')
+              <div class="content-body">
+                    @yield('content')
+              </div>
+          </div>
         </div>
        
     </div>
     
     
-    {{$company = Session::get('empresa') ?? ''}}
-
     <script>
-        let company = @json($company);
+        let company = @json(Session::get('empresa'));
     </script>
 
-    {{-- <footer class="footer footer-static footer-light navbar-border navbar-shadow">
-      <div class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">2020  &copy; Copyright <a class="text-bold-800 grey darken-2" href="/">Delivery</a></span>
-      </div>
-    </footer> --}}
 
     @yield('scripts')
     <script src="/js/app.js" type="text/javascript"></script>
@@ -122,6 +116,7 @@
     <script src="/theme-assets/js/core/customizer.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/prism.min.js.descargar" type="text/javascript"></script>
     <script src="/theme-assets/js/core/jquery.sharrre.js.descargar" type="text/javascript"></script>
+    
     <script>
         function entregaPedido(id){
             if(confirm('¿Está seguro de entregar el pedido?')){
@@ -133,14 +128,5 @@
         }
     </script>
 
-
-    <!-- END CHAMELEON  JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
-    {{-- <script src="/theme-assets/js/scripts/charts/chartjs/bar/column.js" type="text/javascript"></script>
-    <script src="/theme-assets/js/scripts/charts/chartjs/bar/bar.js" type="text/javascript"></script>
-    <script src="/theme-assets/js/scripts/charts/chartjs/line/line.js" type="text/javascript"></script>
-    <script src="/theme-assets/js/scripts/charts/chartjs/pie-doughnut/pie-simple.js" type="text/javascript"></script>
-    <script src="/theme-assets/js/scripts/charts/chartjs/pie-doughnut/doughnut-simple.js" type="text/javascript"></script> --}}
-    <!-- END PAGE LEVEL JS-->
   </body>
 </html>
