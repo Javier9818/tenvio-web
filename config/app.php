@@ -179,7 +179,7 @@ return [
         //Social Fb
         Laravel\Socialite\SocialiteServiceProvider::class,
 
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        // Jenssegers\Mongodb\MongodbServiceProvider::class,
 
     ],
 
