@@ -27,12 +27,6 @@
  * Released under the MIT License.
  */
 
-/*!
- * vue-infinite-loading v2.4.5
- * (c) 2016-2020 PeachScript
- * MIT License
- */
-
 /*! 
   * portal-vue © Thorsten Lünborg, 2019 
   * 
