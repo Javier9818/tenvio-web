@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
- 
+
 <head>
-  <meta charset="UTF-8" /> 
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta name="description" content="TE ENVIO - NORTEC">
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://javier9818.github.io/cdn.tenvio/scripts_front/personalizacion.css"/>
   <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"> -->
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-xVVam1KS4+Qt2OrFa+VdRUoXygyKIuNWUUUBZYv+n27STsJ7oDOHJgfF0bNKLMJF" crossorigin="anonymous">
-  
+
   {{-- <link rel="stylesheet" href= "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -43,7 +43,7 @@
     @yield('contenido')
 
     @yield('footer')
-   
+
     <button id="scrollTopBtn"><i class="fa fa-angle-up"></i></button>
 
     <div class="search-popup">

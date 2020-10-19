@@ -12,7 +12,9 @@
         moneyInvested: sessionStorage.moneyInvested || 0,
         paymentMethod: sessionStorage.paymentMethod || 0,
       }
-      axios.post(`https://tenvio.herokuapp.com/visit`, obj).then(() => { console.log('ok'); })
+
+      axios.post(`https://ebb28aeb8425.ngrok.io/api/visit`, obj).then(() => { console.log('ok'); })
+      //axios.post(`/api/visit`, obj).then(() => { console.log('ok'); })
       // var confirmationMessage = "\o/";
       // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
       // return confirmationMessage;                            //Webkit, Safari, Chrome
@@ -28,7 +30,7 @@ function loadPage(){
     clearStorage()
     sessionStorage.id == undefined ? sessionStorage.id = Date.now() : () => {}
     sessionStorage.path !== path ? sessionStorage.path = path : () => {}
-  }else console.log('incompatible');  
+  }else console.log('incompatible');
 }
 
 function clickComponent(nameComponent){
@@ -40,14 +42,14 @@ function clickComponent(nameComponent){
 
 function addToCartEvent(product){
   var productCart = { product, time:Date.now()}
-  var data = sessionStorage.productsAddedToCart == undefined ? 
+  var data = sessionStorage.productsAddedToCart == undefined ?
             [productCart] : [...JSON.parse(sessionStorage.productsAddedToCart), productCart]
   sessionStorage.productsAddedToCart = JSON.stringify(data)
 }
 
 function removeFromCartEvent(product){
   var productCart = { product, time:Date.now()}
-  var data = sessionStorage.productsRemovedFromCart == undefined ? 
+  var data = sessionStorage.productsRemovedFromCart == undefined ?
             [productCart] : [...JSON.parse(sessionStorage.productsRemovedFromCart), productCart]
   sessionStorage.productsRemovedFromCart = JSON.stringify(data)
 }
@@ -154,7 +156,7 @@ async function loadBigData(){
   //     });
   //   }, 1000);
   //   for (let index = 0; index < 500; index++) {
-      
+
   //   }
   // });
 }

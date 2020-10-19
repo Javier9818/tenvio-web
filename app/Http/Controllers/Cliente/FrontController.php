@@ -338,33 +338,34 @@ class FrontController extends Controller
 					  ]
 				  );
 			  }
-		  }
+          }
+          return ['success' => true]; // verificacion sin email
 		  $dato_pedido = Pedidos::obtenerPedido($pedido->id);
 		  try { event(new NewOrderEvent($empresa['empresa'], $dato_pedido));} catch (\Throwable $th) {}
 
-        
+
         if ($empresa['usuario']==1) {
           //INICIO MENSAJEEEE
           $var = DB::table('personas')
           ->where('id', Auth::user()->persona_id)
           ->select(DB::raw("concat(nombres, ' ', appaterno, ' ', apmaterno) as nmbre"))
-          ->first();          
+          ->first();
           $nombre=$var->nmbre;
           $correo=DB::table('users')
           ->select('email')
           ->where('id','=',Auth::user()->persona_id)
-          ->get()[0]->email; 
+          ->get()[0]->email;
         }
-        
+
         foreach ($request->get('productos') as $p)
         {
-          $descripcion .= $p['descripcion'].' ('.$p['cant'].'un)';              
-        } 
-        
+          $descripcion .= $p['descripcion'].' ('.$p['cant'].'un)';
+        }
+
         $empresas = $request->get('empresas')['name_empresa'];
         //EMAIL
         $tipopago = $request->get('empresas')['medioPago']['nombre'];
-        
+
         $email = $request->get('datos')['email'] ?? $correo;
         $objDemo = new \stdClass();
         $objDemo->accion = "Pagó";
