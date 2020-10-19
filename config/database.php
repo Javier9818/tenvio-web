@@ -91,11 +91,11 @@ return [
             'prefix_indexes' => true,
         ],
 
-        'mongodb' => [
-            'driver' => 'mongodb',
-            'dsn' => 'mongodb+srv://Javier98:J4rCETQAtsW79ov2@cluster0.zxrnb.mongodb.net/Tenvio?retryWrites=true&w=majority',
-            'database' => 'Tenvio'
-        ],
+        // 'mongodb' => [
+        //     'driver' => 'mongodb',
+        //     'dsn' => 'mongodb+srv://Javier98:J4rCETQAtsW79ov2@cluster0.zxrnb.mongodb.net/Tenvio?retryWrites=true&w=majority',
+        //     'database' => 'Tenvio'
+        // ],
 
     ],
 

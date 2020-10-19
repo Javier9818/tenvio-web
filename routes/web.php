@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 // ================================================ CPANEL =================================================*/
 Route::get('/comand-link', function (){Artisan::call('storage:link');});
 Route::get('/comand-view', function (){Artisan::call('view:cache');});
-Route::get('/mongo', 'VisitController@show');
+// Route::get('/mongo', 'VisitController@show');
 
 Route::get('/login', 'Auth\LoginController@show')->name('loginForm')->middleware('guest');
 Route::post('/login', 'Auth\LoginController@authenticate')->name('login');
