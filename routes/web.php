@@ -16,4 +16,8 @@ Route::get('/registro', 'Auth\LoginController@showRegister')->name('registro')->
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');
 Route::get('/recoverypassword/{cifrado}', 'FrontController@Recover')->name('Recover');
 
-
+Route::get('/cars','CarController@index');
+Route::get('/car/{id}','CarController@edit');
+Route::put('/car/{id}','CarController@update');
+Route::post('/car','CarController@store');
+Route::get('/crear-carro','CarController@create');
