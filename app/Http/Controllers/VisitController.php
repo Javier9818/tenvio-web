@@ -10,22 +10,24 @@ class VisitController extends Controller
     public function show(){
         $visits = Visit::all();
         $array = [];
-        $index = 0;
+        $index = 0; 
         // return response()->json($visits);
+        
         foreach ($visits as $key => $value) {
             $time = 0;
             $monto = 0;
-            $array = $value['navigation'];
-            foreach ($array as $key_nav => $value_nav) {
+            // $array = $value['navigation'];
+            foreach ($value['navigation'] as $key_nav => $value_nav) {
                 $time =  $time + $value_nav['sessionTime'];
                 $monto = $monto + $value_nav['moneyInvested'];
             }
-            if($time>0) { //$monto < 100 && $monto > 0 && $time>0
-                array_push($array, json_decode('{"index":"'.$index.'", "time":"'.($time/10000000).'", "moneyInvested":"'.$monto.'"}'));
+            if($time>0 && $time<250000) { //$monto < 100 && $monto > 0 && $time>0
+                array_push($array, json_decode('{"index":"'.$index.'", "time":"'.($time/1000).'", "moneyInvested":"'.$monto.'"}'));
                 $index = $index +1;
             }
             
         }
+        // return count($visits);
         return response()->json($array);
     }
    
