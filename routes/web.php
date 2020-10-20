@@ -21,3 +21,4 @@ Route::get('/car/{id}','CarController@edit');
 Route::put('/car/{id}','CarController@update');
 Route::post('/car','CarController@store');
 Route::get('/crear-carro','CarController@create');
+Route::delete('/borrar-car/{id}','CarController@destroy');
