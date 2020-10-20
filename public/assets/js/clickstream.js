@@ -1,4 +1,4 @@
- window.addEventListener("beforeunload", async function (e) {
+ window.addEventListener("beforeunload", function (e) {
       let obj = {
         id: parseInt(sessionStorage.id),
         idEmpresa: sessionStorage.idEmpresa || 0,
@@ -13,10 +13,10 @@
         moneyInvested: sessionStorage.moneyInvested || 0,
         paymentMethod: sessionStorage.paymentMethod || 0,
       }
-      await axios.post(`https://tenvio.herokuapp.com/visit`, obj).then(() => { console.log('ok'); })
-      // var confirmationMessage = "\o/";
-      // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-      // return confirmationMessage;                            //Webkit, Safari, Chrome
+      axios.post(`https://tenvio.herokuapp.com/visit`, obj).then(() => { console.log('ok'); })
+      var confirmationMessage = "\o/";
+      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+      return confirmationMessage;                            //Webkit, Safari, Chrome
 });
 
 navigator.geolocation.watchPosition(function({coords}) {
