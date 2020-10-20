@@ -4,6 +4,7 @@
         idEmpresa: sessionStorage.idEmpresa || null,
         location: JSON.parse(sessionStorage.location || '[]'),
         device: sessionStorage.device || '',
+        user: sessionStorage.user || null,
         sessionTime: e.timeStamp,
         clicks: JSON.parse(sessionStorage.click || '[]'),
         path: sessionStorage.path,
@@ -32,7 +33,7 @@ function loadPage(){
 }
 
 function clickComponent(nameComponent){
-  console.log(loadBigData())
+  loadBigData()
   var click = { nameComponent, time:Date.now()}
   var data = sessionStorage.click == undefined ? [click] : [...JSON.parse(sessionStorage.click), click]
   sessionStorage.click = JSON.stringify(data)
@@ -77,84 +78,82 @@ function isMobile(){
 //***********************FUNCION MAGICA */
 
 async function loadBigData(){
-  // const device = [
-  //   'Android',
-  //   'iPhone',
-  //   'iPad',
-  //   'BlackBerry',
-  //   'Chrome',
-  //   'Edg',
-  //   'Mozilla',
-  //   'Safari'
+  const device = [
+    'Android',
+    'iPhone',
+    'iPad',
+    'BlackBerry',
+    'Chrome',
+    'Edg',
+    'Mozilla',
+    'Safari'
+  ]
+  // const paymentMethod = [
+  //   1,//YAPE
+  //   2,//PLIN
+  //   3,//TUNKI
+  //   4,//TRANFERENCIA BANCARIA
+  //   5,// CULQI
+  //   6,//CONTRA ENTREGA
   // ]
-  // // const paymentMethod = [
-  // //   1,//YAPE
-  // //   2,//PLIN
-  // //   3,//TUNKI
-  // //   4,//TRANFERENCIA BANCARIA
-  // //   5,// CULQI
-  // //   6,//CONTRA ENTREGA
-  // // ]
 
-  // let datajson = {
-  //   id: 0,
-  //   location: {
-  //     lat: -8.1191,
-  //     lng: -79.0355
-  //   },
-  //   device: '',
-  //   sessionTime:0,
-  //   clicks: [],
-  //   path: '/empresa',
-  //   productsAddedToCart: [],
-  //   productsRemovedFromCart: [],
-  //   moneyInvested: 0,
-  //   paymentMethod: 0,
-  // }
-  // axios.get(`https://api.tenvioperu.com/empresa`).then(({data}) => {
+  let datajson = {
+    id: 0,
+    location: {
+      lat: -8.1191,
+      lng: -79.0355
+    },
+    device: '',
+    sessionTime:0,
+    clicks: [],
+    path: '/empresa',
+    productsAddedToCart: [],
+    productsRemovedFromCart: [],
+    moneyInvested: 0,
+    paymentMethod: 0,
+  }
+  axios.get(`https://api.tenvioperu.com/empresa`).then(({data}) => {
 
-  //   setInterval(() => {
-  //     var productsAddedToCart = [], productsRemovedFromCart= []
-  //     var moneyInvested = 0
-  //     var paymentMethod = Math.floor(Math.random() * (6)) +1
-  //     var {id} = data[Math.floor(Math.random() * (data.length))]
-  //     axios.get(`https://api.tenvioperu.com/empresa/productos/${id}`).then((payload) => {
-  //       var productos = payload.data.productos
-  //       var prandon = Math.floor(Math.random() * 4), prandon_r = Math.floor(Math.random() * 4)
-  //       console.log(prandon, prandon_r)
-  //       for (let j = 0; j <prandon ; j++) {
-  //         var productSelected = productos[Math.floor(Math.random() * (productos.length))]
-  //         moneyInvested += productSelected.precio
-  //         productsAddedToCart.push(productSelected)
-  //       }
-  //       for (let j = 0; j < prandon_r; j++) {
-  //         var productRemoved = productos[Math.floor(Math.random() * (productos.length))]
-  //         productsRemovedFromCart.push(productRemoved)
-  //       }
-  //     }).then(() => {
-  //       axios.post(`/api/visit`, {
-  //         id: (Math.random() * 80000) + 20000,
-  //         idEmpresa: id,
-  //         location: {
-  //           lat: -8.1191,
-  //           lng: -79.0355
-  //         },
-  //         device: device[Math.floor(Math.random() * device.length)],
-  //         sessionTime: (Math.random() * 80000),
-  //         clicks: [],
-  //         path: '/empresa',
-  //         productsAddedToCart,
-  //         productsRemovedFromCart,
-  //         moneyInvested,
-  //         paymentMethod,
-  //       }).then(() => { console.log('ok'); })
-  //     }).then(() => {
-  //       productsAddedToCart = []
-  //       productsRemovedFromCart = []
-  //     });
-  //   }, 1000);
-  //   for (let index = 0; index < 500; index++) {
-      
-  //   }
-  // });
+    setInterval(() => {
+      var productsAddedToCart = [], productsRemovedFromCart= []
+      var moneyInvested = 0
+      var paymentMethod = Math.floor(Math.random() * (6)) +1
+      var {id} = data[Math.floor(Math.random() * (data.length))]
+      axios.get(`https://api.tenvioperu.com/empresa/productos/${id}`).then((payload) => {
+        var productos = payload.data.productos
+        var prandon = Math.floor(Math.random() * 4), prandon_r = Math.floor(Math.random() * 4)
+        console.log(prandon, prandon_r)
+        for (let j = 0; j <prandon ; j++) {
+          var productSelected = productos[Math.floor(Math.random() * (productos.length))]
+          moneyInvested += productSelected.precio
+          productsAddedToCart.push(productSelected)
+        }
+        for (let j = 0; j < prandon_r; j++) {
+          var productRemoved = productos[Math.floor(Math.random() * (productos.length))]
+          productsRemovedFromCart.push(productRemoved)
+        }
+      }).then(() => {
+        axios.post(`https://tenvio.herokuapp.com/visit`, {
+          id: (Math.random() * 80000) + 20000,
+          idEmpresa: id,
+          user: Math.round(Math.random()*100),
+          location: {
+            lat: -8.1191,
+            lng: -79.0355
+          },
+          device: device[Math.round(Math.random() * device.length)],
+          sessionTime: (Math.random() * 80000),
+          clicks: [],
+          path: '/empresa',
+          productsAddedToCart,
+          productsRemovedFromCart,
+          moneyInvested,
+          paymentMethod,
+        }).then(() => { console.log('ok'); })
+      }).then(() => {
+        productsAddedToCart = []
+        productsRemovedFromCart = []
+      });
+    }, 1000);
+  });
 }
