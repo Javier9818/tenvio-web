@@ -13,12 +13,10 @@
         moneyInvested: sessionStorage.moneyInvested || 0,
         paymentMethod: sessionStorage.paymentMethod || 0,
       }
-     
-      // axios.post(`https://tenvio.herokuapp.com/visit`, obj)
-      
-      // var confirmationMessage = "\o/";
-      // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-      // return confirmationMessage;                            //Webkit, Safari, Chrome
+      axios.post(`https://tenvio.herokuapp.com/visit`, obj)
+      var confirmationMessage = "\o/";
+      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+      return confirmationMessage;                            //Webkit, Safari, Chrome
 });
 
 navigator.geolocation.watchPosition(function({coords}) {
@@ -31,21 +29,6 @@ function loadPage(){
     clearStorage()
     sessionStorage.id == undefined ? sessionStorage.id = Date.now() : () => {}
     sessionStorage.path !== path ? sessionStorage.path = path : () => {}
-    let obj = {
-      id: parseInt(sessionStorage.id || Date.now()),
-      idEmpresa: sessionStorage.idEmpresa || 0,
-      location: JSON.parse(sessionStorage.location || '[]'),
-      device: sessionStorage.device || '',
-      user: sessionStorage.user || 0,
-      sessionTime: e.timeStamp,
-      clicks: JSON.parse(sessionStorage.click || '[]'),
-      path: path,
-      productsAddedToCart: JSON.parse(sessionStorage.productsAddedToCart || '[]'),
-      productsRemovedFromCart: JSON.parse(sessionStorage.productsRemovedFromCart || '[]'),
-      moneyInvested: sessionStorage.moneyInvested || 0,
-      paymentMethod: sessionStorage.paymentMethod || 0,
-    }
-    axios.post(`https://tenvio.herokuapp.com/visit`, obj)
   }else console.log('incompatible');  
 }
 
