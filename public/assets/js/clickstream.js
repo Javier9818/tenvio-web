@@ -33,7 +33,7 @@ function loadPage(){
 }
 
 function clickComponent(nameComponent){
-  loadBigData()
+  // loadBigData()
   var click = { nameComponent, time:Date.now()}
   var data = sessionStorage.click == undefined ? [click] : [...JSON.parse(sessionStorage.click), click]
   sessionStorage.click = JSON.stringify(data)
