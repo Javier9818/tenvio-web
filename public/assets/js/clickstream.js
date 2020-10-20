@@ -1,10 +1,10 @@
  window.addEventListener("beforeunload", async function (e) {
       let obj = {
         id: sessionStorage.id,
-        idEmpresa: sessionStorage.idEmpresa || null,
+        idEmpresa: sessionStorage.idEmpresa || 0,
         location: JSON.parse(sessionStorage.location || '[]'),
         device: sessionStorage.device || '',
-        user: sessionStorage.user || null,
+        user: sessionStorage.user || 0,
         sessionTime: e.timeStamp,
         clicks: JSON.parse(sessionStorage.click || '[]'),
         path: sessionStorage.path,
