@@ -1,4 +1,4 @@
- window.addEventListener("beforeunload",  function (e) {
+ window.addEventListener("beforeunload",  async function (e) {
       let obj = {
         id: parseInt(sessionStorage.id),
         idEmpresa: sessionStorage.idEmpresa || 0,
@@ -14,11 +14,8 @@
         paymentMethod: sessionStorage.paymentMethod || 0,
       }
      
-      axios.post(`https://tenvio.herokuapp.com/visit`, obj).then(() => { console.log('ok'); })
+      await axios.post(`https://tenvio.herokuapp.com/visit`, obj)
       
-      setTimeout(() => {
-        return true;
-      }, 500);
       // var confirmationMessage = "\o/";
       // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
       // return confirmationMessage;                            //Webkit, Safari, Chrome
