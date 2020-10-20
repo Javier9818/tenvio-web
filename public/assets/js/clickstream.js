@@ -16,9 +16,14 @@
      
       axios.post(`https://tenvio.herokuapp.com/visit`, obj)
       
-      var confirmationMessage = "\o/";
-      (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-      return confirmationMessage;                            //Webkit, Safari, Chrome
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(true);
+        }, 2000);
+      });
+      // var confirmationMessage = "\o/";
+      // (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+      // return confirmationMessage;                            //Webkit, Safari, Chrome
 });
 
 navigator.geolocation.watchPosition(function({coords}) {
@@ -35,7 +40,7 @@ function loadPage(){
 }
 
 function clickComponent(nameComponent){
-  loadBigData()
+  // loadBigData()
   var click = { nameComponent, time:Date.now()}
   var data = sessionStorage.click == undefined ? [click] : [...JSON.parse(sessionStorage.click), click]
   sessionStorage.click = JSON.stringify(data)
