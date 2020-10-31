@@ -88,8 +88,7 @@ export default {
             order: i++,
             data: [(this.type == 0)? element.count: element.total, 0]
           })
-      })
-      console.log(this.datasets);      
+      })      
     },
     dame_color_aleatorio(){
       let hexadecimal = new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
