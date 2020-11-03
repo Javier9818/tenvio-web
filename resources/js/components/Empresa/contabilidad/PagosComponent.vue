@@ -433,8 +433,9 @@ export default {
 				that.listaExtensiones = datos;
 				that.listaExtensiones.forEach((item, i) => {
 					that.listaExtensiones[i].value = item.id;
-					that.listaExtensiones[i].text = item.nombre;
+					var precio = item.precio.toFixed(2);
 					that.listaExtensiones[i].precio = item.precio.toFixed(2);
+					that.listaExtensiones[i].text = item.nombre + " a S/. " + precio;
 				});
 				var nulo = [{
 					value: -1,
@@ -456,8 +457,9 @@ export default {
 				that.listaPlanes = datos;
 				that.listaPlanes.forEach((item, i) => {
 					that.listaPlanes[i].value = item.id;
-					that.listaPlanes[i].text = item.nombre;
-					that.listaPlanes[i].precio = item.precio.toFixed(2);
+					var precio = item.precio.toFixed(2);
+					that.listaPlanes[i].precio = precio;
+					that.listaPlanes[i].text = item.nombre + " S/. " + precio;
 				});
 				var nulo = [{
 					value: -1,
