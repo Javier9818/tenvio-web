@@ -1,5 +1,7 @@
 <?php
+
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\PedidosUsers;
@@ -14,9 +16,9 @@ class Pedidos extends Model
 		'id',
 		'empresa_id',
 		'estado',
-		'estadoPago',///
-		'id_tipopago',///
-		'id_regpago',///
+		'estadoPago', ///
+		'id_tipopago', ///
+		'id_regpago', ///
 		'comentario',
 		'latitud',
 		'longitud',
@@ -37,36 +39,38 @@ class Pedidos extends Model
 
 	public static $PAGO_CULQI = 5;
 
-	public static function listar($empresa_id, $tipo, $fecha){
+	public static function listar($empresa_id, $tipo, $fecha)
+	{
 		$where = array('pedidos.empresa_id' => $empresa_id);
-		if ($tipo == 'Todo'){
+		if ($tipo == 'Todo') {
 			$where['pedidos.estado'] = 'Pendiente';
 		}
-		if ($tipo == 'Recepcion'){
+		if ($tipo == 'Recepcion') {
 			$where['pedidos.estado'] = 'Aceptado';
 			$where['pedidos.tipo_id'] = 2;
 		}
-		if ($tipo == 'Delivery'){
+		if ($tipo == 'Delivery') {
 			$where['pedidos.estado'] = 'Aceptado';
 			$where['pedidos.tipo_id'] = 1;
 		}
-		if ($tipo == 'Entregado'){
+		if ($tipo == 'Entregado') {
 			$where['pedidos.estado'] = 'Entregado';
 		}
 		$bul = false;
-		if ($fecha != 'Hoy'){
+		if ($fecha != 'Hoy') {
 			$bul = true;
-		}
-		else{
+		} else {
 			$fecha = '';
 		}
 		return static::consultaPedido($where, $bul, $fecha);
 	}
-	public static function obtenerPedido($id_pedido){
+	public static function obtenerPedido($id_pedido)
+	{
 		$where = array('pedidos.id' => $id_pedido);
 		return static::consultaPedido($where, false, '')->first();
 	}
-	public static function consultaPedido($where, $bul, $fecha){
+	public static function consultaPedido($where, $bul, $fecha)
+	{
 		$select = array(
 			'pedidos.id as idpedido',
 			DB::raw("GROUP_CONCAT(dp.producto_id) as ids"),
@@ -77,18 +81,17 @@ class Pedidos extends Model
 			'id_regpago',
 			'comentario'
 		);
-		if ($bul){
+		if ($bul) {
 			$select[] = DB::raw("sum(dp.precio_unit * dp.cantidad) as monto");
 			$select[] = 'pedidos.updated_at as fecha_entrega';
-		}
-		else{
+		} else {
 			$select[] = 'personas.id as idusuario';
 			$select[] = DB::raw("CONCAT(personas.appaterno, ' ', personas.apmaterno, ', ', personas.nombres) as nombres");
 			$select[] = 'personas.celular';
 			$select[] = 'pedidos.direccion';
 			$select[] = 'te.nombre as tipo_entrega';
 		}
-		return Pedidos::whereRaw('pedidos.updated_at like ?', $fecha.'%')->where($where)
+		return Pedidos::whereRaw('pedidos.updated_at like ?', $fecha . '%')->where($where)
 			->select($select)
 			->join('detalle_pedidos as dp', 'dp.pedido_id', '=', 'pedidos.id')
 			->join('users as u', 'u.id', '=', 'pedidos.user_id')
@@ -98,7 +101,8 @@ class Pedidos extends Model
 			->groupBy('pedidos.id')
 			->get();
 	}
-	public static function entregar($idpedido, $empresa_id){
+	public static function entregar($idpedido, $empresa_id)
+	{
 		DB::beginTransaction();
 		try {
 			$pedidos = Pedidos::where('id', $idpedido)
@@ -113,20 +117,23 @@ class Pedidos extends Model
 		}
 		return $pedidos;
 	}
-	public static function aceptar($idpedido){
+	public static function aceptar($idpedido)
+	{
 		return Pedidos::where('id', $idpedido)
 			->update([
 				'estado' => 'ACEPTADO'
 			]);
 	}
-	public static function cancelar($idpedido, $comentario){
+	public static function cancelar($idpedido, $comentario)
+	{
 		return Pedidos::where('id', $idpedido)
 			->update([
 				'estado' => 'CANCELADO',
 				'comentario' => $comentario
 			]);
 	}
-	public static function cancelarvarios($id_pedidos, $comentario){
+	public static function cancelarvarios($id_pedidos, $comentario)
+	{
 		return Pedidos::whereIn('id', $id_pedidos)
 			->update([
 				'estado' => 'CANCELADO',
@@ -134,7 +141,8 @@ class Pedidos extends Model
 			]);
 	}
 
-	public static function listarEmpleados($empresa_id){
+	public static function listarEmpleados($empresa_id)
+	{
 		$where = array(
 			'ue.empresa_id' => $empresa_id,
 			'permiso_id' => 5
@@ -152,7 +160,8 @@ class Pedidos extends Model
 			->join('permiso_user as pu', 'pu.user_id', '=', 'ue.user_id')
 			->get();
 	}
-	public static function asignar($pedidos, $idrepartidor){
+	public static function asignar($pedidos, $idrepartidor)
+	{
 		$asignacion = Asignacion::create([
 			'user_id' => $idrepartidor
 		]);
@@ -170,26 +179,50 @@ class Pedidos extends Model
 	}
 
 
-	public static function devolverPago($idpedido){
+	public static function devolverPago($idpedido)
+	{
 		return Pedidos::where('id', $idpedido)
 			->update([
 				'estadoPAGO' => 'DEVUELTO'
 			]);
 	}
 
-	public static function getOrdersByEmployeeId($id){
+	public static function getOrdersByEmployeeId($id)
+	{
 		$pedidos = DB::table('pedidos')
-		->join("pedidos_users", "pedidos_users.pedidos_id", "pedidos.id")
-		->join("asignacion", "asignacion.id", "pedidos_users.asignacion_id")
-		->join("users", "users.id", "=", "pedidos.user_id")
-		->join("personas", "personas.id", "=", "users.persona_id")
-		->join("detalle_pedidos", "detalle_pedidos.pedido_id", "=", "pedidos.id")
-		->selectRaw('pedidos.id, CONCAT(personas.appaterno ," ", personas.apmaterno ," ",personas.nombres) as cliente,
+			->join("pedidos_users", "pedidos_users.pedidos_id", "pedidos.id")
+			->join("asignacion", "asignacion.id", "pedidos_users.asignacion_id")
+			->join("users", "users.id", "=", "pedidos.user_id")
+			->join("personas", "personas.id", "=", "users.persona_id")
+			->join("detalle_pedidos", "detalle_pedidos.pedido_id", "=", "pedidos.id")
+			->selectRaw('pedidos.id, CONCAT(personas.appaterno ," ", personas.apmaterno ," ",personas.nombres) as cliente,
 		pedidos.direccion, pedidos.monto, pedidos.latitud, pedidos.longitud, personas.celular')
-		->whereRaw("asignacion.user_id= ? and pedidos.estado ='ENVIANDO'", [$id])
-		->groupBy("pedidos.id")
-		->get();
+			->whereRaw("asignacion.user_id= ? and pedidos.estado ='ENVIANDO'", [$id])
+			->groupBy("pedidos.id")
+			->get();
 
 		return $pedidos;
+	}
+
+	public static function quanty_money_date($request)
+	{
+		$empresa_id = $request->get('empresa_id');
+		$states = $request->get('states');
+		$date = $request->get('date');
+		$where = array('pedidos.empresa_id' => $empresa_id);
+		$let = [];
+		foreach ($states as $key => $value) {
+			$where['pedidos.estado'] = $value['state'];
+			$resul = Pedidos::whereRaw('pedidos.created_at like ?', $date . '%')->where($where)
+				->select(DB::raw('SUM(pedidos.monto) as total'))
+				->groupBy('pedidos.id')
+				->get();
+			$total = 0;
+			foreach ($resul as $key => $sub) {
+				$total += $sub->total;
+			}
+			array_push($let, ['state' => $value['state'], 'total' => $total, 'count' => count($resul)]);
+		}
+		return $let;
 	}
 }

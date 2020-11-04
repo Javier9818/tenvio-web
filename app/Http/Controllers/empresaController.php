@@ -8,6 +8,7 @@ use App\Empresa;
 use App\Ciudad;
 use App\TipoNegocio;
 use App\Pagos;
+use App\Pedidos;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -266,4 +267,13 @@ class EmpresaController extends Controller
 
     }
 
+    public function getQuanty_money_date(Request $request)
+    {
+        try {
+            return response()->json(['data'=>Pedidos::quanty_money_date($request) ,"message" => "Hecho",'success'=> true]);
+        } catch (\Exception $th) {
+            return response()->json(['data'=>null,"message" => $th->getMessage(),'success'=> false]);
+        }
+    }
+    
 }
