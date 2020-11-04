@@ -15,4 +15,4 @@ Route::get('/registro', 'Auth\LoginController@showRegister')->name('registro')->
 Route::get('/perfil', 'UserController@getUser')->middleware('auth');
 Route::get('/recoverypassword/{cifrado}', 'FrontController@Recover')->name('Recover');
 
-Route::get('/tokensito', 'AdminController@refrescar_contratos');
+Route::get('/G&w$Q&L%WqOf!pPC', 'AdminController@refrescar_contratos');
