@@ -2,6 +2,18 @@
 <div>
     <div class="container-fluid">
         <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Dashboard</h4>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">                           
+                            <dashboard-quanty-money-date :form="form"></dashboard-quanty-money-date>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
