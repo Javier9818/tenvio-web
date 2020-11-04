@@ -43,6 +43,9 @@ class Contrato extends Model
 	public static $CONTRATO_ENESPERA = 'EN ESPERA A VALIDAR';
 
 	public static function sumarPedidoEntregado($empresa_id){
+		//si estamos en marzo, hay un contrato para marzo, abril y mayo
+		//lo que hace este query es sumarle un pedido hecho al mes de marzo, por eso el order by asc y el first
+		//si se hace una actualizacion se recomienda cambiar por limit 1
 		$contrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => static::$CONTRATO_VIGENTE])
 			->select('id', 'fecha_inicio')->orderBy('fecha_inicio', 'asc')->first();
 		return Contrato::where(['id' => $contrato->id])
@@ -191,4 +194,6 @@ class Contrato extends Model
 			->get();
 	}
 	*/
+
+	
 }
