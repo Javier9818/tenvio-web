@@ -149,7 +149,14 @@ class Contrato extends Model
 			$fechaInicio = Carbon::now();
 		else
 			$fechaInicio = $ultimoContrato->fecha_vencimiento;
+		//doy los 30 dias
 		$fechaVencimiento = (clone $fechaInicio)->addDays(30);
+		//pregunto si la hora actual ya está redondeada | G:i = hora : fecha
+		if ($fechaVencimiento->format('G:i') != $fechaVencimiento->minute(0)->second(0)->format('G:i')){
+			//redondeo aproximando a la hora siguiente
+			$fechaVencimiento = $fechaVencimiento->addHours(1)->minute(0)->second(0);
+		}
+		//dd($fechaVencimiento);
 		return Contrato::create([
 			'empresa_id' => $empresa_id,
 			'plan_id' => $plan->id,
