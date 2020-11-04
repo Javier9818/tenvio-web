@@ -202,5 +202,16 @@ class Contrato extends Model
 	}
 	*/
 
-	
+	public static function refrescar_contratos(){
+		//dd(DB::select("select DATE_ADD(now(),INTERVAL 1 HOUR)")[0]);
+		Contrato::where([
+				'estado' => static::$CONTRATO_VIGENTE,
+			])
+			->whereRaw(
+				'fecha_vencimiento < now()'
+			)
+			->update([
+				'estado' => (static::$CONTRATO_VENCIDO)
+			]);
+	}
 }
