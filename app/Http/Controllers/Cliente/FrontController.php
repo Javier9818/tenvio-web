@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Cliente;
+use App\Http\Controllers\Controller;
 
 use App\Contrato;
 use App\Empresa;

@@ -26,32 +26,32 @@ Route::get('/cargos', 'GeneralController@cargosEmpleado');
 Route::get('/username/{username}', 'GeneralController@validateUsername');
 Route::get('/email/{email}', 'GeneralController@validateEmail');
 
-Route::post('/empleado', 'EmpleadoController@setEmpleado');
-Route::put('/empleado', 'EmpleadoController@updateEmpleado');
-Route::get('/empleados/{empresa}', 'EmpleadoController@listByEmpresa');
+Route::post('/empleado', 'Empresa\EmpleadoController@setEmpleado');
+Route::put('/empleado', 'Empresa\EmpleadoController@updateEmpleado');
+Route::get('/empleados/{empresa}', 'Empresa\EmpleadoController@listByEmpresa');
 
-Route::post('/empresa', 'EmpresaController@setEmpresa');
-Route::post('/activate/empresa', 'EmpresaController@activateEmpresa');
-Route::post('/pre-registro/empresa', 'EmpresaController@preRegisterEmpresa');
-Route::put('/empresa/{empresa}', 'EmpresaController@updateEmpresa');
-Route::put('/fotoEmpresa/{empresa}', 'EmpresaController@updateFoto');
-Route::post('/empresa/search', 'EmpresaController@search');
+Route::post('/empresa', 'Empresa\EmpresaController@setEmpresa');
+Route::post('/activate/empresa', 'Empresa\EmpresaController@activateEmpresa');
+Route::post('/pre-registro/empresa', 'Empresa\EmpresaController@preRegisterEmpresa');
+Route::put('/empresa/{empresa}', 'Empresa\EmpresaController@updateEmpresa');
+Route::put('/fotoEmpresa/{empresa}', 'Empresa\EmpresaController@updateFoto');
+Route::post('/empresa/search', 'Empresa\EmpresaController@search');
 
-Route::get('/tipo-entregas/{empresa}', 'EmpresaController@tiposEntrega');
-Route::put('/tipo-entregas', 'EmpresaController@updateTipoEntrega');
+Route::get('/tipo-entregas/{empresa}', 'Empresa\EmpresaController@tiposEntrega');
+Route::put('/tipo-entregas', 'Empresa\EmpresaController@updateTipoEntrega');
 
 Route::get('/tipo-pago/{empresa}', 'TipopagoController@tiposPago');
 Route::get('/tipo-pago-front/{empresa}', 'TipopagoController@tiposPagoFront');
 Route::put('/tipo-pago', 'TipopagoController@updateTipoPago');
 
-Route::get('/nombre-unico/{empresa}', 'EmpresaController@nombreUnico');
-Route::get('/token-fb/{empresa}', 'EmpresaController@tokenFb');
-Route::put('/token-fb', 'EmpresaController@updateTokenFb');
-Route::post('/nombre-unico', 'EmpresaController@validaNombreUnico');
-Route::put('/nombre-unico', 'EmpresaController@updateNombreUnico');
+Route::get('/nombre-unico/{empresa}', 'Empresa\EmpresaController@nombreUnico');
+Route::get('/token-fb/{empresa}', 'Empresa\EmpresaController@tokenFb');
+Route::put('/token-fb', 'Empresa\EmpresaController@updateTokenFb');
+Route::post('/nombre-unico', 'Empresa\EmpresaController@validaNombreUnico');
+Route::put('/nombre-unico', 'Empresa\EmpresaController@updateNombreUnico');
 
 
-Route::post('/geo-position/{empresa}', 'EmpresaController@geoPosition');
+Route::post('/geo-position/{empresa}', 'Empresa\EmpresaController@geoPosition');
 
 Route::put('/fotoPerfil/{user}', 'UserController@updateFoto');
 Route::put('/user', 'UserController@updateUser');
@@ -70,4 +70,4 @@ Route::get('/bussiness-near/{lat}/{lng}', 'GeneralController@bussinessNear');
 Route::post('/visit', 'VisitController@store');
 
 //dashboard
-Route::post('/empresa-dashboard', 'EmpresaController@getQuanty_money_date');
+Route::post('/empresa-dashboard', 'Empresa\EmpresaController@getQuanty_money_date');
