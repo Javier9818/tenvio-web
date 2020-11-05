@@ -87,6 +87,9 @@ Vue.component('menu-categorias', require('./components/Empresa/menu/Categorias.v
 Vue.component('menu-productos', require('./components/Empresa/menu/Productos.vue').default);
 Vue.component('loader', require('./components/Utils/LoaderAdmin.vue').default) /*loader pacman*/
 
+//dashboards
+Vue.component('dashboard-quanty-money-date', require('./components/Empresa/negocio/dashboards/quanty-money-date.vue').default);
+Vue.component('chart-lineal-dsh1', require('./components/Empresa/negocio/dashboards/ComponenteChart.vue').default);
 
 //PARTE DEL ADMINISTRADOR GLOBAL
 Vue.component('form-empresa-register', require('./components/admin/FormEmpresas.vue').default);

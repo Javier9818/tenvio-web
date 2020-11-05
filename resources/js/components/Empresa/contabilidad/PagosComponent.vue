@@ -41,7 +41,7 @@
 		-->
 		<div class="text-center">
 			<loader :mostrar="mostrarLoader"></loader>
-			<b-button @click="cargarRenovarContrato" variant="primary" size="sm" v-b-modal.actualizar-plan>Renovar Contrato</b-button>
+			<b-button @click="cargarRenovarContrato" variant="primary" size="sm">Renovar Contrato</b-button>
 		</div>
 		<br>
 		<b-table :bordered="true" responsive :hover="true" headVariant="dark" :items="contratos" :fields="fields" :tbody-tr-class="rowClass">
@@ -53,7 +53,7 @@
 		</b-table>
 		<b-modal id="ver-contrato" size="lg" scrollable centered hide-backdrop title="Ver Contrato" hide-footer>
 			<b-form-group label="Estado" label-cols-sm="5" class="mb-0">
-				{{contratoSeleccionado.estado}} desde el {{contratoSeleccionado.fecha_aprob_rech}}
+				{{contratoSeleccionado.estado}} con fecha {{contratoSeleccionado.fecha_aprob_rech}}
 			</b-form-group>
 			<b-form-group label="Fecha de Inicio" label-cols-sm="5" class="mb-0">
 				{{contratoSeleccionado.fecha_inicio}}
@@ -410,6 +410,17 @@ export default {
 			this.deshabilitaboton = valor;
 		},
 		cargarRenovarContrato: function(){
+			var contratos_pendientes = this.contratos.find(item => (item.estado.toUpperCase() == 'EN ESPERA A VALIDAR'));
+			console.log(contratos_pendientes);
+			if(contratos_pendientes != null){
+				Swal.fire(
+					'Error',
+					'No es posible solicitar una renovación del contrato si ya ha enviado uno, por favor espere hasta que los adminsitradores del sistema aprueben su solicitud anterior',
+					'error'
+				)
+				return;
+			}
+			this.$bvModal.show('actualizar-plan');
 			this.fotovouchersubir = [];
 			this.idPlanSeleccionado = -1;
 			if (this.listaPlanes.length == 0)
@@ -433,8 +444,9 @@ export default {
 				that.listaExtensiones = datos;
 				that.listaExtensiones.forEach((item, i) => {
 					that.listaExtensiones[i].value = item.id;
-					that.listaExtensiones[i].text = item.nombre;
+					var precio = item.precio.toFixed(2);
 					that.listaExtensiones[i].precio = item.precio.toFixed(2);
+					that.listaExtensiones[i].text = item.nombre + " a S/. " + precio;
 				});
 				var nulo = [{
 					value: -1,
@@ -456,8 +468,9 @@ export default {
 				that.listaPlanes = datos;
 				that.listaPlanes.forEach((item, i) => {
 					that.listaPlanes[i].value = item.id;
-					that.listaPlanes[i].text = item.nombre;
-					that.listaPlanes[i].precio = item.precio.toFixed(2);
+					var precio = item.precio.toFixed(2);
+					that.listaPlanes[i].precio = precio;
+					that.listaPlanes[i].text = item.nombre + " S/. " + precio;
 				});
 				var nulo = [{
 					value: -1,

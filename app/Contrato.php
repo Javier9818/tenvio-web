@@ -43,6 +43,9 @@ class Contrato extends Model
 	public static $CONTRATO_ENESPERA = 'EN ESPERA A VALIDAR';
 
 	public static function sumarPedidoEntregado($empresa_id){
+		//si estamos en marzo, hay un contrato para marzo, abril y mayo
+		//lo que hace este query es sumarle un pedido hecho al mes de marzo, por eso el order by asc y el first
+		//si se hace una actualizacion se recomienda cambiar por limit 1
 		$contrato = Contrato::where(['empresa_id' => $empresa_id, 'estado' => static::$CONTRATO_VIGENTE])
 			->select('id', 'fecha_inicio')->orderBy('fecha_inicio', 'asc')->first();
 		return Contrato::where(['id' => $contrato->id])
@@ -146,7 +149,14 @@ class Contrato extends Model
 			$fechaInicio = Carbon::now();
 		else
 			$fechaInicio = $ultimoContrato->fecha_vencimiento;
+		//doy los 30 dias
 		$fechaVencimiento = (clone $fechaInicio)->addDays(30);
+		//pregunto si la hora actual ya está redondeada | G:i = hora : fecha
+		if ($fechaVencimiento->format('G:i') != $fechaVencimiento->minute(0)->second(0)->format('G:i')){
+			//redondeo aproximando a la hora siguiente
+			$fechaVencimiento = $fechaVencimiento->addHours(1)->minute(0)->second(0);
+		}
+		//dd($fechaVencimiento);
 		return Contrato::create([
 			'empresa_id' => $empresa_id,
 			'plan_id' => $plan->id,
@@ -191,4 +201,17 @@ class Contrato extends Model
 			->get();
 	}
 	*/
+
+	public static function refrescar_contratos(){
+		//dd(DB::select("select DATE_ADD(now(),INTERVAL 1 HOUR)")[0]);
+		Contrato::where([
+				'estado' => static::$CONTRATO_VIGENTE,
+			])
+			->whereRaw(
+				'fecha_vencimiento < now()'
+			)
+			->update([
+				'estado' => (static::$CONTRATO_VENCIDO)
+			]);
+	}
 }

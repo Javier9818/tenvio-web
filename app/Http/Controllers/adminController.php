@@ -133,5 +133,18 @@ class AdminController extends Controller
 			'lista' => Pagos::listarPagos(),
 			'rutaImagenes' => ExtrasController::$rutaFotosVouchers
 		];
-	}
+    }
+    
+    protected function refrescar_contratos(Request $request){
+        if ($_SERVER['REMOTE_ADDR'] === '127.0.0.1'){
+            DB::beginTransaction();
+            try {
+                Contrato::refrescar_contratos();
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                //dd($e);
+            }
+        }
+    }
 }
