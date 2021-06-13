@@ -1,4 +1,4 @@
-window._ = require('lodash');
+window._ = require("lodash");
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -19,9 +19,9 @@ window._ = require('lodash');
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+window.axios = require("axios");
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 // let token = document.head.querySelector('meta[name="csrf-token"]');
 
@@ -36,11 +36,24 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allows your team to easily build robust real-time web applications.
  */
 
-
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('sube-archivos', require('./components/Utils/SubeArchivos.vue').default) /* vue file agent */
-Vue.component('foto-perfil', require('./components/Auth/fotoPerfil.vue').default);
-Vue.component('user-perfil', require('./components/Auth/perfil.vue').default);
-Vue.component('clave-perfil', require('./components/Auth/contraseña.vue').default);
-Vue.component('mapa-interactivo', require('./components/Utils/maps/MapaInteractivo.vue').default);
+Vue.component(
+    "example-component",
+    require("./components/ExampleComponent.vue").default
+);
+Vue.component(
+    "sube-archivos",
+    require("./components/Utils/SubeArchivos.vue").default
+); /* vue file agent */
+Vue.component(
+    "foto-perfil",
+    require("./components/Auth/fotoPerfil.vue").default
+);
+Vue.component("user-perfil", require("./components/Auth/perfil.vue").default);
+Vue.component(
+    "clave-perfil",
+    require("./components/Auth/contraseña.vue").default
+);
+Vue.component(
+    "mapa-interactivo",
+    require("./components/Utils/maps/MapaInteractivo.vue").default
+);

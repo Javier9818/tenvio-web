@@ -25,7 +25,8 @@
     </picture-input>
     <div class="row align-items-center justify-content-center" v-if="scope === 'true'">
         <button class="btn btn-primary btn-sm mt-2" v-on:click="edit=!edit" v-if="!edit"><i class="ft-edit"></i> Actualizar foto</button>
-        <button class="btn btn-danger btn-sm mt-2" v-on:click="edit=!edit" v-else>Regresar</button>
+        <button class="btn btn-primary btn-sm mt-2 mr-1" v-on:click="submit" v-if="edit && image"><i class="ft-save"></i>Guardar</button>
+        <button class="btn btn-danger btn-sm mt-2" v-on:click="cancel" v-if="edit">Cancelar</button>
     </div>
    </div>
 </template>
@@ -39,7 +40,7 @@
         },
         data(){
             return{
-                image:'',
+                image:false,
                 edit:false
             }
         },
@@ -48,18 +49,23 @@
         },
         methods: {
             onChange (image) {
-
-                if (image) {
-
-                    this.image = image
+                if (image) this.image = image
+                else console.log('FileReader API not supported: use the <form>, Luke!')
+            },
+            submit(){
+                if(this.image)
+                {
                     axios.put(`/api/fotoEmpresa/${this.form.id}`, {image:this.image}).then( ({data}) => {
-
                         this.form.foto = data.foto;
+                        this.edit = false;
+                        this.image = false;
                         Swal.fire('Éxito', 'La foto se ha actualizado', 'success');
                     }).catch( error => Swal.fire('Error', 'Ha sucedido un error, por favor, comuniquese con el área de sistemas', 'error'));
-                } else {
-                    console.log('FileReader API not supported: use the <form>, Luke!')
                 }
+            },
+            cancel(){
+                this.edit = false
+                this.image = false
             }
         }
     }

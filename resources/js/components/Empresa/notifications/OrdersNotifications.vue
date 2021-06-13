@@ -99,6 +99,7 @@
 
 <script>
     import Swal from 'sweetalert2'
+    import EventBus from '../../../event-bus'
     export default {
         mounted() {
             axios.get(`/api/notifications/${empresa.id || empresa}`)
@@ -122,7 +123,8 @@
                 pendientes:0,
                 aceptadas:0,
                 enviadas:0,
-                countIntelligence:0
+                countIntelligence:0,
+                spinnerVisible: false
             }
         },
         methods: {
@@ -136,6 +138,20 @@
                     }
                 });
             },
+            showSpinner() {
+                this.spinnerVisible = true;
+                Swal.fire({
+                    title: 'Cargando...',
+                    text: 'Espere un momento porfavor :)',
+                    showConfirmButton: false,
+                    imageUrl: "/img/loader.gif",
+                    showCancelButton: false,
+                })
+            },
+            hideSpinner() {
+                this.spinnerVisible = false;
+                Swal.close()
+            }
         },
         created(){
             Echo.channel(`ordersCompany.${company || 0}`)
@@ -147,6 +163,17 @@
                     this.notifyPush(messageNotify)
                 }
             });
+
+            EventBus.$on('before-request', this.showSpinner);
+            EventBus.$on('request-error',  this.hideSpinner);
+            EventBus.$on('after-response', this.hideSpinner);
+            EventBus.$on('response-error', this.hideSpinner);
+        },
+        beforeDestroy() {
+            EventBus.$off('before-request', this.showSpinner);
+            EventBus.$off('request-error',  this.hideSpinner);
+            EventBus.$off('after-response', this.hideSpinner);
+            EventBus.$off('response-error', this.hideSpinner);
         }
     }
 </script>
